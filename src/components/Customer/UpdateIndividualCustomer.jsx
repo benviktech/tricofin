@@ -38,8 +38,6 @@ const UpdateIndividualCustomer = ({ location }) => {
     setErrors(response);
     if (Object.keys(response).length === 0) {
       dispatch(updateIndividualCustomer(dataState, history));
-    } else {
-      console.log('validation errors');
     }
   };
 

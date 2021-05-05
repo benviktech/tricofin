@@ -32,7 +32,6 @@ const IndividualCustomerForm = () => {
   } = SearchCustomer();
 
   const individualCustomers = useSelector(state => state.individualCustomersReducer);
-  console.log(individualCustomers, 'customers list');
 
   useEffect(() => {
     dispatch(fetchIndividualCustomers());
@@ -380,12 +379,6 @@ const IndividualCustomerForm = () => {
                     className="add-customer-btn"
                   >
                     Add
-                  </button>
-                  <button
-                    type="button"
-                    className="search-customer-btn"
-                  >
-                    Search Customer
                   </button>
                 </div>
               </div>

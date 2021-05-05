@@ -45,8 +45,6 @@ const UseForm = validate => {
   useEffect(() => {
     if (Object.keys(errors).length === 0) {
       dispatch(postIndividualCustomers(values, history));
-    } else {
-      console.log('validation errors');
     }
   }, [errors]);
 

@@ -17,17 +17,15 @@ const SearchCustomer = () => {
   };
 
   useEffect(async () => {
-    console.log('inside useeffect timer');
     try {
       const response = await axios.get('https://tricoapi.azurewebsites.net/api/Customers/GetIndividualCustomers');
       settestState(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }, []);
 
   const displaySortedList = (data, value) => {
-    console.log(data, value);
     data.forEach(customer => {
       Object.values(customer).forEach(element => {
         if (isNaN(element)) {
