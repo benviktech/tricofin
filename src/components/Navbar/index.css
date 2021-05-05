@@ -1,3 +1,16 @@
+.nav-section {
+  position:fixed;
+  width:100%;
+  top:0;
+  z-index: 5;
+  margin-bottom: 60px;
+}
+
+.view-individual-customer-form,
+.individual-customer-form {
+  margin-top: 60px;
+}
+
 .navbar-light {
   background-color: #3a5794;
   height: 60px;
