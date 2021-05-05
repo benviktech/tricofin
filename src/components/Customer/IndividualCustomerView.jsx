@@ -33,11 +33,6 @@ const ViewIndividualCustomer = () => {
     <div className="spinner section">
       <Loader />
     </div>
-  ) : personalData.error !== '' ? (
-    <div>
-      {' '}
-      { personalData.error }
-    </div>
   ) : (
     <div className="view-individual-customer-form">
       <Modal
