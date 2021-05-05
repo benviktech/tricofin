@@ -1,0 +1,263 @@
+.maintenance-customer-info {
+  color: #fff;
+  font-weight: bold;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  display: flex;
+  font-size: 16px;
+  padding: 5px;
+  justify-content: center;
+  background-color: #c2c2c2;
+}
+
+.lower-downer-section {
+  display: flex;
+}
+
+.left-inner-form-section {
+  background-color: #3a5794;
+  padding: 10px 5px;
+  margin-right: 10px;
+  flex: 1;
+}
+
+.submit-form-top-section {
+  flex: 7;
+}
+
+.main-form-color {
+  background-color: #c2c2c2;
+  display: flex;
+}
+
+.middle-inner-form-section {
+  flex: 4;
+  padding: 10px 10px 0;
+}
+
+.form-group {
+  position: relative;
+}
+
+.left-form-group {
+  display: flex;
+  align-items: center;
+  background-color: #999;
+  justify-content: center;
+  padding: 2px 0;
+}
+
+.left-form-group label {
+  width: 24%;
+  color: #555;
+}
+
+.form-control-input {
+  height: 25px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.span-warning {
+  position: absolute;
+  right: 10%;
+  font-size: 12px;
+  color: red;
+}
+
+.right-inner-form-section {
+  flex: 3;
+  padding: 10px;
+  background-color: #999;
+}
+
+.right-inner-form-section .image-section {
+  height: 195px;
+  width: 250px;
+  background-color: #fff;
+}
+
+.right-inner-form-section .image-section img {
+  height: 195px;
+  width: 250px;
+}
+
+.other-input-section {
+  background-color: #c2c2c2;
+}
+
+.add-customer-btn {
+  background-color: #1991da;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  margin-right: 10px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.search-customer-btn {
+  background-color: #3a5794;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.upper-bottom-section {
+  background-color: #3a5794;
+  text-align: center;
+}
+
+.upper-bottom-section .span {
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  padding: 5px;
+}
+
+.bottom-form-section {
+  padding: 2px 10px 0;
+  display: flex;
+}
+
+.bottom-form-section .form-group {
+  width: 25%;
+  align-items: center;
+}
+
+.left-form-group-division {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.left-form-group-div {
+  flex: 1;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.form-control-div {
+  height: 25px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.left-form-group-division .form-control-div {
+  flex: 1;
+}
+
+.icon-section i {
+  font-size: 25px;
+  margin: 0 2px;
+  color: #fff;
+  display: block;
+  cursor: pointer;
+}
+
+.loading-content-section {
+  height: 66vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.manage-drop-down {
+  position: relative;
+}
+
+.modal-hide-section {
+  position: absolute;
+  display: none;
+}
+
+.modal-popup-section {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 30px;
+  height: 100px;
+  right: 0;
+}
+
+.top-section-modal-section {
+  position: fixed;
+  height: 0;
+  width: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #3a5794;
+  border-top: 10px solid transparent;
+  left: 10px;
+  z-index: 20;
+}
+
+.inner-section-modal-section {
+  overflow-y: auto;
+  height: 350px;
+}
+
+.inner-section-modal-section-inner {
+  display: flex;
+  width: 250px;
+  background-color: #3a5794;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.right-form-group-view {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.header-title-div {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-header {
+  background-color: #999;
+  display: flex;
+  align-items: center;
+}
+
+.inner-left-section-image {
+  flex: 1;
+}
+
+.edit-button,
+.update-customer-btn {
+  background-color: #3a5794;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  font-size: 13px;
+  font-weight: bold;
+}
