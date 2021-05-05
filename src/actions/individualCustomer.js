@@ -30,6 +30,7 @@ export const fetchIndividualCustomers = () => async dispatch => {
   const method = 'get';
   const path = '/api/Customers/GetIndividualCustomers';
   try {
+    dispatch({ type: LOADING_CONTENT });
     const response = await FetchIndividualCustomersRequest(method, path);
     dispatch(individualCustomersSuccessFetch(response.data));
   } catch (error) {

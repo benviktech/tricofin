@@ -2,12 +2,14 @@ import {
   GET_INDIVIDUAL_CUSTOMER_SUCCESS,
   LOADING_CONTENT,
   LOADING_ERROR,
+  FETCH_INDIVIDUAL_CUSTOMER_SUCCESS,
 } from '../actions/individualCustomer';
 
 const initialState = {
   individualCustomer: {},
   error: '',
   loading: false,
+  individualCustomers: [],
 };
 
 const individualCustomersReducer = (state = initialState, action) => {
@@ -30,6 +32,12 @@ const individualCustomersReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case FETCH_INDIVIDUAL_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        individualCustomers: action.payload,
       };
     default:
       return state;

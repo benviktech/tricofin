@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Sidebar from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
 import UseForm from './UseForm';
@@ -14,8 +14,10 @@ import './index.css';
 import MoreInfo from './MoreInfo';
 import SearchCustomer from './SearchCustomer';
 import Loader from '../Loader/Loader';
+import { fetchIndividualCustomers } from '../../actions/individualCustomer';
 
 const IndividualCustomerForm = () => {
+  const dispatch = useDispatch();
   const {
     handleChange, values, handleSubmit, errors,
   } = UseForm(validate);
@@ -29,9 +31,14 @@ const IndividualCustomerForm = () => {
     searchedCustomer, finalSortedList,
   } = SearchCustomer();
 
-  const personalData = useSelector(state => state.individualCustomersReducer);
+  const individualCustomers = useSelector(state => state.individualCustomersReducer);
+  console.log(individualCustomers, 'customers list');
 
-  return personalData.loading ? (
+  useEffect(() => {
+    dispatch(fetchIndividualCustomers());
+  }, []);
+
+  return individualCustomers.loading ? (
     <div className="spinner section">
       <Loader />
     </div>
