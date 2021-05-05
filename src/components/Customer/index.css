@@ -261,3 +261,29 @@
   font-size: 13px;
   font-weight: bold;
 }
+
+
+/* Tab screen sizes */
+
+@media only screen and (max-width: 1000px) {
+  .main-form-color {
+    flex-direction: column;
+  }
+
+  .submit-form-top-section {
+    flex: 5;
+  }
+
+  .upper-bottom-section {
+    margin-bottom: 60px;
+  }
+
+  .bottom-form-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bottom-form-section .form-group {
+    width: 100%;
+  }
+}
