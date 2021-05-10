@@ -1,13 +1,13 @@
 .maintenance-customer-info {
-  color: #fff;
+  color: #666;
   font-weight: bold;
   border-top: 3px solid #fff;
   border-bottom: 3px solid #fff;
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   padding: 5px;
   justify-content: center;
-  background-color: #c2c2c2;
+  background-color: #F3F2F1;
 }
 
 .lower-downer-section {
@@ -26,7 +26,8 @@
 }
 
 .main-form-color {
-  background-color: #c2c2c2;
+  background-color: #fff;
+  border: 1px solid #F3F2F1;
   display: flex;
 }
 
@@ -42,9 +43,9 @@
 .left-form-group {
   display: flex;
   align-items: center;
-  background-color: #999;
   justify-content: center;
-  padding: 2px 0;
+  padding: 1px 0;
+  border: 1px solid #F3F2F1;
 }
 
 .left-form-group label {
@@ -62,6 +63,7 @@
   outline: none;
   cursor: pointer;
   margin-left: auto;
+  background-color: #F3F2F1;
 }
 
 .span-warning {
@@ -74,7 +76,8 @@
 .right-inner-form-section {
   flex: 3;
   padding: 10px;
-  background-color: #999;
+  background-color: #F3F2F1;
+  border-bottom: 1px solid #fff;
 }
 
 .right-inner-form-section .image-section {
@@ -89,7 +92,7 @@
 }
 
 .other-input-section {
-  background-color: #c2c2c2;
+  background-color: #fff;
 }
 
 .add-customer-btn {
@@ -114,14 +117,14 @@
 }
 
 .upper-bottom-section {
-  background-color: #3a5794;
+  background-color: #F3F2F1;
   text-align: center;
 }
 
 .upper-bottom-section .span {
   font-weight: 600;
   font-size: 14px;
-  color: #fff;
+  color: #444;
   border-bottom: 1px solid #fff;
   padding: 5px;
 }
@@ -145,8 +148,8 @@
 .left-form-group-div {
   flex: 1;
   font-size: 13px;
-  color: #fff;
-  font-weight: 600;
+  color: #251E50;
+  font-weight: 500;
 }
 
 .form-control-div {
@@ -154,12 +157,12 @@
   border: none;
   border-radius: 3px;
   padding: 0 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   margin-left: 10px;
   outline: none;
   cursor: pointer;
-  color: #fff;
+  color: #251E50;
 }
 
 .left-form-group-division .form-control-div {
@@ -169,7 +172,7 @@
 .icon-section i {
   font-size: 25px;
   margin: 0 2px;
-  color: #fff;
+  color: #C2C2C2;
   display: block;
   cursor: pointer;
 }
@@ -261,7 +264,6 @@
   font-size: 13px;
   font-weight: bold;
 }
-
 
 /* Tab screen sizes */
 
