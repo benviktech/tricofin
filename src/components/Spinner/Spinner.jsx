@@ -5,7 +5,7 @@ export default function Spinner() {
   return (
     <Loader
       type="Puff"
-      color="#3A5794"
+      color="#F3F2F1"
       height={200}
       width={200}
     />

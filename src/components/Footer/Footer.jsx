@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FooterSection = styled.div`
-    margin-top: 5px;
-    background-color: #3A5794;
+    background-color: #D7D7D7;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,8 +14,7 @@ const FooterSection = styled.div`
 
 const StyledSpan = styled.span` 
     font-size: 12px;
-    font-weight: bold;
-    color: #fff;
+    color: #888;
 `;
 
 const Footer = () => (

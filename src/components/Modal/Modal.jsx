@@ -36,7 +36,7 @@ const ModalHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;   
-    background: #062e5c;
+    background: #0178D4;
 `;
 
 const Modal = ({ modalCloser, openModel, modalText }) => (
