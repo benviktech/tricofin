@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-nested-ternary */
 
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory, useParams } from 'react-router';
+import axios from 'axios';
 import { updateIndividualCustomer } from '../../actions/individualCustomer';
 import ModalFunction from '../Modal/ModalFunction';
 import Sidebar from '../Sidebar/Sidebar';
@@ -13,20 +16,36 @@ import Modal from '../Modal/Modal';
 import './index.css';
 import Loader from '../Loader/Loader';
 
-const UpdateIndividualCustomer = ({ location }) => {
-  const { state } = location;
-  const [dataState, setDataState] = useState(state);
-  const [errors, setErrors] = useState({});
+const UpdateIndividualCustomer = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
+  const [dataState, setDataState] = useState({});
+  const [staticData, setStaticData] = useState({});
+  const [errors, setErrors] = useState({});
   const history = useHistory();
 
   const handleChange = e => {
     const { name, value } = e.target;
+    console.log(dataState, 'data state');
     setDataState({
       ...dataState,
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios.get('https://tricoapi.azurewebsites.net/api/StaticData/GetStaticData')
+        .then(response => {
+          setStaticData(response.data);
+          axios.get(
+            `https://tricoapi.azurewebsites.net/api/Customers/GetIndividualCustomer/${id}`,
+          ).then(response => setDataState(response.data))
+            .catch(error => console.log(error.message));
+        }).catch(error => console.log(error.message));
+    };
+    fetchData();
+  }, []);
 
   const {
     modalCloser, modalOpener, openModel, modalText,
@@ -41,14 +60,8 @@ const UpdateIndividualCustomer = ({ location }) => {
     }
   };
 
-  const personalData = useSelector(state => state.individualCustomersReducer);
-
-  return personalData.loading ? (
-    <div className="spinner section">
-      <Loader />
-    </div>
-  ) : (
-    <div className="individual-customer-form">
+  return Object.keys(dataState).length > 0 ? (
+    <div className="view-individual-customer-form">
       <Modal
         modalText={modalText}
         modalCloser={modalCloser}
@@ -84,16 +97,31 @@ const UpdateIndividualCustomer = ({ location }) => {
                   </div>
                   <div className="right-form-group ml-auto col-md-4">
                     <label htmlFor="title">Title:</label>
-                    <select
-                      className="form-control-input col-md-9 ml-2"
-                      onChange={handleChange}
-                      name="title"
-                      value={dataState.title}
-                    >
-                      <option value="" disabled selected hidden>Select Title</option>
-                      <option value="MR">MR.</option>
-                      <option value="Mrs">MRs.</option>
-                    </select>
+                    {
+                    Object.keys(staticData).includes('titles') ? (
+                      <select
+                        className="form-control-input col-md-9 ml-2"
+                        onChange={handleChange}
+                        name="title"
+                        value={dataState.title}
+                      >
+                        <option value="" disabled selected hidden>Select Title</option>
+                        {
+                          staticData.titles.map((title, index) => (
+                            <option key={index} value={title.titleID}>
+                              {title.titleID}
+                            </option>
+                          ))
+                        }
+                      </select>
+                    ) : (
+                      <select
+                        className="form-control-input col-md-9 ml-2"
+                      >
+                        <option value="" disabled selected hidden>Select Title</option>
+                      </select>
+                    )
+                  }
                   </div>
                 </div>
                 <div className="form-group">
@@ -250,17 +278,32 @@ const UpdateIndividualCustomer = ({ location }) => {
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
                         <label htmlFor="customerId w-50">Gender:</label>
-                        <select
-                          className="form-control-input col-md-8"
-                          placeholder="Enter Gender"
-                          onChange={handleChange}
-                          name="genderID"
-                          value={dataState.genderID}
-                        >
-                          <option value="" disabled selected hidden>Select Gender</option>
-                          <option value="M">Male</option>
-                          <option value="F">Female</option>
-                        </select>
+                        {
+                          Object.keys(staticData).includes('gender') ? (
+                            <select
+                              className="form-control-input col-md-8"
+                              placeholder="Enter Gender"
+                              onChange={handleChange}
+                              name="genderID"
+                              value={dataState.genderID}
+                            >
+                              <option value="" disabled selected hidden>Select Gender</option>
+                              {
+                                staticData.gender.map((value, index) => (
+                                  <option key={index} value={value.genderID}>
+                                    {value.description}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          ) : (
+                            <select
+                              className="form-control-input col-md-8"
+                            >
+                              <option value="" disabled selected hidden>Select Gender</option>
+                            </select>
+                          )
+                        }
                       </div>
                       { errors.genderID && <small className="span-warning">{errors.genderID}</small>}
                     </div>
@@ -270,76 +313,124 @@ const UpdateIndividualCustomer = ({ location }) => {
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
                     <label className="w-25" htmlFor="customerId">Nationality:</label>
-                    <select
-                      className="form-control-input col-md-8"
-                      placeholder="Enter Nationality"
-                      onChange={handleChange}
-                      name="nationalityID"
-                      value={dataState.nationalityID}
-                    >
-                      <option value="" disabled selected hidden>Select Nationality</option>
-                      <option value="U">Ugandan</option>
-                      <option value="K">Kenyan</option>
-                      <option value="T">Tanzanian</option>
-                      <option value="R">Rwandan</option>
-                      <option value="I">Indian</option>
-                      <option value="N">Nigerian</option>
-                    </select>
+                    {
+                      Object.keys(staticData).includes('nationality') ? (
+                        <select
+                          className="form-control-input col-md-8"
+                          placeholder="Enter Nationality"
+                          onChange={handleChange}
+                          name="nationalityID"
+                          value={dataState.nationalityID}
+                        >
+                          <option value="" disabled selected hidden>Select Nationality</option>
+                          {
+                          staticData.nationality.map((nation, index) => (
+                            <option key={index} value={nation.nationalityID}>
+                              {nation.description}
+                            </option>
+                          ))
+                          }
+                        </select>
+                      ) : (
+                        <select
+                          className="form-control-input col-md-8"
+                        >
+                          <option value="" disabled selected hidden>Select Nationality</option>
+                        </select>
+                      )
+                    }
                   </div>
                   { errors.nationalityID && <small className="span-warning">{errors.nationalityID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
                     <label className="w-25" htmlFor="customerId">Marital Status:</label>
-                    <select
-                      className="form-control-input col-md-8"
-                      onChange={handleChange}
-                      name="maritalStatusID"
-                      value={dataState.maritalStatusID}
-                    >
-                      <option value="" disabled selected hidden>Select Marital Status</option>
-                      <option value="1">Single</option>
-                      <option value="2">Divorced</option>
-                      <option value="3">Married</option>
-                      <option value="4">Separated</option>
-                      <option value="5">Widowed</option>
-                      <option value="6">Anulled</option>
-                    </select>
+                    {
+                      Object.keys(staticData).includes('nationality') ? (
+                        <select
+                          className="form-control-input col-md-8"
+                          onChange={handleChange}
+                          name="maritalStatusID"
+                          value={dataState.maritalStatusID}
+                        >
+                          <option value="" disabled selected hidden>Select Marital Status</option>
+                          {
+                          staticData.maritalStatus.map((status, index) => (
+                            <option key={index} value={status.maritalStatusID}>
+                              {status.status}
+                            </option>
+                          ))
+                          }
+                        </select>
+                      ) : (
+                        <select
+                          className="form-control-input col-md-8"
+                        >
+                          <option value="" disabled selected hidden>Select Marital Status</option>
+                        </select>
+                      )
+                    }
                   </div>
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
                     <label className="w-25" htmlFor="customerId">Risk Profile:</label>
-                    <select
-                      className="form-control-input col-md-8"
-                      onChange={handleChange}
-                      name="riskProfileID"
-                      value={dataState.riskProfileID}
-                    >
-                      <option value="" disabled selected hidden>Select Risk Profile</option>
-                      <option value="H">High</option>
-                      <option value="L">Low</option>
-                      <option value="M">Medium</option>
-                    </select>
+                    {
+                      Object.keys(staticData).includes('nationality') ? (
+                        <select
+                          className="form-control-input col-md-8"
+                          onChange={handleChange}
+                          name="riskProfileID"
+                          value={dataState.riskProfileID}
+                        >
+                          <option value="" disabled selected hidden>Select Risk Profile</option>
+                          {
+                          staticData.riskProfiles.map((profile, index) => (
+                            <option key={index} value={profile.riskProfileID}>
+                              {profile.riskProfile}
+                            </option>
+                          ))
+                          }
+                        </select>
+                      ) : (
+                        <select
+                          className="form-control-input col-md-8"
+                        >
+                          <option value="" disabled selected hidden>Select Risk Profile</option>
+                        </select>
+                      )
+                    }
                   </div>
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
                     <label className="w-25" htmlFor="customerId">Customer Type:</label>
-                    <select
-                      className="form-control-input col-md-8"
-                      placeholder="Enter Marital Status"
-                      onChange={handleChange}
-                      name="custTypeID"
-                      value={dataState.custTypeID}
-                    >
-                      <option value="" disabled selected hidden>Select Customer Type</option>
-                      <option value="C">Client</option>
-                      <option value="S">Staff</option>
-                      <option value="E">Employee</option>
-                      <option value="D">Director</option>
-                      <option value="G">Guarantor</option>
-                    </select>
+                    {
+                      Object.keys(staticData).includes('customerTypes') ? (
+                        <select
+                          className="form-control-input col-md-8"
+                          placeholder="Enter Marital Status"
+                          onChange={handleChange}
+                          name="custTypeID"
+                          value={dataState.custTypeID}
+                        >
+                          <option value="" disabled selected hidden>Select Customer Type</option>
+                          {
+                          staticData.customerTypes.map((type, index) => (
+                            <option key={index} value={type.custTypeID}>
+                              {type.customerType}
+                            </option>
+                          ))
+                          }
+                        </select>
+                      ) : (
+                        <select
+                          className="form-control-input col-md-8"
+                        >
+                          <option value="" disabled selected hidden>Select Customer Type</option>
+                        </select>
+                      )
+                    }
                   </div>
                 </div>
                 <div className="submit-button-section">
@@ -356,6 +447,10 @@ const UpdateIndividualCustomer = ({ location }) => {
           </div>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="spinner section">
+      <Loader />
     </div>
   );
 };

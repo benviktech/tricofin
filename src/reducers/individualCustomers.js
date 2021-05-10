@@ -17,7 +17,7 @@ const individualCustomersReducer = (state = initialState, action) => {
     case GET_INDIVIDUAL_CUSTOMER_SUCCESS:
       return {
         ...state,
-        individualCustomers: action.payload,
+        individualCustomer: action.payload,
         error: '',
         loading: false,
       };

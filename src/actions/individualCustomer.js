@@ -76,6 +76,7 @@ export const postIndividualCustomers = (values, history) => async dispatch => {
 };
 
 export const fetchSingleIndividualCustomer = CustId => async dispatch => {
+  console.log('inside individual customer');
   const method = 'get';
   const path = `/api/Customers/GetIndividualCustomer/${CustId}`;
   try {
@@ -89,12 +90,39 @@ export const fetchSingleIndividualCustomer = CustId => async dispatch => {
 export const updateIndividualCustomer = (data, history) => async dispatch => {
   const method = 'put';
   const path = '/api/Customers/UpdateIndividualCustomer';
+  const result = {
+    custID: data.custID,
+    title: data.title,
+    surName: data.surName,
+    foreName1: data.foreName1,
+    foreName2: data.foreName2,
+    foreName3: data.foreName3,
+    dateofbirth: data.dateofbirth,
+    genderID: data.genderID,
+    nationalityID: data.nationalityID,
+    rAddress: data.rAddress,
+    maritalStatusID: parseInt(data.maritalStatusID, 10),
+    custTypeID: data.custTypeID,
+    riskProfileID: data.riskProfileID,
+    phone1: data.phone1,
+    phone2: data.phone2,
+    phone3: data.phone3,
+    emailID1: data.emailID1,
+    emailID2: data.emailID2,
+    createdOn: data.createdOn,
+    createdBy: data.createdBy,
+    modifiedOn: data.modifiedOn,
+    modifiedBy: data.modifiedBy,
+  };
+
+  console.log(result, data, 'data vs result');
 
   try {
     dispatch({ type: LOADING_CONTENT });
-    const response = await UpdateIndividualCustomersRequest(method, data, path);
+    const response = await UpdateIndividualCustomersRequest(method, result, path);
     history.push(`/viewindividualcustomerform/${response.data.custID}`);
   } catch (error) {
+    console.log(error.message, 'error messages');
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };

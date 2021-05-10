@@ -50,7 +50,7 @@ const ViewIndividualCustomer = () => {
           </div>
           <div className="submit-form-top-section">
             {
-              personalData.individualCustomers === undefined ? (
+              personalData.individualCustomer === undefined ? (
                 <div className="loading-content-section">
                   <Spinner />
                 </div>
@@ -66,7 +66,7 @@ const ViewIndividualCustomer = () => {
                           type="text"
                           name="searchcustomer"
                         >
-                          {personalData.individualCustomers.custID}
+                          {personalData.individualCustomer.custID}
                         </div>
                       </div>
                       <div className="right-form-group-view ml-auto col-md-4">
@@ -78,7 +78,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input view-header col-md-7 ml-2"
                         >
-                          {personalData.individualCustomers.title}
+                          {personalData.individualCustomer.title}
                         </div>
                       </div>
                     </div>
@@ -90,7 +90,7 @@ const ViewIndividualCustomer = () => {
                           placeholder="Enter Surename"
                           type="text"
                         >
-                          {personalData.individualCustomers.surName}
+                          {personalData.individualCustomer.surName}
                         </div>
                       </div>
                     </div>
@@ -102,7 +102,7 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                           placeholder="Enter Forename"
                         >
-                          {personalData.individualCustomers.foreName1}
+                          {personalData.individualCustomer.foreName1}
                         </div>
                       </div>
                     </div>
@@ -112,7 +112,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {personalData.individualCustomers.foreName2}
+                          {personalData.individualCustomer.foreName2}
                         </div>
                       </div>
                     </div>
@@ -122,7 +122,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {personalData.individualCustomers.foreName3}
+                          {personalData.individualCustomer.foreName3}
                         </div>
                       </div>
                     </div>
@@ -132,7 +132,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {personalData.individualCustomers.rAddress}
+                          {personalData.individualCustomer.rAddress}
                         </div>
                       </div>
                     </div>
@@ -142,7 +142,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {personalData.individualCustomers.emailID1}
+                          {personalData.individualCustomer.emailID1}
                         </div>
                       </div>
                     </div>
@@ -152,7 +152,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {personalData.individualCustomers.emailID2}
+                          {personalData.individualCustomer.emailID2}
                         </div>
                       </div>
                     </div>
@@ -162,7 +162,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {new Date(personalData.individualCustomers.dateofbirth).toUTCString().split(' ').slice(0, 4)
+                          {new Date(personalData.individualCustomer.dateofbirth).toUTCString().split(' ').slice(0, 4)
                             .join(' ')}
                         </div>
                       </div>
@@ -177,7 +177,7 @@ const ViewIndividualCustomer = () => {
                             <div
                               className="form-control-input col-md-8"
                             >
-                              {personalData.individualCustomers.phone1}
+                              {personalData.individualCustomer.phone1}
                             </div>
                           </div>
                         </div>
@@ -187,7 +187,7 @@ const ViewIndividualCustomer = () => {
                             <div
                               className="form-control-input col-md-8"
                             >
-                              { personalData.individualCustomers.phone2 }
+                              { personalData.individualCustomer.phone2 }
                             </div>
                           </div>
                         </div>
@@ -197,7 +197,7 @@ const ViewIndividualCustomer = () => {
                             <div
                               className="form-control-input col-md-8"
                             >
-                              {personalData.individualCustomers.phone3}
+                              {personalData.individualCustomer.phone3}
                             </div>
                           </div>
                         </div>
@@ -208,7 +208,7 @@ const ViewIndividualCustomer = () => {
                             <div
                               className="form-control-input col-md-8"
                             >
-                              {personalData.individualCustomers.genderID === 'M' ? 'Male' : 'Female'}
+                              {personalData.individualCustomer.genderID === 'M' ? 'Male' : 'Female'}
                             </div>
                           </div>
                         </div>
@@ -224,11 +224,11 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomers.nationalityID === 'N' ? 'Nigerian'
-                            : personalData.individualCustomers.nationalityID === 'U' ? 'Ugandan'
-                              : personalData.individualCustomers.nationalityID === 'K' ? 'Kenyan'
-                                : personalData.individualCustomers.nationalityID === 'T' ? 'Tanzanian'
-                                  : personalData.individualCustomers.nationalityID === 'R' ? 'Rwandan'
+                          personalData.individualCustomer.nationalityID === 'N' ? 'Nigerian'
+                            : personalData.individualCustomer.nationalityID === 'U' ? 'Ugandan'
+                              : personalData.individualCustomer.nationalityID === 'K' ? 'Kenyan'
+                                : personalData.individualCustomer.nationalityID === 'T' ? 'Tanzanian'
+                                  : personalData.individualCustomer.nationalityID === 'R' ? 'Rwandan'
                                     : 'Indian'
                           }
                         </div>
@@ -241,11 +241,11 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomers.maritalStatusID === 1 ? 'Single'
-                            : personalData.individualCustomers.maritalStatusID === 2 ? 'Divorced'
-                              : personalData.individualCustomers.maritalStatusID === 3 ? 'Married'
-                                : personalData.individualCustomers.maritalStatusID === 4 ? 'Separated'
-                                  : personalData.individualCustomers.maritalStatusID === 5 ? 'Widowed'
+                          personalData.individualCustomer.maritalStatusID === 1 ? 'Single'
+                            : personalData.individualCustomer.maritalStatusID === 2 ? 'Divorced'
+                              : personalData.individualCustomer.maritalStatusID === 3 ? 'Married'
+                                : personalData.individualCustomer.maritalStatusID === 4 ? 'Separated'
+                                  : personalData.individualCustomer.maritalStatusID === 5 ? 'Widowed'
                                     : 'Anulled'
                           }
                         </div>
@@ -258,8 +258,8 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomers.riskProfileID === 'L' ? 'Low'
-                            : personalData.individualCustomers.riskProfileID === 'M' ? 'Medium'
+                          personalData.individualCustomer.riskProfileID === 'L' ? 'Low'
+                            : personalData.individualCustomer.riskProfileID === 'M' ? 'Medium'
                               : 'High'
                           }
                         </div>
@@ -272,10 +272,10 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomers.custTypeID === 'C' ? 'Client'
-                            : personalData.individualCustomers.custTypeID === 'S' ? 'Staff'
-                              : personalData.individualCustomers.custTypeID === 'E' ? 'Employee'
-                                : personalData.individualCustomers.custTypeID === 'D' ? 'Director'
+                          personalData.individualCustomer.custTypeID === 'C' ? 'Client'
+                            : personalData.individualCustomer.custTypeID === 'S' ? 'Staff'
+                              : personalData.individualCustomer.custTypeID === 'E' ? 'Employee'
+                                : personalData.individualCustomer.custTypeID === 'D' ? 'Director'
                                   : 'Guarantor'
                           }
                         </div>
@@ -285,8 +285,7 @@ const ViewIndividualCustomer = () => {
                       <Link
                         className="edit-button"
                         to={{
-                          pathname: `/updatecustomer/${personalData.individualCustomers.custID}`,
-                          state: personalData.individualCustomers,
+                          pathname: `/updatecustomer/${personalData.individualCustomer.custID}`,
                         }}
                       >
                         Update
