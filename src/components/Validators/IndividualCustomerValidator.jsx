@@ -17,7 +17,7 @@ export default function updateCustomerValidator(values) {
   }
 
   if (!values.rAddress.trim()) {
-    errors.rAddress = 'rAddress Required';
+    errors.rAddress = 'Address Required';
   }
 
   if (!values.dateofbirth) {
