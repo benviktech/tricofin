@@ -1,54 +1,36 @@
 import React from 'react';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
+import * as MdIcons from 'react-icons/md';
+import * as FaIcons from 'react-icons/fa';
+import * as HiIcons from 'react-icons/hi';
+import * as GrIcons from 'react-icons/gr';
+
+const iconStyles = { color: 'white', fontSize: '1.8em' };
+const innerIconStyles = { fontSize: '1.2em' };
 
 const SidebarData = [
   {
     title: 'Personal Info',
-    icon: <AiIcons.AiFillHome />,
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
         title: 'Signature',
         path: '/signature',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <FaIcons.FaFileSignature style={innerIconStyles} />,
       },
       {
         title: 'Identification',
         path: '/identification',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
       },
       {
         title: 'Contact Info',
         path: '/contactinfo',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
       },
     ],
-  },
-  {
-    title: 'Views',
-    icon: <AiIcons.AiFillHome />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-    subNav: [
-      {
-        title: 'Views1',
-        path: '/viewsone',
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: 'Views2',
-        path: '/Viewstwo',
-        icon: <IoIcons.IoIosPaper />,
-      },
-    ],
-  },
-  {
-    title: 'Reports',
-    path: '/reports',
-    icon: <AiIcons.AiFillHome />,
   },
 ];
 

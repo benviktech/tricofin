@@ -43,6 +43,7 @@ const SearchCustomer = () => {
     searchIndividualCustomer,
     searchedCustomer,
     finalSortedList,
+    setSearchedCustomer,
   };
 };
 

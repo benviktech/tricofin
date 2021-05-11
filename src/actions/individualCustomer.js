@@ -47,7 +47,7 @@ export const postIndividualCustomers = (values, history) => async dispatch => {
     foreName3: values.foreName3,
     dateofbirth: values.dateofbirth,
     genderID: values.genderID,
-    nationalityID: values.nationalityID,
+    nationalityID: values.nationalityID.split('')[0],
     rAddress: values.rAddress.toUpperCase(),
     maritalStatusID: parseInt(values.maritalStatusID, 10),
     custTypeID: values.custTypeID,
@@ -81,6 +81,7 @@ export const fetchSingleIndividualCustomer = CustId => async dispatch => {
   const path = `/api/Customers/GetIndividualCustomer/${CustId}`;
   try {
     const response = await GetIndividualCustomersRequest(method, path);
+    console.log(response.data, 'created user information');
     dispatch(individualCustomersSuccessGet(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
@@ -99,7 +100,7 @@ export const updateIndividualCustomer = (data, history) => async dispatch => {
     foreName3: data.foreName3,
     dateofbirth: data.dateofbirth,
     genderID: data.genderID,
-    nationalityID: data.nationalityID,
+    nationalityID: data.nationalityID.split('')[0],
     rAddress: data.rAddress,
     maritalStatusID: parseInt(data.maritalStatusID, 10),
     custTypeID: data.custTypeID,
@@ -115,14 +116,11 @@ export const updateIndividualCustomer = (data, history) => async dispatch => {
     modifiedBy: data.modifiedBy,
   };
 
-  console.log(result, data, 'data vs result');
-
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await UpdateIndividualCustomersRequest(method, result, path);
     history.push(`/viewindividualcustomerform/${response.data.custID}`);
   } catch (error) {
-    console.log(error.message, 'error messages');
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };

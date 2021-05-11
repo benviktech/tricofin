@@ -60,6 +60,8 @@ const UpdateIndividualCustomer = () => {
     }
   };
 
+  console.log(dataState, 'dataState in update');
+
   return Object.keys(dataState).length > 0 ? (
     <div className="view-individual-customer-form">
       <Modal
@@ -87,13 +89,14 @@ const UpdateIndividualCustomer = () => {
                 <div className="form-group d-flex ">
                   <div className="left-form-group col-md-8">
                     <label htmlFor="customerId w-50">Customer ID:</label>
-                    <input
+                    <div
                       disabled
                       className="form-control-input col-md-8"
-                      placeholder="Enter Keyword"
                       type="text"
                       name="customerid"
-                    />
+                    >
+                      {dataState.custID}
+                    </div>
                   </div>
                   <div className="right-form-group ml-auto col-md-4">
                     <label htmlFor="title">Title:</label>
@@ -129,7 +132,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">SurName:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Surename"
                       type="text"
                       name="surName"
                       value={dataState.surName}
@@ -143,7 +145,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">ForeName1:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Forename"
                       type="text"
                       name="foreName1"
                       value={dataState.foreName1}
@@ -157,7 +158,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">ForeName2:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Forename"
                       type="text"
                       name="foreName2"
                       value={dataState.foreName2}
@@ -170,7 +170,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">ForeName3:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Forename"
                       type="text"
                       name="foreName3"
                       value={dataState.foreName3}
@@ -183,7 +182,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">Residential Address:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Residential Address"
                       type="text"
                       name="rAddress"
                       value={dataState.rAddress}
@@ -197,7 +195,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">EmailID1:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Email Address"
                       type="email"
                       name="emailID1"
                       value={dataState.emailID1}
@@ -210,7 +207,6 @@ const UpdateIndividualCustomer = () => {
                     <label htmlFor="customerId w-50">EmailID2:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Email Address"
                       type="email"
                       name="emailID2"
                       value={dataState.emailID2}
@@ -240,7 +236,6 @@ const UpdateIndividualCustomer = () => {
                         <label htmlFor="customerId w-50">Phone1:</label>
                         <input
                           className="form-control-input col-md-8"
-                          placeholder="Enter Number.."
                           type="number"
                           name="phone1"
                           value={dataState.phone1}
@@ -253,7 +248,6 @@ const UpdateIndividualCustomer = () => {
                         <label htmlFor="customerId w-50">Phone2:</label>
                         <input
                           className="form-control-input col-md-8"
-                          placeholder="Enter Number.."
                           type="number"
                           name="phone2"
                           value={dataState.phone2}
@@ -266,7 +260,6 @@ const UpdateIndividualCustomer = () => {
                         <label htmlFor="customerId w-50">Phone3:</label>
                         <input
                           className="form-control-input col-md-8"
-                          placeholder="Enter Number.."
                           type="number"
                           name="phone3"
                           value={dataState.phone3}
@@ -282,7 +275,6 @@ const UpdateIndividualCustomer = () => {
                           Object.keys(staticData).includes('gender') ? (
                             <select
                               className="form-control-input col-md-8"
-                              placeholder="Enter Gender"
                               onChange={handleChange}
                               name="genderID"
                               value={dataState.genderID}
@@ -317,12 +309,10 @@ const UpdateIndividualCustomer = () => {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
                           className="form-control-input col-md-8"
-                          placeholder="Enter Nationality"
                           onChange={handleChange}
                           name="nationalityID"
                           value={dataState.nationalityID}
                         >
-                          <option value="" disabled selected hidden>Select Nationality</option>
                           {
                           staticData.nationality.map((nation, index) => (
                             <option key={index} value={nation.nationalityID}>
@@ -409,7 +399,6 @@ const UpdateIndividualCustomer = () => {
                       Object.keys(staticData).includes('customerTypes') ? (
                         <select
                           className="form-control-input col-md-8"
-                          placeholder="Enter Marital Status"
                           onChange={handleChange}
                           name="custTypeID"
                           value={dataState.custTypeID}

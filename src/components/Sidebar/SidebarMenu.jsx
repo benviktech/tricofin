@@ -32,13 +32,17 @@ const DropdownLink = styled(NavLink)`
     display: flex;
     align-items: center;
     color: #444;
-    font-size: 13px;
     &:hover {
         background: #D3D3D3;
         cursor: pointer;
         text-decoration: none;
         color: #f5f5f5
     }
+`;
+
+const DropdownLinkIcon = styled.div`
+    padding: 2px
+    background: teal;
 `;
 
 const SidebarMenu = ({ item }) => {
@@ -63,7 +67,9 @@ const SidebarMenu = ({ item }) => {
       {
             subnav && item.subNav.map((item, index) => (
               <DropdownLink to={item.path} key={index}>
-                { item.icon }
+                <DropdownLinkIcon>
+                  { item.icon }
+                </DropdownLinkIcon>
                 <SidebarLabel>{ item.title }</SidebarLabel>
               </DropdownLink>
             ))

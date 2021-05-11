@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+
 export default function updateCustomerValidator(values) {
   const errors = {};
   const nameRegex = /^[a-zA-Z ]{3,30}$/;
@@ -46,5 +48,10 @@ export default function updateCustomerValidator(values) {
     errors.title = 'Select a Title';
   }
 
+  if (!values.phone1) {
+    errors.phone1 = 'Number is Required';
+  } else if (isNaN(values.phone1)) {
+    errors.phone1 = 'Use a Number';
+  }
   return errors;
 }

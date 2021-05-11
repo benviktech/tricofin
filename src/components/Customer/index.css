@@ -6,7 +6,7 @@
   font-size: 14px;
   padding: 5px;
   justify-content: center;
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
   position: absolute;
   right: 0;
   z-index: 2;
@@ -18,7 +18,7 @@
 }
 
 .left-inner-form-section {
-  background-color: #D7D7D7;
+  background-color: #d7d7d7;
   padding: 10px 5px;
   margin-right: 10px;
   flex: 1;
@@ -33,7 +33,7 @@
 
 .main-form-color {
   background-color: #fff;
-  border: 1px solid #F3F2F1;
+  border: 1px solid #f3f2f1;
   display: flex;
 }
 
@@ -51,7 +51,7 @@
   align-items: center;
   justify-content: center;
   padding: 1px 0;
-  border: 1px solid #F3F2F1;
+  border: 1px solid #f3f2f1;
 }
 
 .left-form-group label {
@@ -69,7 +69,7 @@
   outline: none;
   cursor: pointer;
   margin-left: auto;
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
 }
 
 .span-warning {
@@ -83,13 +83,13 @@
   flex: 3;
   padding: 10px;
   background-color: #fff;
-  border-left: 1px solid #F3F2F1;
+  border-left: 1px solid #f3f2f1;
 }
 
 .right-inner-form-section .image-section {
   height: 195px;
   width: 250px;
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
 }
 
 .right-inner-form-section .image-section img {
@@ -113,7 +113,7 @@
 }
 
 .search-customer-btn {
-  background-color: #3a5794;
+  background-color: #1991da;
   color: #fff;
   padding: 5px 20px;
   border-radius: 3px;
@@ -123,7 +123,7 @@
 }
 
 .upper-bottom-section {
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
   text-align: center;
 }
 
@@ -154,7 +154,7 @@
 .left-form-group-div {
   flex: 1;
   font-size: 13px;
-  color: #251E50;
+  color: #251e50;
   font-weight: 500;
 }
 
@@ -168,7 +168,7 @@
   margin-left: 10px;
   outline: none;
   cursor: pointer;
-  color: #251E50;
+  color: #251e50;
 }
 
 .left-form-group-division .form-control-div {
@@ -178,7 +178,7 @@
 .icon-section i {
   font-size: 25px;
   margin: 0 2px;
-  color: #C2C2C2;
+  color: #c2c2c2;
   display: block;
   cursor: pointer;
 }
@@ -208,18 +208,6 @@
   right: 0;
 }
 
-.top-section-modal-section {
-  position: fixed;
-  height: 0;
-  width: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #3a5794;
-  border-top: 10px solid transparent;
-  left: 10px;
-  z-index: 20;
-}
-
 .inner-section-modal-section {
   overflow-y: auto;
   height: 350px;
@@ -228,7 +216,7 @@
 .inner-section-modal-section-inner {
   display: flex;
   width: 250px;
-  background-color: #3a5794;
+  background-color: #1991da;
   padding: 10px;
   font-size: 12px;
   font-weight: bold;
@@ -251,7 +239,7 @@
 }
 
 .view-header {
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
   display: flex;
   align-items: center;
 }
@@ -262,7 +250,7 @@
 
 .edit-button,
 .update-customer-btn {
-  background-color: #0178D4;
+  background-color: #0178d4;
   color: #fff;
   padding: 5px 20px;
   border-radius: 3px;

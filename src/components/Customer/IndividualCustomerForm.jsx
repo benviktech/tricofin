@@ -21,7 +21,7 @@ import { fetchUiStaticData } from '../../actions';
 const IndividualCustomerForm = () => {
   const dispatch = useDispatch();
   const {
-    handleChange, values, handleSubmit, errors,
+    handleChange, values, handleSubmit, errors, setErrors,
   } = UseForm(validate);
 
   const {
@@ -31,7 +31,14 @@ const IndividualCustomerForm = () => {
   const {
     searchIndividualCustomer,
     searchedCustomer, finalSortedList,
+    setSearchedCustomer,
   } = SearchCustomer();
+
+  const clearInputsValues = e => {
+    e.preventDefault();
+    setSearchedCustomer('');
+    setErrors({});
+  };
 
   const individualCustomers = useSelector(state => state.individualCustomersReducer);
   const staticData = useSelector(state => state.staticDataReducer);
@@ -70,7 +77,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">Search By Name:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Keyword"
                       type="text"
                       name="searchcustomer"
                       value={searchedCustomer}
@@ -82,7 +88,6 @@ const IndividualCustomerForm = () => {
                            ) : (
 
                              <div className="modal-popup-section">
-                               <div className="top-section-modal-section" />
                                <div className="inner-section-modal-section">
                                  {
                                 Array.from(new Set(finalSortedList)).map(customer => (
@@ -122,7 +127,7 @@ const IndividualCustomerForm = () => {
                           name="title"
                           value={values.title}
                         >
-                          <option value="" disabled selected hidden>Select Title</option>
+                          <option value="" disabled selected hidden>Select</option>
                           {
                             staticData.staticData.titles.map((title, index) => (
                               <option
@@ -138,7 +143,7 @@ const IndividualCustomerForm = () => {
                         <select
                           className="form-control-input col-md-9 ml-2"
                         >
-                          <option value="" disabled selected hidden>Select Title</option>
+                          <option value="" disabled selected hidden>Select</option>
                         </select>
                       )
                     }
@@ -150,7 +155,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">SurName:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Surename"
                       type="text"
                       name="surName"
                       value={values.surName}
@@ -165,7 +169,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">ForeName1:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Forename"
                       type="text"
                       name="foreName1"
                       value={values.foreName1}
@@ -179,7 +182,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">ForeName2:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Forename"
                       type="text"
                       name="foreName2"
                       value={values.foreName2}
@@ -192,7 +194,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">ForeName3:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Forename"
                       type="text"
                       name="foreName3"
                       value={values.foreName3}
@@ -205,7 +206,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">Residential Address:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Residential Address"
                       type="text"
                       name="rAddress"
                       value={values.rAddress}
@@ -219,7 +219,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">EmailID1:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Email Address"
                       type="email"
                       name="emailID1"
                       value={values.emailID1}
@@ -232,7 +231,6 @@ const IndividualCustomerForm = () => {
                     <label htmlFor="customerId w-50">EmailID2:</label>
                     <input
                       className="form-control-input col-md-8"
-                      placeholder="Enter Email Address"
                       type="email"
                       name="emailID2"
                       value={values.emailID2}
@@ -262,21 +260,20 @@ const IndividualCustomerForm = () => {
                         <label htmlFor="customerId w-50">Phone1:</label>
                         <input
                           className="form-control-input col-md-8"
-                          placeholder="Enter Number.."
-                          type="number"
+                          type="text"
                           name="phone1"
                           value={values.phone1}
                           onChange={handleChange}
                         />
                       </div>
+                      { errors.phone1 && <small className="span-warning">{errors.phone1}</small>}
                     </div>
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
                         <label htmlFor="customerId w-50">Phone2:</label>
                         <input
                           className="form-control-input col-md-8"
-                          placeholder="Enter Number.."
-                          type="number"
+                          type="text"
                           name="phone2"
                           value={values.phone2}
                           onChange={handleChange}
@@ -288,8 +285,7 @@ const IndividualCustomerForm = () => {
                         <label htmlFor="customerId w-50">Phone3:</label>
                         <input
                           className="form-control-input col-md-8"
-                          placeholder="Enter Number.."
-                          type="number"
+                          type="text"
                           name="phone3"
                           value={values.phone3}
                           onChange={handleChange}
@@ -304,12 +300,11 @@ const IndividualCustomerForm = () => {
                           Object.keys(staticData.staticData).includes('gender') ? (
                             <select
                               className="form-control-input col-md-8"
-                              placeholder="Enter Gender"
                               onChange={handleChange}
                               name="genderID"
                               value={values.genderID}
                             >
-                              <option value="" disabled selected hidden>Select Gender</option>
+                              <option value="" disabled selected hidden>Select </option>
                               {
                                 staticData.staticData.gender.map((value, index) => (
                                   <option
@@ -325,7 +320,7 @@ const IndividualCustomerForm = () => {
                             <select
                               className="form-control-input col-md-8"
                             >
-                              <option value="" disabled selected hidden>Select Gender</option>
+                              <option value="" disabled selected hidden>Select </option>
                             </select>
                           )
                         }
@@ -342,12 +337,11 @@ const IndividualCustomerForm = () => {
                       Object.keys(staticData.staticData).includes('nationality') ? (
                         <select
                           className="form-control-input col-md-8"
-                          placeholder="Enter Nationality"
                           onChange={handleChange}
                           name="nationalityID"
                           value={values.nationalityID}
                         >
-                          <option value="" disabled selected hidden>Select Nationality</option>
+                          <option value="" disabled selected hidden>Select </option>
                           {
                             staticData.staticData.nationality.map((nation, index) => (
                               <option
@@ -363,7 +357,7 @@ const IndividualCustomerForm = () => {
                         <select
                           className="form-control-input col-md-8"
                         >
-                          <option value="" disabled selected hidden>Select Nationality</option>
+                          <option value="" disabled selected hidden>Select</option>
                         </select>
                       )
                     }
@@ -381,7 +375,7 @@ const IndividualCustomerForm = () => {
                             name="maritalStatusID"
                             value={values.maritalStatusID}
                           >
-                            <option value="" disabled selected hidden>Select Marital Status</option>
+                            <option value="" disabled selected hidden>Select </option>
                             {
                               staticData.staticData.maritalStatus.map((status, index) => (
                                 <option
@@ -397,7 +391,7 @@ const IndividualCustomerForm = () => {
                           <select
                             className="form-control-input col-md-8"
                           >
-                            <option value="" disabled selected hidden>Select Marital Status</option>
+                            <option value="" disabled selected hidden>Select </option>
                           </select>
                         )
                       }
@@ -415,7 +409,7 @@ const IndividualCustomerForm = () => {
                             name="riskProfileID"
                             value={values.riskProfileID}
                           >
-                            <option value="" disabled selected hidden>Select Risk Profile</option>
+                            <option value="" disabled selected hidden>Select </option>
                             {
                               staticData.staticData.riskProfiles.map((profile, index) => (
                                 <option
@@ -431,7 +425,7 @@ const IndividualCustomerForm = () => {
                           <select
                             className="form-control-input col-md-8"
                           >
-                            <option value="" disabled selected hidden>Select Risk Profile</option>
+                            <option value="" disabled selected hidden>Select </option>
                           </select>
                         )
                       }
@@ -445,12 +439,11 @@ const IndividualCustomerForm = () => {
                         Object.keys(staticData.staticData).includes('customerTypes') ? (
                           <select
                             className="form-control-input col-md-8"
-                            placeholder="Enter Marital Status"
                             onChange={handleChange}
                             name="custTypeID"
                             value={values.custTypeID}
                           >
-                            <option value="" disabled selected hidden>Select Customer Type</option>
+                            <option value="" disabled selected hidden>Select </option>
                             {
                               staticData.staticData.customerTypes.map((type, index) => (
                                 <option
@@ -466,7 +459,7 @@ const IndividualCustomerForm = () => {
                           <select
                             className="form-control-input col-md-8"
                           >
-                            <option value="" disabled selected hidden>Select Customer Type</option>
+                            <option value="" disabled selected hidden>Select </option>
                           </select>
                         )
                       }
@@ -479,6 +472,13 @@ const IndividualCustomerForm = () => {
                     className="add-customer-btn"
                   >
                     Add
+                  </button>
+                  <button
+                    type="button"
+                    className="add-customer-btn"
+                    onClick={clearInputsValues}
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>

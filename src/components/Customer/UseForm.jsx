@@ -49,7 +49,7 @@ const UseForm = validate => {
   }, [errors]);
 
   return {
-    handleChange, values, handleSubmit, errors,
+    handleChange, values, handleSubmit, errors, setErrors,
   };
 };
 
