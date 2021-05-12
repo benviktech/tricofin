@@ -236,19 +236,20 @@ const UpdateIndividualCustomer = () => {
                         <label htmlFor="customerId w-50">Phone1:</label>
                         <input
                           className="form-control-input col-md-8"
-                          type="number"
+                          type="text"
                           name="phone1"
                           value={dataState.phone1}
                           onChange={handleChange}
                         />
                       </div>
+                      { errors.phone1 && <small className="span-warning">{errors.phone1}</small>}
                     </div>
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
                         <label htmlFor="customerId w-50">Phone2:</label>
                         <input
                           className="form-control-input col-md-8"
-                          type="number"
+                          type="text"
                           name="phone2"
                           value={dataState.phone2}
                           onChange={handleChange}
@@ -260,7 +261,7 @@ const UpdateIndividualCustomer = () => {
                         <label htmlFor="customerId w-50">Phone3:</label>
                         <input
                           className="form-control-input col-md-8"
-                          type="number"
+                          type="text"
                           name="phone3"
                           value={dataState.phone3}
                           onChange={handleChange}
