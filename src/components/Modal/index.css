@@ -1,0 +1,10 @@
+.fa-times-circle-section {
+  flex: 1;
+  text-align: center;
+}
+
+.fa-times-circle {
+  cursor: pointer;
+  margin-top: -30px;
+  margin-right: 5px;
+}
