@@ -3,7 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SidebarLink = styled.div`
@@ -49,6 +49,16 @@ const SidebarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
+  const { url } = useRouteMatch();
+  console.log(url, 'url information');
+
+  React.useEffect(() => {
+    if (url === '/signature'
+    || url === '/identification'
+    || url === '/contactinfo') {
+      setSubnav(true);
+    }
+  }, []);
 
   return (
     <>
@@ -66,7 +76,16 @@ const SidebarMenu = ({ item }) => {
       </SidebarLink>
       {
             subnav && item.subNav.map((item, index) => (
-              <DropdownLink to={item.path} key={index}>
+              <DropdownLink
+                onClick={item.subNav && showSubnav}
+                activeStyle={{
+                  background: '#AEAEAE',
+                  color: '#fff',
+                }}
+                exact
+                to={item.path}
+                key={index}
+              >
                 <DropdownLinkIcon>
                   { item.icon }
                 </DropdownLinkIcon>
