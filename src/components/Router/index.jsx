@@ -21,6 +21,8 @@ import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
 import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
 import GroupMembers from '../Pages/GroupMembers';
 import UpdateGroupMaintenance from '../GroupMaintenance/UpdateGroupMaintenance';
+import SystemSettingsCompanyInfo from '../System/SystemSettings/SystemSettings';
+import SystemSettingsOtherSettings from '../System/SystemSettings/OtherSettings';
 
 const Router = () => (
   <div className="router-section">
@@ -46,6 +48,8 @@ const Router = () => (
         <Route path="/groupmaintenanceview/:id" component={GroupMaintenanceView} />
         <Route path="/groupmembers/:id" component={GroupMembers} />
         <Route path="/updategroupmember/:id" component={UpdateGroupMaintenance} />
+        <Route path="/systemsettingscompanyinfo" component={SystemSettingsCompanyInfo} />
+        <Route path="/systemsettingsothersettings" component={SystemSettingsOtherSettings} />
       </Switch>
       <Footer />
     </BrowserRouter>
