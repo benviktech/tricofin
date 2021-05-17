@@ -6,6 +6,8 @@ import IndividualCustomerForm from '../Customer/IndividualCustomerForm';
 import ViewIndividualCustomer from '../Customer/IndividualCustomerView';
 import UpdateIndividualCustomer from '../Customer/UpdateIndividualCustomer';
 import Footer from '../Footer/Footer';
+import SystemSettingsCompanyInfo from '../System/SystemSettings/SystemSettings';
+import SystemSettingsOtherSettings from '../System/SystemSettings/OtherSettings';
 
 const Router = () => (
   <div className="router-section">
@@ -16,6 +18,8 @@ const Router = () => (
         <Route path="/individualcustomerform" component={IndividualCustomerForm} />
         <Route path="/viewindividualcustomerform/:id" component={ViewIndividualCustomer} />
         <Route path="/updatecustomer/:id" component={UpdateIndividualCustomer} />
+        <Route path="/systemsettingscompanyinfo" component={SystemSettingsCompanyInfo} />
+        <Route path="/systemsettingsothersettings" component={SystemSettingsOtherSettings} />
       </Switch>
       <Footer />
     </BrowserRouter>
