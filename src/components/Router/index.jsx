@@ -19,9 +19,9 @@ const Router = () => (
         <Route path="/individualcustomerform" component={IndividualCustomerForm} />
         <Route path="/viewindividualcustomerform/:id" component={ViewIndividualCustomer} />
         <Route path="/updatecustomer/:id" component={UpdateIndividualCustomer} />
-        <Route path="/signature" component={Signature} />
-        <Route path="/identification" component={Indentification} />
-        <Route path="/contactinfo" component={ContactInfo} />
+        <Route path="/signature/:id" component={Signature} />
+        <Route path="/identification/:id" component={Indentification} />
+        <Route path="/contactinfo/:id" component={ContactInfo} />
       </Switch>
       <Footer />
     </BrowserRouter>
