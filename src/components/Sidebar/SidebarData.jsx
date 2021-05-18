@@ -16,7 +16,7 @@ const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
-        title: 'Signature',
+        title: 'Signature & Photo',
         path: '/signature',
         icon: <FaIcons.FaFileSignature style={innerIconStyles} />,
       },
