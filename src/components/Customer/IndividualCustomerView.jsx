@@ -8,7 +8,10 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../Sidebar/Sidebar';
 import Profile from '../../images/avatar.png';
-import { fetchSingleIndividualCustomer } from '../../actions/individualCustomer';
+import {
+  fetchSingleIndividualCustomer,
+  signaturePhotoFetch,
+} from '../../actions/individualCustomer';
 import Spinner from '../Spinner/Spinner';
 import ModalFunction from '../Modal/ModalFunction';
 import Modal from '../Modal/Modal';
@@ -24,9 +27,11 @@ const ViewIndividualCustomer = () => {
   } = ModalFunction();
 
   const personalData = useSelector(state => state.individualCustomersReducer);
+  const ImageInfo = useSelector(state => state.individualCustomersReducer.imageInfo);
 
   useEffect(() => {
     dispatch(fetchSingleIndividualCustomer(id));
+    dispatch(signaturePhotoFetch(id));
   }, []);
 
   return personalData.loading ? (
@@ -214,7 +219,13 @@ const ViewIndividualCustomer = () => {
                         </div>
                       </div>
                       <div className="image-section mb-2">
-                        <img src={Profile} alt="profile" />
+                        {
+                          Object.keys(ImageInfo).length > 0 ? (
+                            <img src={`${ImageInfo.imageSrc}`} alt="profile" />
+                          ) : (
+                            <img src={Profile} alt="profile" />
+                          )
+                        }
                       </div>
                     </div>
                     <div className="form-group ">
