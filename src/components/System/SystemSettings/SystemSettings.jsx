@@ -4,7 +4,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import SetingsSidebar from './SettingsSideBar';
 import Modal from '../../Modal/Modal';
@@ -107,13 +107,19 @@ const SystemSettingsCompanyInfo = () => {
                         </div>
                       </div>
                       <hr />
-                      <h4 class="text-center">Company Logo</h4>
+                      
                       <div class="right-side-lower-section">
                         <div className="company-img">
-                        <img src="company-logo.jpg"  class="rounded company-logo " alt="company profile" />
+                        <h4 class="">Company Logo</h4>
+                        <img src="company-logo.jpg"  className="rounded company-logo-img " alt="company profile" />
+                        <div class="file-input">
+                          <input type="file" id="file" class="file" />
+                          <label for="file">Browse</label>
+                        </div>
                         </div>
                         <div className="buttons-action">
-                          <button type="submit" class="btn btn-primary">Sign in</button>
+                          <NavLink to="/" style={{textDecoration: "none"}} className="buttons-link">Edit</NavLink>
+                          <NavLink to="/" style={{textDecoration: "none"}} className="buttons-link">Save</NavLink>
                         </div>
                       </div>
                       </form>
