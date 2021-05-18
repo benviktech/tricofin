@@ -3,6 +3,8 @@ import {
   PostIndividualCustomersRequest,
   GetIndividualCustomersRequest,
   UpdateIndividualCustomersRequest,
+  SignaturePhotoAdditionRequest,
+  PhotoSignatureRequest,
 } from '../utils/api';
 
 export const FETCH_INDIVIDUAL_CUSTOMER_SUCCESS = 'FETCH_INDIVIDUAL_CUSTOMER_SUCCESS';
@@ -10,6 +12,8 @@ export const POST_INDIVIDUAL_CUSTOMER_SUCCESS = 'POST_INDIVIDUAL_CUSTOMER_SUCCES
 export const GET_INDIVIDUAL_CUSTOMER_SUCCESS = 'GET_INDIVIDUAL_CUSTOMER_SUCCESS';
 export const LOADING_CONTENT = 'LOADING_CONTENT';
 export const LOADING_ERROR = 'LOADING_ERROR';
+export const FETCH_IMAGE_SUCCESS = 'FETCH_IMAGE_SUCCESS';
+export const FETCH_IMAGE_FAILURE = 'FETCH_IMAGE_FAILURE';
 
 export const individualCustomersSuccessFetch = data => ({
   type: FETCH_INDIVIDUAL_CUSTOMER_SUCCESS,
@@ -76,12 +80,11 @@ export const postIndividualCustomers = (values, history) => async dispatch => {
 };
 
 export const fetchSingleIndividualCustomer = CustId => async dispatch => {
-  console.log('inside individual customer');
   const method = 'get';
   const path = `/api/Customers/GetIndividualCustomer/${CustId}`;
   try {
     const response = await GetIndividualCustomersRequest(method, path);
-    console.log(response.data, 'created user information');
+    console.log(response, 'created user information');
     dispatch(individualCustomersSuccessGet(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
@@ -122,5 +125,28 @@ export const updateIndividualCustomer = (data, history) => async dispatch => {
     history.push(`/viewindividualcustomerform/${response.data.custID}`);
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const SignaturePhotoAddition = (form, history, id) => async dispatch => {
+  const path = '/api/Customers/SavePhotoOrSignature';
+  const method = 'post';
+  try {
+    const response = await SignaturePhotoAdditionRequest(method, path, form);
+    console.log(response.data, 'response data');
+    history.push(`/viewindividualcustomerform/${id}`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const signaturePhotoFetch = id => async dispatch => {
+  const path = `api/Customers/GetCustomerPhoto/${id}`;
+  const method = 'get';
+  try {
+    const response = await PhotoSignatureRequest(method, path);
+    dispatch({ type: FETCH_IMAGE_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: FETCH_IMAGE_FAILURE, payload: error.message });
   }
 };
