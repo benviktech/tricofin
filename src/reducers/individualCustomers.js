@@ -3,6 +3,8 @@ import {
   LOADING_CONTENT,
   LOADING_ERROR,
   FETCH_INDIVIDUAL_CUSTOMER_SUCCESS,
+  FETCH_IMAGE_SUCCESS,
+  FETCH_IMAGE_FAILURE,
 } from '../actions/individualCustomer';
 
 const initialState = {
@@ -10,6 +12,7 @@ const initialState = {
   error: '',
   loading: false,
   individualCustomers: [],
+  imageInfo: {},
 };
 
 const individualCustomersReducer = (state = initialState, action) => {
@@ -38,6 +41,16 @@ const individualCustomersReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         individualCustomers: action.payload,
+      };
+    case FETCH_IMAGE_SUCCESS:
+      return {
+        ...state,
+        imageInfo: action.payload,
+      };
+    case FETCH_IMAGE_FAILURE:
+      return {
+        ...state,
+        imageInfo: {},
       };
     default:
       return state;
