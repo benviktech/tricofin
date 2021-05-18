@@ -40,7 +40,89 @@ const SystemSettingsCompanyInfo = () => {
           <div className="left-inner-form-section">
             <SetingsSidebar />
           </div>
-          <div className="submit-form-top-section"></div>
+          <div className="submit-form-top-section">
+            <div className="container-main  ">
+                <div className="left-container-side">
+                  <h4 class="text-center">Contact Information</h4>
+                  <hr />
+                  <form>
+                    
+                    <div class="form-item">
+                      <label for="name" class="col-form-label">Company Name</label>
+                      <div class="form-input">
+                        <input type="text" class="form-input-input"  disabled/>
+                      </div>
+                    </div>
+                    <div class="form-item">
+                      <label for="physicaladdress" class=" col-form-label">Physical Adress</label>
+                      <div class="form-input">
+                        <input type="text" class="form-input-input"  disabled/>
+                      </div>
+                    </div>
+                    <div class="form-item">
+                      <label for="pobox" class=" col-form-label">P.O. Box Address</label>
+                      <div class="form-input">
+                        <input type="text" class="form-input-input"  disabled/>
+                      </div>
+                    </div>
+                    <div class="form-item">
+                      <label for="pobox" class="col-form-label">Email Address 1</label>
+                      <div class="form-input">
+                        <input type="email" class="form-input-input" placeholder="geshafinancialservices@gmail.com"  disabled/>
+                      </div>
+                    </div>
+                    <div class="form-item">
+                      <label for="pobox" class=" col-form-label">Email Address 2</label>
+                      <div class="form-input">
+                        <input type="email" class="form-input-input" placeholder=""  disabled/>
+                      </div>
+                    </div>
+                    <div class="form-item">
+                      <label for="pobox" class="col-form-label">Phone 1</label>
+                      <div class="form-input">
+                        <input type="text" class="form-control-1" placeholder="+256785450481"  disabled/>
+                      </div>
+                      <label for="pobox1" class="col-form-label">Phone 2</label>
+                      <div class="form-input">
+                        <input type="text" class="form-control-1" placeholder="+256785450481"  disabled/>
+                      </div>
+                    </div>
+                    <div class="form-item">
+                      <label for="pobox" class="col-form-label">Website</label>
+                      <div class="form-input">
+                        <input type="text" class="form-input-input" placeholder="www.geshamicrofinance.co.ug"  disabled/>
+                      </div>
+                    </div>
+                    </form>
+                </div>
+
+                <div className="container-right-side">
+                      <form>
+                      <h4 class="text-center">Company Tag Line</h4>
+                      <hr />
+                      <div class="form-item">
+                        <label for="pobox" class=" col-form-label">Tag Line</label>
+                        <div class="form-input">
+                          <input type="text" class="form-input-input" placeholder="Funding Your Dreams"  disabled/>
+                        </div>
+                      </div>
+                      <hr />
+                      <h4 class="text-center">Company Logo</h4>
+                      <div class="right-side-lower-section">
+                        <div className="company-img">
+                        <img src="company-logo.jpg"  class="rounded company-logo " alt="company profile" />
+                        </div>
+                        <div className="buttons-action">
+                          <button type="submit" class="btn btn-primary">Sign in</button>
+                        </div>
+                      </div>
+                      </form>
+                </div>
+
+              
+            </div>
+          </div>
+
 
         </div>
       </div>
