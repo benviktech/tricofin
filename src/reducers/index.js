@@ -4,6 +4,7 @@ import staticDataReducer from './staticData';
 import individualCustomerIdentification from './pages';
 import nonIndividualCustomersReducer from './nonIndividualCustomer';
 import groupMaintenanceReducer from './groupMaintenance';
+import companyInfoReducer from "./systemCompanyInfos";
 
 const rootReducer = combineReducers({
   individualCustomersReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   individualCustomerIdentification,
   nonIndividualCustomersReducer,
   groupMaintenanceReducer,
+  companyInfoReducer,
 });
 
 export default rootReducer;
