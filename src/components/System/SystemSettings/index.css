@@ -31,6 +31,25 @@
   margin-top: 40px;
 }
 
+.main-area {
+  flex: 7;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+}
+.left-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-right: 1px solid black;
+}
+
+.right-column {
+  display: flex;
+  flex: 1;
+  /* flex-direction: column; */
+  justify-content: space-between;
+}
 .main-form-color {
   background-color: #fff;
   border: 1px solid #f3f2f1;
@@ -312,6 +331,10 @@
   width: 300px;
   text-align: center;
 }
+.form-input-input-select {
+  width: 60px;
+  text-align: center;
+}
 .form-control-1 {
   text-align: center;
 }
@@ -374,4 +397,36 @@
   width: 0.1px;
   height: 0.1px;
   position: absolute;
+}
+
+.other-setting {
+  /* margin-top: 80px; */
+}
+
+.form-input-input-check {
+  height: 25px;
+  width: 25px;
+  background-color: #0178d4;
+}
+
+.account {
+  /* display: flex; */
+}
+
+.available-balance {
+  margin-left: 20px;
+  flex: 1;
+  padding-left: 5px;
+  border: 1px solid black;
+  height: fit-content;
+  width: fit-content;
+}
+.total-balanace {
+  margin-left: 10px;
+  flex: 1;
+  padding-left: 5px;
+  border: 1px solid black;
+  height: fit-content;
+  width: fit-content;
+  margin-right: 10px;
 }

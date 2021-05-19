@@ -11,6 +11,7 @@ import Modal from '../../Modal/Modal';
 import ModalFunction from '../../Modal/ModalFunction';
 import './index.css';
 import Loader from '../../Loader/Loader';
+import { fetchCompanyInfo } from "../../../actions/systemCompanyInfo"
 
 const SystemSettingsCompanyInfo = () => {
   const dispatch = useDispatch();
@@ -21,11 +22,15 @@ const SystemSettingsCompanyInfo = () => {
 
 
 
-  const individualCustomers = useSelector(state => state.individualCustomersReducer);
-  const staticData = useSelector(state => state.staticDataReducer);
+  const companyInfo = useSelector(state => state.companyInfoReducer);
+  console.log(companyInfo)
+
+  useEffect(() => {
+    dispatch(fetchCompanyInfo());
+  }, []);
 
 
-  return true ? (
+  return companyInfo ? (
     <div className="individual-customer-form">
       <Modal
         modalText={modalText}
