@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const baseUrl = 'https://tricoapi.azurewebsites.net';
+const baseUrl = "https://tricoapi.azurewebsites.net";
 
 export const FetchIndividualCustomersRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
@@ -28,6 +28,11 @@ export const DeleteIndividualCustomersRequest = async (method, path) => {
 };
 
 export const FetchStaticData = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+
+export const FetchCompanyInfoRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
