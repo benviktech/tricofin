@@ -16,7 +16,7 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  background-color: #0178D4;
+  background-color: #0178d4;
   color: #fff;
   font-weight: 600;
   font-size: 12px;
@@ -81,4 +81,123 @@
 .photo-header {
   font-size: 12px;
   font-weight: 600;
+}
+
+.upper-inputs-section {
+  width: 70%;
+}
+
+.top-inputs-section,
+.bottom-input-section {
+  display: flex;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.bottom-input-section {
+  padding-top: 20px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 5px;
+}
+
+.id-type-section,
+.id-number-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  margin: 10px 20px 0;
+  position: relative;
+}
+
+.id-type-section select,
+.id-number-section input {
+  width: 70%;
+  border-radius: 3px;
+  height: 30px;
+  border: 1px solid #ddd;
+  outline: none;
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.input-label,
+.id-input-label {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 20px;
+}
+
+.top-section,
+.middle-section {
+  background-color: #aeaeae;
+  display: flex;
+  margin-right: 5px;
+  color: #444;
+}
+
+.middle-section {
+  background-color: #ddd;
+}
+
+.idcode-section,
+.idcode-section-inner {
+  flex: 1;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+  border-right: 1px solid #ddd;
+  padding: 5px 0;
+}
+
+.idcode-section-inner {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.first-border-left {
+  border-left: 1px solid #ddd;
+}
+
+.out-form-loop {
+  overflow-y: auto;
+  height: 300px;
+  cursor: pointer;
+}
+
+.out-form-loop::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.add-form-data-button {
+  padding: 0 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-form-data-button button {
+  padding: 5px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #0178d4;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.error-section {
+  font-size: 11px;
+  color: red;
+  position: absolute;
+  right: 0;
+  bottom: -20px;
 }
