@@ -6,7 +6,7 @@ const ContactInfo = () => (
   <div className="individual-customer-form">
     <div className="lower-form-section">
       <div className="maintenance-customer-info">
-        <span>Customer Signature and Photo Section</span>
+        <span>Contact Information Section</span>
       </div>
       <div className="lower-downer-section">
         <div className="left-inner-form-section">
