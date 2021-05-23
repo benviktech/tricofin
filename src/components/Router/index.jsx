@@ -8,7 +8,8 @@ import UpdateIndividualCustomer from '../Customer/UpdateIndividualCustomer';
 import Footer from '../Footer/Footer';
 import Signature from '../Pages/Signature';
 import Indentification from '../Pages/Indentification';
-import ContactInfo from '../Pages/ContactInfo';
+import PrimaryContactInfo from '../Pages/PrimaryContactInfo';
+import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
 
 const Router = () => (
   <div className="router-section">
@@ -21,7 +22,8 @@ const Router = () => (
         <Route path="/updatecustomer/:id" component={UpdateIndividualCustomer} />
         <Route path="/signature/:id" component={Signature} />
         <Route path="/identification/:id" component={Indentification} />
-        <Route path="/contactinfo/:id" component={ContactInfo} />
+        <Route path="/primarycontactinfo/:id" component={PrimaryContactInfo} />
+        <Route path="/secondarycontactinfo/:id" component={SecondaryContactInfo} />
       </Switch>
       <Footer />
     </BrowserRouter>
