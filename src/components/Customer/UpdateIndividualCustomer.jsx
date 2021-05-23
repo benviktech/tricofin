@@ -35,11 +35,11 @@ const UpdateIndividualCustomer = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get('https://tricoapi.azurewebsites.net/api/StaticData/GetStaticData')
+      await axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetStaticData')
         .then(response => {
           setStaticData(response.data);
           axios.get(
-            `https://tricoapi.azurewebsites.net/api/Customers/GetIndividualCustomer/${id}`,
+            `https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomer/${id}`,
           ).then(response => setDataState(response.data))
             .catch(error => console.log(error.message));
         }).catch(error => console.log(error.message));
