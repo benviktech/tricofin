@@ -26,8 +26,13 @@ const SidebarData = [
         icon: <HiIcons.HiIdentification style={innerIconStyles} />,
       },
       {
-        title: 'Contact Info',
-        path: '/contactinfo',
+        title: 'Primary Contact',
+        path: '/primarycontactinfo',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+      {
+        title: 'Secondary Contact',
+        path: '/secondarycontactinfo',
         icon: <GrIcons.GrContact style={innerIconStyles} />,
       },
     ],
