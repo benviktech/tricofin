@@ -58,7 +58,8 @@ const SidebarMenu = ({ item }) => {
   React.useEffect(() => {
     if (url.split('/')[1] === 'signature'
     || url.split('/')[1] === 'identification'
-    || url.split('/')[1] === 'contactinfo') {
+    || url.split('/')[1] === 'primarycontactinfo'
+    || url.split('/')[1] === 'secondarycontactinfo') {
       setSubnav(true);
     }
   }, []);
@@ -81,7 +82,8 @@ const SidebarMenu = ({ item }) => {
         Object.keys(currentUser.individualCustomer).length > 0
         || url.split('/')[1] === 'signature'
         || url.split('/')[1] === 'identification'
-        || url.split('/')[1] === 'contactinfo' ? (
+        || url.split('/')[1] === 'primarycontactinfo'
+        || url.split('/')[1] === 'secondarycontactinfo' ? (
 
             subnav && item.subNav.map((item, index) => (
               <DropdownLink
