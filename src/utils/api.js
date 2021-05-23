@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'https://tricoapi.azurewebsites.net';
+const baseUrl = 'https://tricofin.azurewebsites.net';
 
 export const FetchIndividualCustomersRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
@@ -38,6 +38,16 @@ export const SignaturePhotoAdditionRequest = async (method, path, data) => {
 };
 
 export const PhotoSignatureRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+
+export const PostIdentificationSuccessRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const GetIdentificationSuccessRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
