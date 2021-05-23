@@ -96,7 +96,6 @@
 
 .bottom-input-section {
   padding-top: 20px;
-  border-bottom: 1px solid #ddd;
   margin-bottom: 5px;
 }
 
@@ -167,8 +166,9 @@
 
 .out-form-loop {
   overflow-y: auto;
-  height: 300px;
+  height: 250px;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .out-form-loop::-webkit-scrollbar {
@@ -297,4 +297,11 @@
 
 .downer-adjust-margin {
   margin: unset;
+}
+
+.align-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -100px;
 }
