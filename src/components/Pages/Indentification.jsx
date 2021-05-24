@@ -93,6 +93,29 @@ const Indentification = () => {
     dispatch(getCustomerIdentification(id));
   }, []);
 
+  const countryDisplay = country => {
+    if (country.trim() === 'IN') {
+      return 'INDIA';
+    }
+    if (country.trim() === 'KE') {
+      return 'KENYA';
+    }
+    if (country.trim() === 'UG') {
+      return 'UGANDA';
+    }
+    if (country.trim() === 'TZ') {
+      return 'TANZANIA';
+    }
+    if (country.trim() === 'RW') {
+      return 'RWANDA';
+    }
+    if (country.trim() === 'NG') {
+      return 'NIGERIA';
+    }
+
+    return null;
+  };
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -244,13 +267,7 @@ const Indentification = () => {
                               {content.countryID}
                             </div>
                             <div className="idcode-section-inner">
-                              {content.countryID === 'IN' ? 'INDIA'
-                                : content.countryID === 'KE' ? 'KENYA'
-                                  : content.countryID === 'NG' ? 'NIGERIA'
-                                    : content.countryID === 'RW' ? 'RWANDA'
-                                      : content.countryID === 'TZ' ? 'TANZANIA'
-                                        : content.countryID === 'UG' ? 'UGANDA'
-                                          : 'NIN'}
+                              {countryDisplay(content.countryID)}
                             </div>
                             <div className="idcode-section-inner">
                               {(content.createdOn).split('T')[0].split('-')[1] === '01'
@@ -282,8 +299,8 @@ const Indentification = () => {
                           </div>
                         ))
                       ) : (
-                        <div className="middle-section">
-                          Loading
+                        <div className="middle-section empty-section">
+                          <i className="far fa-folder-open" />
                         </div>
                       )
 

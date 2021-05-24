@@ -171,6 +171,19 @@
   margin-bottom: 20px;
 }
 
+.empty-section {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.empty-section i {
+  font-size: 30px;
+  color: #999;
+}
+
 .out-form-loop::-webkit-scrollbar {
   width: 0;
   height: 0;
