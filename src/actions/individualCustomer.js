@@ -128,13 +128,20 @@ export const updateIndividualCustomer = (data, history) => async dispatch => {
   }
 };
 
-export const SignaturePhotoAddition = (form, history, id) => async dispatch => {
+export const SignaturePhotoAddition = (formPhoto, history, id, formSignature) => async dispatch => {
   const path = '/api/Customers/SavePhotoOrSignature';
   const method = 'post';
   try {
-    const response = await SignaturePhotoAdditionRequest(method, path, form);
-    console.log(response.data, 'response data');
+    const response = await SignaturePhotoAdditionRequest(method, path, formPhoto);
     history.push(`/viewindividualcustomerform/${id}`);
+    if (response.data) {
+      try {
+        const result = await SignaturePhotoAdditionRequest(method, path, formSignature);
+        console.log(result, 'signature saved');
+      } catch (error) {
+        dispatch({ type: LOADING_ERROR, payload: error.message });
+      }
+    }
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }

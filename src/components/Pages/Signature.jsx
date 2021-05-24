@@ -15,16 +15,26 @@ const Signature = () => {
 
   const addSignaturePhoto = e => {
     e.preventDefault();
-    const form = new FormData();
-    form.append('custID', id);
-    form.append('photoOrSignature', 'P');
-    form.append('imageName', 'id');
-    form.append('imageFile', photo);
-    form.append('createdOn', '2021-05-18T08:24:25.200Z');
-    form.append('modifiedOn', '2021-05-18T08:24:25.200Z');
-    form.append('createdBy', 'BENVIK');
-    form.append('modifiedBy', 'BENVIK');
-    dispatch(SignaturePhotoAddition(form, history, id));
+    const formPhoto = new FormData();
+    formPhoto.append('custID', id);
+    formPhoto.append('photoOrSignature', 'P');
+    formPhoto.append('imageName', 'id');
+    formPhoto.append('imageFile', photo);
+    formPhoto.append('createdOn', '2021-05-18T08:24:25.200Z');
+    formPhoto.append('modifiedOn', '2021-05-18T08:24:25.200Z');
+    formPhoto.append('createdBy', 'BENVIK');
+    formPhoto.append('modifiedBy', 'BENVIK');
+
+    const formSignature = new FormData();
+    formSignature.append('custID', id);
+    formSignature.append('photoOrSignature', 'S');
+    formSignature.append('imageName', 'id');
+    formSignature.append('imageFile', signature);
+    formSignature.append('createdOn', '2021-05-18T08:24:25.200Z');
+    formSignature.append('modifiedOn', '2021-05-18T08:24:25.200Z');
+    formSignature.append('createdBy', 'BENVIK');
+    formSignature.append('modifiedBy', 'BENVIK');
+    dispatch(SignaturePhotoAddition(formPhoto, history, id, formSignature));
   };
 
   return (
