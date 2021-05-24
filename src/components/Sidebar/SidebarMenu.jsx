@@ -80,10 +80,7 @@ const SidebarMenu = ({ item }) => {
       </SidebarLink>
       {
         Object.keys(currentUser.individualCustomer).length > 0
-        || url.split('/')[1] === 'signature'
-        || url.split('/')[1] === 'identification'
-        || url.split('/')[1] === 'primarycontactinfo'
-        || url.split('/')[1] === 'secondarycontactinfo' ? (
+        && url.split('/')[1] !== 'individualcustomerform' ? (
 
             subnav && item.subNav.map((item, index) => (
               <DropdownLink
