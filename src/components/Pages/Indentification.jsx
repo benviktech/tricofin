@@ -1,6 +1,8 @@
 /* eslint-disable  react/no-array-index-key */
 /* eslint-disable  jsx-a11y/control-has-associated-label */
 /* eslint-disable  no-nested-ternary */
+/* eslint-disable  jsx-a11y/click-events-have-key-events */
+/* eslint-disable  jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
@@ -19,6 +21,7 @@ const Indentification = () => {
   const [staticData, setStaticData] = useState({});
   const [IDTypes, setIDTypes] = useState([]);
   const [errors, setErrors] = useState({});
+  const [hideErrorDiv, setHideErrorDiv] = useState('');
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -88,6 +91,11 @@ const Indentification = () => {
   }, []);
 
   const identificationData = useSelector(state => state.individualCustomerIdentification);
+  console.log(identificationData.error, 'error message');
+
+  const displayError = () => {
+    setHideErrorDiv('d-none');
+  };
 
   useEffect(() => {
     dispatch(getCustomerIdentification(id));
@@ -128,7 +136,7 @@ const Indentification = () => {
           </div>
           {
             Object.keys(staticData).length > 0 ? (
-              <form onSubmit={submitData} className="submit-form-top-section">
+              <form onSubmit={submitData} className="submit-form-top-section identification-form">
                 <div className="identification-section">
                   <div className="upper-inputs-section">
                     <div className="top-inputs-section">
@@ -319,6 +327,19 @@ const Indentification = () => {
                       Cancel
                     </button>
                   </div>
+                </div>
+                <div>
+                  {
+                    identificationData.error.includes('500') ? (
+                      <div className={`${hideErrorDiv} notification-div shadow text-danger`}>
+                        <i
+                          onClick={displayError}
+                          className="far fa-times-circle"
+                        />
+                        <span>ID Already added</span>
+                      </div>
+                    ) : null
+                  }
                 </div>
               </form>
             ) : (

@@ -318,3 +318,22 @@
   align-items: center;
   margin-top: -100px;
 }
+
+.identification-form {
+  position: relative;
+}
+
+.notification-div {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  padding: 10px;
+}
+
+.notification-div span {
+  font-size: 12px;
+}
+
+.notification-div i {
+  font-size: 13px;
+}

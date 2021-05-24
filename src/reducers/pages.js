@@ -1,4 +1,4 @@
-import { POST_IDENTIFICATION_SUCCESS } from '../actions/pages';
+import { POST_IDENTIFICATION_SUCCESS, LOADING_ERROR } from '../actions/pages';
 
 const initialState = {
   indentifications: [],
@@ -14,6 +14,11 @@ const individualCustomerIdentification = (state = initialState, action) => {
         indentifications: action.payload,
         error: '',
         loading: false,
+      };
+    case LOADING_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;
