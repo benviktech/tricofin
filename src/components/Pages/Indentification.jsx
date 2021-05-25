@@ -17,7 +17,7 @@ const Indentification = () => {
   const [idType, setIdType] = useState('');
   const [idNumber, setIdNumber] = useState('');
   const [isCountry, setIsCountry] = useState('');
-  const [issueDate, setIssueDate] = useState('');
+  const [expiryDate, setExpirDate] = useState('');
   const [staticData, setStaticData] = useState({});
   const [IDTypes, setIDTypes] = useState([]);
   const [errors, setErrors] = useState({});
@@ -41,9 +41,6 @@ const Indentification = () => {
       value.isCountry = 'Country is Required';
     }
 
-    if (!issueDate.trim()) {
-      value.issueDate = 'Issue Date is Required';
-    }
     setErrors(value);
   };
 
@@ -54,6 +51,7 @@ const Indentification = () => {
         idCode: parseInt(idType, 10),
         idNo: idNumber,
         countryID: isCountry,
+        expiryDate,
         createdBy: 'BENVIK',
         createdOn: (new Date()).toISOString(),
         modifiedBy: 'BENVIK',
@@ -63,7 +61,7 @@ const Indentification = () => {
       dispatch(postCustomerIdentification(data, history));
       setIdNumber('');
       setIsCountry('');
-      setIssueDate('');
+      setExpirDate('');
       setIdType('');
     }
   }, [errors]);
@@ -91,7 +89,6 @@ const Indentification = () => {
   }, []);
 
   const identificationData = useSelector(state => state.individualCustomerIdentification);
-  console.log(identificationData.error, 'error message');
 
   const displayError = () => {
     setHideErrorDiv('d-none');
@@ -211,8 +208,8 @@ const Indentification = () => {
                           Expiry Date:
                         </div>
                         <input
-                          value={issueDate}
-                          onChange={e => setIssueDate(e.target.value)}
+                          value={expiryDate}
+                          onChange={e => setExpirDate(e.target.value)}
                           type="date"
                         />
                         <div className="error-section">
@@ -227,9 +224,6 @@ const Indentification = () => {
                 </div>
                 <div className="identification-listing">
                   <div className="top-section">
-                    <div className="idcode-section">
-                      IDCode
-                    </div>
                     <div className="idcode-section">
                       ID
                     </div>
@@ -252,9 +246,6 @@ const Indentification = () => {
                         identificationData.indentifications.map((content, index) => (
                           <div className="middle-section" key={index}>
                             <div className="idcode-section-inner first-border-left">
-                              {content.idCode}
-                            </div>
-                            <div className="idcode-section-inner">
                               {content.idCode === 1 ? 'TIN NUMBER'
                                 : content.idCode === 2 ? 'KACITA NUMBER'
                                   : content.idCode === 3 ? 'NATIONAL ID'
@@ -278,30 +269,30 @@ const Indentification = () => {
                               {countryDisplay(content.countryID)}
                             </div>
                             <div className="idcode-section-inner">
-                              {(content.createdOn).split('T')[0].split('-')[1] === '01'
-                                ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('01', 'Jan')
-                                : (content.createdOn).split('T')[0].split('-')[1] === '02'
-                                  ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('02', 'Feb')
-                                  : (content.createdOn).split('T')[0].split('-')[1] === '03'
-                                    ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('03', 'Mar')
-                                    : (content.createdOn).split('T')[0].split('-')[1] === '04'
-                                      ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('04', 'Apr')
-                                      : (content.createdOn).split('T')[0].split('-')[1] === '05'
-                                        ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('05', 'May')
-                                        : (content.createdOn).split('T')[0].split('-')[1] === '06'
-                                          ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('06', 'Jun')
-                                          : (content.createdOn).split('T')[0].split('-')[1] === '07'
-                                            ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('07', 'Jul')
-                                            : (content.createdOn).split('T')[0].split('-')[1] === '08'
-                                              ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('08', 'Aug')
-                                              : (content.createdOn).split('T')[0].split('-')[1] === '09'
-                                                ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('09', 'Sep')
-                                                : (content.createdOn).split('T')[0].split('-')[1] === '10'
-                                                  ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('10', 'Oct')
-                                                  : (content.createdOn).split('T')[0].split('-')[1] === '11'
-                                                    ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('11', 'Nov')
-                                                    : (content.createdOn).split('T')[0].split('-')[1] === '12'
-                                                      ? (content.createdOn).split('T')[0].split('-').reverse().join('/').replace('12', 'Dec')
+                              {(content.expiryDate).split('T')[0].split('-')[1] === '01'
+                                ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('01', 'Jan')
+                                : (content.expiryDate).split('T')[0].split('-')[1] === '02'
+                                  ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('02', 'Feb')
+                                  : (content.expiryDate).split('T')[0].split('-')[1] === '03'
+                                    ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('03', 'Mar')
+                                    : (content.expiryDate).split('T')[0].split('-')[1] === '04'
+                                      ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('04', 'Apr')
+                                      : (content.expiryDate).split('T')[0].split('-')[1] === '05'
+                                        ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('05', 'May')
+                                        : (content.expiryDate).split('T')[0].split('-')[1] === '06'
+                                          ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('06', 'Jun')
+                                          : (content.expiryDate).split('T')[0].split('-')[1] === '07'
+                                            ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('07', 'Jul')
+                                            : (content.expiryDate).split('T')[0].split('-')[1] === '08'
+                                              ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('08', 'Aug')
+                                              : (content.expiryDate).split('T')[0].split('-')[1] === '09'
+                                                ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('09', 'Sep')
+                                                : (content.expiryDate).split('T')[0].split('-')[1] === '10'
+                                                  ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('10', 'Oct')
+                                                  : (content.expiryDate).split('T')[0].split('-')[1] === '11'
+                                                    ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('11', 'Nov')
+                                                    : (content.expiryDate).split('T')[0].split('-')[1] === '12'
+                                                      ? (content.expiryDate).split('T')[0].split('-').reverse().join('/').replace('12', 'Dec')
                                                       : null }
                             </div>
                           </div>
