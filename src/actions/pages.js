@@ -1,6 +1,7 @@
 import {
   PostIdentificationSuccessRequest,
   GetIdentificationSuccessRequest,
+  PostContactSuccessRequest,
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
@@ -32,5 +33,18 @@ export const getCustomerIdentification = id => async dispatch => {
     dispatch(individualCustomerIdentification(response.data));
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+export const postCustomerContact = data => async dispatch => {
+  const method = 'post';
+  const path = '/api/Customers/SaveContactInformation';
+  console.log(data, 'before submission');
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await PostContactSuccessRequest(method, path, data);
+    console.log(response.data, 'after submission');
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
