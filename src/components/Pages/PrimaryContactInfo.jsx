@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-restricted-globals */
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
@@ -42,6 +39,8 @@ const PrimaryContactForm = () => {
     },
   );
 
+  const clearErrors = () => setErrors({});
+
   const handleChange = e => {
     const { name, value } = e.target;
     setValues({
@@ -67,6 +66,8 @@ const PrimaryContactForm = () => {
       submitForm={submitPrimaryContact}
       handleChange={handleChange}
       values={values}
+      errors={errors}
+      clearErrors={clearErrors}
     />
   );
 };

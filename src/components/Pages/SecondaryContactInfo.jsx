@@ -39,6 +39,8 @@ const SecondaryContactInfo = () => {
     },
   );
 
+  const clearErrors = () => setErrors({});
+
   const handleChange = e => {
     const { name, value } = e.target;
     setValues({
@@ -64,6 +66,8 @@ const SecondaryContactInfo = () => {
       submitForm={submitSecondaryContact}
       handleChange={handleChange}
       values={values}
+      errors={errors}
+      clearErrors={clearErrors}
     />
   );
 };

@@ -5,9 +5,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../Sidebar/Sidebar';
 import '../Customer/index.css';
+import Spinner from '../Spinner/Spinner';
 
 const ContactInfo = ({
-  header, submitForm, handleChange, values,
+  header, submitForm, handleChange, values, errors, clearErrors,
 }) => {
   const regions = [{ id: 1, name: 'NORTHERN' },
     { id: 2, name: 'EASTERN' },
@@ -66,14 +67,14 @@ const ContactInfo = ({
                       <div className="label-unit">
                         Plot/Street No:
                       </div>
-                      <div className="unit-section">
+                      <div className="unit-section street-no-content">
                         <input
                           value={values.plotStreetNo}
                           onChange={handleChange}
                           name="plotStreetNo"
                           type="text"
                         />
-                        <div className="floor-section">
+                        <div className="floor-section street-no-content">
                           <div className="inner-label-unit">
                             Floor No:
                           </div>
@@ -83,6 +84,12 @@ const ContactInfo = ({
                             name="floorNo"
                             type="text"
                           />
+                          <div className="floor-no-error">
+                            {errors.floorNo && errors.floorNo}
+                          </div>
+                        </div>
+                        <div className="street-no-error">
+                          {errors.plotStreetNo && errors.plotStreetNo}
                         </div>
                       </div>
                     </div>
@@ -191,7 +198,7 @@ const ContactInfo = ({
                     </div>
                   </div>
                   <div className="right-address-section">
-                    <div className="unit-floor-section">
+                    <div className="unit-floor-section street-no-content">
                       <div className="label-unit unit-left-section">
                         P.O Box No:
                       </div>
@@ -213,13 +220,16 @@ const ContactInfo = ({
                             type="text"
                           />
                         </div>
+                        <div className="office-no-error">
+                          {errors.poBoxNo && errors.poBoxNo}
+                        </div>
                       </div>
                     </div>
                     <div className="unit-floor-section">
                       <div className="label-unit unit-left-section">
                         Been At Address Since:
                       </div>
-                      <div className="unit-section unit-right-section">
+                      <div className="unit-section unit-right-section street-no-content">
                         <div className="lower-floor-section">
                           <input
                             value={values.atAddressSince}
@@ -228,20 +238,23 @@ const ContactInfo = ({
                             type="date"
                           />
                         </div>
+                        <div className="street-no-error">
+                          {errors.atAddressSince && errors.atAddressSince}
+                        </div>
                       </div>
                     </div>
                     <div className="unit-floor-section">
                       <div className="label-unit unit-left-section">
                         Primary Tel No:
                       </div>
-                      <div className="unit-section unit-right-section">
+                      <div className="unit-section unit-right-section street-no-content">
                         <input
                           value={values.pnTelNo}
                           name="pnTelNo"
                           onChange={handleChange}
                           type="text"
                         />
-                        <div className="floor-section lower-floor-section">
+                        <div className="floor-section lower-floor-section street-no-content">
                           <div className="inner-label-unit">
                             Mobile No:
                           </div>
@@ -251,6 +264,12 @@ const ContactInfo = ({
                             onChange={handleChange}
                             type="text"
                           />
+                          <div className="floor-no-error">
+                            {errors.mobNo && errors.mobNo}
+                          </div>
+                        </div>
+                        <div className="street-no-error">
+                          {errors.pnTelNo && errors.pnTelNo}
                         </div>
                       </div>
                     </div>
@@ -292,6 +311,7 @@ const ContactInfo = ({
                       </button>
                       <button
                         type="button"
+                        onClick={clearErrors}
                       >
                         Cancel
                       </button>
@@ -299,8 +319,8 @@ const ContactInfo = ({
                   </div>
                 </form>
               ) : (
-                <div className="contact-info-section">
-                  Loading section....
+                <div className="contact-info-section align-spinner-two">
+                  <Spinner />
                 </div>
               )
             }
