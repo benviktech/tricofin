@@ -51,3 +51,8 @@ export const GetIdentificationSuccessRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
+
+export const PostContactSuccessRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
