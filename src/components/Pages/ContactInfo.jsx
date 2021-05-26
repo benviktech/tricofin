@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,7 +10,7 @@ import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
 
 const ContactInfo = ({
-  header, submitForm, handleChange, values, errors, clearErrors,
+  header, submitForm, handleChange, values, errors, clearErrors, postError, modal, setModal,
 }) => {
   const regions = [{ id: 1, name: 'NORTHERN' },
     { id: 2, name: 'EASTERN' },
@@ -16,6 +18,7 @@ const ContactInfo = ({
     { id: 4, name: 'WESTERN' },
     { id: 5, name: 'SOUTHERN' }];
   const [countries, setCountries] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetCountries');
@@ -31,6 +34,17 @@ const ContactInfo = ({
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>{header}</span>
+          {
+            postError.includes('5050') ? (
+              <div className={`${modal} submit-error-section shadow`}>
+                <i
+                  className="far fa-times-circle"
+                  onClick={() => setModal('d-none')}
+                />
+                Contact already exist
+              </div>
+            ) : null
+          }
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">

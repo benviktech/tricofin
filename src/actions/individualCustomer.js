@@ -84,7 +84,6 @@ export const fetchSingleIndividualCustomer = CustId => async dispatch => {
   const path = `/api/Customers/GetIndividualCustomer/${CustId}`;
   try {
     const response = await GetIndividualCustomersRequest(method, path);
-    console.log(response, 'created user information');
     dispatch(individualCustomersSuccessGet(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });

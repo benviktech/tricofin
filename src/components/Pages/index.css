@@ -363,3 +363,15 @@
 .office-no-error {
   bottom: 0;
 }
+
+.submit-error-section {
+  font-size: 12px;
+  font-weight: 200;
+  color: red;
+  background-color: #fff;
+  padding: 10px;
+  position: absolute;
+  bottom: -25px;
+  top: 20px;
+  right: 10px;
+}

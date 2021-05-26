@@ -5,11 +5,17 @@ import {
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
+export const POST_CONTACT_SUCCESS = 'POST_CONTACT_SUCCESS';
 export const LOADING_CONTENT = 'LOADING_CONTENT';
 export const LOADING_ERROR = 'LOADING_ERROR';
 
 export const individualCustomerIdentification = data => ({
   type: POST_IDENTIFICATION_SUCCESS,
+  payload: data,
+});
+
+export const individualCustomerContact = data => ({
+  type: POST_CONTACT_SUCCESS,
   payload: data,
 });
 
@@ -32,19 +38,19 @@ export const getCustomerIdentification = id => async dispatch => {
     const response = await GetIdentificationSuccessRequest(method, path);
     dispatch(individualCustomerIdentification(response.data));
   } catch (error) {
-    console.log(error.message);
+    dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
 
 export const postCustomerContact = data => async dispatch => {
   const method = 'post';
   const path = '/api/Customers/SaveContactInformation';
-  console.log(data, 'before submission');
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await PostContactSuccessRequest(method, path, data);
-    console.log(response.data, 'after submission');
+    dispatch(individualCustomerContact(response.data));
   } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
+    const result = `${error.message} 5050`;
+    dispatch({ type: LOADING_ERROR, payload: result });
   }
 };

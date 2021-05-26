@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import ContactInfo from './ContactInfo';
 import { postCustomerContact } from '../../actions/pages';
@@ -7,8 +7,10 @@ import contactValidator from '../Validators/ContactValidator';
 
 const PrimaryContactForm = () => {
   const headerPrimaryContact = 'Primary Contact Information';
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({ logError: 'log error' });
   const dispatch = useDispatch();
+  const [modal, setModal] = useState('d-none');
+  const postError = useSelector(state => state.individualCustomerIdentification.error);
   const { id } = useParams();
   const [values, setValues] = useState(
     {
@@ -54,9 +56,13 @@ const PrimaryContactForm = () => {
     setErrors(contactValidator(values));
   };
 
-  useEffect(() => {
-    if (Object.keys(errors).length === 0) {
-      dispatch(postCustomerContact(values));
+  useEffect(async () => {
+    if (Object.keys(errors).includes('buttonClick')) {
+      if (Object.keys(errors).length === 1) {
+        await dispatch(postCustomerContact(values));
+        setModal('');
+        setErrors({});
+      }
     }
   }, [errors]);
 
@@ -68,6 +74,9 @@ const PrimaryContactForm = () => {
       values={values}
       errors={errors}
       clearErrors={clearErrors}
+      postError={postError}
+      modal={modal}
+      setModal={setModal}
     />
   );
 };

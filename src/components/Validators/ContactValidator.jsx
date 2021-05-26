@@ -2,6 +2,7 @@
 
 export default function contactValidator(values) {
   const errors = {};
+  errors.buttonClick = 'submission';
   if (!values.atAddressSince) {
     errors.atAddressSince = 'Must be provided';
   }
