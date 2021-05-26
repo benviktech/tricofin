@@ -20,8 +20,8 @@ const Indentification = () => {
   const [expiryDate, setExpirDate] = useState('');
   const [staticData, setStaticData] = useState({});
   const [IDTypes, setIDTypes] = useState([]);
-  const [errors, setErrors] = useState({});
-  const [hideErrorDiv, setHideErrorDiv] = useState('');
+  const [errors, setErrors] = useState({ logError: 'log error' });
+  const [hideErrorDiv, setHideErrorDiv] = useState('d-none');
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -29,6 +29,7 @@ const Indentification = () => {
   const submitData = e => {
     e.preventDefault();
     const value = {};
+    value.buttonClick = 'submission';
     if (!idNumber.trim()) {
       value.idNumber = 'ID Number is required';
     }
@@ -44,25 +45,28 @@ const Indentification = () => {
     setErrors(value);
   };
 
-  useEffect(() => {
-    if (Object.values(errors).length === 0) {
-      const data = {
-        custID: id,
-        idCode: parseInt(idType, 10),
-        idNo: idNumber,
-        countryID: isCountry,
-        expiryDate,
-        createdBy: 'BENVIK',
-        createdOn: (new Date()).toISOString(),
-        modifiedBy: 'BENVIK',
-        modifiedOn: (new Date()).toISOString(),
-      };
+  useEffect(async () => {
+    if (Object.keys(errors).includes('buttonClick')) {
+      if (Object.values(errors).length === 1) {
+        const data = {
+          custID: id,
+          idCode: parseInt(idType, 10),
+          idNo: idNumber,
+          countryID: isCountry,
+          expiryDate,
+          createdBy: 'BENVIK',
+          createdOn: (new Date()).toISOString(),
+          modifiedBy: 'BENVIK',
+          modifiedOn: (new Date()).toISOString(),
+        };
 
-      dispatch(postCustomerIdentification(data, history));
-      setIdNumber('');
-      setIsCountry('');
-      setExpirDate('');
-      setIdType('');
+        await dispatch(postCustomerIdentification(data, history));
+        setHideErrorDiv('');
+        setIdNumber('');
+        setIsCountry('');
+        setExpirDate('');
+        setIdType('');
+      }
     }
   }, [errors]);
 
@@ -321,7 +325,7 @@ const Indentification = () => {
                 </div>
                 <div>
                   {
-                    identificationData.error.includes('500') ? (
+                    identificationData.error.includes('5055') ? (
                       <div className={`${hideErrorDiv} notification-div shadow text-danger`}>
                         <i
                           onClick={displayError}

@@ -27,7 +27,8 @@ export const postCustomerIdentification = data => async dispatch => {
     const response = await PostIdentificationSuccessRequest(method, path, data);
     dispatch(individualCustomerIdentification(response.data));
   } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
+    const result = `${error.message} 5055`;
+    dispatch({ type: LOADING_ERROR, payload: result });
   }
 };
 
