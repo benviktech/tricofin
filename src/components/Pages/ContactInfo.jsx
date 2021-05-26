@@ -2,15 +2,26 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-nested-ternary */
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
+import { fetchCountriesData } from '../../actions/pages';
 
 const ContactInfo = ({
-  header, submitForm, handleChange, values, errors, clearErrors, postError, modal, setModal,
+  header,
+  submitForm,
+  handleChange,
+  values,
+  errors,
+  clearErrors,
+  postError,
+  modal,
+  setModal,
+  postSuccess,
 }) => {
   const regions = [{ id: 1, name: 'NORTHERN' },
     { id: 2, name: 'EASTERN' },
@@ -18,16 +29,16 @@ const ContactInfo = ({
     { id: 4, name: 'WESTERN' },
     { id: 5, name: 'SOUTHERN' }];
   const [countries, setCountries] = useState([]);
+  const dispatch = useDispatch();
+  const countriesData = useSelector(state => state.individualCustomerIdentification.countries);
+
+  useEffect(async () => {
+    await dispatch(fetchCountriesData());
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetCountries');
-      if (response.data) {
-        setCountries(response.data);
-      }
-    };
-    fetchData();
-  }, []);
+    setCountries(countriesData);
+  }, [countriesData]);
 
   return (
     <div className="individual-customer-form">
@@ -42,6 +53,14 @@ const ContactInfo = ({
                   onClick={() => setModal('d-none')}
                 />
                 Contact already exist
+              </div>
+            ) : Object.keys(postSuccess).length > 0 ? (
+              <div className={`${modal} submit-error-section shadow text-success`}>
+                <i
+                  className="far fa-times-circle"
+                  onClick={() => setModal('d-none')}
+                />
+                Contact Created Succesfully
               </div>
             ) : null
           }

@@ -12,34 +12,34 @@ const SecondaryContactInfo = () => {
   const [modal, setModal] = useState('d-none');
   const postError = useSelector(state => state.individualCustomerIdentification.error);
   const { id } = useParams();
-  const [values, setValues] = useState(
-    {
-      custID: id,
-      contactType: 'S',
-      buildingName: '',
-      floorNo: '',
-      plotStreetNo: '',
-      lcStreetName: '',
-      parish: '',
-      suburb: '',
-      village: '',
-      countyTown: '',
-      district: '',
-      region: '',
-      poBoxNo: '',
-      postOfficeTown: '',
-      countryCode: '',
-      atAddressSince: '',
-      pnTelNo: '',
-      mobNo: '',
-      emailAddress: '',
-      website: '',
-      createdBy: 'BENVIK',
-      createdOn: '2021-05-25T11:48:42.653Z',
-      modifiedBy: 'BENVIK',
-      modifiedOn: '2021-05-25T11:48:42.653Z',
-    },
-  );
+  const postSuccess = useSelector(state => state.individualCustomerIdentification.contact);
+  const initialState = {
+    custID: id,
+    contactType: 'S',
+    buildingName: '',
+    floorNo: '',
+    plotStreetNo: '',
+    lcStreetName: '',
+    parish: '',
+    suburb: '',
+    village: '',
+    countyTown: '',
+    district: '',
+    region: '',
+    poBoxNo: '',
+    postOfficeTown: '',
+    countryCode: '',
+    atAddressSince: '',
+    pnTelNo: '',
+    mobNo: '',
+    emailAddress: '',
+    website: '',
+    createdBy: 'BENVIK',
+    createdOn: '2021-05-25T11:48:42.653Z',
+    modifiedBy: 'BENVIK',
+    modifiedOn: '2021-05-25T11:48:42.653Z',
+  };
+  const [values, setValues] = useState(initialState);
 
   const clearErrors = () => setErrors({});
 
@@ -62,6 +62,7 @@ const SecondaryContactInfo = () => {
         await dispatch(postCustomerContact(values));
         setModal('');
         setErrors({});
+        setValues(initialState);
       }
     }
   }, [errors]);
@@ -77,6 +78,7 @@ const SecondaryContactInfo = () => {
       postError={postError}
       modal={modal}
       setModal={setModal}
+      postSuccess={postSuccess}
     />
   );
 };

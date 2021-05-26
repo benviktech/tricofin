@@ -2,9 +2,11 @@ import {
   PostIdentificationSuccessRequest,
   GetIdentificationSuccessRequest,
   PostContactSuccessRequest,
+  FetchCountriesDataRequest,
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
+export const FETCH_COUNTRIES_SUCCESS = 'FETCH_COUNTRIES_SUCCESS';
 export const POST_CONTACT_SUCCESS = 'POST_CONTACT_SUCCESS';
 export const LOADING_CONTENT = 'LOADING_CONTENT';
 export const LOADING_ERROR = 'LOADING_ERROR';
@@ -53,5 +55,16 @@ export const postCustomerContact = data => async dispatch => {
   } catch (error) {
     const result = `${error.message} 5050`;
     dispatch({ type: LOADING_ERROR, payload: result });
+  }
+};
+
+export const fetchCountriesData = () => async dispatch => {
+  const method = 'get';
+  const path = '/api/StaticData/GetCountries';
+  try {
+    const response = await FetchCountriesDataRequest(method, path);
+    dispatch({ type: FETCH_COUNTRIES_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
