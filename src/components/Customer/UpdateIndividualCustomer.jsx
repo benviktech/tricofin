@@ -47,13 +47,6 @@ const UpdateIndividualCustomer = () => {
     fetchData();
   }, []);
 
-  const typeOfCustomers = [
-    { type: 'CLIENT', value: 'C' },
-    { type: 'STAFF', value: 'S' },
-    { type: 'EMPLOYEE', value: 'E' },
-    { type: 'DIRECTOR', value: 'D' },
-    { type: 'GUARANTOR', value: 'G' }];
-
   const {
     modalCloser, modalOpener, openModel, modalText,
   } = ModalFunction();
@@ -413,9 +406,9 @@ const UpdateIndividualCustomer = () => {
                         >
                           <option value="" disabled selected hidden>Select Customer Type</option>
                           {
-                          typeOfCustomers.map((type, index) => (
-                            <option key={index} value={type.value}>
-                              {type.type}
+                          staticData.customerTypes.map((type, index) => (
+                            <option key={index} value={type.custTypeID}>
+                              {type.customerType}
                             </option>
                           ))
                           }

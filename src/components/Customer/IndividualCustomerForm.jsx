@@ -42,12 +42,6 @@ const IndividualCustomerForm = () => {
 
   const individualCustomers = useSelector(state => state.individualCustomersReducer);
   const staticData = useSelector(state => state.staticDataReducer);
-  const typeOfCustomers = [
-    { type: 'CLIENT', value: 'C' },
-    { type: 'STAFF', value: 'S' },
-    { type: 'EMPLOYEE', value: 'E' },
-    { type: 'DIRECTOR', value: 'D' },
-    { type: 'GUARANTOR', value: 'G' }];
 
   useEffect(() => {
     dispatch(fetchUiStaticData());
@@ -447,12 +441,12 @@ const IndividualCustomerForm = () => {
                         >
                           <option value="" disabled selected hidden>Select </option>
                           {
-                            typeOfCustomers.map((type, index) => (
+                            staticData.staticData.customerTypes.map((type, index) => (
                               <option
                                 key={index}
-                                value={type.value}
+                                value={type.custTypeID}
                               >
-                                {type.type}
+                                {type.customerType}
                               </option>
                             ))
                           }
