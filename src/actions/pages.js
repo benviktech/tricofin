@@ -3,6 +3,7 @@ import {
   GetIdentificationSuccessRequest,
   PostContactSuccessRequest,
   FetchCountriesDataRequest,
+  DeleteIdentificationSuccessRequest,
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
@@ -27,6 +28,19 @@ export const postCustomerIdentification = data => async dispatch => {
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await PostIdentificationSuccessRequest(method, path, data);
+    dispatch(individualCustomerIdentification(response.data));
+  } catch (error) {
+    const result = `${error.message} 5055`;
+    dispatch({ type: LOADING_ERROR, payload: result });
+  }
+};
+
+export const deletCustomerIdentification = (idType, cudId) => async dispatch => {
+  const method = 'delete';
+  const path = `/api/Customers/DeleteCustomerIdentification/${cudId}/${idType}`;
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await DeleteIdentificationSuccessRequest(method, path);
     dispatch(individualCustomerIdentification(response.data));
   } catch (error) {
     const result = `${error.message} 5055`;

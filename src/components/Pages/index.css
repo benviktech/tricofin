@@ -10,7 +10,8 @@
   padding: 0 30px;
 }
 
-.submit-button-section button {
+.submit-button-section button,
+.delete-info button {
   height: 30px;
   padding: 5px 20px;
   border: none;
@@ -20,6 +21,11 @@
   color: #fff;
   font-weight: 600;
   font-size: 12px;
+}
+
+.delete-info button {
+  background-color: red;
+  padding: 2px 10px;
 }
 
 .signature-section,
