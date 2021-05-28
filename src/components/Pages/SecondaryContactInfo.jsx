@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { useParams } from 'react-router';
 import ContactInfo from './ContactInfo';
 import contactValidator from '../Validators/ContactValidator';
@@ -13,6 +14,7 @@ const SecondaryContactInfo = () => {
   const postError = useSelector(state => state.individualCustomerIdentification.error);
   const { id } = useParams();
   const postSuccess = useSelector(state => state.individualCustomerIdentification.contact);
+  const [contactInfo, setContactInfo] = useState({});
   const initialState = {
     custID: id,
     contactType: 'S',
@@ -67,6 +69,19 @@ const SecondaryContactInfo = () => {
     }
   }, [errors]);
 
+  useEffect(async () => {
+    const response = await axios.get(`https://tricofin.azurewebsites.net/api/Customers/GetSecondaryContactInformation/${id}`);
+    if (response.data) {
+      if (Object.keys(response.data).includes('contactType')) {
+        setContactInfo(response.data);
+        setModal('');
+      }
+    }
+    return () => {
+      setModal('d-none');
+    };
+  }, []);
+
   return (
     <ContactInfo
       header={headerSecondaryContact}
@@ -79,6 +94,7 @@ const SecondaryContactInfo = () => {
       modal={modal}
       setModal={setModal}
       postSuccess={postSuccess}
+      contactInfo={contactInfo}
     />
   );
 };

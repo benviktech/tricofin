@@ -22,6 +22,7 @@ const ContactInfo = ({
   modal,
   setModal,
   postSuccess,
+  contactInfo,
 }) => {
   const regions = [{ id: 1, name: 'NORTHERN' },
     { id: 2, name: 'EASTERN' },
@@ -61,6 +62,16 @@ const ContactInfo = ({
                   onClick={() => setModal('d-none')}
                 />
                 Contact Created Succesfully
+              </div>
+            ) : Object.keys(contactInfo).length > 0 ? (
+              <div className={`${modal} submit-error-section shadow text-success`}>
+                <i
+                  className="far fa-times-circle"
+                  onClick={() => setModal('d-none')}
+                />
+                {header.split(' ')[0]}
+                {' '}
+                Contact Exists
               </div>
             ) : null
           }
@@ -337,11 +348,21 @@ const ContactInfo = ({
                       </div>
                     </div>
                     <div className="add-form-data-button">
-                      <button
-                        type="submit"
-                      >
-                        Add
-                      </button>
+                      {
+                        Object.keys(contactInfo).length > 0 ? (
+                          <button
+                            type="submit"
+                          >
+                            Update
+                          </button>
+                        ) : (
+                          <button
+                            type="submit"
+                          >
+                            Add
+                          </button>
+                        )
+                      }
                       <button
                         type="button"
                         onClick={clearErrors}

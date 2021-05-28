@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { useParams } from 'react-router';
 import ContactInfo from './ContactInfo';
 import { postCustomerContact } from '../../actions/pages';
@@ -13,6 +14,7 @@ const PrimaryContactForm = () => {
   const postError = useSelector(state => state.individualCustomerIdentification.error);
   const { id } = useParams();
   const postSuccess = useSelector(state => state.individualCustomerIdentification.contact);
+  const [contactInfo, setContactInfo] = useState({});
   const initialState = {
     custID: id,
     contactType: 'P',
@@ -67,6 +69,19 @@ const PrimaryContactForm = () => {
     }
   }, [errors]);
 
+  useEffect(async () => {
+    const response = await axios.get(`https://tricofin.azurewebsites.net/api/Customers/GetPrimaryContactInformation/${id}`);
+    if (response.data) {
+      if (Object.keys(response.data).includes('contactType')) {
+        setContactInfo(response.data);
+        setModal('');
+      }
+    }
+    return () => {
+      setModal('d-none');
+    };
+  }, []);
+
   return (
     <ContactInfo
       header={headerPrimaryContact}
@@ -79,6 +94,7 @@ const PrimaryContactForm = () => {
       modal={modal}
       setModal={setModal}
       postSuccess={postSuccess}
+      contactInfo={contactInfo}
     />
   );
 };
