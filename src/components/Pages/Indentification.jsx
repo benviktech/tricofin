@@ -284,7 +284,7 @@ const Indentification = () => {
                                                     : 'NIN'}
                             </div>
                             <div className="idcode-section-inner">
-                              {content.idNo}
+                              {(content.idNo).toUpperCase()}
                             </div>
                             <div className="idcode-section-inner">
                               {content.countryID}

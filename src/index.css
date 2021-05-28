@@ -11,3 +11,7 @@ label {
   font-weight: bold;
   color: #444;
 }
+
+input {
+  text-transform: uppercase;
+}
