@@ -4,6 +4,7 @@ import {
   PostContactSuccessRequest,
   FetchCountriesDataRequest,
   DeleteIdentificationSuccessRequest,
+  UpdateContactSuccessRequest,
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
@@ -65,6 +66,19 @@ export const postCustomerContact = data => async dispatch => {
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await PostContactSuccessRequest(method, path, data);
+    dispatch(individualCustomerContact(response.data));
+  } catch (error) {
+    const result = `${error.message} 5050`;
+    dispatch({ type: LOADING_ERROR, payload: result });
+  }
+};
+
+export const updateCustomerContact = data => async dispatch => {
+  const method = 'put';
+  const path = '/api/Customers/UpdateContactInformation';
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await UpdateContactSuccessRequest(method, path, data);
     dispatch(individualCustomerContact(response.data));
   } catch (error) {
     const result = `${error.message} 5050`;

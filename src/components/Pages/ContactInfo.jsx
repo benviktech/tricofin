@@ -23,6 +23,7 @@ const ContactInfo = ({
   setModal,
   postSuccess,
   contactInfo,
+  updateContact,
 }) => {
   const regions = [{ id: 1, name: 'NORTHERN' },
     { id: 2, name: 'EASTERN' },
@@ -351,7 +352,8 @@ const ContactInfo = ({
                       {
                         Object.keys(contactInfo).length > 0 ? (
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={updateContact}
                           >
                             Update
                           </button>

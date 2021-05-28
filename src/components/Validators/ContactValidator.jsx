@@ -1,8 +1,13 @@
 /* eslint-disable no-restricted-globals */
 
-export default function contactValidator(values) {
+export default function contactValidator(values, state = 'Save Contact') {
   const errors = {};
-  errors.buttonClick = 'submission';
+  if (state === 'Save Contact') {
+    errors.buttonClick = 'Save Contact';
+  }
+  if (state === 'Update Contact') {
+    errors.buttonClick = 'Update Contact';
+  }
   if (!values.atAddressSince) {
     errors.atAddressSince = 'Must be provided';
   }

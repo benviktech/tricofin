@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import ContactInfo from './ContactInfo';
 import contactValidator from '../Validators/ContactValidator';
-import { postCustomerContact } from '../../actions/pages';
+import { postCustomerContact, updateCustomerContact } from '../../actions/pages';
 
 const SecondaryContactInfo = () => {
   const headerSecondaryContact = 'Secondary Contact Information';
@@ -58,10 +58,24 @@ const SecondaryContactInfo = () => {
     setErrors(contactValidator(values));
   };
 
+  const updateSecondaryContact = () => {
+    const state = 'Update Contact';
+    setErrors(contactValidator(values, state));
+  };
+
   useEffect(async () => {
-    if (Object.keys(errors).includes('buttonClick')) {
+    if (Object.values(errors).includes('Save Contact')) {
       if (Object.keys(errors).length === 1) {
         await dispatch(postCustomerContact(values));
+        setModal('');
+        setErrors({});
+        setValues(initialState);
+      }
+    }
+
+    if (Object.values(errors).includes('Update Contact')) {
+      if (Object.keys(errors).length === 1) {
+        await dispatch(updateCustomerContact(values));
         setModal('');
         setErrors({});
         setValues(initialState);
@@ -95,6 +109,7 @@ const SecondaryContactInfo = () => {
       setModal={setModal}
       postSuccess={postSuccess}
       contactInfo={contactInfo}
+      updateContact={updateSecondaryContact}
     />
   );
 };

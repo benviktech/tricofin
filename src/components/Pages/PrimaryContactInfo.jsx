@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import ContactInfo from './ContactInfo';
-import { postCustomerContact } from '../../actions/pages';
+import { postCustomerContact, updateCustomerContact } from '../../actions/pages';
 import contactValidator from '../Validators/ContactValidator';
 
 const PrimaryContactForm = () => {
@@ -58,10 +58,24 @@ const PrimaryContactForm = () => {
     setErrors(contactValidator(values));
   };
 
+  const updatePrimaryContact = () => {
+    const state = 'Update Contact';
+    setErrors(contactValidator(values, state));
+  };
+
   useEffect(async () => {
-    if (Object.keys(errors).includes('buttonClick')) {
+    if (Object.values(errors).includes('Save Contact')) {
       if (Object.keys(errors).length === 1) {
         await dispatch(postCustomerContact(values));
+        setModal('');
+        setErrors({});
+        setValues(initialState);
+      }
+    }
+
+    if (Object.values(errors).includes('Update Contact')) {
+      if (Object.keys(errors).length === 1) {
+        await dispatch(updateCustomerContact(values));
         setModal('');
         setErrors({});
         setValues(initialState);
@@ -95,6 +109,7 @@ const PrimaryContactForm = () => {
       setModal={setModal}
       postSuccess={postSuccess}
       contactInfo={contactInfo}
+      updateContact={updatePrimaryContact}
     />
   );
 };
