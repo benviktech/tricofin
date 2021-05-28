@@ -68,7 +68,7 @@ export const postIndividualCustomers = (values, history) => async dispatch => {
   };
 
   const method = 'post';
-  const path = '/api/Customers/SaveIndividualCustomer';
+  const path = 'api/Customers/SaveIndividualCustomer';
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await PostIndividualCustomersRequest(method, data, path);

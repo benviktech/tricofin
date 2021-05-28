@@ -271,7 +271,7 @@ const ContactInfo = ({
                       </div>
                     </div>
                     <div className="unit-floor-section">
-                      <div className="label-unit unit-left-section">
+                      <div className="label-unit unit-left-section text-info">
                         Been At Address Since:
                       </div>
                       <div className="unit-section unit-right-section street-no-content">

@@ -159,7 +159,7 @@ const Indentification = () => {
                   <div className="upper-inputs-section">
                     <div className="top-inputs-section">
                       <div className="id-type-section">
-                        <div className="input-label">
+                        <div className="input-label text-info">
                           ID Types:
                         </div>
                         <select
@@ -184,7 +184,7 @@ const Indentification = () => {
                         </div>
                       </div>
                       <div className="id-number-section">
-                        <div className="id-input-label">ID No:</div>
+                        <div className="id-input-label text-danger">ID No:</div>
                         <input
                           value={idNumber}
                           onChange={e => setIdNumber(e.target.value)}
@@ -200,7 +200,7 @@ const Indentification = () => {
                     </div>
                     <div className="bottom-input-section">
                       <div className="id-type-section">
-                        <div className="input-label">
+                        <div className="input-label text-info">
                           Country of Issue:
                         </div>
                         <select
