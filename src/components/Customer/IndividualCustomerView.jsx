@@ -117,7 +117,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {(personalData.individualCustomer.foreName2).toUpperCase()}
+                          {personalData.individualCustomer.foreName2}
                         </div>
                       </div>
                     </div>
@@ -127,7 +127,7 @@ const ViewIndividualCustomer = () => {
                         <div
                           className="form-control-input col-md-8"
                         >
-                          {(personalData.individualCustomer.foreName3).toUpperCase()}
+                          {personalData.individualCustomer.foreName3}
                         </div>
                       </div>
                     </div>
