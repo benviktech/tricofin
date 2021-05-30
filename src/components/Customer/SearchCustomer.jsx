@@ -18,7 +18,7 @@ const SearchCustomer = () => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get('https://tricoapi.azurewebsites.net/api/Customers/GetIndividualCustomers');
+      const response = await axios.get('https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomers');
       settestState(response.data);
     } catch (error) {
       console.log(error.message);

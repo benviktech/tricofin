@@ -3,7 +3,8 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { NavLink, useParams, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SidebarLink = styled.div`
@@ -28,7 +29,7 @@ const SidebarLabel = styled.span`
 
 const DropdownLink = styled(NavLink)`
     height: 60px;
-    padding-left: 3rem;
+    padding-left: 2rem;
     display: flex;
     align-items: center;
     color: #444;
@@ -47,8 +48,21 @@ const DropdownLinkIcon = styled.div`
 
 const SidebarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
+  const { id } = useParams();
 
   const showSubnav = () => setSubnav(!subnav);
+  const { url } = useRouteMatch();
+
+  const currentUser = useSelector(state => state.individualCustomersReducer);
+
+  React.useEffect(() => {
+    if (url.split('/')[1] === 'signature'
+    || url.split('/')[1] === 'identification'
+    || url.split('/')[1] === 'primarycontactinfo'
+    || url.split('/')[1] === 'secondarycontactinfo') {
+      setSubnav(true);
+    }
+  }, []);
 
   return (
     <>
@@ -65,14 +79,30 @@ const SidebarMenu = ({ item }) => {
         </div>
       </SidebarLink>
       {
+        (Object.keys(currentUser.individualCustomer).length > 0
+        && url.split('/')[1] !== 'individualcustomerform')
+        || url.split('/')[1] === 'signature'
+        || url.split('/')[1] === 'identification'
+        || url.split('/')[1] === 'primarycontactinfo'
+        || url.split('/')[1] === 'secondarycontactinfo' ? (
+
             subnav && item.subNav.map((item, index) => (
-              <DropdownLink to={item.path} key={index}>
+              <DropdownLink
+                onClick={item.subNav && showSubnav}
+                activeStyle={{
+                  background: '#AEAEAE',
+                }}
+                exact
+                to={`${item.path}/${id}`}
+                key={index}
+              >
                 <DropdownLinkIcon>
                   { item.icon }
                 </DropdownLinkIcon>
                 <SidebarLabel>{ item.title }</SidebarLabel>
               </DropdownLink>
             ))
+          ) : null
         }
     </>
   );

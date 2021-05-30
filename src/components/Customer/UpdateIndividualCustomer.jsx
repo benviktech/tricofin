@@ -35,11 +35,11 @@ const UpdateIndividualCustomer = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get('https://tricoapi.azurewebsites.net/api/StaticData/GetStaticData')
+      await axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetStaticData')
         .then(response => {
           setStaticData(response.data);
           axios.get(
-            `https://tricoapi.azurewebsites.net/api/Customers/GetIndividualCustomer/${id}`,
+            `https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomer/${id}`,
           ).then(response => setDataState(response.data))
             .catch(error => console.log(error.message));
         }).catch(error => console.log(error.message));
@@ -129,7 +129,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label htmlFor="customerId w-50">SurName:</label>
+                    <label className="text-info" htmlFor="customerId">SurName:</label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -142,7 +142,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label htmlFor="customerId w-50">ForeName1:</label>
+                    <label className="text-info" htmlFor="customerId">ForeName1:</label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -179,7 +179,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group d-flex align-items-center col-md-12">
-                    <label htmlFor="customerId w-50">Residential Address:</label>
+                    <label className="text-info" htmlFor="customerId">Residential Address:</label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -216,7 +216,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
-                    <label className="w-25" htmlFor="customerId">Date of Birth:</label>
+                    <label className="w-25 text-info" htmlFor="customerId">Date of Birth:</label>
                     <input
                       className="form-control-input col-md-8"
                       type="date"
@@ -271,7 +271,7 @@ const UpdateIndividualCustomer = () => {
 
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
-                        <label htmlFor="customerId w-50">Gender:</label>
+                        <label className="text-info" htmlFor="customerId">Gender:</label>
                         {
                           Object.keys(staticData).includes('gender') ? (
                             <select
@@ -305,7 +305,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25" htmlFor="customerId">Nationality:</label>
+                    <label className="w-25 text-info" htmlFor="customerId">Nationality:</label>
                     {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
@@ -335,7 +335,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25" htmlFor="customerId">Marital Status:</label>
+                    <label className="w-25 text-info" htmlFor="customerId">Marital Status:</label>
                     {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
@@ -365,7 +365,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25" htmlFor="customerId">Risk Profile:</label>
+                    <label className="w-25 text-info" htmlFor="customerId">Risk Profile:</label>
                     {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
@@ -395,7 +395,7 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25" htmlFor="customerId">Customer Type:</label>
+                    <label className="w-25 text-info" htmlFor="customerId">Customer Type:</label>
                     {
                       Object.keys(staticData).includes('customerTypes') ? (
                         <select
