@@ -6,6 +6,10 @@ import IndividualCustomerForm from '../Customer/IndividualCustomerForm';
 import ViewIndividualCustomer from '../Customer/IndividualCustomerView';
 import UpdateIndividualCustomer from '../Customer/UpdateIndividualCustomer';
 import Footer from '../Footer/Footer';
+import Signature from '../Pages/Signature';
+import Indentification from '../Pages/Indentification';
+import PrimaryContactInfo from '../Pages/PrimaryContactInfo';
+import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
 
 const Router = () => (
   <div className="router-section">
@@ -16,6 +20,10 @@ const Router = () => (
         <Route path="/individualcustomerform" component={IndividualCustomerForm} />
         <Route path="/viewindividualcustomerform/:id" component={ViewIndividualCustomer} />
         <Route path="/updatecustomer/:id" component={UpdateIndividualCustomer} />
+        <Route path="/signature/:id" component={Signature} />
+        <Route path="/identification/:id" component={Indentification} />
+        <Route path="/primarycontactinfo/:id" component={PrimaryContactInfo} />
+        <Route path="/secondarycontactinfo/:id" component={SecondaryContactInfo} />
       </Switch>
       <Footer />
     </BrowserRouter>

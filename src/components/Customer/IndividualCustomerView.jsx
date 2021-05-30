@@ -8,7 +8,10 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../Sidebar/Sidebar';
 import Profile from '../../images/avatar.png';
-import { fetchSingleIndividualCustomer } from '../../actions/individualCustomer';
+import {
+  fetchSingleIndividualCustomer,
+  signaturePhotoFetch,
+} from '../../actions/individualCustomer';
 import Spinner from '../Spinner/Spinner';
 import ModalFunction from '../Modal/ModalFunction';
 import Modal from '../Modal/Modal';
@@ -24,9 +27,11 @@ const ViewIndividualCustomer = () => {
   } = ModalFunction();
 
   const personalData = useSelector(state => state.individualCustomersReducer);
+  const ImageInfo = useSelector(state => state.individualCustomersReducer.imageInfo);
 
   useEffect(() => {
     dispatch(fetchSingleIndividualCustomer(id));
+    dispatch(signaturePhotoFetch(id));
   }, []);
 
   return personalData.loading ? (
@@ -208,13 +213,19 @@ const ViewIndividualCustomer = () => {
                             <div
                               className="form-control-input col-md-8"
                             >
-                              {personalData.individualCustomer.genderID === 'M' ? 'Male' : 'Female'}
+                              {personalData.individualCustomer.genderID === 'M' ? 'MALE' : 'FEMALE'}
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="image-section mb-2">
-                        <img src={Profile} alt="profile" />
+                        {
+                          Object.keys(ImageInfo).length > 0 ? (
+                            <img src={`${ImageInfo.imageSrc}`} alt="profile" />
+                          ) : (
+                            <img src={Profile} alt="profile" />
+                          )
+                        }
                       </div>
                     </div>
                     <div className="form-group ">
@@ -224,12 +235,12 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomer.nationalityID === 'N' ? 'Nigerian'
-                            : personalData.individualCustomer.nationalityID === 'U' ? 'Ugandan'
-                              : personalData.individualCustomer.nationalityID === 'K' ? 'Kenyan'
-                                : personalData.individualCustomer.nationalityID === 'T' ? 'Tanzanian'
-                                  : personalData.individualCustomer.nationalityID === 'R' ? 'Rwandan'
-                                    : 'Indian'
+                          personalData.individualCustomer.nationalityID === 'N' ? 'NIGERIAN'
+                            : personalData.individualCustomer.nationalityID === 'U' ? 'UGANDAN'
+                              : personalData.individualCustomer.nationalityID === 'K' ? 'KENYAN'
+                                : personalData.individualCustomer.nationalityID === 'T' ? 'TANZANIAN'
+                                  : personalData.individualCustomer.nationalityID === 'R' ? 'RWANDAN'
+                                    : 'INDIAN'
                           }
                         </div>
                       </div>
@@ -241,11 +252,11 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomer.maritalStatusID === 1 ? 'Single'
-                            : personalData.individualCustomer.maritalStatusID === 2 ? 'Divorced'
-                              : personalData.individualCustomer.maritalStatusID === 3 ? 'Married'
-                                : personalData.individualCustomer.maritalStatusID === 4 ? 'Separated'
-                                  : personalData.individualCustomer.maritalStatusID === 5 ? 'Widowed'
+                          personalData.individualCustomer.maritalStatusID === 1 ? 'SINGLE'
+                            : personalData.individualCustomer.maritalStatusID === 2 ? 'DIVORCED'
+                              : personalData.individualCustomer.maritalStatusID === 3 ? 'MARRIED'
+                                : personalData.individualCustomer.maritalStatusID === 4 ? 'SEPERATED'
+                                  : personalData.individualCustomer.maritalStatusID === 5 ? 'WIDOWED'
                                     : 'Anulled'
                           }
                         </div>
@@ -258,9 +269,9 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomer.riskProfileID === 'L' ? 'Low'
-                            : personalData.individualCustomer.riskProfileID === 'M' ? 'Medium'
-                              : 'High'
+                          personalData.individualCustomer.riskProfileID === 'L' ? 'LOW'
+                            : personalData.individualCustomer.riskProfileID === 'M' ? 'MEDIUM'
+                              : 'HIGH'
                           }
                         </div>
                       </div>
@@ -272,11 +283,11 @@ const ViewIndividualCustomer = () => {
                           className="form-control-input col-md-8"
                         >
                           {
-                          personalData.individualCustomer.custTypeID === 'C' ? 'Client'
-                            : personalData.individualCustomer.custTypeID === 'S' ? 'Staff'
-                              : personalData.individualCustomer.custTypeID === 'E' ? 'Employee'
-                                : personalData.individualCustomer.custTypeID === 'D' ? 'Director'
-                                  : 'Guarantor'
+                          personalData.individualCustomer.custTypeID === 'C' ? 'CLIENT'
+                            : personalData.individualCustomer.custTypeID === 'S' ? 'STAFF'
+                              : personalData.individualCustomer.custTypeID === 'E' ? 'EMPLOYEE'
+                                : personalData.individualCustomer.custTypeID === 'D' ? 'DIRECTOR'
+                                  : 'GUARANTOR'
                           }
                         </div>
                       </div>
