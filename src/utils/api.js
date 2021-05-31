@@ -71,3 +71,8 @@ export const DeleteIdentificationSuccessRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
+
+export const PostNonIndividualCustomersRequest = async (method, data, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};

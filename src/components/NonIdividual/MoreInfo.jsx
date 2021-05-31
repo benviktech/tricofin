@@ -24,7 +24,7 @@ const MoreInfo = ({ modalOpener }) => (
       </div>
       <div className="form-group d-flex  ml-2">
         <div className="left-form-group-division">
-          <div className="left-form-group-div" htmlFor="customerId">shares Balance:</div>
+          <div className="left-form-group-div" htmlFor="customerId">Savings Balance:</div>
           <div className="form-control-div border">
             0.00
           </div>
