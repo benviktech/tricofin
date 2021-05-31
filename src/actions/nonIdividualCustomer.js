@@ -1,5 +1,6 @@
 import {
   PostNonIndividualCustomersRequest,
+  GetNonIndividualCustomerRequest,
 } from '../utils/api';
 
 export const POST_NON_INDIVIDUAL_CUSTOMER_SUCCESS = 'POST_NON_INDIVIDUAL_CUSTOMER_SUCCESS';
@@ -36,9 +37,19 @@ export const postNonIndividualCustomers = (data, history) => async dispatch => {
     dispatch({ type: LOADING_CONTENT });
     const response = await PostNonIndividualCustomersRequest(method, values, path);
     dispatch(nonIndividualCustomersSuccessFetch(response.data));
-    console.log(history, 'history information');
-    console.log(response.data, 'history information');
-    // history.push(`/viewindividualcustomerform/${response.data.custID}`);
+    history.push(`/viewnonindividualcustomerform/${response.data.custID}`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const fetchSingleNonIndividualCustomer = CustId => async dispatch => {
+  const method = 'get';
+  const path = `/api/Customers/GetNonIndividualCustomer/${CustId}`;
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await GetNonIndividualCustomerRequest(method, path);
+    dispatch(nonIndividualCustomersSuccessFetch(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
