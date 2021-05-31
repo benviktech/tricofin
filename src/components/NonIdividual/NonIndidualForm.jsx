@@ -3,11 +3,18 @@
 import React from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import './index.css';
+import MoreInfo from './MoreInfo';
+import ModalFunction from '../Modal/ModalFunction';
+import Modal from '../Modal/Modal';
 
 const NonIndidualCustomerForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
   };
+
+  const {
+    modalCloser, modalOpener, openModel, modalText,
+  } = ModalFunction();
 
   const clearInputsValues = () => {
     console.log('clear content');
@@ -15,7 +22,11 @@ const NonIndidualCustomerForm = () => {
 
   return (
     <div className="individual-customer-form">
-
+      <Modal
+        modalText={modalText}
+        modalCloser={modalCloser}
+        openModel={openModel}
+      />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>Non Individual Customer Information</span>
@@ -145,7 +156,7 @@ const NonIndidualCustomerForm = () => {
                 </div>
               </div>
             </form>
-
+            <MoreInfo modalOpener={modalOpener} />
           </div>
         </div>
       </div>
