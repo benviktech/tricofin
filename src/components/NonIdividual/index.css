@@ -3,3 +3,14 @@ textarea {
     background-color: pink;
     padding: 10px !important;
 }
+
+.span-warning-non {
+    position: absolute;
+    color: red;
+    bottom: -15px;
+    right: 20px;
+}
+
+.submit-button-section {
+    margin-top: 30px !important;
+}

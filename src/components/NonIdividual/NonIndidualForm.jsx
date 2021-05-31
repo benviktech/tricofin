@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../Sidebar/Sidebar';
 import './index.css';
+import '../Customer/index.css';
 import MoreInfo from './MoreInfo';
 import ModalFunction from '../Modal/ModalFunction';
 import Modal from '../Modal/Modal';
@@ -46,7 +47,7 @@ const NonIndidualCustomerForm = () => {
                 }).catch(error => console.log(error.message));
             }).catch(error => console.log(error.message));
         })
-        .catch(errors => console.log(errors.message));
+        .catch(error => console.log(error.message));
     };
     fetchData();
   }, []);
@@ -90,7 +91,7 @@ const NonIndidualCustomerForm = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.bizName && <small className="span-warning mt-4">{errors.bizName}</small>}
+                  { errors.bizName && <small className="span-warning-non mt-4">{errors.bizName}</small>}
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
@@ -103,7 +104,7 @@ const NonIndidualCustomerForm = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.bizName && <small className="span-warning mt-4">{errors.bizName}</small>}
+                  { errors.tradingName && <small className="span-warning-non mt-4">{errors.tradingName}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
@@ -138,6 +139,7 @@ const NonIndidualCustomerForm = () => {
                     )
                   }
                   </div>
+                  { errors.econID && <small className="span-warning-non mt-4">{errors.econID}</small>}
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
@@ -171,6 +173,7 @@ const NonIndidualCustomerForm = () => {
                     )
                   }
                   </div>
+                  { errors.indSecID && <small className="span-warning-non mt-4">{errors.indSecID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group d-flex align-items-center col-md-12">
@@ -204,6 +207,7 @@ const NonIndidualCustomerForm = () => {
                     )
                   }
                   </div>
+                  { errors.bizTypeID && <small className="span-warning-non mt-4">{errors.bizTypeID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
@@ -218,6 +222,7 @@ const NonIndidualCustomerForm = () => {
                       onChange={handleChange}
                     />
                   </div>
+                  { errors.activityDescription && <small className="span-warning-non mt-4">{errors.activityDescription}</small>}
                 </div>
               </div>
               <div className="right-inner-form-section">
@@ -232,6 +237,7 @@ const NonIndidualCustomerForm = () => {
                       onChange={handleChange}
                     />
                   </div>
+                  { errors.regDate && <small className="span-warning-non mt-4">{errors.regDate}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
@@ -265,6 +271,7 @@ const NonIndidualCustomerForm = () => {
                     )
                   }
                   </div>
+                  { errors.riskProfileID && <small className="span-warning-non mt-4">{errors.riskProfileID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
@@ -298,6 +305,7 @@ const NonIndidualCustomerForm = () => {
                     )
                   }
                   </div>
+                  { errors.custTypeID && <small className="span-warning-non mt-4">{errors.custTypeID}</small>}
                 </div>
                 <div className="submit-button-section">
                   <button
