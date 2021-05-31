@@ -11,6 +11,7 @@ import Indentification from '../Pages/Indentification';
 import PrimaryContactInfo from '../Pages/PrimaryContactInfo';
 import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
 import NonIndidualCustomerForm from '../NonIdividual/NonIndidualForm';
+import NonIndividualCustomerView from '../NonIdividual/NonIndividualCustomerView';
 
 const Router = () => (
   <div className="router-section">
@@ -26,6 +27,7 @@ const Router = () => (
         <Route path="/primarycontactinfo/:id" component={PrimaryContactInfo} />
         <Route path="/secondarycontactinfo/:id" component={SecondaryContactInfo} />
         <Route path="/nonindidualcustomerform" component={NonIndidualCustomerForm} />
+        <Route path="/viewnonindividualcustomerform/:id" component={NonIndividualCustomerView} />
       </Switch>
       <Footer />
     </BrowserRouter>
