@@ -1,7 +1,7 @@
 textarea {
     height: 80px !important;
     background-color: pink;
-    padding: 10px !important;
+    padding: 10px 20px !important;
 }
 
 .span-warning-non {
