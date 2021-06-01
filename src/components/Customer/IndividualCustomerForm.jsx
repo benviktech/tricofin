@@ -72,6 +72,7 @@ const IndividualCustomerForm = () => {
                   <div className="left-form-group manage-drop-down col-md-8">
                     <label htmlFor="customerId w-50">Search By Name:</label>
                     <input
+                      autoComplete="off"
                       className="form-control-input col-md-8"
                       type="text"
                       name="searchcustomer"
