@@ -17,13 +17,13 @@ export const postNonIndividualCustomers = (data, history) => async dispatch => {
   const path = '/api/Customers/SaveNonIndividualCustomer';
 
   const values = {
-    bizName: data.bizName,
-    tradingName: data.tradingName,
+    bizName: (data.bizName).toUpperCase(),
+    tradingName: (data.tradingName).toUpperCase(),
     econID: parseInt(data.econID, 10),
     indSecID: parseInt(data.indSecID, 10),
     bizTypeID: parseInt(data.bizTypeID, 10),
     regDate: data.regDate,
-    activityDescription: data.activityDescription,
+    activityDescription: (data.activityDescription).toUpperCase(),
     custTypeID: data.custTypeID,
     riskProfileID: data.riskProfileID,
     isDeleted: false,
