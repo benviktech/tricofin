@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable no-restricted-globals */
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +33,7 @@ const ContactInfo = ({
     { id: 'W', name: 'WESTERN' },
     { id: 'S', name: 'SOUTHERN' }];
   const [countries, setCountries] = useState([]);
+  const [numErrors, setNumErrors] = useState({});
   const dispatch = useDispatch();
   const countriesData = useSelector(state => state.individualCustomerIdentification.countries);
 
@@ -50,6 +52,26 @@ const ContactInfo = ({
   useEffect(() => {
     setCountries(countriesData);
   }, [countriesData]);
+
+  useEffect(() => {
+    const results = {};
+    if (contactInfo.plotStreetNo && isNaN(contactInfo.plotStreetNo)) {
+      results.plotStreetNo = 'Must be number';
+    }
+    if (contactInfo.floorNo && isNaN(contactInfo.floorNo)) {
+      results.floorNo = 'Must be number';
+    }
+    if (contactInfo.poBoxNo && isNaN(contactInfo.poBoxNo)) {
+      results.poBoxNo = 'Must be number';
+    }
+    if (contactInfo.pnTelNo && isNaN(contactInfo.pnTelNo)) {
+      results.pnTelNo = 'Must be number';
+    }
+    if (contactInfo.mobNo && isNaN(contactInfo.mobNo)) {
+      results.mobNo = 'Must be number';
+    }
+    setNumErrors(results);
+  }, [contactInfo]);
 
   return (
     <div className="individual-customer-form">
@@ -148,6 +170,7 @@ const ContactInfo = ({
                         {
                           Object.keys(contactInfo).length > 0 ? (
                             <input
+                              autoComplete="off"
                               value={contactInfo.plotStreetNo}
                               onChange={handleUpdateChange}
                               name="plotStreetNo"
@@ -155,6 +178,7 @@ const ContactInfo = ({
                             />
                           ) : (
                             <input
+                              autoComplete="off"
                               value={values.plotStreetNo}
                               onChange={handleChange}
                               name="plotStreetNo"
@@ -169,6 +193,7 @@ const ContactInfo = ({
                           {
                             Object.keys(contactInfo).length > 0 ? (
                               <input
+                                autoComplete="off"
                                 value={contactInfo.floorNo}
                                 onChange={handleUpdateChange}
                                 name="floorNo"
@@ -176,6 +201,7 @@ const ContactInfo = ({
                               />
                             ) : (
                               <input
+                                autoComplete="off"
                                 value={values.floorNo}
                                 onChange={handleChange}
                                 name="floorNo"
@@ -184,11 +210,11 @@ const ContactInfo = ({
                             )
                           }
                           <div className="floor-no-error">
-                            {errors.floorNo && errors.floorNo}
+                            {numErrors.floorNo && numErrors.floorNo}
                           </div>
                         </div>
                         <div className="street-no-error">
-                          {errors.plotStreetNo && errors.plotStreetNo}
+                          {numErrors.plotStreetNo && numErrors.plotStreetNo}
                         </div>
                       </div>
                     </div>
@@ -200,6 +226,7 @@ const ContactInfo = ({
                         {
                           Object.keys(contactInfo).length > 0 ? (
                             <input
+                              autoComplete="off"
                               value={contactInfo.parish}
                               onChange={handleUpdateChange}
                               name="parish"
@@ -410,6 +437,7 @@ const ContactInfo = ({
                         {
                           Object.keys(contactInfo).length > 0 ? (
                             <input
+                              autoComplete="off"
                               value={contactInfo.poBoxNo}
                               name="poBoxNo"
                               onChange={handleUpdateChange}
@@ -417,6 +445,7 @@ const ContactInfo = ({
                             />
                           ) : (
                             <input
+                              autoComplete="off"
                               value={values.poBoxNo}
                               name="poBoxNo"
                               onChange={handleChange}
@@ -447,7 +476,7 @@ const ContactInfo = ({
                           }
                         </div>
                         <div className="office-no-error">
-                          {errors.poBoxNo && errors.poBoxNo}
+                          {numErrors.poBoxNo && numErrors.poBoxNo}
                         </div>
                       </div>
                     </div>
@@ -488,6 +517,7 @@ const ContactInfo = ({
                         {
                           Object.keys(contactInfo).length > 0 ? (
                             <input
+                              autoComplete="off"
                               value={contactInfo.pnTelNo}
                               name="pnTelNo"
                               onChange={handleUpdateChange}
@@ -495,6 +525,7 @@ const ContactInfo = ({
                             />
                           ) : (
                             <input
+                              autoComplete="off"
                               value={values.pnTelNo}
                               name="pnTelNo"
                               onChange={handleChange}
@@ -509,6 +540,7 @@ const ContactInfo = ({
                           {
                             Object.keys(contactInfo).length > 0 ? (
                               <input
+                                autoComplete="off"
                                 value={contactInfo.mobNo}
                                 name="mobNo"
                                 onChange={handleUpdateChange}
@@ -516,6 +548,7 @@ const ContactInfo = ({
                               />
                             ) : (
                               <input
+                                autoComplete="off"
                                 value={values.mobNo}
                                 name="mobNo"
                                 onChange={handleChange}
@@ -524,11 +557,11 @@ const ContactInfo = ({
                             )
                           }
                           <div className="floor-no-error">
-                            {errors.mobNo && errors.mobNo}
+                            {numErrors.mobNo && numErrors.mobNo}
                           </div>
                         </div>
                         <div className="street-no-error">
-                          {errors.pnTelNo && errors.pnTelNo}
+                          {numErrors.pnTelNo && numErrors.pnTelNo}
                         </div>
                       </div>
                     </div>
