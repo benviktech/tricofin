@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../Sidebar/Sidebar';
 import './index.css';
@@ -11,6 +12,7 @@ import ModalFunction from '../Modal/ModalFunction';
 import Modal from '../Modal/Modal';
 import UseForm from './UseForm';
 import validate from '../Validators/NonIndividualCustomer';
+import SearchNonIndividual from './SearchNonIndividual';
 
 const NonIndidualCustomerForm = () => {
   const [sectors, setSectors] = useState([]);
@@ -25,8 +27,14 @@ const NonIndidualCustomerForm = () => {
     modalCloser, modalOpener, openModel, modalText,
   } = ModalFunction();
 
+  const {
+    searchNonIndividualCustomer,
+    searchedCustomer, finalSortedList,
+    setSearchedCustomer,
+  } = SearchNonIndividual();
+
   const clearInputsValues = () => {
-    console.log('clear content');
+    setSearchedCustomer('');
     setErrors({});
   };
 
@@ -71,13 +79,46 @@ const NonIndidualCustomerForm = () => {
             <form className="main-form-color" onSubmit={handleSubmit}>
               <div className="middle-inner-form-section">
                 <div className="form-group">
-                  <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">Search Customer:</label>
+                  <div className="left-form-group manage-drop-down col-md-12">
+                    <label htmlFor="customerId w-50">Search By Name:</label>
                     <input
+                      autoComplete="off"
                       className="form-control-input col-md-8"
                       type="text"
-                      name="surName"
+                      name="searchcustomer"
+                      value={searchedCustomer}
+                      onChange={searchNonIndividualCustomer}
                     />
+                    {
+                         searchedCustomer === '' ? (
+                           <div className="modal-hide-section" />
+                         ) : (
+
+                           <div className="modal-popup-section">
+                             <div className="inner-section-modal-section">
+                               {
+                              Array.from(new Set(finalSortedList)).map(customer => (
+                                <Link
+                                  exact
+                                  to={{
+                                    pathname: `/viewnonindividualcustomerform/${customer.custID}`,
+                                  }}
+                                  className="inner-section-modal-section-inner border"
+                                  key={customer.custID}
+                                >
+                                  <div className="modal-customer-name-section mr-2">
+                                    { customer.bizName }
+                                  </div>
+                                  <div className="modal-customer-name-section mr-2">
+                                    { customer.tradingName}
+                                  </div>
+                                </Link>
+                              ))
+                            }
+                             </div>
+                           </div>
+                         )
+                      }
                   </div>
                 </div>
                 <div className="form-group">
@@ -108,7 +149,7 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
-                    <label htmlFor="customerId w-50">Economic Sector:</label>
+                    <label htmlFor="customerId">Economic Sector:</label>
                     {' '}
                     {
                     sectors.length > 0 ? (
@@ -132,7 +173,7 @@ const NonIndidualCustomerForm = () => {
                       </select>
                     ) : (
                       <select
-                        className="form-control-input col-md-9 ml-2"
+                        className="form-control-input col-md-8"
                       >
                         <option value="" disabled selected hidden>Select</option>
                       </select>
@@ -166,7 +207,7 @@ const NonIndidualCustomerForm = () => {
                       </select>
                     ) : (
                       <select
-                        className="form-control-input col-md-9 ml-2"
+                        className="form-control-input col-md-8"
                       >
                         <option value="" disabled selected hidden>Select</option>
                       </select>
@@ -200,7 +241,7 @@ const NonIndidualCustomerForm = () => {
                       </select>
                     ) : (
                       <select
-                        className="form-control-input col-md-9 ml-2"
+                        className="form-control-input col-md-8"
                       >
                         <option value="" disabled selected hidden>Select</option>
                       </select>
@@ -264,7 +305,7 @@ const NonIndidualCustomerForm = () => {
                       </select>
                     ) : (
                       <select
-                        className="form-control-input col-md-9 ml-2"
+                        className="form-control-input col-md-8"
                       >
                         <option value="" disabled selected hidden>Select</option>
                       </select>
@@ -298,7 +339,7 @@ const NonIndidualCustomerForm = () => {
                       </select>
                     ) : (
                       <select
-                        className="form-control-input col-md-9 ml-2"
+                        className="form-control-input col-md-8"
                       >
                         <option value="" disabled selected hidden>Select</option>
                       </select>
