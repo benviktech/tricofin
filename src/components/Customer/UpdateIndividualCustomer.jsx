@@ -26,7 +26,6 @@ const UpdateIndividualCustomer = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    console.log(dataState, 'data state');
     setDataState({
       ...dataState,
       [name]: value,
@@ -59,8 +58,6 @@ const UpdateIndividualCustomer = () => {
       dispatch(updateIndividualCustomer(dataState, history));
     }
   };
-
-  console.log(dataState, 'dataState in update');
 
   return Object.keys(dataState).length > 0 ? (
     <div className="view-individual-customer-form">
