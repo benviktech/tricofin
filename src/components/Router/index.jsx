@@ -12,6 +12,7 @@ import PrimaryContactInfo from '../Pages/PrimaryContactInfo';
 import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
 import NonIndidualCustomerForm from '../NonIdividual/NonIndidualForm';
 import NonIndividualCustomerView from '../NonIdividual/NonIndividualCustomerView';
+import UpdateNonIndidualCustomerForm from '../NonIdividual/UpdateNonIndividual';
 
 const Router = () => (
   <div className="router-section">
@@ -28,6 +29,7 @@ const Router = () => (
         <Route path="/secondarycontactinfo/:id" component={SecondaryContactInfo} />
         <Route path="/nonindidualcustomerform" component={NonIndidualCustomerForm} />
         <Route path="/viewnonindividualcustomerform/:id" component={NonIndividualCustomerView} />
+        <Route path="/updatenonindividualcustomer/:id" component={UpdateNonIndidualCustomerForm} />
       </Switch>
       <Footer />
     </BrowserRouter>
