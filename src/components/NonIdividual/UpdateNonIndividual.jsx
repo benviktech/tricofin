@@ -390,7 +390,7 @@ const UpdateNonIndidualCustomerForm = () => {
                   </div>
                   { errors.custTypeID && <small className="span-warning-non mt-4">{errors.custTypeID}</small>}
                 </div>
-                <div className="submit-button-section">
+                <div className="submit-button-section form-button-section">
                   <button
                     type="submit"
                     className="add-customer-btn"
