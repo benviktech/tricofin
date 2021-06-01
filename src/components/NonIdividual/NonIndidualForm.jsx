@@ -123,7 +123,13 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">Business Name:</label>
+                    <label htmlFor="customerId">
+                      Business Name
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -136,7 +142,13 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">Trading Name:</label>
+                    <label htmlFor="customerId">
+                      Trading Name
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -218,7 +230,13 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group d-flex align-items-center col-md-12">
-                    <label className="text-info" htmlFor="customerId">Business Type:</label>
+                    <label htmlFor="customerId">
+                      Business Type
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     {
                     sectors.length > 0 ? (
                       <select
@@ -252,7 +270,13 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Activity Description:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Activity Description
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     <textarea
                       className="form-control-input col-md-8"
                       id=""
@@ -269,7 +293,13 @@ const NonIndidualCustomerForm = () => {
               <div className="right-inner-form-section">
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Registration Date:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Registration Date
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="date"
@@ -282,7 +312,13 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Risk Profile:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Risk Profile
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     {
                     Object.keys(staticData).includes('riskProfiles') ? (
                       <select
@@ -316,7 +352,13 @@ const NonIndidualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Customer Type:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Customer Type
+                      <span className="text-danger mx-1">
+                        *
+                      </span>
+                      :
+                    </label>
                     {
                     Object.keys(staticData).includes('customerTypes') ? (
                       <select

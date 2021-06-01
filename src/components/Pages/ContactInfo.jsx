@@ -481,8 +481,12 @@ const ContactInfo = ({
                       </div>
                     </div>
                     <div className="unit-floor-section">
-                      <div className="label-unit unit-left-section text-info">
-                        Been At Address Since:
+                      <div className="label-unit unit-left-section">
+                        Been At Address Since
+                        <span className="text-danger mx-1">
+                          *
+                        </span>
+                        :
                       </div>
                       <div className="unit-section unit-right-section street-no-content">
                         <div className="lower-floor-section">

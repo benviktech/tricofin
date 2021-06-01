@@ -144,7 +144,7 @@ const NonIndividualCustomerView = () => {
                   <div className="middle-inner-form-section">
                     <div className="form-group">
                       <div className="left-form-group col-md-12">
-                        <label className="text-info" htmlFor="customerId">Customer ID:</label>
+                        <label htmlFor="customerId">Customer ID:</label>
                         <div
                           className="form-control-input col-md-8"
                           type="text"
@@ -157,7 +157,7 @@ const NonIndividualCustomerView = () => {
                     </div>
                     <div className="form-group">
                       <div className="left-form-group col-md-12">
-                        <label className="text-info" htmlFor="customerId">Business Name:</label>
+                        <label htmlFor="customerId">Business Name:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
@@ -170,7 +170,7 @@ const NonIndividualCustomerView = () => {
                     </div>
                     <div className="form-group">
                       <div className="left-form-group col-md-12">
-                        <label className="text-info" htmlFor="customerId">Trading Name:</label>
+                        <label htmlFor="customerId">Trading Name:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
@@ -204,7 +204,7 @@ const NonIndividualCustomerView = () => {
                     </div>
                     <div className="form-group ">
                       <div className="left-form-group d-flex align-items-center col-md-12">
-                        <label className="text-info" htmlFor="customerId">Business Type:</label>
+                        <label htmlFor="customerId">Business Type:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
@@ -215,7 +215,7 @@ const NonIndividualCustomerView = () => {
                     </div>
                     <div className="form-group ">
                       <div className="left-form-group col-md-12">
-                        <label className="w-25 text-info" htmlFor="customerId">Activity Description:</label>
+                        <label className="w-25" htmlFor="customerId">Activity Description:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
@@ -233,7 +233,7 @@ const NonIndividualCustomerView = () => {
                   <div className="right-inner-form-section">
                     <div className="form-group ">
                       <div className="left-form-group other-input-section col-md-12">
-                        <label className="w-25 text-info" htmlFor="customerId">Registration Date:</label>
+                        <label className="w-25" htmlFor="customerId">Registration Date:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
@@ -246,7 +246,7 @@ const NonIndividualCustomerView = () => {
                     </div>
                     <div className="form-group ">
                       <div className="left-form-group other-input-section col-md-12">
-                        <label className="w-25 text-info" htmlFor="customerId">Risk Profile:</label>
+                        <label className="w-25" htmlFor="customerId">Risk Profile:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
@@ -257,7 +257,7 @@ const NonIndividualCustomerView = () => {
                     </div>
                     <div className="form-group ">
                       <div className="left-form-group other-input-section col-md-12">
-                        <label className="w-25 text-info" htmlFor="customerId">Customer Type:</label>
+                        <label className="w-25" htmlFor="customerId">Customer Type:</label>
                         <div
                           className="form-control-input col-md-8"
                         >
