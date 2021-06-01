@@ -7,13 +7,17 @@ export default function updateCustomerValidator(values, state = 'Create Non Indi
     errors.state = 'Creating';
   }
 
-  if (!values.bizName.trim()) {
+  if (state === 'Update Non Individual Customer') {
+    errors.state = 'Updating';
+  }
+
+  if (!values.bizName) {
     errors.bizName = 'Business Name is Required';
   }
-  if (!values.tradingName.trim()) {
+  if (!values.tradingName) {
     errors.tradingName = 'Trading Name is Required';
   }
-  if (!values.econID.trim()) {
+  if (!values.econID) {
     errors.econID = 'Economic Sector is Required';
   }
 
