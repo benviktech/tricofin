@@ -60,7 +60,7 @@ const PrimaryContactForm = () => {
 
   const updatePrimaryContact = () => {
     const state = 'Update Contact';
-    setErrors(contactValidator(values, state));
+    setErrors(contactValidator(contactInfo, state));
   };
 
   useEffect(async () => {
@@ -75,7 +75,7 @@ const PrimaryContactForm = () => {
 
     if (Object.values(errors).includes('Update Contact')) {
       if (Object.keys(errors).length === 1) {
-        await dispatch(updateCustomerContact(values));
+        await dispatch(updateCustomerContact(contactInfo));
         setModal('');
         setErrors({});
         setValues(initialState);
@@ -110,6 +110,7 @@ const PrimaryContactForm = () => {
       postSuccess={postSuccess}
       contactInfo={contactInfo}
       updateContact={updatePrimaryContact}
+      setContactInfo={setContactInfo}
     />
   );
 };

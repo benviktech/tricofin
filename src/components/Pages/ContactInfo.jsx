@@ -24,12 +24,13 @@ const ContactInfo = ({
   postSuccess,
   contactInfo,
   updateContact,
+  setContactInfo,
 }) => {
-  const regions = [{ id: 1, name: 'NORTHERN' },
-    { id: 2, name: 'EASTERN' },
-    { id: 3, name: 'CENTRAL' },
-    { id: 4, name: 'WESTERN' },
-    { id: 5, name: 'SOUTHERN' }];
+  const regions = [{ id: 'N', name: 'NORTHERN' },
+    { id: 'E', name: 'EASTERN' },
+    { id: 'C', name: 'CENTRAL' },
+    { id: 'W', name: 'WESTERN' },
+    { id: 'S', name: 'SOUTHERN' }];
   const [countries, setCountries] = useState([]);
   const dispatch = useDispatch();
   const countriesData = useSelector(state => state.individualCustomerIdentification.countries);
@@ -37,6 +38,14 @@ const ContactInfo = ({
   useEffect(async () => {
     await dispatch(fetchCountriesData());
   }, []);
+
+  const handleUpdateChange = e => {
+    const { name, value } = e.target;
+    setContactInfo({
+      ...contactInfo,
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     setCountries(countriesData);
@@ -89,23 +98,46 @@ const ContactInfo = ({
                     <div className="building-name">
                       <div className="label-unit">Building Name:</div>
                       <div className="building-input">
-                        <input
-                          type="text"
-                          value={values.buildingName}
-                          onChange={handleChange}
-                          name="buildingName"
-                        />
+                        {
+                        Object.keys(contactInfo).length > 0 ? (
+                          <input
+                            type="text"
+                            value={contactInfo.buildingName}
+                            onChange={handleUpdateChange}
+                            name="buildingName"
+                          />
+                        ) : (
+
+                          <input
+                            type="text"
+                            value={values.buildingName}
+                            onChange={handleChange}
+                            name="buildingName"
+                          />
+                        )
+                      }
                       </div>
                     </div>
                     <div className="building-name">
                       <div className="label-unit">LC/Street:</div>
                       <div className="building-input">
-                        <input
-                          type="text"
-                          value={values.lcStreetName}
-                          onChange={handleChange}
-                          name="lcStreetName"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              type="text"
+                              value={contactInfo.lcStreetName}
+                              onChange={handleUpdateChange}
+                              name="lcStreetName"
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              value={values.lcStreetName}
+                              onChange={handleChange}
+                              name="lcStreetName"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                     <div className="unit-floor-section">
@@ -113,22 +145,44 @@ const ContactInfo = ({
                         Plot/Street No:
                       </div>
                       <div className="unit-section street-no-content">
-                        <input
-                          value={values.plotStreetNo}
-                          onChange={handleChange}
-                          name="plotStreetNo"
-                          type="text"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              value={contactInfo.plotStreetNo}
+                              onChange={handleUpdateChange}
+                              name="plotStreetNo"
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value={values.plotStreetNo}
+                              onChange={handleChange}
+                              name="plotStreetNo"
+                              type="text"
+                            />
+                          )
+                        }
                         <div className="floor-section street-no-content">
                           <div className="inner-label-unit">
                             Floor No:
                           </div>
-                          <input
-                            value={values.floorNo}
-                            onChange={handleChange}
-                            name="floorNo"
-                            type="text"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.floorNo}
+                                onChange={handleUpdateChange}
+                                name="floorNo"
+                                type="text"
+                              />
+                            ) : (
+                              <input
+                                value={values.floorNo}
+                                onChange={handleChange}
+                                name="floorNo"
+                                type="text"
+                              />
+                            )
+                          }
                           <div className="floor-no-error">
                             {errors.floorNo && errors.floorNo}
                           </div>
@@ -143,22 +197,44 @@ const ContactInfo = ({
                         Parish:
                       </div>
                       <div className="unit-section select-area">
-                        <input
-                          value={values.parish}
-                          onChange={handleChange}
-                          name="parish"
-                          type="text"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              value={contactInfo.parish}
+                              onChange={handleUpdateChange}
+                              name="parish"
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value={values.parish}
+                              onChange={handleChange}
+                              name="parish"
+                              type="text"
+                            />
+                          )
+                        }
                         <div className="floor-section">
                           <div className="inner-label-unit">
                             Suburb:
                           </div>
-                          <input
-                            value={values.suburb}
-                            onChange={handleChange}
-                            name="suburb"
-                            type="text"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.suburb}
+                                onChange={handleUpdateChange}
+                                name="suburb"
+                                type="text"
+                              />
+                            ) : (
+                              <input
+                                value={values.suburb}
+                                onChange={handleChange}
+                                name="suburb"
+                                type="text"
+                              />
+                            )
+                          }
                         </div>
                       </div>
                     </div>
@@ -167,46 +243,105 @@ const ContactInfo = ({
                         Village:
                       </div>
                       <div className="unit-section select-area">
-                        <input
-                          value={values.village}
-                          onChange={handleChange}
-                          name="village"
-                          type="text"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              value={contactInfo.village}
+                              onChange={handleUpdateChange}
+                              name="village"
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value={values.village}
+                              onChange={handleChange}
+                              name="village"
+                              type="text"
+                            />
+                          )
+                        }
                         <div className="floor-section">
                           <div className="inner-label-unit">
                             County/Town:
                           </div>
-                          <input
-                            value={values.countyTown}
-                            onChange={handleChange}
-                            name="countyTown"
-                            type="text"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.countyTown}
+                                onChange={handleUpdateChange}
+                                name="countyTown"
+                                type="text"
+                              />
+                            ) : (
+                              <input
+                                value={values.countyTown}
+                                onChange={handleChange}
+                                name="countyTown"
+                                type="text"
+                              />
+                            )
+                          }
                         </div>
                       </div>
                     </div>
                     <div className="building-name">
                       <div className="label-unit">District:</div>
                       <div className="building-input">
-                        <input
-                          value={values.district}
-                          onChange={handleChange}
-                          name="district"
-                          type="text"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              value={contactInfo.district}
+                              onChange={handleUpdateChange}
+                              name="district"
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value={values.district}
+                              onChange={handleChange}
+                              name="district"
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                     <div className="building-name">
                       <div className="label-unit">Region:</div>
                       <div className="building-input">
-                        <select
-                          onChange={handleChange}
-                          name="region"
-                          value={values.region}
-                        >
-                          <option value="" disabled selected hidden>Select</option>
-                          {
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <select
+                              onChange={handleUpdateChange}
+                              name="region"
+                              value={contactInfo.region
+                                && (contactInfo.region === 'N' ? 'NORTHERN'
+                                  : contactInfo.region === 'S' ? 'SOUTHERN'
+                                    : contactInfo.region === 'W' ? 'WESTERN'
+                                      : contactInfo.region === 'E' ? 'EASTERN'
+                                        : contactInfo.region === 'C' ? 'CENTRAL'
+                                          : null)}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
+                                regions.map(region => (
+                                  <option
+                                    key={region.id}
+                                    value={region.name}
+                                  >
+                                    {region.name}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          ) : (
+                            <select
+                              onChange={handleChange}
+                              name="region"
+                              value={values.region}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
                             regions.map(region => (
                               <option
                                 key={region.id}
@@ -216,19 +351,41 @@ const ContactInfo = ({
                               </option>
                             ))
                           }
-                        </select>
+                            </select>
+                          )
+                        }
                       </div>
                     </div>
                     <div className="building-name">
                       <div className="label-unit">Country:</div>
                       <div className="building-input">
-                        <select
-                          onChange={handleChange}
-                          name="countryCode"
-                          value={values.countryCode}
-                        >
-                          <option value="" disabled selected hidden>Select</option>
-                          {
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <select
+                              onChange={handleUpdateChange}
+                              name="countryCode"
+                              value={contactInfo.countryCode}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
+                                countries.map((country, index) => (
+                                  <option
+                                    key={index}
+                                    value={country.countryID}
+                                  >
+                                    {country.country}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          ) : (
+                            <select
+                              onChange={handleChange}
+                              name="countryCode"
+                              value={values.countryCode}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
                             countries.map((country, index) => (
                               <option
                                 key={index}
@@ -238,7 +395,9 @@ const ContactInfo = ({
                               </option>
                             ))
                           }
-                        </select>
+                            </select>
+                          )
+                        }
                       </div>
                     </div>
                   </div>
@@ -248,22 +407,44 @@ const ContactInfo = ({
                         P.O Box No:
                       </div>
                       <div className="unit-section unit-right-section">
-                        <input
-                          value={values.poBoxNo}
-                          name="poBoxNo"
-                          onChange={handleChange}
-                          type="text"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              value={contactInfo.poBoxNo}
+                              name="poBoxNo"
+                              onChange={handleUpdateChange}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value={values.poBoxNo}
+                              name="poBoxNo"
+                              onChange={handleChange}
+                              type="text"
+                            />
+                          )
+                        }
                         <div className="floor-section lower-floor-section">
                           <div className="inner-label-unit">
                             Post Office Town:
                           </div>
-                          <input
-                            value={values.postOfficeTown}
-                            name="postOfficeTown"
-                            onChange={handleChange}
-                            type="text"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.postOfficeTown}
+                                name="postOfficeTown"
+                                onChange={handleUpdateChange}
+                                type="text"
+                              />
+                            ) : (
+                              <input
+                                value={values.postOfficeTown}
+                                name="postOfficeTown"
+                                onChange={handleChange}
+                                type="text"
+                              />
+                            )
+                          }
                         </div>
                         <div className="office-no-error">
                           {errors.poBoxNo && errors.poBoxNo}
@@ -276,12 +457,23 @@ const ContactInfo = ({
                       </div>
                       <div className="unit-section unit-right-section street-no-content">
                         <div className="lower-floor-section">
-                          <input
-                            value={values.atAddressSince}
-                            name="atAddressSince"
-                            onChange={handleChange}
-                            type="date"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.atAddressSince}
+                                name="atAddressSince"
+                                onChange={handleUpdateChange}
+                                type="date"
+                              />
+                            ) : (
+                              <input
+                                value={values.atAddressSince}
+                                name="atAddressSince"
+                                onChange={handleChange}
+                                type="date"
+                              />
+                            )
+                          }
                         </div>
                         <div className="street-no-error">
                           {errors.atAddressSince && errors.atAddressSince}
@@ -293,22 +485,44 @@ const ContactInfo = ({
                         Primary Tel No:
                       </div>
                       <div className="unit-section unit-right-section street-no-content">
-                        <input
-                          value={values.pnTelNo}
-                          name="pnTelNo"
-                          onChange={handleChange}
-                          type="text"
-                        />
+                        {
+                          Object.keys(contactInfo).length > 0 ? (
+                            <input
+                              value={contactInfo.pnTelNo}
+                              name="pnTelNo"
+                              onChange={handleUpdateChange}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value={values.pnTelNo}
+                              name="pnTelNo"
+                              onChange={handleChange}
+                              type="text"
+                            />
+                          )
+                        }
                         <div className="floor-section lower-floor-section street-no-content">
                           <div className="inner-label-unit">
                             Mobile No:
                           </div>
-                          <input
-                            value={values.mobNo}
-                            name="mobNo"
-                            onChange={handleChange}
-                            type="text"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.mobNo}
+                                name="mobNo"
+                                onChange={handleUpdateChange}
+                                type="text"
+                              />
+                            ) : (
+                              <input
+                                value={values.mobNo}
+                                name="mobNo"
+                                onChange={handleChange}
+                                type="text"
+                              />
+                            )
+                          }
                           <div className="floor-no-error">
                             {errors.mobNo && errors.mobNo}
                           </div>
@@ -324,12 +538,23 @@ const ContactInfo = ({
                       </div>
                       <div className="unit-section unit-right-section">
                         <div className="lower-floor-section ">
-                          <input
-                            value={values.emailAddress}
-                            name="emailAddress"
-                            onChange={handleChange}
-                            type="input"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.emailAddress}
+                                name="emailAddress"
+                                onChange={handleUpdateChange}
+                                type="input"
+                              />
+                            ) : (
+                              <input
+                                value={values.emailAddress}
+                                name="emailAddress"
+                                onChange={handleChange}
+                                type="input"
+                              />
+                            )
+                          }
                         </div>
                       </div>
                     </div>
@@ -339,12 +564,23 @@ const ContactInfo = ({
                       </div>
                       <div className="unit-section unit-right-section">
                         <div className="lower-floor-section ">
-                          <input
-                            value={values.website}
-                            name="website"
-                            onChange={handleChange}
-                            type="input"
-                          />
+                          {
+                            Object.keys(contactInfo).length > 0 ? (
+                              <input
+                                value={contactInfo.website}
+                                name="website"
+                                onChange={handleUpdateChange}
+                                type="input"
+                              />
+                            ) : (
+                              <input
+                                value={values.website}
+                                name="website"
+                                onChange={handleChange}
+                                type="input"
+                              />
+                            )
+                          }
                         </div>
                       </div>
                     </div>
