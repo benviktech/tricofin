@@ -81,3 +81,8 @@ export const GetNonIndividualCustomerRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
+
+export const UpdateNonIndividualCustomersRequest = async (method, data, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
