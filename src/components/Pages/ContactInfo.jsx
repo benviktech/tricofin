@@ -11,6 +11,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
 import { fetchCountriesData } from '../../actions/pages';
+import numbersValidator from '../Validators/ContactNumberValidator';
 
 const ContactInfo = ({
   header,
@@ -54,24 +55,12 @@ const ContactInfo = ({
   }, [countriesData]);
 
   useEffect(() => {
-    const results = {};
-    if (contactInfo.plotStreetNo && isNaN(contactInfo.plotStreetNo)) {
-      results.plotStreetNo = 'Must be number';
-    }
-    if (contactInfo.floorNo && isNaN(contactInfo.floorNo)) {
-      results.floorNo = 'Must be number';
-    }
-    if (contactInfo.poBoxNo && isNaN(contactInfo.poBoxNo)) {
-      results.poBoxNo = 'Must be number';
-    }
-    if (contactInfo.pnTelNo && isNaN(contactInfo.pnTelNo)) {
-      results.pnTelNo = 'Must be number';
-    }
-    if (contactInfo.mobNo && isNaN(contactInfo.mobNo)) {
-      results.mobNo = 'Must be number';
-    }
-    setNumErrors(results);
+    setNumErrors(numbersValidator(contactInfo));
   }, [contactInfo]);
+
+  useEffect(() => {
+    setNumErrors(numbersValidator(values));
+  }, [values]);
 
   return (
     <div className="individual-customer-form">
