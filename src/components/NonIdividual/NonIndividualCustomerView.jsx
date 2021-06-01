@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalFunction from '../Modal/ModalFunction';
 import MoreInfo from './MoreInfo';
@@ -21,9 +22,6 @@ const NonIndividualCustomerView = () => {
   const {
     modalCloser, modalOpener, openModel, modalText,
   } = ModalFunction();
-  const updateNonIndividual = () => {
-    console.log('update data');
-  };
 
   const customer = useSelector(state => state.nonIndividualCustomersReducer);
 
@@ -269,13 +267,15 @@ const NonIndividualCustomerView = () => {
                       </div>
                     </div>
                     <div className="submit-button-section">
-                      <button
+                      <Link
                         type="button"
                         className="add-customer-btn"
-                        onClick={updateNonIndividual}
+                        to={{
+                          pathname: `/updatenonindividualcustomer/${customer.nonIndividualCustomer.custID}`,
+                        }}
                       >
                         Update
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
