@@ -134,7 +134,7 @@ const NonIndividualCustomerView = () => {
           <div className="submit-form-top-section">
             {
               customer.loading ? (
-                <div className="main-form-color">
+                <div className="main-form-color d-flex align-items-center justify-content-center">
                   <Spinner />
                 </div>
               ) : customer.error.length > 0 ? (
