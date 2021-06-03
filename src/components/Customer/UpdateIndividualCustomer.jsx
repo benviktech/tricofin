@@ -9,7 +9,7 @@ import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
 import { updateIndividualCustomer } from '../../actions/individualCustomer';
 import ModalFunction from '../Modal/ModalFunction';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import IndividualCustomerValidator from '../Validators/IndividualCustomerValidator';
 import MoreInfo from './MoreInfo';
 import Modal from '../Modal/Modal';
