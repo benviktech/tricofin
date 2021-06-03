@@ -2,6 +2,7 @@
 
 export default function updateCustomerValidator(values, state = 'Create Non Individual Customer') {
   const errors = {};
+  const todaysDate = new Date();
 
   if (state === 'Create Non Individual Customer') {
     errors.state = 'Creating';
@@ -31,6 +32,10 @@ export default function updateCustomerValidator(values, state = 'Create Non Indi
 
   if (!values.regDate) {
     errors.regDate = 'Registration Date is Required';
+  }
+
+  if (new Date(values.regDate) <= todaysDate) {
+    errors.regDate = 'Must be future Date';
   }
 
   if (!values.activityDescription) {

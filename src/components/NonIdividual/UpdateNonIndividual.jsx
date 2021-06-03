@@ -24,6 +24,7 @@ const UpdateNonIndidualCustomerForm = () => {
   const [staticData, setStaticData] = useState({});
   const [dataState, setDataState] = useState({});
   const [errors, setErrors] = useState({});
+  const [dateError, setDateError] = useState({});
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -69,6 +70,16 @@ const UpdateNonIndidualCustomerForm = () => {
       }
     }
   };
+
+  const todaysDate = new Date();
+
+  useEffect(() => {
+    const errs = {};
+    if (new Date(dataState.regDate) <= todaysDate) {
+      errs.regDate = 'Must be future Date';
+    }
+    setDateError(errs);
+  }, [dataState]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -311,7 +322,7 @@ const UpdateNonIndidualCustomerForm = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.regDate && <small className="span-warning-non mt-4">{errors.regDate}</small>}
+                  { dateError.regDate && <small className="span-warning-non mt-4">{dateError.regDate}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">

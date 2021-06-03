@@ -19,6 +19,7 @@ const NonIndidualCustomerForm = () => {
   const [industries, setIndustry] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [staticData, setStaticData] = useState({});
+  const [dateError, setDateError] = useState({});
   const {
     handleChange, values, handleSubmit, errors, setErrors,
   } = UseForm(validate);
@@ -37,6 +38,16 @@ const NonIndidualCustomerForm = () => {
     setSearchedCustomer('');
     setErrors({});
   };
+
+  const todaysDate = new Date();
+
+  useEffect(() => {
+    const errs = {};
+    if (new Date(values.regDate) <= todaysDate) {
+      errs.regDate = 'Must be future Date';
+    }
+    setDateError(errs);
+  }, [values]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -308,7 +319,7 @@ const NonIndidualCustomerForm = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.regDate && <small className="span-warning-non mt-4">{errors.regDate}</small>}
+                  { dateError.regDate && <small className="span-warning-non mt-4">{dateError.regDate}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
