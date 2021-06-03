@@ -12,6 +12,7 @@ label {
   color: #444;
 }
 
-input {
+input,
+textarea {
   text-transform: uppercase;
 }

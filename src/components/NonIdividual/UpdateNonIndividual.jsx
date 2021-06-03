@@ -39,15 +39,18 @@ const UpdateNonIndidualCustomerForm = () => {
     modalCloser, modalOpener, openModel, modalText,
   } = ModalFunction();
 
+  const customer = useSelector(state => state.nonIndividualCustomersReducer);
+
   const clearInputsValues = () => {
     setErrors({});
+    if (Object.keys(customer.nonIndividualCustomer).length > 0) {
+      setDataState(customer.nonIndividualCustomer);
+    }
   };
 
   useEffect(() => {
     dispatch(fetchSingleNonIndividualCustomer(id));
   }, []);
-
-  const customer = useSelector(state => state.nonIndividualCustomersReducer);
 
   useEffect(() => {
     if (Object.keys(customer.nonIndividualCustomer).length > 0) {
@@ -59,7 +62,6 @@ const UpdateNonIndidualCustomerForm = () => {
     e.preventDefault();
     const state = 'Update Non Individual Customer';
     const response = validate(dataState, state);
-    console.log(response, 'errors');
     setErrors(response);
     if (Object.values(response).includes('Updating')) {
       if (Object.keys(response).length === 1) {
@@ -304,7 +306,8 @@ const UpdateNonIndidualCustomerForm = () => {
                       className="form-control-input col-md-8"
                       type="date"
                       name="regDate"
-                      value={dataState.regDate}
+                      value={dataState.regDate
+                        && new Date(dataState.regDate).toISOString().substring(0, 10)}
                       onChange={handleChange}
                     />
                   </div>

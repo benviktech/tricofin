@@ -254,7 +254,8 @@ const UpdateIndividualCustomer = () => {
                       className="form-control-input col-md-8"
                       type="date"
                       name="dateofbirth"
-                      value={dataState.dateofbirth}
+                      value={dataState.dateofbirth
+                        && new Date(dataState.dateofbirth).toISOString().substring(0, 10)}
                       onChange={handleChange}
                     />
                   </div>

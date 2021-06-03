@@ -482,7 +482,9 @@ const ContactInfo = ({
                           {
                             Object.keys(contactInfo).length > 0 ? (
                               <input
-                                value={contactInfo.atAddressSince}
+                                value={contactInfo.atAddressSince
+                                && new Date(contactInfo.atAddressSince)
+                                  .toISOString().substring(0, 10)}
                                 name="atAddressSince"
                                 onChange={handleUpdateChange}
                                 type="date"
