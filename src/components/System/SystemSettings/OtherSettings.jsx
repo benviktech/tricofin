@@ -11,6 +11,7 @@ import Modal from '../../Modal/Modal';
 import ModalFunction from '../../Modal/ModalFunction';
 import './index.css';
 import Loader from '../../Loader/Loader';
+import Label from "./Label"
 
 const SystemSettingsOtherSettings = () => {
   const dispatch = useDispatch();
@@ -47,32 +48,32 @@ const SystemSettingsOtherSettings = () => {
                   <hr />
                   <form>
                     <div class="form-item">
-                      <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Enforce Password History</label>
+                    <Label name="Enforce Password History" />
                       <div class="form-input">
                         <input type="number" class="form-input-input-select" />
                       </div>
-                      <label for="name" class="col-form-label">Passwords Remembered <span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#63;</span> </label>
+                      <Label name="Passwords Remembered" icon="&#63;" />
                     </div>
                     <div class="form-item">
-                      <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Maximum Password Age</label>
+                      <Label name="Maximum Password Age"/>
                       <div class="form-input">
                         <input type="number" class="form-input-input-select" />
                       </div>
-                      <label for="name" class="col-form-label">Days <span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#63;</span> </label>
+                      <Label name="Days" icon="&#63;" />
                     </div>
                     <div class="form-item">
-                      <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Minimum Password Length</label>
+                      <Label name="Minimum Password Length"/>
                       <div class="form-input">
                         <input type="number" class="form-input-input-select" />
                       </div>
-                      <label for="name" class="col-form-label">Characters <span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#63;</span> </label>
+                      <Label name="Characters" icon="&#63;" />
                     </div>
                     <div class="form-item">
-                      <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Password Must Meet Complexity Requirements</label>
+                      <Label name="Password Must Meet Complexity Requirements"/>
                       <div class="form-input">
                         <input type="checkbox" class="form-input-input-check" />
                       </div>
-                      <label for="name" class="col-form-label">Disabled <span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#63;</span> </label>
+                      <Label name="Disabled" icon="&#63;" />
                     </div>
                   </form>
               </div>
@@ -81,11 +82,11 @@ const SystemSettingsOtherSettings = () => {
                   <hr />
                   <form>
                   <div class="form-item">
-                      <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Lock System After</label>
+                      <Label name="Lock System After"/>
                       <div class="form-input">
                         <input type="number" class="form-input-input-select" />
                       </div>
-                      <label for="name" class="col-form-label">Secs <span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#63;</span> </label>
+                      <Label name="Secs" icon="&#63;" />
                     </div>
                   </form>
               </div>
@@ -100,46 +101,46 @@ const SystemSettingsOtherSettings = () => {
                     <hr />
                     <form>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Clear Balance</label>
+                        <Label name="Clear Balance"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Lien Amount</label>
+                        <Label name="Lien Amount"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Frozen Amount</label>
+                        <Label name="Frozen Amount"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Minimum Balance</label>
+                        <Label name="Minimum Balance"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Unsupervised Credit</label>
+                        <Label name="Unsupervised Credit"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Unsupervised Dedit</label>
+                        <Label name="Unsupervised Dedit"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                     </form>
                   </div>
@@ -148,46 +149,46 @@ const SystemSettingsOtherSettings = () => {
                     <hr />
                     <form>
                     <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Clear Balance</label>
+                        <Label name="Clear Balance"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Lien Amount</label>
+                        <Label name="Lien Amount"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Frozen Amount</label>
+                        <Label name="Frozen Amount"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Minimum Balance</label>
+                        <Label name="Minimum Balance"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Unsupervised Credit</label>
+                        <Label name="Unsupervised Credit"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                       <div class="form-item">
-                        <label for="name" class="col-form-label" style={{color:"#0178d4"}}>Unsupervised Dedit</label>
+                        <Label name="Unsupervised Dedit"/>
                         <div class="form-input">
                           <input type="checkbox" class="form-input-input-check" />
                         </div>
-                        <label for="name" class="col-form-label"><span style={{display:"inline-block",padding:"3px",backgroundColor:"#D7D7D7"}}>&#43;</span> </label>
+                        <Label  icon="&#43;" />
                       </div>
                     </form>
                   </div>
