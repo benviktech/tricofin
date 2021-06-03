@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalFunction from '../Modal/ModalFunction';
 import MoreInfo from './MoreInfo';
-import Sidebar from '../Sidebar/Sidebar';
+import { NonIdividualSidebar } from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
 import { fetchSingleNonIndividualCustomer } from '../../actions/nonIdividualCustomer';
 import Spinner from '../Spinner/Spinner';
@@ -127,7 +127,7 @@ const NonIndividualCustomerView = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
-            <Sidebar />
+            <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">
             {
