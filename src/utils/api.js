@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://tricoapi.azurewebsites.net";
+const baseUrl = "https://tricofin.azurewebsites.net";
 
 export const FetchIndividualCustomersRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
@@ -102,7 +102,6 @@ export const DeleteCustomerDirector = async (method, path) => {
   return response;
 };
 
-<<<<<<< HEAD
 export const PostGroupMaintenanceRequest = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
@@ -132,9 +131,7 @@ export const DeleteGroupMemberRequest = async (method, values, path) => {
   const response = await axios[method](`${baseUrl}/${path}`, { data: values });
   return response;
 };
-=======
 export const FetchCompanyInfoRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
->>>>>>> Added method for fetching company info via axios
