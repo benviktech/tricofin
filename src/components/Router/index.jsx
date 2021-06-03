@@ -8,6 +8,14 @@ import UpdateIndividualCustomer from '../Customer/UpdateIndividualCustomer';
 import Footer from '../Footer/Footer';
 import SystemSettingsCompanyInfo from '../System/SystemSettings/SystemSettings';
 import SystemSettingsOtherSettings from '../System/SystemSettings/OtherSettings';
+import SystemSecurityRoles from '../System/SystemSecurity/SystemRoles';
+import SystemSecurityRights from '../System/SystemSecurity/SystemRights';
+import SystemSecurityMaintenance from '../System/SystemSecurity/SystemMaintenance';
+import SystemSecurityDeleteUser from '../System/SystemSecurity/SystemDeleteUser';
+import SystemSecurityRoleAdd from '../System/SystemSecurity/SystemRoleAddForm';
+import SystemSecurityRoleEdit from '../System/SystemSecurity/SystemRoleEditForm';
+import UpdateCompanyInfo from '../System/SystemSettings/UpdateCompanyInfo';
+import SystemSecurityUpdateUser from '../System/SystemSecurity/SystemUpdateUser';
 
 const Router = () => (
   <div className="router-section">
@@ -20,6 +28,14 @@ const Router = () => (
         <Route path="/updatecustomer/:id" component={UpdateIndividualCustomer} />
         <Route path="/systemsettingscompanyinfo" component={SystemSettingsCompanyInfo} />
         <Route path="/systemsettingsothersettings" component={SystemSettingsOtherSettings} />
+        <Route path="/system/systemsettings/updatecompanyinfo" component={UpdateCompanyInfo} />
+        <Route path="/system/systemsecurity/roles" component={SystemSecurityRoles} />
+        <Route path="/system/systemsecurity/rights" component={SystemSecurityRights} />
+        <Route path="/system/systemsecurity/adduser" component={SystemSecurityMaintenance} />
+        <Route path="/system/systemsecurity/editUser" component={SystemSecurityUpdateUser} />
+        <Route path="/system/systemsecurity/deleteuser" component={SystemSecurityDeleteUser} />
+        <Route path="/system/systemsecurity/addrole" component={SystemSecurityRoleAdd} />
+        <Route path="/system/systemsecurity/editrole" component={SystemSecurityRoleEdit} />
       </Switch>
       <Footer />
     </BrowserRouter>
