@@ -2,7 +2,7 @@ import React from 'react';
 import ModalFunction from '../Modal/ModalFunction';
 import Spinner from '../Spinner/Spinner';
 import Modal from '../Modal/Modal';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import MoreInfo from '../Customer/MoreInfo';
 import '../Customer/index.css';
 import './index.css';
