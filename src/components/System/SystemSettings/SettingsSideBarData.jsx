@@ -16,13 +16,13 @@ const SettingsSidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     path:'/systemsettingscompanyinfo',
   },
-  {
-    title: 'Other Settings',
-    icon: <MdIcons.MdDashboard style={iconStyles} />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-    path:'/systemsettingsothersettings',
-  },
+  // {
+  //   title: 'Other Settings',
+  //   icon: <MdIcons.MdDashboard style={iconStyles} />,
+  //   iconClosed: <RiIcons.RiArrowDownSFill />,
+  //   iconOpened: <RiIcons.RiArrowUpSFill />,
+  //   path:'/systemsettingsothersettings',
+  // },
 ];
 
 export default SettingsSidebarData;
