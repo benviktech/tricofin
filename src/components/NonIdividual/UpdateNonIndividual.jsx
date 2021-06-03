@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
-import Sidebar from '../Sidebar/Sidebar';
+import { NonIdividualSidebar } from '../Sidebar/Sidebar';
 import './index.css';
 import '../Customer/index.css';
 import MoreInfo from './MoreInfo';
@@ -105,7 +105,7 @@ const UpdateNonIndidualCustomerForm = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
-            <Sidebar />
+            <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">
             <form className="main-form-color" onSubmit={updateCustomer}>
