@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
 import {
