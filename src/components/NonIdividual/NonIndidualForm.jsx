@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../Sidebar/Sidebar';
+import { NonIdividualSidebar } from '../Sidebar/Sidebar';
 import './index.css';
 import '../Customer/index.css';
 import MoreInfo from './MoreInfo';
@@ -73,7 +73,7 @@ const NonIndidualCustomerForm = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
-            <Sidebar />
+            <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">
             <form className="main-form-color" onSubmit={handleSubmit}>
