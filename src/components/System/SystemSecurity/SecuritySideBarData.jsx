@@ -10,18 +10,39 @@ const innerIconStyles = { fontSize: '1.2em' };
 
 const SecuritySidebarData = [
   {
-    title: 'Company Info',
-    icon: <MdIcons.MdAccountBalance style={iconStyles} />,
+    title: 'Roles',
+    icon: <RiIcons.RiTeamLine style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
-    path:'/systemsettingscompanyinfo',
+    path:'/system/systemsecurity/roles',
   },
   {
-    title: 'Other Settings',
-    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    title: 'Access Rights',
+    icon: <RiIcons.RiUserAddLine style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
-    path:'/systemsettingsothersettings',
+    path:'/system/systemsecurity/rights',
+  },
+  {
+    title: 'Add User',
+    icon: <RiIcons.RiUserLine style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    path:'/system/systemsecurity/adduser',
+  },
+  {
+    title: 'Edit User',
+    icon: <RiIcons.RiUserLine style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    path:'/system/systemsecurity/editUser',
+  },
+  {
+    title: 'Delete User',
+    icon: <RiIcons.RiUserUnfollowFill style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    path:'/system/systemsecurity/deleteuser',
   },
 ];
 
