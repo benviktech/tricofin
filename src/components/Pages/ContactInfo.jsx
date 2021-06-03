@@ -7,7 +7,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
 import { fetchCountriesData } from '../../actions/pages';
