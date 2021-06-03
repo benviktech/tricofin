@@ -8,7 +8,7 @@ import * as GrIcons from 'react-icons/gr';
 const iconStyles = { color: 'white', fontSize: '1.8em' };
 const innerIconStyles = { fontSize: '1.2em' };
 
-const SidebarData = [
+export const IndividualCustomerSidebarData = [
   {
     title: 'Personal Info',
     icon: <MdIcons.MdDashboard style={iconStyles} />,
@@ -39,4 +39,33 @@ const SidebarData = [
   },
 ];
 
-export default SidebarData;
+export const NonIndidualCustomerSidebarData = [
+  {
+    title: 'Non Individual Customer Maintenance',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'Directors Information',
+        path: '/directorsinformation',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
+      },
+      {
+        title: 'Identification Info',
+        path: '/identificationinfo',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+      {
+        title: 'Primary Contact',
+        path: '/nonindividualprimarycontactinfo',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+      {
+        title: 'Secondary Contact',
+        path: '/nonindividualsecondarycontactinfo',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+    ],
+  },
+];
