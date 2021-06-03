@@ -13,6 +13,10 @@ import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
 import NonIndidualCustomerForm from '../NonIdividual/NonIndidualForm';
 import NonIndividualCustomerView from '../NonIdividual/NonIndividualCustomerView';
 import UpdateNonIndidualCustomerForm from '../NonIdividual/UpdateNonIndividual';
+import NonIndividualSecondaryContact from '../Pages/NonIndividualSecondaryContact';
+import NonIndividualPrimaryContact from '../Pages/NonIndividualPrimaryContact';
+import NonIndividualIdentification from '../Pages/NonIndividualIdentification';
+import DirectorsInfo from '../Pages/DirectorsInfo';
 
 const Router = () => (
   <div className="router-section">
@@ -30,6 +34,10 @@ const Router = () => (
         <Route path="/nonindidualcustomerform" component={NonIndidualCustomerForm} />
         <Route path="/viewnonindividualcustomerform/:id" component={NonIndividualCustomerView} />
         <Route path="/updatenonindividualcustomer/:id" component={UpdateNonIndidualCustomerForm} />
+        <Route path="/nonindividualsecondarycontactinfo/:id" component={NonIndividualSecondaryContact} />
+        <Route path="/nonindividualprimarycontactinfo/:id" component={NonIndividualPrimaryContact} />
+        <Route path="/directorsinformation/:id" component={DirectorsInfo} />
+        <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
       </Switch>
       <Footer />
     </BrowserRouter>
