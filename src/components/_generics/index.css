@@ -9,3 +9,16 @@ button {
   margin-right: 10px !important;
   border-radius: 3px !important;
 }
+
+input {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  background-color: #f3f2f1;
+  margin-left: 10px !important;
+}
