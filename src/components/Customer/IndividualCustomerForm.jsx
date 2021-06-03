@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
 import UseForm from './UseForm';
 import validate from '../Validators/IndividualCustomerValidator';
