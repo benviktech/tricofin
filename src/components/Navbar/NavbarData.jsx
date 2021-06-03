@@ -11,7 +11,7 @@ const NavbarData = [
         linkText: 'Shutdown Tricofin',
       },
       {
-        to: '#',
+        to: '/system/systemsecurity/roles',
         linkText: 'System Security',
       },
       {
