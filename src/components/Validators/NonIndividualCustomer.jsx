@@ -2,7 +2,6 @@
 
 export default function updateCustomerValidator(values, state = 'Create Non Individual Customer') {
   const errors = {};
-  const todaysDate = new Date();
 
   if (state === 'Create Non Individual Customer') {
     errors.state = 'Creating';
@@ -34,8 +33,8 @@ export default function updateCustomerValidator(values, state = 'Create Non Indi
     errors.regDate = 'Registration Date is Required';
   }
 
-  if (new Date(values.regDate) <= todaysDate) {
-    errors.regDate = 'Must be future Date';
+  if (new Date(values.regDate) >= new Date()) {
+    errors.regDate = 'Cannot be a future Date';
   }
 
   if (!values.activityDescription) {
@@ -51,20 +50,3 @@ export default function updateCustomerValidator(values, state = 'Create Non Indi
   }
   return errors;
 }
-
-/*
-      bizName: 'Softearth',
-    tradingName: 'Sample Trade',
-    econID: 0,
-    indSecID: 0,
-    bizTypeID: 0,
-    regDate: '2021-05-31T11:48:34.825Z',
-    activityDescription: 'Great Business',
-    custTypeID: 'C',
-    riskProfileID: 'H',
-    isDeleted: false,
-    createdBy: 'BENVIK',
-    createdOn: '2021-05-31T11:48:34.825Z',
-    modifiedBy: 'BENVIK',
-    modifiedOn: '2021-05-31T11:48:34.825Z',
-  */

@@ -71,12 +71,10 @@ const UpdateNonIndidualCustomerForm = () => {
     }
   };
 
-  const todaysDate = new Date();
-
   useEffect(() => {
     const errs = {};
-    if (new Date(dataState.regDate) <= todaysDate) {
-      errs.regDate = 'Must be future Date';
+    if (new Date(dataState.regDate) >= new Date()) {
+      errs.regDate = 'Cannot be a future Date';
     }
     setDateError(errs);
   }, [dataState]);

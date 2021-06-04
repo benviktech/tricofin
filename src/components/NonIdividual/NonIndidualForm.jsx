@@ -39,12 +39,10 @@ const NonIndidualCustomerForm = () => {
     setErrors({});
   };
 
-  const todaysDate = new Date();
-
   useEffect(() => {
     const errs = {};
-    if (new Date(values.regDate) <= todaysDate) {
-      errs.regDate = 'Must be future Date';
+    if (new Date(values.regDate) >= new Date()) {
+      errs.regDate = 'Cannot be be future Date';
     }
     setDateError(errs);
   }, [values]);
@@ -80,7 +78,7 @@ const NonIndidualCustomerForm = () => {
       />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Non Individual Customer Information</span>
+          <span>Customer Information</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
