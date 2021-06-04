@@ -17,7 +17,7 @@ const NonIndividualIdentification = () => {
       />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Non Individual Customer Information</span>
+          <span>Identification Information</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
