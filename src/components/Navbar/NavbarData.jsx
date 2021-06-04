@@ -4,23 +4,11 @@ const NavbarData = [
     innerLinks: [
       {
         to: '#',
-        linkText: 'Lock System',
-      },
-      {
-        to: '#',
-        linkText: 'Shutdown Tricofin',
+        linkText: 'Log Out',
       },
       {
         to: '/system/systemsecurity/roles',
         linkText: 'System Security',
-      },
-      {
-        to: '#',
-        linkText: 'Static Data Maintenance',
-      },
-      {
-        to: '#',
-        linkText: 'Public Holidays',
       },
       {
         to: '/systemsettingscompanyinfo',

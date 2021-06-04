@@ -37,13 +37,7 @@ const SecuritySidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     path:'/system/systemsecurity/editUser',
   },
-  {
-    title: 'Delete User',
-    icon: <RiIcons.RiUserUnfollowFill style={iconStyles} />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-    path:'/system/systemsecurity/deleteuser',
-  },
+
 ];
 
 export default SecuritySidebarData;
