@@ -10,7 +10,7 @@ import SecuritySidebar from './SecuritySideBar';
 import Modal from '../../Modal/Modal';
 import ModalFunction from '../../Modal/ModalFunction';
 import './index.css';
-import Loader from '../../Loader/Loader';
+import Loader from './Loader/Loader';
 import { Button, Input } from '../../_generics/Generics';
 import { fetchSystemRoles } from '../../../actions/systemRole';
 import { createSystemUser, updateSystemUser, deleteSystemUser, RESET_USER_ALERT } from "../../../actions/systemUser";
@@ -667,11 +667,11 @@ const SystemSecurityUpdateUser = () => {
         </div>
     </div>) : isLoading ? (
     <div className="spinner section">
-      <Loader />
+      <Loader headerText="System Security: Edit User" />
     </div>
     ) : (
     <div className="spinner section">
-      <Loader />
+      <Loader headerText="System Security: Edit User" />
     </div>
     )
 
