@@ -22,6 +22,7 @@ const UpdateNonIndidualCustomerForm = () => {
   const [industries, setIndustry] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [staticData, setStaticData] = useState({});
+  const [inputState, setInputState] = useState(false);
   const [dataState, setDataState] = useState({});
   const [errors, setErrors] = useState({});
   const [dateError, setDateError] = useState({});
@@ -44,6 +45,7 @@ const UpdateNonIndidualCustomerForm = () => {
 
   const clearInputsValues = () => {
     setErrors({});
+    setInputState(true);
     if (Object.keys(customer.nonIndividualCustomer).length > 0) {
       setDataState(customer.nonIndividualCustomer);
     }
@@ -145,6 +147,7 @@ const UpdateNonIndidualCustomerForm = () => {
                       className="form-control-input col-md-8"
                       type="text"
                       name="bizName"
+                      disabled={inputState}
                       value={dataState.bizName}
                       onChange={handleChange}
                     />
@@ -164,6 +167,7 @@ const UpdateNonIndidualCustomerForm = () => {
                       className="form-control-input col-md-8"
                       type="text"
                       name="tradingName"
+                      disabled={inputState}
                       value={dataState.tradingName}
                       onChange={handleChange}
                     />
@@ -186,6 +190,7 @@ const UpdateNonIndidualCustomerForm = () => {
                         {
                           sectors.map((sector, index) => (
                             <option
+                              disabled={inputState}
                               key={index}
                               value={sector.econID}
                             >
@@ -221,6 +226,7 @@ const UpdateNonIndidualCustomerForm = () => {
                           industries.map((industry, index) => (
                             <option
                               key={index}
+                              disabled={inputState}
                               value={industry.indSecID}
                             >
                               {industry.industrySector}
@@ -261,6 +267,7 @@ const UpdateNonIndidualCustomerForm = () => {
                           businesses.map((business, index) => (
                             <option
                               key={index}
+                              disabled={inputState}
                               value={business.businessTypeID}
                             >
                               {business.businessType}
@@ -294,6 +301,7 @@ const UpdateNonIndidualCustomerForm = () => {
                       cols="30"
                       rows="10"
                       name="activityDescription"
+                      disabled={inputState}
                       value={dataState.activityDescription}
                       onChange={handleChange}
                     />
@@ -315,6 +323,7 @@ const UpdateNonIndidualCustomerForm = () => {
                       className="form-control-input col-md-8"
                       type="date"
                       name="regDate"
+                      disabled={inputState}
                       value={dataState.regDate
                         && new Date(dataState.regDate).toISOString().substring(0, 10)}
                       onChange={handleChange}
@@ -344,6 +353,7 @@ const UpdateNonIndidualCustomerForm = () => {
                           staticData.riskProfiles.map((profile, index) => (
                             <option
                               key={index}
+                              disabled={inputState}
                               value={profile.riskProfileID}
                             >
                               {profile.riskProfile}
@@ -384,6 +394,7 @@ const UpdateNonIndidualCustomerForm = () => {
                           staticData.customerTypes.map((type, index) => (
                             <option
                               key={index}
+                              disabled={inputState}
                               value={type.custTypeID}
                             >
                               {type.customerType}
