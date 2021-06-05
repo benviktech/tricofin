@@ -3,6 +3,7 @@ import {
   LOADING_ERROR,
   POST_CONTACT_SUCCESS,
   FETCH_COUNTRIES_SUCCESS,
+  SAVE_DIRECTOR_SUCCESS,
 } from '../actions/pages';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   loading: false,
   contact: {},
   countries: [],
+  directors: [],
 };
 
 const individualCustomerIdentification = (state = initialState, action) => {
@@ -33,6 +35,12 @@ const individualCustomerIdentification = (state = initialState, action) => {
         ...state,
         countries: action.payload,
         contact: {},
+        error: '',
+      };
+    case SAVE_DIRECTOR_SUCCESS:
+      return {
+        ...state,
+        directors: action.payload,
         error: '',
       };
     case LOADING_ERROR:
