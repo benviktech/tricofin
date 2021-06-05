@@ -36,7 +36,7 @@ const DirectorInfo = () => {
     setSearchedCustomer('');
   };
 
-  const saveDirector = e => {
+  const saveDirector = async e => {
     e.preventDefault();
     const data = {
       columnID: 0,
@@ -50,7 +50,8 @@ const DirectorInfo = () => {
       deletedOn: (new Date()).toISOString(),
       deletedBy: 'BENVIK',
     };
-    dispatch(saveCustomerDirector(data));
+    await dispatch(saveCustomerDirector(data));
+    setDirector({});
   };
 
   const directorsList = useSelector(state => state.individualCustomerIdentification);
@@ -154,11 +155,21 @@ const DirectorInfo = () => {
                         Title:
                       </div>
                       <div className="first-input-section">
-                        <input
-                          value={director.title}
-                          className="w-25"
-                          type="text"
-                        />
+                        {
+                          Object.keys(director).length > 0 ? (
+                            <input
+                              value={director.title}
+                              className="w-25"
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value=""
+                              className="w-25"
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                   </div>
@@ -168,10 +179,19 @@ const DirectorInfo = () => {
                         Sur Name:
                       </div>
                       <div className="first-input-section">
-                        <input
-                          value={director.surName}
-                          type="text"
-                        />
+                        {
+                          Object.keys(director).length > 0 ? (
+                            <input
+                              value={director.surName}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value=""
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                     <div className="first-section-inner">
@@ -179,10 +199,19 @@ const DirectorInfo = () => {
                         Fore Name 1:
                       </div>
                       <div className="first-input-section">
-                        <input
-                          value={director.foreName1}
-                          type="text"
-                        />
+                        {
+                          Object.keys(director).length > 0 ? (
+                            <input
+                              value={director.foreName1}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value=""
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                   </div>
@@ -192,10 +221,19 @@ const DirectorInfo = () => {
                         Fore Name 2:
                       </div>
                       <div className="first-input-section">
-                        <input
-                          value={director.foreName2}
-                          type="text"
-                        />
+                        {
+                          Object.keys(director).length > 0 ? (
+                            <input
+                              value={director.foreName2}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value=""
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                     <div className="first-section-inner">
@@ -203,10 +241,19 @@ const DirectorInfo = () => {
                         Fore Name 3:
                       </div>
                       <div className="first-input-section">
-                        <input
-                          value={director.foreName3}
-                          type="text"
-                        />
+                        {
+                          Object.keys(director).length > 0 ? (
+                            <input
+                              value={director.foreName3}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value=""
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                   </div>
@@ -216,10 +263,19 @@ const DirectorInfo = () => {
                         Residence:
                       </div>
                       <div className="first-input-section">
-                        <input
-                          value={director.rAddress}
-                          type="text"
-                        />
+                        {
+                          Object.keys(director).length > 0 ? (
+                            <input
+                              value={director.rAddress}
+                              type="text"
+                            />
+                          ) : (
+                            <input
+                              value=""
+                              type="text"
+                            />
+                          )
+                        }
                       </div>
                     </div>
                   </div>

@@ -452,3 +452,8 @@
   cursor: pointer;
   margin-bottom: 10px;
 }
+
+.lower-content-display::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
