@@ -5,9 +5,12 @@ import {
   FetchCountriesDataRequest,
   DeleteIdentificationSuccessRequest,
   UpdateContactSuccessRequest,
+  SaveCustomerDirector,
+  GetCustomerDirector,
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
+export const SAVE_DIRECTOR_SUCCESS = 'SAVE_DIRECTOR_SUCCESS';
 export const FETCH_COUNTRIES_SUCCESS = 'FETCH_COUNTRIES_SUCCESS';
 export const POST_CONTACT_SUCCESS = 'POST_CONTACT_SUCCESS';
 export const LOADING_CONTENT = 'LOADING_CONTENT';
@@ -20,6 +23,11 @@ export const individualCustomerIdentification = data => ({
 
 export const individualCustomerContact = data => ({
   type: POST_CONTACT_SUCCESS,
+  payload: data,
+});
+
+export const fetchDirectorSuccess = data => ({
+  type: SAVE_DIRECTOR_SUCCESS,
   payload: data,
 });
 
@@ -92,6 +100,28 @@ export const fetchCountriesData = () => async dispatch => {
   try {
     const response = await FetchCountriesDataRequest(method, path);
     dispatch({ type: FETCH_COUNTRIES_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const saveCustomerDirector = data => async dispatch => {
+  const method = 'post';
+  const path = '/api/Customers/SaveNonIndividualCustomerDirector';
+  try {
+    const response = await SaveCustomerDirector(method, path, data);
+    dispatch(fetchDirectorSuccess(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const getCustomerDirector = CustId => async dispatch => {
+  const method = 'get';
+  const path = `/api/Customers/GetNonIndividualCustomerDirectors/${CustId}`;
+  try {
+    const response = await GetCustomerDirector(method, path);
+    dispatch(fetchDirectorSuccess(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
