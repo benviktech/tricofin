@@ -86,3 +86,13 @@ export const UpdateNonIndividualCustomersRequest = async (method, data, path) =>
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const SaveCustomerDirector = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const GetCustomerDirector = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
