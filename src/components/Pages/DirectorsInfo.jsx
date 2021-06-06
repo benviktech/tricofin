@@ -17,6 +17,7 @@ import { saveCustomerDirector, getCustomerDirector } from '../../actions/pages';
 
 const DirectorInfo = () => {
   const [director, setDirector] = useState({});
+  const [errors, setErrors] = useState('');
   const [customerList, setCutomerList] = useState([]);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -38,20 +39,24 @@ const DirectorInfo = () => {
 
   const saveDirector = async e => {
     e.preventDefault();
-    const data = {
-      columnID: 0,
-      custID: id,
-      directorID: director.custID,
-      isDeleted: true,
-      createdOn: (new Date()).toISOString(),
-      createdBy: 'BENVIK',
-      modifiedOn: (new Date()).toISOString(),
-      modifiedBy: 'BENVIK',
-      deletedOn: (new Date()).toISOString(),
-      deletedBy: 'BENVIK',
-    };
-    await dispatch(saveCustomerDirector(data));
-    setDirector({});
+    if (Object.keys(director).length > 0) {
+      const data = {
+        columnID: 0,
+        custID: id,
+        directorID: director.custID,
+        isDeleted: true,
+        createdOn: (new Date()).toISOString(),
+        createdBy: 'BENVIK',
+        modifiedOn: (new Date()).toISOString(),
+        modifiedBy: 'BENVIK',
+        deletedOn: (new Date()).toISOString(),
+        deletedBy: 'BENVIK',
+      };
+      await dispatch(saveCustomerDirector(data));
+      setDirector({});
+    } else {
+      setErrors('Please select a Director');
+    }
   };
 
   const directorsList = useSelector(state => state.individualCustomerIdentification);
@@ -82,6 +87,12 @@ const DirectorInfo = () => {
     sortDirectors();
   }, [directorsList.directors]);
 
+  const closePopUp = () => {
+    setErrors('');
+  };
+
+  const clearInputs = () => setDirector({});
+
   return (
     <div className="individual-customer-form">
       <Modal
@@ -93,6 +104,17 @@ const DirectorInfo = () => {
         <div className="maintenance-customer-info">
           <span>Identification Information</span>
         </div>
+        {
+          errors && (
+            <div className="notification-errors-section shadow">
+              <i
+                onClick={closePopUp}
+                className="fas fa-times-circle"
+              />
+              { errors }
+            </div>
+          )
+        }
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
             <NonIdividualSidebar />
@@ -355,6 +377,7 @@ const DirectorInfo = () => {
                   </button>
                   <button
                     type="button"
+                    onClick={clearInputs}
                   >
                     Cancel
                   </button>
