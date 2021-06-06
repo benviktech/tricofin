@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
 import {
@@ -159,8 +159,12 @@ const Indentification = () => {
                   <div className="upper-inputs-section">
                     <div className="top-inputs-section">
                       <div className="id-type-section">
-                        <div className="input-label text-info">
-                          ID Types:
+                        <div className="input-label">
+                          ID Types
+                          <span className="text-danger mx-1">
+                            *
+                          </span>
+                          :
                         </div>
                         <select
                           onChange={e => setIdType(e.target.value)}
@@ -184,7 +188,13 @@ const Indentification = () => {
                         </div>
                       </div>
                       <div className="id-number-section">
-                        <div className="id-input-label text-danger">ID No:</div>
+                        <div className="id-input-label">
+                          ID No
+                          <span className="text-danger mx-1">
+                            *
+                          </span>
+                          :
+                        </div>
                         <input
                           value={idNumber}
                           onChange={e => setIdNumber(e.target.value)}
@@ -200,8 +210,12 @@ const Indentification = () => {
                     </div>
                     <div className="bottom-input-section">
                       <div className="id-type-section">
-                        <div className="input-label text-info">
-                          Country of Issue:
+                        <div className="input-label">
+                          Country of Issue
+                          <span className="text-danger">
+                            *
+                          </span>
+                          :
                         </div>
                         <select
                           onChange={e => setIsCountry(e.target.value)}

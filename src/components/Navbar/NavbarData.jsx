@@ -24,7 +24,7 @@ const NavbarData = [
         linkText: 'Individual Customers',
       },
       {
-        to: '#',
+        to: '/nonindidualcustomerform',
         linkText: 'Non Individual Customers',
       },
       {

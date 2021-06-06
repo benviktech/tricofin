@@ -9,7 +9,7 @@ import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
 import { updateIndividualCustomer } from '../../actions/individualCustomer';
 import ModalFunction from '../Modal/ModalFunction';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import IndividualCustomerValidator from '../Validators/IndividualCustomerValidator';
 import MoreInfo from './MoreInfo';
 import Modal from '../Modal/Modal';
@@ -26,7 +26,6 @@ const UpdateIndividualCustomer = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    console.log(dataState, 'data state');
     setDataState({
       ...dataState,
       [name]: value,
@@ -59,8 +58,6 @@ const UpdateIndividualCustomer = () => {
       dispatch(updateIndividualCustomer(dataState, history));
     }
   };
-
-  console.log(dataState, 'dataState in update');
 
   return Object.keys(dataState).length > 0 ? (
     <div className="view-individual-customer-form">
@@ -129,7 +126,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">SurName:</label>
+                    <label htmlFor="customerId">
+                      SurName
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -142,7 +148,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">ForeName1:</label>
+                    <label htmlFor="customerId">
+                      ForeName1
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -179,7 +194,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group d-flex align-items-center col-md-12">
-                    <label className="text-info" htmlFor="customerId">Residential Address:</label>
+                    <label htmlFor="customerId">
+                      Residential Address
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -216,12 +240,22 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Date of Birth:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Date of Birth
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="date"
                       name="dateofbirth"
-                      value={dataState.dateofbirth}
+                      value={dataState.dateofbirth
+                        && new Date(dataState.dateofbirth).toISOString().substring(0, 10)}
                       onChange={handleChange}
                     />
                   </div>
@@ -271,7 +305,13 @@ const UpdateIndividualCustomer = () => {
 
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
-                        <label className="text-info" htmlFor="customerId">Gender:</label>
+                        <label htmlFor="customerId">
+                          Gender
+                          <span className="text-danger">
+                            *
+                          </span>
+                          :
+                        </label>
                         {
                           Object.keys(staticData).includes('gender') ? (
                             <select
@@ -305,7 +345,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Nationality:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Nationality
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
@@ -335,7 +384,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Marital Status:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Marital Status
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
@@ -365,7 +423,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Risk Profile:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Risk Profile
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData).includes('nationality') ? (
                         <select
@@ -395,7 +462,16 @@ const UpdateIndividualCustomer = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Customer Type:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Customer Type
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData).includes('customerTypes') ? (
                         <select

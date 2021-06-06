@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
 import UseForm from './UseForm';
 import validate from '../Validators/IndividualCustomerValidator';
@@ -72,6 +72,7 @@ const IndividualCustomerForm = () => {
                   <div className="left-form-group manage-drop-down col-md-8">
                     <label htmlFor="customerId w-50">Search By Name:</label>
                     <input
+                      autoComplete="off"
                       className="form-control-input col-md-8"
                       type="text"
                       name="searchcustomer"
@@ -148,7 +149,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">SurName:</label>
+                    <label htmlFor="customerId">
+                      SurName
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -162,7 +172,16 @@ const IndividualCustomerForm = () => {
 
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
-                    <label className="text-info" htmlFor="customerId">ForeName1:</label>
+                    <label htmlFor="customerId">
+                      ForeName1
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -199,7 +218,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group d-flex align-items-center col-md-12">
-                    <label className="text-info" htmlFor="customerId">Residential Address:</label>
+                    <label htmlFor="customerId">
+                      Residential Address
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="text"
@@ -236,7 +264,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Date of Birth:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Date of Birth
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     <input
                       className="form-control-input col-md-8"
                       type="date"
@@ -291,7 +328,13 @@ const IndividualCustomerForm = () => {
 
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
-                        <label className="text-info" htmlFor="customerId">Gender:</label>
+                        <label htmlFor="customerId">
+                          Gender
+                          <span className="text-danger">
+                            *
+                          </span>
+                          :
+                        </label>
                         {
                         Object.keys(staticData.staticData).includes('gender') ? (
                           <select
@@ -328,7 +371,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Nationality:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Nationality
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                     Object.keys(staticData.staticData).includes('nationality') ? (
                       <select
@@ -362,7 +414,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Marital Status:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Marital Status
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData.staticData).includes('maritalStatus') ? (
                         <select
@@ -396,7 +457,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Risk Profile:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Risk Profile
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData.staticData).includes('riskProfiles') ? (
                         <select
@@ -430,7 +500,16 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
-                    <label className="w-25 text-info" htmlFor="customerId">Customer Type:</label>
+                    <label className="w-25" htmlFor="customerId">
+                      Customer Type
+                      <span className="text-danger">
+                        {' '}
+                        *
+                      </span>
+                      {' '}
+                      {' '}
+                      :
+                    </label>
                     {
                       Object.keys(staticData.staticData).includes('customerTypes') ? (
                         <select
