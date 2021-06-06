@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import './index.css';
 import { SignaturePhotoAddition } from '../../actions/individualCustomer';

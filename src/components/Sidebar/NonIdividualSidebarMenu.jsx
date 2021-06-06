@@ -12,20 +12,20 @@ import {
   DropdownLinkIcon,
 } from './StyledComponent';
 
-const SidebarMenu = ({ item }) => {
+const NonIndividualSidebarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
   const { id } = useParams();
 
   const showSubnav = () => setSubnav(!subnav);
   const { url } = useRouteMatch();
 
-  const currentUser = useSelector(state => state.individualCustomersReducer);
+  const currentCustomer = useSelector(state => state.nonIndividualCustomersReducer);
 
   React.useEffect(() => {
-    if (url.split('/')[1] === 'signature'
-    || url.split('/')[1] === 'identification'
-    || url.split('/')[1] === 'primarycontactinfo'
-    || url.split('/')[1] === 'secondarycontactinfo') {
+    if (url.split('/')[1] === 'directorsinformation'
+    || url.split('/')[1] === 'nonindividualprimarycontactinfo'
+    || url.split('/')[1] === 'nonindividualsecondarycontactinfo'
+    || url.split('/')[1] === 'identificationinfo') {
       setSubnav(true);
     }
   }, []);
@@ -33,8 +33,11 @@ const SidebarMenu = ({ item }) => {
   return (
     <>
       <SidebarLink onClick={item.subNav && showSubnav}>
-        <div>
-          {item.icon}
+        <div className="d-flex">
+          <div>
+            {' '}
+            {item.icon}
+          </div>
           <SidebarLabel>{item.title}</SidebarLabel>
         </div>
         <div>
@@ -45,12 +48,14 @@ const SidebarMenu = ({ item }) => {
         </div>
       </SidebarLink>
       {
-        (Object.keys(currentUser.individualCustomer).length > 0
-        && url.split('/')[1] !== 'individualcustomerform')
-        || url.split('/')[1] === 'signature'
-        || url.split('/')[1] === 'identification'
-        || url.split('/')[1] === 'primarycontactinfo'
-        || url.split('/')[1] === 'secondarycontactinfo' ? (
+        (Object.keys(currentCustomer.nonIndividualCustomer).length > 0
+        && url.split('/')[1] !== 'nonindidualcustomerform')
+        || url.split('/')[1] === 'directorsinformation'
+        || url.split('/')[1] === 'nonindividualprimarycontactinfo'
+        || url.split('/')[1] === 'nonindividualsecondarycontactinfo'
+        || url.split('/')[1] === 'updatenonindividualcustomer'
+        || url.split('/')[1] === 'viewnonindividualcustomerform'
+        || url.split('/')[1] === 'identificationinfo' ? (
 
             subnav && item.subNav.map((item, index) => (
               <DropdownLink
@@ -74,4 +79,4 @@ const SidebarMenu = ({ item }) => {
   );
 };
 
-export default SidebarMenu;
+export default NonIndividualSidebarMenu;
