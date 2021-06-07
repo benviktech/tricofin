@@ -429,7 +429,7 @@
   outline: none;
   cursor: pointer;
   margin-left: auto;
-  background-color: #f3f2f1;
+  border: 1px solid #d7d7d7;
   width: 100%;
 }
 

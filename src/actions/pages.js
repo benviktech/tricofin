@@ -112,7 +112,8 @@ export const saveCustomerDirector = data => async dispatch => {
     const response = await SaveCustomerDirector(method, path, data);
     dispatch(fetchDirectorSuccess(response.data));
   } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
+    const result = `5020 ${error.message}`;
+    dispatch({ type: LOADING_ERROR, payload: result });
   }
 };
 

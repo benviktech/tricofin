@@ -17,6 +17,7 @@ import { saveCustomerDirector, getCustomerDirector } from '../../actions/pages';
 
 const DirectorInfo = () => {
   const [director, setDirector] = useState({});
+  const [hideErrorDiv, setHideErrorDiv] = useState('d-none');
   const [errors, setErrors] = useState('');
   const [customerList, setCutomerList] = useState([]);
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const DirectorInfo = () => {
       };
       await dispatch(saveCustomerDirector(data));
       setDirector({});
+      setHideErrorDiv('');
     } else {
       setErrors('Please select a Director');
     }
@@ -93,6 +95,10 @@ const DirectorInfo = () => {
 
   const clearInputs = () => setDirector({});
 
+  const displayError = () => {
+    setHideErrorDiv('d-none');
+  };
+
   return (
     <div className="individual-customer-form">
       <Modal
@@ -114,6 +120,17 @@ const DirectorInfo = () => {
               { errors }
             </div>
           )
+        }
+        {
+          directorsList.error.includes('5020') ? (
+            <div className={`${hideErrorDiv} notification-errors-section shadow`}>
+              <i
+                onClick={displayError}
+                className="far fa-times-circle"
+              />
+              Director already exist
+            </div>
+          ) : null
         }
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
