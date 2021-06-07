@@ -13,7 +13,7 @@ import Modal from '../Modal/Modal';
 import { NonIdividualSidebar } from '../Sidebar/Sidebar';
 import MoreInfo from '../NonIdividual/MoreInfo';
 import SearchCustomer from '../Customer/SearchCustomer';
-import { saveCustomerDirector, getCustomerDirector } from '../../actions/pages';
+import { saveCustomerDirector, getCustomerDirector, removeCustomerDirector } from '../../actions/pages';
 
 const DirectorInfo = () => {
   const [director, setDirector] = useState({});
@@ -89,14 +89,14 @@ const DirectorInfo = () => {
     sortDirectors();
   }, [directorsList.directors]);
 
-  const closePopUp = () => {
-    setErrors('');
-  };
+  const closePopUp = () => setErrors('');
 
   const clearInputs = () => setDirector({});
 
-  const displayError = () => {
-    setHideErrorDiv('d-none');
+  const displayError = () => setHideErrorDiv('d-none');
+
+  const removeDirector = dirId => {
+    dispatch(removeCustomerDirector(id, dirId));
   };
 
   return (
@@ -373,6 +373,7 @@ const DirectorInfo = () => {
                          <div className="idcode-section-inner delete-info">
                            <button
                              type="button"
+                             onClick={() => removeDirector(director.custID)}
                            >
                              Delete
                            </button>

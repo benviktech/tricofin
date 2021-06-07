@@ -7,6 +7,7 @@ import {
   UpdateContactSuccessRequest,
   SaveCustomerDirector,
   GetCustomerDirector,
+  DeleteCustomerDirector,
 } from '../utils/api';
 
 export const POST_IDENTIFICATION_SUCCESS = 'POST_IDENTIFICATION_SUCCESS';
@@ -15,6 +16,7 @@ export const FETCH_COUNTRIES_SUCCESS = 'FETCH_COUNTRIES_SUCCESS';
 export const POST_CONTACT_SUCCESS = 'POST_CONTACT_SUCCESS';
 export const LOADING_CONTENT = 'LOADING_CONTENT';
 export const LOADING_ERROR = 'LOADING_ERROR';
+export const DELETE_DIRECTOR_SUCCESS = 'DELETE_DIRECTOR_SUCCESS';
 
 export const individualCustomerIdentification = data => ({
   type: POST_IDENTIFICATION_SUCCESS,
@@ -123,6 +125,21 @@ export const getCustomerDirector = CustId => async dispatch => {
   try {
     const response = await GetCustomerDirector(method, path);
     dispatch(fetchDirectorSuccess(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const removeCustomerDirector = (CustId, DirectorId) => async dispatch => {
+  const method = 'delete';
+  const path = `/api/Customers/DeleteNonIndividualCustomerDirector/${CustId}/${DirectorId}`;
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await DeleteCustomerDirector(method, path);
+    if (response.data) {
+      console.log(response.data);
+      dispatch({ type: DELETE_DIRECTOR_SUCCESS, payload: DirectorId });
+    }
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }

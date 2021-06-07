@@ -4,6 +4,7 @@ import {
   POST_CONTACT_SUCCESS,
   FETCH_COUNTRIES_SUCCESS,
   SAVE_DIRECTOR_SUCCESS,
+  DELETE_DIRECTOR_SUCCESS,
 } from '../actions/pages';
 
 const initialState = {
@@ -41,6 +42,12 @@ const individualCustomerIdentification = (state = initialState, action) => {
       return {
         ...state,
         directors: action.payload,
+        error: '',
+      };
+    case DELETE_DIRECTOR_SUCCESS:
+      return {
+        ...state,
+        directors: state.directors.filter(data => data.directorID !== action.payload),
         error: '',
       };
     case LOADING_ERROR:
