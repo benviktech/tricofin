@@ -123,7 +123,7 @@ const DirectorInfo = () => {
         }
         {
           directorsList.error.includes('5020') ? (
-            <div className={`${hideErrorDiv} notification-errors-section shadow`}>
+            <div className={`${hideErrorDiv} notification-errors-section shadow text`}>
               <i
                 onClick={displayError}
                 className="far fa-times-circle"
