@@ -57,7 +57,7 @@ const DirectorInfo = () => {
       setDirector({});
       setHideErrorDiv('');
     } else {
-      setErrors('Please select a Director');
+      setErrors('Please select a Director!');
     }
   };
 
