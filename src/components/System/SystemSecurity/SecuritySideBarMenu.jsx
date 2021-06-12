@@ -29,15 +29,11 @@ const SidebarLabel = styled.span`
 
 
 
-
-
-
 const SidebarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
   let match = useRouteMatch();
-  console.log(match.path)
   return (
     <NavLink to={item.path} style={{textDecoration:"none",display:"block"}} activeStyle={{backgroundColor:"#F3F2F1",color:"#777" }} >
       <SidebarLink >
