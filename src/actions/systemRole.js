@@ -24,10 +24,8 @@ export const fetchSystemRoles = () => async (dispatch) => {
 export const createSystemRole = (data) => async (dispatch) => {
   const method = "post";
   const path = "api/System/SaveRole";
-  console.log(data, "before submission");
   try {
     const response = await PostSystemsRoleRequest(method, path, data);
-    console.log(response.data, "role posted successfully");
     dispatch(systemRoleSuccessFetch(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
