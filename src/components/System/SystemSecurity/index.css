@@ -32,23 +32,30 @@
 }
 
 .access-rights {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .userrole-container {
-  /* margin-bottom: 30px; */
 }
-.userrole-container table {
-  margin: 0 auto;
-  width: 50%;
-}
-.userrole-container form {
+
+.modules-role-section {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  width: 50%;
 }
+
+.role-choose {
+  flex: 1;
+}
+
+.system-modules-container {
+  flex: 3;
+}
+
 .form-input-role {
   margin-left: 20px;
   background-color: #d7d7d7;
@@ -62,32 +69,18 @@
   padding-left: 20px;
 }
 .data-entry-rights {
-  display: flex;
+  /* display: flex; */
   /* text-align: center; */
-  flex-direction: column;
-  flex: 1;
-  border-left: 1px solid #d7d7d7;
+  /* flex-direction: column; */
+  /* flex: 1; */
+  /* border-left: 1px solid #d7d7d7;
   height: 50vh;
-  padding-left: 20px;
+  padding-left: 20px; */
 }
-.data-entry {
-  margin: 0 auto;
-  flex: 1;
-}
-.supervision {
-  flex: 1;
-  margin: 0 auto;
-}
-.blue-banner {
-  height: 20px;
-  background-color: #0178d4;
-  width: 95%;
-}
-.role-listing {
-  flex: 1;
-}
+
 .rights-container {
-  flex: 1;
+  /* flex: 1; */
+  /* width: 50%; */
 }
 .button-cell {
   width: 100%;
@@ -124,15 +117,66 @@
   width: 35%;
 }
 
+.submit-form-top-section {
+  flex: 5;
+  display: flex;
+}
+
+.submit-form-top-section-role {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.role-buttons-section {
+  display: flex;
+  padding: 30px;
+  justify-content: flex-end;
+}
+
+.user-maintenance-buttons-section {
+  display: flex;
+  padding: 30px;
+  justify-content: flex-end;
+}
+
+.user-maintenancerole-buttons-section {
+  display: flex;
+  padding: 20px;
+  justify-content: flex-end;
+}
+
+.create-role-section {
+  margin-top: 30px;
+}
+
+.display-users-section {
+  height: 50vh;
+}
+.display-role-members-section {
+}
+.individual-customer-form {
+  position: relative;
+}
+.role-members-table {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+.role-listing-table {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+.display-roles-section {
+  height: 50vh;
+}
+
 /* Tab screen sizes */
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (min-width: 1000px) {
   .main-form-color {
     flex-direction: column;
-  }
-
-  .submit-form-top-section {
-    flex: 5;
   }
 
   .upper-bottom-section {
@@ -275,6 +319,10 @@
   position: absolute;
   display: none;
 }
+.modal-hide-section-role-choose {
+  position: absolute;
+  display: none;
+}
 .modal-hide-section-user-useredit {
   position: absolute;
   display: none;
@@ -314,11 +362,19 @@
   height: 100px;
   right: 105px;
 }
+.modal-popup-section-role-choose {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 130px;
+  height: 100px;
+  left: 395px;
+}
 .modal-popup-section-user-useredit {
   position: absolute;
   padding: 10px;
   z-index: 20;
-  top: 160px;
+  top: 270px;
   height: 100px;
   left: 340px;
 }
@@ -341,6 +397,10 @@
   overflow-y: auto;
   height: 350px;
 }
+.inner-section-modal-section-role-choose {
+  overflow-y: auto;
+  height: 350px;
+}
 .inner-section-modal-section-user-useredit {
   overflow-y: auto;
   height: 350px;
@@ -356,6 +416,7 @@
   cursor: pointer;
   margin-bottom: 5px;
   color: #fff;
+  text-transform: uppercase;
 }
 
 .inner-section-modal-section-inner-useredit {
@@ -368,6 +429,7 @@
   cursor: pointer;
   margin-bottom: 5px;
   color: #fff;
+  text-transform: uppercase;
 }
 
 .inner-section-modal-section-inner-role {
@@ -380,6 +442,7 @@
   cursor: pointer;
   margin-bottom: 5px;
   color: #fff;
+  text-transform: uppercase;
 }
 
 .inner-section-modal-section-inner-role-useredit {
@@ -392,6 +455,19 @@
   cursor: pointer;
   margin-bottom: 5px;
   color: #fff;
+  text-transform: uppercase;
+}
+.inner-section-modal-section-inner-role-choose {
+  display: flex;
+  width: 200px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
 }
 .inner-section-modal-section-inner-user-useredit {
   display: flex;
@@ -403,12 +479,22 @@
   cursor: pointer;
   margin-bottom: 5px;
   color: #fff;
+  text-transform: uppercase;
 }
 
 .user-alert {
-  z-index: 40;
+  position: absolute;
+  top: 20px;
   width: 50%;
   margin: 0 auto;
+}
+
+.roles-header-section {
+  font-weight: 700;
+}
+.roles-rows-section {
+  font-weight: 700;
+  color: #666673;
 }
 
 .page-refresh {
@@ -419,4 +505,13 @@
   top: 50%;
   left: 30%;
   /* background-color: #0178d4; */
+}
+
+.rstm-tree-item--active {
+  background-color: #1991da !important;
+}
+
+.tree-menu-div {
+  height: 60vh !important;
+  overflow-y: scroll;
 }
