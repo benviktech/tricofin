@@ -49,7 +49,7 @@ const RoleMembers = () => {
             <div className="column-three">Surname</div>
           </div>
           {filteredUsers.map((user) => (
-            <div className="roles-rows-section">
+            <div className="roles-header-section">
               <div className="column-two">{user.userName}</div>
               <div className="column-three">{user.surName}</div>
             </div>
