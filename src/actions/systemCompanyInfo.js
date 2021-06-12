@@ -53,8 +53,6 @@ export const updateCompanyInfo = (data, history) => async (dispatch) => {
     modifiedBy: data.modifiedBy,
   };
 
-  console.log(result);
-
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await UpdateCompanyInfoRequest(method, result, path);

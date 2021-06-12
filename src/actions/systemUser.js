@@ -9,6 +9,7 @@ export const LOADING_CONTENT = "LOADING_CONTENT";
 export const LOADING_ERROR = "LOADING_ERROR";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const RESET_USER_ALERT = "RESET_USER_ALERT";
 
 export const createUserSuccessPost = (data) => {
@@ -64,14 +65,9 @@ export const createSystemUser = (data) => async (dispatch) => {
 
   try {
     dispatch({ type: LOADING_CONTENT });
-    console.log(userData);
     const response = await PostSystemUserRequest(method, path, userData);
     dispatch(createUserSuccessPost(response.data));
-    console.log(response.data);
-  } catch (error) {
-    console.log("am here");
-    console.log(error.message);
-  }
+  } catch (error) {}
 };
 
 export const updateSystemUser = (data) => async (dispatch) => {
@@ -109,10 +105,8 @@ export const updateSystemUser = (data) => async (dispatch) => {
     console.log(userData);
     const response = await UpdateSystemUserRequest(method, path, userData);
     dispatch(updateUserSuccessPost(response.data));
-    console.log(response.data);
   } catch (error) {
     console.log("am here");
-    console.log(error.message);
   }
 };
 
@@ -123,8 +117,5 @@ export const deleteSystemUser = (data) => async (dispatch) => {
   try {
     const response = await DeleteSystemUserRequest(method, path);
     dispatch(deleteUserSuccess(userName));
-  } catch (error) {
-    console.log("am here");
-    console.log(error.message);
-  }
+  } catch (error) {}
 };
