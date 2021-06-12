@@ -24,19 +24,13 @@ const SecuritySidebarData = [
     path:'/system/systemsecurity/rights',
   },
   {
-    title: 'Add User',
+    title: 'User Maintenance',
     icon: <RiIcons.RiUserLine style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     path:'/system/systemsecurity/adduser',
   },
-  {
-    title: 'Edit User',
-    icon: <RiIcons.RiUserLine style={iconStyles} />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-    path:'/system/systemsecurity/editUser',
-  },
+
 
 ];
 
