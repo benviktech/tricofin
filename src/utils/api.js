@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const baseUrl = 'https://tricofin.azurewebsites.net';
+const baseUrl = "https://tricofin.azurewebsites.net";
 
 export const FetchIndividualCustomersRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
@@ -82,7 +82,15 @@ export const GetNonIndividualCustomerRequest = async (method, path) => {
   return response;
 };
 
-export const UpdateNonIndividualCustomersRequest = async (method, data, path) => {
+export const UpdateNonIndividualCustomersRequest = async (
+  method,
+  data,
+  path
+) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+export const DeleteSystemUserRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };

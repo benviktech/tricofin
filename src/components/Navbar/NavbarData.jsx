@@ -4,16 +4,16 @@ const NavbarData = [
     innerLinks: [
       {
         to: '#',
-        linkText: 'Action',
+        linkText: 'Log Out',
       },
       {
-        to: '#',
-        linkText: 'Another action',
+        to: '/system/systemsecurity/roles',
+        linkText: 'System Security',
       },
       {
-        to: '#',
-        linkText: 'Something else here',
-      },
+        to: '/systemsettingscompanyinfo',
+        linkText: 'System Settings',
+      }
     ],
   },
   {

@@ -1,0 +1,518 @@
+.maintenance-customer-info {
+  color: #666;
+  font-weight: bold;
+  border-bottom: 3px solid #fff;
+  display: flex;
+  font-size: 14px;
+  padding: 5px;
+  justify-content: center;
+  background-color: #f3f2f1;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+.lower-downer-section {
+  display: flex;
+}
+
+.left-inner-form-section {
+  background-color: #d7d7d7;
+  padding: 10px 5px;
+  margin-right: 10px;
+  flex: 1;
+  z-index: 5;
+  height: 90vh;
+}
+
+.userroledetails-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.access-rights {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.userrole-container {
+}
+
+.modules-role-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.role-choose {
+  flex: 1;
+}
+
+.system-modules-container {
+  flex: 3;
+}
+
+.form-input-role {
+  margin-left: 20px;
+  background-color: #d7d7d7;
+  border: none;
+  outline: none;
+}
+.role-members {
+  flex: 1;
+  border-left: 1px solid #d7d7d7;
+  height: 50vh;
+  padding-left: 20px;
+}
+.data-entry-rights {
+  /* display: flex; */
+  /* text-align: center; */
+  /* flex-direction: column; */
+  /* flex: 1; */
+  /* border-left: 1px solid #d7d7d7;
+  height: 50vh;
+  padding-left: 20px; */
+}
+
+.rights-container {
+  /* flex: 1; */
+  /* width: 50%; */
+}
+.button-cell {
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  color: #0178d4;
+  border: none;
+  background: none;
+}
+
+.buttons-action-roles {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.buttons-link-roles {
+  padding: 10px;
+  border-radius: 25px;
+  width: 80px;
+  background: linear-gradient(40deg, #0178d4, #d7d7d7);
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.role-id,
+.description {
+  justify-content: space-between;
+  width: 35%;
+}
+
+.submit-form-top-section {
+  flex: 5;
+  display: flex;
+}
+
+.submit-form-top-section-role {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.role-buttons-section {
+  display: flex;
+  padding: 30px;
+  justify-content: flex-end;
+}
+
+.user-maintenance-buttons-section {
+  display: flex;
+  padding: 30px;
+  justify-content: flex-end;
+}
+
+.user-maintenancerole-buttons-section {
+  display: flex;
+  padding: 20px;
+  justify-content: flex-end;
+}
+
+.create-role-section {
+  margin-top: 30px;
+}
+
+.display-users-section {
+  height: 50vh;
+}
+.display-role-members-section {
+}
+.individual-customer-form {
+  position: relative;
+}
+.role-members-table {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+.role-listing-table {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+.display-roles-section {
+  height: 50vh;
+}
+
+/* Tab screen sizes */
+
+@media only screen and (min-width: 1000px) {
+  .main-form-color {
+    flex-direction: column;
+  }
+
+  .upper-bottom-section {
+    margin-bottom: 60px;
+  }
+
+  .bottom-form-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bottom-form-section .form-group {
+    width: 100%;
+  }
+}
+
+.internal-headings {
+  color: #666;
+  font-size: 14px;
+}
+.buttons-addrole {
+  padding: 8px;
+  border-radius: 25px;
+  margin-top: 10px;
+  width: 200px;
+  background: linear-gradient(40deg, #0178d4, #d7d7d7);
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spinner-small {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+}
+.rights-dropdown-container {
+  overflow: scroll;
+  height: 300px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.userrole-search {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.usermaintenance-section {
+  flex: 7;
+  margin-top: 40px;
+  display: flex;
+}
+
+.user-details-section {
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+.user-settings-section {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  border-left: 1px solid #666666;
+  padding: 20px;
+}
+
+.userroleadd-section {
+  width: 100%;
+  margin-top: 30px;
+}
+.user-details-data-section {
+  width: 100%;
+  margin-top: 10px;
+}
+.userrole-create-header {
+  color: #666666;
+  font-weight: 700;
+  text-align: center;
+}
+
+.userdetails-create-header {
+  color: #666666;
+  font-weight: 700;
+  text-align: center;
+}
+
+.input-div {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-weight: 600;
+  margin-top: 10px;
+  position: relative;
+}
+
+.input-div .label {
+  width: 150px;
+}
+.input-box {
+  width: 65%;
+}
+
+.input-box-password {
+  width: 55%;
+}
+.input-box-phone {
+  width: 55%;
+}
+
+.user-advanced-settings {
+  margin-top: 20px;
+}
+
+.roles-container {
+  display: flex;
+  flex-direction: column;
+  width: 311px;
+  left: 348px;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  background-color: #f3f2f1;
+}
+
+.modal-hide-section {
+  position: absolute;
+  display: none;
+}
+.modal-hide-section-useredit {
+  position: absolute;
+  display: none;
+}
+.modal-hide-section-role {
+  position: absolute;
+  display: none;
+}
+.modal-hide-section-role-useredit {
+  position: absolute;
+  display: none;
+}
+.modal-hide-section-role-choose {
+  position: absolute;
+  display: none;
+}
+.modal-hide-section-user-useredit {
+  position: absolute;
+  display: none;
+}
+
+.modal-popup-section {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 15px;
+  height: 100px;
+  left: 150px;
+}
+
+.modal-popup-section-useredit {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  bottom: 120px;
+  height: 100px;
+  left: 340px;
+}
+
+.modal-popup-section-role {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 200px;
+  height: 100px;
+  right: 105px;
+}
+.modal-popup-section-role-useredit {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 200px;
+  height: 100px;
+  right: 105px;
+}
+.modal-popup-section-role-choose {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 130px;
+  height: 100px;
+  left: 395px;
+}
+.modal-popup-section-user-useredit {
+  position: absolute;
+  padding: 10px;
+  z-index: 20;
+  top: 210px;
+  height: 100px;
+  left: 340px;
+}
+
+.inner-section-modal-section {
+  overflow-y: auto;
+  height: 350px;
+}
+
+.inner-section-modal-section-useredit {
+  overflow-y: auto;
+  height: 200px;
+}
+
+.inner-section-modal-section-role {
+  overflow-y: auto;
+  height: 350px;
+}
+.inner-section-modal-section-role-useredit {
+  overflow-y: auto;
+  height: 350px;
+}
+.inner-section-modal-section-role-choose {
+  overflow-y: auto;
+  height: 350px;
+}
+.inner-section-modal-section-user-useredit {
+  overflow-y: auto;
+  height: 350px;
+}
+
+.inner-section-modal-section-inner {
+  display: flex;
+  width: 250px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.inner-section-modal-section-inner-useredit {
+  display: flex;
+  width: 250px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.inner-section-modal-section-inner-role {
+  display: flex;
+  width: 200px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.inner-section-modal-section-inner-role-useredit {
+  display: flex;
+  width: 200px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.inner-section-modal-section-inner-role-choose {
+  display: flex;
+  width: 200px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.inner-section-modal-section-inner-user-useredit {
+  display: flex;
+  width: 200px;
+  background-color: #1991da;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.user-alert {
+  position: absolute;
+  top: 20px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.roles-header-section {
+  font-weight: 700;
+}
+.roles-rows-section {
+  font-weight: 700;
+  color: #666673;
+}
+
+.page-refresh {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-self: center;
+  top: 50%;
+  left: 30%;
+  /* background-color: #0178d4; */
+}
+
+.rstm-tree-item--active {
+  background-color: #1991da !important;
+}
+
+.tree-menu-div {
+  height: 60vh !important;
+  overflow-y: scroll;
+}
