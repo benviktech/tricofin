@@ -272,6 +272,7 @@
   color: #000;
   font-weight: 600;
   margin-top: 10px;
+  position: relative;
 }
 
 .input-div .label {
@@ -332,9 +333,9 @@
   position: absolute;
   padding: 10px;
   z-index: 20;
-  top: 180px;
+  top: 15px;
   height: 100px;
-  left: 340px;
+  left: 150px;
 }
 
 .modal-popup-section-useredit {
@@ -374,7 +375,7 @@
   position: absolute;
   padding: 10px;
   z-index: 20;
-  top: 270px;
+  top: 210px;
   height: 100px;
   left: 340px;
 }

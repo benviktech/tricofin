@@ -365,7 +365,7 @@ const SystemSecurityMaintenance = () => {
                     {sortedTempUsers.length <= 0 ? (
                       <div className="modal-hide-section-user-useredit" />
                     ) : (
-                      <div className="modal-popup-section-user-useredit">
+                      <div className="modal-popup-section">
                         <div className="inner-section-modal-section-user-useredit">
                           {sortedTempUsers.map((user) => (
                             <div
@@ -518,7 +518,7 @@ const SystemSecurityMaintenance = () => {
                     {sortedTempRoles.length <= 0 ? (
                       <div className="modal-hide-section-role" />
                     ) : (
-                      <div className="modal-popup-section-role">
+                      <div className="modal-popup-section">
                         <div className="inner-section-modal-section-role">
                           {sortedTempRoles.map((role) => (
                             <div
