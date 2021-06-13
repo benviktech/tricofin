@@ -18,6 +18,7 @@ import NonIndividualPrimaryContact from '../Pages/NonIndividualPrimaryContact';
 import NonIndividualIdentification from '../Pages/NonIndividualIdentification';
 import DirectorsInfo from '../Pages/DirectorsInfo';
 import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
+import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
 
 const Router = () => (
   <div className="router-section">
@@ -40,6 +41,7 @@ const Router = () => (
         <Route path="/directorsinformation/:id" component={DirectorsInfo} />
         <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
         <Route path="/groupmaintenanceform" component={GroupMaintenance} />
+        <Route path="/groupmaintenanceview" component={GroupMaintenanceView} />
       </Switch>
       <Footer />
     </BrowserRouter>
