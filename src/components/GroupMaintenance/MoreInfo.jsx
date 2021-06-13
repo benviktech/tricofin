@@ -12,19 +12,19 @@ const MoreInfo = () => (
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total Members:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total Savings A/Cs:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total Loans A/Cs:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
       </div>
@@ -32,19 +32,19 @@ const MoreInfo = () => (
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total Loan Amount:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total Savings Bal:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total Loan Bal:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
       </div>
@@ -52,19 +52,19 @@ const MoreInfo = () => (
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total O/S Interest:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Total O/S Principal:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
         <div className="lower-horizontal-section">
           <div className="lower-label-section">Chair Person:</div>
           <div className="lower-input-section">
-            <input type="text" />
+            <div className="info-details" />
           </div>
         </div>
       </div>
