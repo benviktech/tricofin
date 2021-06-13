@@ -28,7 +28,7 @@ const NavbarData = [
         linkText: 'Non Individual Customers',
       },
       {
-        to: '#',
+        to: '/groupmaintenanceform',
         linkText: 'Group Maintenance',
       },
     ],
