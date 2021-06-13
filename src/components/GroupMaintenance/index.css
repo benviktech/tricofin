@@ -11,7 +11,9 @@
 }
 
 .horizontal-section input,
-.bottom-form-section input {
+.bottom-form-section .info-details,
+.information-section,
+.information-section-left {
   height: 30px;
   border: none;
   border-radius: 3px;
@@ -23,6 +25,18 @@
   margin-left: auto;
   background-color: #f3f2f1;
   width: 100%;
+}
+
+.information-section {
+  display: flex;
+  align-items: center;
+}
+
+.information-section-left {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  margin-right: 2px;
 }
 
 .left-horizontal-section {
@@ -40,10 +54,14 @@
 
 .inner-right-section {
   display: flex;
-  flex: 1;
+  flex: 3;
   font-weight: 600;
   align-items: center;
   margin-left: 10px;
+}
+
+.inner-left-section {
+  flex: 2;
 }
 
 .inner-right-input {
@@ -113,7 +131,7 @@
   flex: 1;
 }
 
-.bottom-form-section input {
+.bottom-form-section .info-details {
   background-color: #fff;
   height: 25px;
   font-size: 12px;
