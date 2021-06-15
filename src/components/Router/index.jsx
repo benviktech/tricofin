@@ -19,6 +19,7 @@ import NonIndividualIdentification from '../Pages/NonIndividualIdentification';
 import DirectorsInfo from '../Pages/DirectorsInfo';
 import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
 import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
+import GroupMembers from '../Pages/GroupMembers';
 
 const Router = () => (
   <div className="router-section">
@@ -42,6 +43,7 @@ const Router = () => (
         <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
         <Route path="/groupmaintenanceform" component={GroupMaintenance} />
         <Route path="/groupmaintenanceview" component={GroupMaintenanceView} />
+        <Route path="/groupmembers/:id" component={GroupMembers} />
       </Switch>
       <Footer />
     </BrowserRouter>

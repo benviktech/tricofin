@@ -468,3 +468,124 @@
   background-color: #fff;
   padding: 10px;
 }
+
+.main-groups-section {
+  margin-right: 5px;
+}
+
+.id-display-section {
+  display: flex;
+}
+
+.main-group-top-left {
+  flex: 1;
+  display: flex;
+  font-size: 12px;
+  font-weight: 600;
+  align-items: center;
+}
+
+.main-group-top-right {
+  flex: 6;
+  display: flex;
+  font-weight: 600;
+}
+
+.group-top-input-left {
+  padding: 5px 20px;
+  margin-right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.group-top-input-right {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px;
+  border-radius: 3px;
+}
+
+.main-group-top-right div {
+  font-size: 12px;
+}
+
+.customer-information-section {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.customer-more-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: #d7d7d7;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lower-customer-info-section {
+  display: flex;
+}
+
+.left-lower-customer-info-section {
+  flex: 1;
+}
+
+.right-lower-customer-info-section {
+  width: 300px;
+  padding: 0 20px;
+}
+
+.right-lower-customer-info-section div {
+  border: 1px solid #F3F2F1;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d7d7d7;
+  height: 100%;
+}
+
+.first-lower-customer-info-section,
+.second-lower-customer-info-section {
+  display: flex;
+  margin-bottom: 10px;
+  margin-right: 2px;
+  justify-content: space-between;
+}
+
+.first-lower-customer-info-section input,
+.second-lower-customer-info-section input {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  margin-left: auto;
+  background-color: #f3f2f1;
+  width: 100%;
+}
+
+.input-lower-customer-info-section {
+  flex: 2;
+}
+
+.label-lower-customer-info-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.members-listings {
+  font-weight: 600;
+  font-size: 13px;
+  background-color: #D7D7D7;
+}

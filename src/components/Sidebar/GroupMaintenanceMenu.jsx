@@ -22,10 +22,8 @@ const GroupMaintenanceMenu = ({ item }) => {
   const currentCustomer = useSelector(state => state.nonIndividualCustomersReducer);
 
   React.useEffect(() => {
-    if (url.split('/')[1] === 'directorsinformation'
-    || url.split('/')[1] === 'nonindividualprimarycontactinfo'
-    || url.split('/')[1] === 'nonindividualsecondarycontactinfo'
-    || url.split('/')[1] === 'identificationinfo') {
+    if (url.split('/')[1] === 'groupmaintenanceview'
+    || url.split('/')[1] === 'groupmembers') {
       setSubnav(true);
     }
   }, []);
@@ -49,13 +47,9 @@ const GroupMaintenanceMenu = ({ item }) => {
       </SidebarLink>
       {
         (Object.keys(currentCustomer.nonIndividualCustomer).length > 0
-        && url.split('/')[1] !== 'nonindidualcustomerform')
-        || url.split('/')[1] === 'directorsinformation'
-        || url.split('/')[1] === 'nonindividualprimarycontactinfo'
-        || url.split('/')[1] === 'nonindividualsecondarycontactinfo'
-        || url.split('/')[1] === 'updatenonindividualcustomer'
-        || url.split('/')[1] === 'viewnonindividualcustomerform'
-        || url.split('/')[1] === 'identificationinfo' ? (
+        && url.split('/')[1] !== 'groupmaintenanceform')
+        || url.split('/')[1] === 'groupmaintenanceview'
+        || url.split('/')[1] === 'groupmembers' ? (
 
             subnav && item.subNav.map((item, index) => (
               <DropdownLink
