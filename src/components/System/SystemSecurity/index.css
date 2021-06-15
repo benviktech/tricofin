@@ -136,7 +136,7 @@
 
 .user-maintenance-buttons-section {
   display: flex;
-  padding: 30px;
+  margin: 7px;
   justify-content: flex-end;
 }
 
@@ -367,9 +367,9 @@
   position: absolute;
   padding: 10px;
   z-index: 20;
-  top: 130px;
+  top: 15px;
   height: 100px;
-  left: 395px;
+  left: 150px;
 }
 .modal-popup-section-user-useredit {
   position: absolute;
@@ -405,6 +405,7 @@
 .inner-section-modal-section-user-useredit {
   overflow-y: auto;
   height: 350px;
+  width: 215px;
 }
 
 .inner-section-modal-section-inner {
@@ -515,4 +516,9 @@
 .tree-menu-div {
   height: 60vh !important;
   overflow-y: scroll;
+}
+
+.indicator {
+  font-size: 14px;
+  text-align: center;
 }
