@@ -10,6 +10,7 @@ import "./index.css";
 import Loader from "./Loader/Loader";
 import { Button, Input } from "../../_generics/Generics";
 import { fetchSystemRoles } from "../../../actions/systemRole";
+import userMaintenanceValidator from "../../Validators/UserMaintenanceValidator";
 import axios from "axios";
 import {
   createSystemUser,
@@ -135,7 +136,10 @@ const SystemSecurityMaintenance = () => {
     axios
       .get(`${baseUrl}/api/System/GetSystemUser/${userName}`)
       .then(function (response) {
-        setFormState(response.data);
+        setFormState({
+          ...response.data,
+          password: response.data.userPassword,
+        });
         if (response.data.tempRole) {
           setRoleDisable(false);
         } else if (!response.data.tempRole) {
@@ -227,21 +231,32 @@ const SystemSecurityMaintenance = () => {
     return currentDate.toISOString().split("T")[0];
   };
 
-  const clearFields = (e) => {
-    e.preventDefault();
-    setFormState({});
+  const clearFields = () => {
+    setErrors({});
   };
 
   const createUser = () => {
-    dispatch(createSystemUser(formState));
+    const response = userMaintenanceValidator(formState);
+    setErrors(response);
+    if (Object.keys(response).length === 0) {
+      dispatch(createSystemUser(formState));
+    }
   };
 
   const updateUser = () => {
-    dispatch(updateSystemUser(formState));
+    const response = userMaintenanceValidator(formState);
+    setErrors(response);
+    if (Object.keys(response).length === 0) {
+      dispatch(updateSystemUser(formState));
+    }
   };
 
   const deleteUser = () => {
-    dispatch(deleteSystemUser(formState));
+    const response = userMaintenanceValidator(formState);
+    setErrors(response);
+    if (Object.keys(response).length === 0) {
+      dispatch(deleteSystemUser(formState));
+    }
   };
 
   return roles.length > 0 ? (
@@ -321,6 +336,10 @@ const SystemSecurityMaintenance = () => {
                         handleChange={filterRoles}
                         type="text"
                       />
+                      <br />
+                      {errors.roleID && (
+                        <span className="error-display">{errors.roleID}</span>
+                      )}
                     </div>
                     {sortedRoles.length <= 0 ? (
                       <div className="modal-hide-section" />
@@ -361,6 +380,10 @@ const SystemSecurityMaintenance = () => {
                         name="userName"
                         type="text"
                       />
+                      <br />
+                      {errors.userName && (
+                        <span className="error-display">{errors.userName}</span>
+                      )}
                     </div>
                     {sortedTempUsers.length <= 0 ? (
                       <div className="modal-hide-section-user-useredit" />
@@ -392,10 +415,16 @@ const SystemSecurityMaintenance = () => {
                       <div className="input-box-password">
                         <Input
                           handleChange={handleChange}
-                          value={formState.userpassword}
-                          name="userpassword"
+                          value={formState.userPassword}
+                          name="userPassword"
                           type="password"
                         />
+                        <br />
+                        {errors.userPassword && (
+                          <span className="error-display">
+                            {errors.userPassword}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="input-div">
@@ -419,6 +448,10 @@ const SystemSecurityMaintenance = () => {
                         name="surName"
                         type="text"
                       />
+                      <br />
+                      {errors.surName && (
+                        <span className="error-display">{errors.surName}</span>
+                      )}
                     </div>
                   </div>
                   <div className="input-div">
@@ -430,6 +463,12 @@ const SystemSecurityMaintenance = () => {
                         name="otherNames"
                         type="text"
                       />
+                      <br />
+                      {errors.otherNames && (
+                        <span className="error-display">
+                          {errors.otherNames}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="input-div">
@@ -442,6 +481,12 @@ const SystemSecurityMaintenance = () => {
                           name="phoneNo1"
                           type="text"
                         />
+                        <br />
+                        {errors.phoneNo1 && (
+                          <span className="error-display">
+                            {errors.phoneNo1}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="input-div">
@@ -481,10 +526,6 @@ const SystemSecurityMaintenance = () => {
                     </div>
                   </div>
                 </form>
-                <div className="user-maintenancerole-buttons-section">
-                  <Button onClick={createUser} name="Add" />
-                  <Button onClick={clearFields} name="Cancel" />
-                </div>
               </div>
             </div>
 
@@ -627,6 +668,7 @@ const SystemSecurityMaintenance = () => {
                 </form>
 
                 <div className="user-maintenance-buttons-section">
+                  <Button onClick={createUser} name="Add" />
                   <Button onClick={updateUser} name="Update User" />
                   <Button onClick={clearFields} name="Clear Data" />
                   <Button onClick={deleteUser} name="Delete User" />
