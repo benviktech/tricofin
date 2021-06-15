@@ -1,8 +1,8 @@
 import React from "react";
 import "./index.css";
 
-export const Button = ({ name, onClick, type = "button" }) => (
-  <button type={type} onClick={onClick}>
+export const Button = ({ name, onClick, type = "button", disabled }) => (
+  <button type={type} onClick={onClick} disabled={disabled}>
     {name}
   </button>
 );
