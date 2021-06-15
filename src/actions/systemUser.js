@@ -40,7 +40,7 @@ export const createSystemUser = (data) => async (dispatch) => {
   const userData = {
     userName: data.userName,
     roleID: data.roleID,
-    userPassword: data.userpassword,
+    userPassword: data.userPassword,
     surName: data.surName,
     otherNames: data.otherNames,
     phoneNo1: data.phoneNo1,
