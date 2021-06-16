@@ -161,6 +161,16 @@ export const PostSystemsRoleRequest = async (method, path, data) => {
   return response;
 };
 
+export const UpdateSystemsRoleRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const DeleteSystemsRoleRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
 export const PostSystemUserRequest = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
