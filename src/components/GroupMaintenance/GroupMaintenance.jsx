@@ -1,18 +1,31 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
 
-import React from 'react';
-import { useHistory } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import './index.css';
 import MoreInfo from './MoreInfo';
+import UseForm from './UseForm';
+import meetingDays from './FormData';
+import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 
 const GroupMaintenance = () => {
-  const history = useHistory();
-  const submitCustomer = e => {
-    e.preventDefault();
-    history.push('groupmaintenanceview');
-  };
+  const [systemFrequencies, setSystemFrequencies] = useState([]);
+  const {
+    handleChange, values, handleSubmit,
+  } = UseForm(GroupMaintenanceValidator);
+
+  useEffect(() => {
+    const fetchData = () => {
+      axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemFrequencies')
+        .then(response => setSystemFrequencies(response.data))
+        .catch(error => console.log(error.message));
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -24,12 +37,29 @@ const GroupMaintenance = () => {
             <GroupMaintenanceSidebar />
           </div>
           <div className="submit-form-top-section">
-            <form className="main-form-color boder" onSubmit={submitCustomer}>
+            <form className="main-form-color boder" onSubmit={handleSubmit}>
               <div className="left-section">
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">Search Group Name:</div>
                   <div className="right-horizontal-section">
                     <input type="text" />
+                  </div>
+                </div>
+                <div className="horizontal-section">
+                  <div className="left-horizontal-section">
+                    Group Name
+                    <span className="text-danger mx-1">
+                      *
+                    </span>
+                    :
+                  </div>
+                  <div className="right-horizontal-section">
+                    <input
+                      name="groupName"
+                      value={values.groupName}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
                 <div className="horizontal-section">
@@ -42,7 +72,12 @@ const GroupMaintenance = () => {
                   </div>
                   <div className="right-horizontal-section">
                     <div className="inner-left-section">
-                      <input type="date" />
+                      <input
+                        name="formationDate"
+                        value={values.formationDate}
+                        onChange={handleChange}
+                        type="date"
+                      />
                     </div>
                     <div className="inner-right-section">
                       <div className="inner-right-label">
@@ -53,7 +88,12 @@ const GroupMaintenance = () => {
                         :
                       </div>
                       <div className="inner-right-input">
-                        <input type="date" />
+                        <input
+                          name="regDate"
+                          value={values.regDate}
+                          onChange={handleChange}
+                          type="date"
+                        />
                       </div>
                     </div>
                   </div>
@@ -68,7 +108,12 @@ const GroupMaintenance = () => {
                   </div>
                   <div className="right-horizontal-section">
                     <div className="inner-left-section">
-                      <input type="text" />
+                      <input
+                        name="location"
+                        value={values.location}
+                        onChange={handleChange}
+                        type="text"
+                      />
                     </div>
                     <div className="inner-right-section">
                       <div className="inner-right-label">
@@ -79,7 +124,12 @@ const GroupMaintenance = () => {
                         :
                       </div>
                       <div className="inner-right-input">
-                        <input type="text" />
+                        <input
+                          name="regNo"
+                          value={values.regNo}
+                          onChange={handleChange}
+                          type="text"
+                        />
                       </div>
                     </div>
                   </div>
@@ -93,15 +143,27 @@ const GroupMaintenance = () => {
                     :
                   </div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+                    <input
+                      name="village"
+                      value={values.village}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">Sourced By :</div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+                    <input
+                      name="sourcedBy"
+                      value={values.sourcedBy}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
+              </div>
+              <div className="right-section">
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">
                     Credit Officer
@@ -111,11 +173,14 @@ const GroupMaintenance = () => {
                     :
                   </div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+                    <input
+                      name="creditOfficer"
+                      value={values.creditOfficer}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
-              </div>
-              <div className="right-section">
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">
                     Savings Product
@@ -125,7 +190,12 @@ const GroupMaintenance = () => {
                     :
                   </div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+                    <input
+                      name="savingsProductID"
+                      value={values.savingsProductID}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
                 <div className="horizontal-section">
@@ -137,7 +207,12 @@ const GroupMaintenance = () => {
                     :
                   </div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+                    <input
+                      name="loanProductID"
+                      value={values.loanProductID}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
                 <div className="horizontal-section">
@@ -150,7 +225,12 @@ const GroupMaintenance = () => {
                   </div>
                   <div className="right-horizontal-section">
                     <div className="inner-left-section">
-                      <input type="text" />
+                      <input
+                        name="maxMembers"
+                        value={values.maxMembers}
+                        onChange={handleChange}
+                        type="text"
+                      />
                     </div>
                     <div className="inner-right-section">
                       <div className="inner-right-label members-number">
@@ -161,7 +241,12 @@ const GroupMaintenance = () => {
                         :
                       </div>
                       <div className="inner-right-input">
-                        <input type="text" />
+                        <input
+                          name="minMembersLoanDisb"
+                          value={values.minMembersLoanDisb}
+                          onChange={handleChange}
+                          type="text"
+                        />
                       </div>
                     </div>
                   </div>
@@ -178,11 +263,21 @@ const GroupMaintenance = () => {
                     <div className="inner-left-section select-section">
                       <select
                         className="form-control-input"
-                        name="title"
+                        name="meetingDay"
+                        value={values.meetingDay}
+                        onChange={handleChange}
                       >
                         <option value="" disabled selected hidden>Select</option>
-                        <option value="one">Select</option>
-                        <option value="two">Select</option>
+                        {
+                          meetingDays.map((meeting, index) => (
+                            <option
+                              key={index}
+                              value={meeting.value}
+                            >
+                              {meeting.day}
+                            </option>
+                          ))
+                        }
                       </select>
                     </div>
                     <div className="inner-right-section select-section-two">
@@ -196,11 +291,21 @@ const GroupMaintenance = () => {
                       <div className="inner-right-input">
                         <select
                           className="form-control-input"
-                          name="title"
+                          name="meetingFreq"
+                          value={values.meetingFreq}
+                          onChange={handleChange}
                         >
                           <option value="" disabled selected hidden>Select</option>
-                          <option value="one">Select</option>
-                          <option value="two">Select</option>
+                          {
+                          systemFrequencies.map((frequency, index) => (
+                            <option
+                              key={index}
+                              value={frequency.freqID}
+                            >
+                              {frequency.frequency}
+                            </option>
+                          ))
+                        }
                         </select>
                       </div>
                     </div>
@@ -215,7 +320,12 @@ const GroupMaintenance = () => {
                     :
                   </div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+                    <input
+                      name="meetingPlace"
+                      value={values.meetingPlace}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
 
