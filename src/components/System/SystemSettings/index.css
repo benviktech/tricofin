@@ -307,10 +307,18 @@
   display: flex;
   /* width: 100%; */
   padding: 30px;
+  column-gap: 50px;
+}
+
+.text-center {
+  font-size: 14px;
+  color: #666;
+  font-weight: 700;
 }
 
 .left-container-side {
   flex: 1;
+  /* align-self: flex-end; */
 }
 .right-container-side {
   flex: 1;
