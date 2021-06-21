@@ -8,9 +8,9 @@ export default function accessRightsValidator(values) {
     errors.roleID = "Choose a Role to set its Rights";
   }
 
-  if (!values.columnID) {
-    errors.columnID = "Please Select a Module to proceed";
-  }
+  // if (!values.columnID) {
+  //   errors.columnID = "Please Select a Module to proceed";
+  // }
 
   //   if (!values.email.trim()) {
   //     errors.email = "Company Email Address Required ";
