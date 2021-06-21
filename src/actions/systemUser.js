@@ -3,35 +3,10 @@ import {
   UpdateSystemUserRequest,
   DeleteSystemUserRequest,
 } from "../utils/api";
+import { toast } from "react-toastify";
 
-export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const LOADING_CONTENT = "LOADING_CONTENT";
 export const LOADING_ERROR = "LOADING_ERROR";
-export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
-export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
-export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
-export const RESET_USER_ALERT = "RESET_USER_ALERT";
-
-export const createUserSuccessPost = (data) => {
-  return {
-    type: CREATE_USER_SUCCESS,
-    payload: data,
-  };
-};
-
-export const updateUserSuccessPost = (data) => {
-  return {
-    type: UPDATE_USER_SUCCESS,
-    payload: data,
-  };
-};
-
-export const deleteUserSuccess = (data) => {
-  return {
-    type: DELETE_USER_SUCCESS,
-    payload: data,
-  };
-};
 
 export const createSystemUser = (data) => async (dispatch) => {
   const path = "api/System/SaveSystemUser";
@@ -66,8 +41,11 @@ export const createSystemUser = (data) => async (dispatch) => {
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await PostSystemUserRequest(method, path, userData);
-    dispatch(createUserSuccessPost(response.data));
-  } catch (error) {}
+    toast.success(`User ${data.userName} Created Successfully`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+    toast.error(`Adding User ${data.userName} Failed`);
+  }
 };
 
 export const updateSystemUser = (data) => async (dispatch) => {
@@ -104,18 +82,21 @@ export const updateSystemUser = (data) => async (dispatch) => {
     dispatch({ type: LOADING_CONTENT });
     console.log(userData);
     const response = await UpdateSystemUserRequest(method, path, userData);
-    dispatch(updateUserSuccessPost(response.data));
+    toast.success(`User ${data.userName} Updated Successfully`);
   } catch (error) {
-    console.log("am here");
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+    toast.error(`Updating User ${data.userName} Failed`);
   }
 };
 
 export const deleteSystemUser = (data) => async (dispatch) => {
-  const userName = data.userName;
-  const path = `api/System/DeleteSystemUser/${userName}`;
+  const path = `api/System/DeleteSystemUser/${data.userName}`;
   const method = "delete";
   try {
     const response = await DeleteSystemUserRequest(method, path);
-    dispatch(deleteUserSuccess(userName));
-  } catch (error) {}
+    toast.success(`User ${data.userName} Deleted Successfully`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+    toast.error(`Deleting User ${data.userName} Failed`);
+  }
 };

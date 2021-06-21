@@ -24,25 +24,22 @@ const baseUrl = "https://tricofin.azurewebsites.net";
 const SystemSecurityRoles = () => {
   const dispatch = useDispatch();
 
-  const { modalCloser, modalOpener, openModel, modalText } = ModalFunction();
   const [activeRole, setActiveRole] = useState("");
   const [activeModule, setActiveModule] = useState("");
-  const [activeColumn, setActiveColumn] = useState("");
   const [formState, setFormState] = useState({});
   const initialFormstate = {
-    columnID: "",
     roleID: activeRole,
     moduleID: activeModule,
-    canView: true,
-    canAdd: true,
-    canEdit: true,
-    canDelete: true,
+    canView: false,
+    canAdd: false,
+    canEdit: false,
+    canDelete: false,
     postingLimit: 0,
-    canSupervise: true,
+    canSupervise: false,
     supervisionLimit: 0,
-    createdOn: new Date(),
+    createdOn: "",
     createdBy: "BENEVIK",
-    modifiedOn: new Date(),
+    modifiedOn: "",
     modifiedBy: "BENEVIK",
   };
 
@@ -71,6 +68,12 @@ const SystemSecurityRoles = () => {
     fetchSystemModules();
   }, [activeRole]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setRightCreated(false);
+    }, 2000);
+  }, [rightCreated]);
+
   const fetchSystemRoles = async () => {
     axios
       .get(`${baseUrl}/api/System/GetRoles`)
@@ -89,16 +92,45 @@ const SystemSecurityRoles = () => {
     const response = accessRightsValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
+      console.log(formState);
       axios
         .post(`${baseUrl}/api/System/SaveRoleRights`, {
           ...formState,
           createdBy: "BENEVIK",
+          createdOn: new Date(),
+        })
+        .then(function (response) {
+          // handle success
+          const { columnID, ...stateData } = response.data;
+          console.log(stateData);
+          setFormState(stateData);
+          setRightCreated(response.data.roleID);
+          setModulePresent(true);
+        })
+        .catch(function (error) {
+          console.log("failed to createrole");
+        });
+    }
+  };
+
+  const updateSystemRight = async () => {
+    const response = accessRightsValidator(formState);
+    setErrors(response);
+    if (Object.keys(response).length === 0) {
+      console.log(formState);
+      axios
+        .put(`${baseUrl}/api/System/UpdateRoleRights`, {
+          ...formState,
+          createdBy: "BENEVIK",
+          modifiedOn: new Date(),
         })
         .then(function (response) {
           // handle success
           console.log(response.data);
         })
-        .catch(function (error) {});
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 
@@ -126,8 +158,9 @@ const SystemSecurityRoles = () => {
       )
       .then(function (response) {
         // handle success
-        console.log(response.data);
-        setFormState(response.data);
+        const { columnID, ...stateData } = response.data;
+        console.log(stateData);
+        setFormState(stateData);
         setModulePresent(true);
       })
       .catch(function (error) {
@@ -139,9 +172,10 @@ const SystemSecurityRoles = () => {
         console.log(bestModule, "Best module");
         setFormState({
           ...initialFormstate,
-          columnID: bestModule.columnID,
           roleID: activeRole,
           moduleID: bestModule.moduleID,
+          modifiedOn: new Date(),
+          createdOn: new Date(),
         });
         console.log(error);
         setModulePresent(false);
@@ -202,6 +236,7 @@ const SystemSecurityRoles = () => {
         ...initialFormstate,
         roleID: "",
       });
+      setActiveModule("");
     }
   };
 
@@ -219,14 +254,10 @@ const SystemSecurityRoles = () => {
   const handleChecking = (e) => {
     const { name, checked } = e.target;
     console.log(name);
-    setFormState(() => ({
-      ...formState,
+    setFormState((previousState) => ({
+      ...previousState,
       [name]: checked,
     }));
-  };
-
-  const resetAlert = () => {
-    setRightCreated(false);
   };
 
   const clearErrors = () => {
@@ -242,27 +273,20 @@ const SystemSecurityRoles = () => {
 
   return companyInfo ? (
     <div className="individual-customer-form">
-      <Modal
-        modalText={modalText}
-        modalCloser={modalCloser}
-        openModel={openModel}
-      />
-
       {rightCreated && (
         <div
           className="alert user-alert alert-success alert-dismissible fade show"
           role="alert"
         >
-          <strong>Success</strong> User {} Created Successfully
+          <strong>Success</strong> Right for {rightCreated} Modified
+          Successfully
           <button
             type="button"
             className="close"
             data-dismiss="alert"
             aria-label="Close"
           >
-            <span onClick={resetAlert} aria-hidden="true">
-              &times;
-            </span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
       )}
@@ -342,15 +366,9 @@ const SystemSecurityRoles = () => {
                           const level = keys.length;
                           key = keys[keys.length - 1];
                           console.log(props, "column id");
-                          if (activeModule === key) {
-                            // setActiveModule("")
-                            // setFormState(initialFormstate);
-                            console.log(props);
-                          } else {
-                            setActiveModule(key);
-                            setActiveModuleLabel(label);
-                            fetchSystemModuleRight(key);
-                          }
+                          setActiveModule(key);
+                          setActiveModuleLabel(label);
+                          fetchSystemModuleRight(key);
                         }}
                         data={cleanData}
                       />
@@ -460,15 +478,15 @@ const SystemSecurityRoles = () => {
                   <div className="cancel-submit-buttons-section">
                     {!modulePresent && (
                       <Button
-                        disabled={!modulePresent}
+                        disabled={modulePresent}
                         onClick={createSystemRight}
                         name="Add"
                       />
                     )}
                     {modulePresent && (
                       <Button
-                        disabled={modulePresent}
-                        onClick={createSystemRight}
+                        disabled={!modulePresent}
+                        onClick={updateSystemRight}
                         name="Update"
                       />
                     )}

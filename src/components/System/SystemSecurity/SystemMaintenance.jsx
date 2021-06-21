@@ -5,6 +5,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 import SecuritySidebar from "./SecuritySideBar";
 import "./index.css";
 import Loader from "./Loader/Loader";
@@ -16,7 +17,6 @@ import {
   createSystemUser,
   updateSystemUser,
   deleteSystemUser,
-  RESET_USER_ALERT,
 } from "../../../actions/systemUser";
 
 const baseUrl = "https://tricofin.azurewebsites.net";
@@ -40,15 +40,6 @@ const SystemSecurityMaintenance = () => {
 
   const companyInfo = useSelector((state) => state.companyInfoReducer);
   const user = useSelector((state) => state?.systemUserReducer?.systemUser);
-  const userCreated = useSelector(
-    (state) => state?.systemUserReducer?.userCreated
-  );
-  const userUpdated = useSelector(
-    (state) => state?.systemUserReducer?.userUpdated
-  );
-  const deletedUser = useSelector(
-    (state) => state?.systemUserReducer?.deletedUser
-  );
 
   useEffect(() => {
     fetchSystemUsers();
@@ -68,16 +59,6 @@ const SystemSecurityMaintenance = () => {
       setIsCashierDisable(false);
     }
   }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch({ type: RESET_USER_ALERT });
-    }, 2000);
-  }, [userCreated, userUpdated, deletedUser]);
-
-  const resetAlert = () => {
-    setIsLoaded(false);
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -261,59 +242,6 @@ const SystemSecurityMaintenance = () => {
 
   return roles.length > 0 ? (
     <div className="individual-customer-form">
-      {userCreated && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> User {user.userName} Created Successfully
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span onClick={resetAlert} aria-hidden="true">
-              &times;
-            </span>
-          </button>
-        </div>
-      )}
-
-      {userUpdated && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> User {user.userName} Updated Successfully
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      )}
-
-      {deletedUser && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> User Deleted Successfully
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      )}
-
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>System Security: User Maintenance</span>
