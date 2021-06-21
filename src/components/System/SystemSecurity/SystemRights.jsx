@@ -361,7 +361,6 @@ const SystemSecurityRoles = () => {
                           canDelete,
                           ...props
                         }) => {
-                          // this.navigate(props.url); // user defined prop
                           const keys = key.split("/");
                           const level = keys.length;
                           key = keys[keys.length - 1];
