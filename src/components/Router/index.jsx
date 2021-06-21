@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "../Home";
 import Navbar from "../Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import IndividualCustomerForm from "../Customer/IndividualCustomerForm";
 import ViewIndividualCustomer from "../Customer/IndividualCustomerView";
 import UpdateIndividualCustomer from "../Customer/UpdateIndividualCustomer";
@@ -23,12 +25,12 @@ import SystemSecurityRoles from "../System/SystemSecurity/SystemRoles";
 import SystemSecurityRights from "../System/SystemSecurity/SystemRights";
 import SystemSecurityMaintenance from "../System/SystemSecurity/SystemMaintenance";
 import UpdateCompanyInfo from "../System/SystemSettings/UpdateCompanyInfo";
-import SystemSecurityUpdateUser from "../System/SystemSecurity/SystemUpdateUser";
 
 const Router = () => (
   <div className="router-section">
     <BrowserRouter>
       <Navbar />
+      <ToastContainer hideProgressBar={true} limit={1} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route
@@ -98,10 +100,6 @@ const Router = () => (
         <Route
           path="/system/systemsecurity/adduser"
           component={SystemSecurityMaintenance}
-        />
-        <Route
-          path="/system/systemsecurity/editUser"
-          component={SystemSecurityUpdateUser}
         />
       </Switch>
       <Footer />
