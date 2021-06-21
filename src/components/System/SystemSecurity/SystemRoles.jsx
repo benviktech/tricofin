@@ -6,6 +6,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch, Switch, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 import SecuritySidebar from "./SecuritySideBar";
 import Modal from "../../Modal/Modal";
 import ModalFunction from "../../Modal/ModalFunction";
@@ -34,37 +35,22 @@ const SystemSecurityRoles = () => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const { path, url } = useRouteMatch();
-  const { modalCloser, openModel, modalText } = ModalFunction();
 
   const roles = useSelector((state) => state.systemRoleReducer);
   const role = useSelector((state) => state.systemRoleReducer?.systemRoles);
+  const loadingError = useSelector((state) => state.systemRoleReducer?.error);
   const companyInfo = useSelector((state) => state.companyInfoReducer);
-  const roleCreated = useSelector(
-    (state) => state?.systemRoleReducer?.roleCreated
-  );
-  const roleUpdated = useSelector(
-    (state) => state?.systemRoleReducer?.roleUpdated
-  );
-  const deletedRole = useSelector(
-    (state) => state?.systemRoleReducer?.deletedRole
-  );
 
   useEffect(() => {
     dispatch(fetchSystemRoles());
   }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch({ type: RESET_ROLE_ALERT });
-    }, 2000);
-  }, [roleCreated, roleUpdated, deletedRole]);
 
   const handleChange = (e) => {
     console.log("clicked");
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value,
+      [name]: value.toUpperCase(),
     });
   };
 
@@ -126,61 +112,6 @@ const SystemSecurityRoles = () => {
     </div>
   ) : roles.systemRoles.length > 0 ? (
     <div className="individual-customer-form">
-      <Modal
-        modalText={modalText}
-        modalCloser={modalCloser}
-        openModel={openModel}
-      />
-      {roleCreated && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> Role {role.roleID} Created Successfully
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      )}
-
-      {roleUpdated && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> Role {role.roleID} Updated Successfully
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      )}
-
-      {deletedRole && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> {deletedRole.remarks}
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      )}
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>System Security: Roles</span>
