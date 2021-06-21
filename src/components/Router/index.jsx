@@ -33,6 +33,7 @@ const Router = () => (
   <div className="router-section">
     <BrowserRouter>
       <Navbar />
+      <ToastContainer hideProgressBar={true} limit={1} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/individualcustomerform" component={IndividualCustomerForm} />
