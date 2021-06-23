@@ -4,15 +4,14 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import SetingsSidebar from "./SettingsSideBar";
 import axios from "axios";
 import "./index.css";
 import { updateCompanyInfo } from "../../../actions/systemCompanyInfo";
 import Spinner from "../../Spinner/Spinner";
 import updateCompanyInfoValidator from "../../Validators/CompanyInfoValidator";
-import avatar from "../../../dist/images/company-logo.jpg";
 import { Input } from "../../_generics/Generics";
 import Label from "./Label";
 

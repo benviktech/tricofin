@@ -3,28 +3,25 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
 
-import React, { useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import SetingsSidebar from './SettingsSideBar';
-import Modal from '../../Modal/Modal';
-import ModalFunction from '../../Modal/ModalFunction';
-import './index.css';
-import Loader from '../../Loader/Loader';
-import Label from "./Label"
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import SetingsSidebar from "./SettingsSideBar";
+import Modal from "../../Modal/Modal";
+import ModalFunction from "../../Modal/ModalFunction";
+import "./index.css";
+import Loader from "../../Loader/Loader";
+import Label from "./Label";
 
 const SystemSettingsOtherSettings = () => {
   const dispatch = useDispatch();
 
-  const {
-    modalCloser, modalOpener, openModel, modalText,
-  } = ModalFunction();
+  const { modalCloser, modalOpener, openModel, modalText } = ModalFunction();
 
-
-
-  const individualCustomers = useSelector(state => state.individualCustomersReducer);
-  const staticData = useSelector(state => state.staticDataReducer);
-
+  const individualCustomers = useSelector(
+    (state) => state.individualCustomersReducer
+  );
+  const staticData = useSelector((state) => state.staticDataReducer);
 
   return true ? (
     <div className="individual-customer-form">
@@ -44,158 +41,168 @@ const SystemSettingsOtherSettings = () => {
           <div className="main-area">
             <div className="left-column">
               <div className="password-policy">
-                  <h4 class="text-center">Password Policy</h4>
-                  <hr />
-                  <form>
-                    <div class="form-item">
+                <h4 class="text-center">Password Policy</h4>
+                <hr />
+                <form>
+                  <div class="form-item">
                     <Label name="Enforce Password History" />
-                      <div class="form-input">
-                        <input type="number" class="form-input-input-select" />
-                      </div>
-                      <Label name="Passwords Remembered" icon="&#63;" />
+                    <div class="form-input">
+                      <input type="number" class="form-input-input-select" />
                     </div>
-                    <div class="form-item">
-                      <Label name="Maximum Password Age"/>
-                      <div class="form-input">
-                        <input type="number" class="form-input-input-select" />
-                      </div>
-                      <Label name="Days" icon="&#63;" />
+                    <Label name="Passwords Remembered" icon="&#63;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Maximum Password Age" />
+                    <div class="form-input">
+                      <input type="number" class="form-input-input-select" />
                     </div>
-                    <div class="form-item">
-                      <Label name="Minimum Password Length"/>
-                      <div class="form-input">
-                        <input type="number" class="form-input-input-select" />
-                      </div>
-                      <Label name="Characters" icon="&#63;" />
+                    <Label name="Days" icon="&#63;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Minimum Password Length" />
+                    <div class="form-input">
+                      <input type="number" class="form-input-input-select" />
                     </div>
-                    <div class="form-item">
-                      <Label name="Password Must Meet Complexity Requirements"/>
-                      <div class="form-input">
-                        <input type="checkbox" class="form-input-input-check" />
-                      </div>
-                      <Label name="Disabled" icon="&#63;" />
+                    <Label name="Characters" icon="&#63;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Password Must Meet Complexity Requirements" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
                     </div>
-                  </form>
+                    <Label name="Disabled" icon="&#63;" />
+                  </div>
+                </form>
               </div>
               <div className="other-setting">
-                  <h4 class="text-center">Other settings</h4>
-                  <hr />
-                  <form>
+                <h4 class="text-center">Other settings</h4>
+                <hr />
+                <form>
                   <div class="form-item">
-                      <Label name="Lock System After"/>
-                      <div class="form-input">
-                        <input type="number" class="form-input-input-select" />
-                      </div>
-                      <Label name="Secs" icon="&#63;" />
+                    <Label name="Lock System After" />
+                    <div class="form-input">
+                      <input type="number" class="form-input-input-select" />
                     </div>
-                  </form>
+                    <Label name="Secs" icon="&#63;" />
+                  </div>
+                </form>
               </div>
               <div className="buttons-action">
-                <NavLink to="/" style={{textDecoration: "none"}} className="buttons-link">Edit</NavLink>
-                <NavLink to="/" style={{textDecoration: "none"}} className="buttons-link">Save</NavLink>
+                <NavLink
+                  to="/"
+                  style={{ textDecoration: "none" }}
+                  className="buttons-link"
+                >
+                  Edit
+                </NavLink>
+                <NavLink
+                  to="/"
+                  style={{ textDecoration: "none" }}
+                  className="buttons-link"
+                >
+                  Save
+                </NavLink>
               </div>
             </div>
             <div className="right-column">
-                  <div className="available-balance">
-                    <h4>Available Balance Settings</h4>
-                    <hr />
-                    <form>
-                      <div class="form-item">
-                        <Label name="Clear Balance"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Lien Amount"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Frozen Amount"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Minimum Balance"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Unsupervised Credit"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Unsupervised Dedit"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                    </form>
+              <div className="available-balance">
+                <h4>Available Balance Settings</h4>
+                <hr />
+                <form>
+                  <div class="form-item">
+                    <Label name="Clear Balance" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
                   </div>
-                  <div className="total-balanace">
-                  <h4>Total Balance Settings</h4>
-                    <hr />
-                    <form>
-                    <div class="form-item">
-                        <Label name="Clear Balance"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Lien Amount"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Frozen Amount"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Minimum Balance"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Unsupervised Credit"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                      <div class="form-item">
-                        <Label name="Unsupervised Dedit"/>
-                        <div class="form-input">
-                          <input type="checkbox" class="form-input-input-check" />
-                        </div>
-                        <Label  icon="&#43;" />
-                      </div>
-                    </form>
+                  <div class="form-item">
+                    <Label name="Lien Amount" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
                   </div>
-
+                  <div class="form-item">
+                    <Label name="Frozen Amount" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Minimum Balance" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Unsupervised Credit" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Unsupervised Dedit" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                </form>
+              </div>
+              <div className="total-balanace">
+                <h4>Total Balance Settings</h4>
+                <hr />
+                <form>
+                  <div class="form-item">
+                    <Label name="Clear Balance" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Lien Amount" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Frozen Amount" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Minimum Balance" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Unsupervised Credit" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                  <div class="form-item">
+                    <Label name="Unsupervised Dedit" />
+                    <div class="form-input">
+                      <input type="checkbox" class="form-input-input-check" />
+                    </div>
+                    <Label icon="&#43;" />
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
