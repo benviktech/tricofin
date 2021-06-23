@@ -3,18 +3,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
 
-import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SetingsSidebar from "./SettingsSideBar";
-import Modal from "../../Modal/Modal";
-import ModalFunction from "../../Modal/ModalFunction";
 import "./index.css";
-import avatar from "../../../dist/images/company-logo.jpg";
-import Loader from "../../Loader/Loader";
 import { fetchCompanyInfo } from "../../../actions/systemCompanyInfo";
 import Spinner from "../../Spinner/Spinner";
-import { Input } from "../../_generics/Generics";
 import Label from "./Label";
 
 const SystemSettingsCompanyInfo = () => {
