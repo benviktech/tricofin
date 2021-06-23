@@ -4,11 +4,9 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import SecuritySidebar from "./SecuritySideBar";
-import Modal from "../../Modal/Modal";
-import ModalFunction from "../../Modal/ModalFunction";
 import "./index.css";
 import Loader from "../../Loader/Loader";
 import { Button, Input } from "../../_generics/Generics";
@@ -57,7 +55,6 @@ const SystemSecurityRoles = () => {
   const [modulePresent, setModulePresent] = useState(false);
 
   const [activeModuleLabel, setActiveModuleLabel] = useState("");
-  const [rightCreated, setRightCreated] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -67,12 +64,6 @@ const SystemSecurityRoles = () => {
   useEffect(() => {
     fetchSystemModules();
   }, [activeRole]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setRightCreated(false);
-    }, 2000);
-  }, [rightCreated]);
 
   const fetchSystemRoles = async () => {
     axios
@@ -104,11 +95,13 @@ const SystemSecurityRoles = () => {
           const { columnID, ...stateData } = response.data;
           console.log(stateData);
           setFormState(stateData);
-          setRightCreated(response.data.roleID);
           setModulePresent(true);
+          toast.success(
+            `Added rights for ${response.data.roleID}  successfully`
+          );
         })
         .catch(function (error) {
-          console.log("failed to createrole");
+          toast.success(`Failed rights for ${response.data.roleID} `);
         });
     }
   };
@@ -125,11 +118,12 @@ const SystemSecurityRoles = () => {
           modifiedOn: new Date(),
         })
         .then(function (response) {
-          // handle success
-          console.log(response.data);
+          toast.success(
+            `Edited rights for ${response.data.roleID}  successfully`
+          );
         })
         .catch(function (error) {
-          console.log(error);
+          toast.error(`Failed to change rights for ${response.data.roleID}`);
         });
     }
   };
@@ -177,7 +171,9 @@ const SystemSecurityRoles = () => {
           modifiedOn: new Date(),
           createdOn: new Date(),
         });
-        console.log(error);
+        toast.warn(
+          `No Rights set for role ${activeRole} on module ${bestModule.module}`
+        );
         setModulePresent(false);
       });
   };
@@ -273,24 +269,6 @@ const SystemSecurityRoles = () => {
 
   return companyInfo ? (
     <div className="individual-customer-form">
-      {rightCreated && (
-        <div
-          className="alert user-alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          <strong>Success</strong> Right for {rightCreated} Modified
-          Successfully
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      )}
-
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>System Security: Access Rights</span>
