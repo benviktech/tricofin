@@ -8,8 +8,6 @@ import { Link, useRouteMatch, Switch, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import SecuritySidebar from "./SecuritySideBar";
-import Modal from "../../Modal/Modal";
-import ModalFunction from "../../Modal/ModalFunction";
 import "./index.css";
 import Loader from "./Loader/Loader";
 import RoleMembers from "./RoleMembers";
@@ -19,7 +17,6 @@ import {
   fetchSystemRoles,
   UpdateSystemRole,
   DeleteSystemRole,
-  RESET_ROLE_ALERT,
 } from "../../../actions/systemRole";
 
 const SystemSecurityRoles = () => {
@@ -73,7 +70,7 @@ const SystemSecurityRoles = () => {
     console.log("fired");
     const response = RoleValidator(values);
     setErrors(response);
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(response).length === 0) {
       dispatch(UpdateSystemRole(values));
     }
   };
@@ -122,33 +119,59 @@ const SystemSecurityRoles = () => {
           </div>
           <div className="submit-form-top-section-role">
             <div className="create-role-section">
-              <form>
-                <div className="role-id d-flex">
-                  <label htmlFor="role-id"> Role Id:</label>
+              <form className="form-role-section">
+                <div
+                  className={
+                    errors.roleID ? "role-id d-flex required" : "role-id d-flex"
+                  }
+                >
+                  <label htmlFor="role-id" className="form-label">
+                    {" "}
+                    Role Id:
+                  </label>
                   <Input
                     name="roleID"
                     handleChange={handleChange}
                     value={values.roleID}
                     type="text"
                     maxlength="4"
+                    className="form-input"
                   />
-                  <br />
-                  {errors.roleID && (
-                    <span className="error-display">{errors.roleID}</span>
-                  )}
+
+                  {/* {errors.roleID && (
+                    <>
+                      <br />
+                      <span className="error-display">{errors.roleID}</span>
+                    </>
+                  )} */}
                 </div>
-                <div className="description my-2 d-flex">
-                  <label htmlFor="description"> Description:</label>
+                <div
+                  className={
+                    errors.description
+                      ? "required description my-2 d-flex"
+                      : "description my-2 d-flex"
+                  }
+                >
+                  <label htmlFor="description" className="form-label">
+                    {" "}
+                    Description:
+                  </label>
                   <Input
                     name="description"
                     value={values.description}
                     handleChange={handleChange}
                     type="text"
+                    className="form-input"
                   />
-                  <br />
-                  {errors.description && (
-                    <span className="error-display">{errors.description}</span>
-                  )}
+
+                  {/* {errors.description && (
+                    <>
+                      <br />
+                      <span className="error-display">
+                        {errors.description}
+                      </span>
+                    </>
+                  )} */}
                 </div>
               </form>
             </div>
@@ -167,13 +190,14 @@ const SystemSecurityRoles = () => {
                           pathname: `${url}/${role.roleID}`,
                         }}
                         className="column-two"
-                        onClick={() =>
+                        onClick={() => {
                           setValues({
                             ...values,
                             roleID: role.roleID,
                             description: role.description,
-                          })
-                        }
+                          });
+                          setErrors({});
+                        }}
                       >
                         {role.roleID}
                       </Link>
