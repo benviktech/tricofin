@@ -87,43 +87,55 @@ const UpdateCompanyInfo = () => {
                     >
                       Physical Adress
                     </label>
-                    <div class="form-input">
+                    <div
+                      class={
+                        errors.pAddress ? "required form-input" : "form-input"
+                      }
+                    >
                       <Input
                         handleChange={handleChange}
                         name="pAddress"
                         value={formState.pAddress}
                         type="text"
                       />
-                      <br />
+                      {/* <br />
                       {errors.pAddress && (
                         <span className="error-display">{errors.pAddress}</span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                   <div class="form-item">
                     <label for="pobox" class=" col-form-label form-label">
                       P.O. Box Address
                     </label>
-                    <div class="form-input">
+                    <div
+                      class={
+                        errors.boxAddress ? "required form-input" : "form-input"
+                      }
+                    >
                       <Input
                         handleChange={handleChange}
                         value={formState.boxAddress}
                         name="boxAddress"
                         type="text"
                       />
-                      <br />
+                      {/* <br />
                       {errors.boxAddress && (
                         <span className="error-display">
                           {errors.boxAddress}
                         </span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                   <div class="form-item">
                     <label for="pobox" class="col-form-label form-label">
                       Email Address 1
                     </label>
-                    <div class="form-input">
+                    <div
+                      class={
+                        errors.email ? "required form-input" : "form-input"
+                      }
+                    >
                       <Input
                         handleChange={handleChange}
                         value={formState.email}
@@ -131,13 +143,15 @@ const UpdateCompanyInfo = () => {
                         type="email"
                         placeholder="geshafinancialservices@gmail.com"
                       />
-                      <br />
+                      {/* <br />
                       {errors.email && (
                         <span className="error-display">{errors.email}</span>
-                      )}
+                      )} */}
                     </div>
                   </div>
-                  <div class="form-item">
+                  <div
+                    class={errors.phone ? "required form-item" : "form-item"}
+                  >
                     <label for="pobox" class="col-form-label form-label">
                       Phone 1
                     </label>
@@ -149,10 +163,10 @@ const UpdateCompanyInfo = () => {
                         type="text"
                         placeholder="+256785450481"
                       />
-                      <br />
+                      {/* <br />
                       {errors.phone && (
                         <span className="error-display">{errors.phone}</span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                   <div class="form-item">
