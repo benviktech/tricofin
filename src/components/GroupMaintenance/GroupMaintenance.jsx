@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import './index.css';
@@ -9,11 +10,12 @@ import MoreInfo from './MoreInfo';
 import UseForm from './UseForm';
 import meetingDays from './FormData';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
+import SearchCustomer from './SearchCustomer';
 
 const GroupMaintenance = () => {
   const [systemFrequencies, setSystemFrequencies] = useState([]);
   const {
-    handleChange, values, handleSubmit,
+    handleChange, values, handleSubmit, errors, setErrors,
   } = UseForm(GroupMaintenanceValidator);
 
   useEffect(() => {
@@ -25,6 +27,17 @@ const GroupMaintenance = () => {
 
     fetchData();
   }, []);
+
+  const {
+    searchIndividualCustomer,
+    searchedCustomer, finalSortedList,
+    setSearchedCustomer,
+  } = SearchCustomer();
+
+  console.log(setSearchedCustomer);
+  const clearErrors = () => {
+    setErrors({});
+  };
 
   return (
     <div className="individual-customer-form">
@@ -39,13 +52,51 @@ const GroupMaintenance = () => {
           <div className="submit-form-top-section">
             <form className="main-form-color boder" onSubmit={handleSubmit}>
               <div className="left-section">
-                <div className="horizontal-section">
+                <div className="horizontal-section manage-drop-down ">
                   <div className="left-horizontal-section">Search Group Name:</div>
                   <div className="right-horizontal-section">
-                    <input type="text" />
+
+                    <input
+                      autoComplete="off"
+                      type="text"
+                      name="searchcustomer"
+                      value={searchedCustomer}
+                      onChange={searchIndividualCustomer}
+                    />
                   </div>
+                  {
+                         searchedCustomer === '' ? (
+                           <div className="modal-hide-section" />
+                         ) : (
+
+                           <div className="modal-popup-section">
+                             <div className="inner-section-modal-section">
+                               {
+                              Array.from(new Set(finalSortedList)).map(customer => (
+                                <Link
+                                  exact
+                                  to={{
+                                    pathname: `/groupmaintenanceview/${customer.groupID}`,
+                                  }}
+                                  className="inner-section-modal-section-inner border"
+                                  key={customer.groupID}
+                                >
+                                  <div className="modal-customer-name-section mr-2">
+                                    { customer.groupName }
+                                  </div>
+                                  <div className="modal-customer-name-section mr-2">
+                                    { customer.location}
+                                  </div>
+                                </Link>
+                              ))
+                            }
+                             </div>
+                           </div>
+                         )
+                      }
                 </div>
-                <div className="horizontal-section">
+
+                <div className="horizontal-section error-container-section">
                   <div className="left-horizontal-section">
                     Group Name
                     <span className="text-danger mx-1">
@@ -61,6 +112,9 @@ const GroupMaintenance = () => {
                       type="text"
                     />
                   </div>
+                  <div className="error-display-section">
+                    {errors.groupName && errors.groupName}
+                  </div>
                 </div>
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">
@@ -70,7 +124,7 @@ const GroupMaintenance = () => {
                     </span>
                     :
                   </div>
-                  <div className="right-horizontal-section">
+                  <div className="right-horizontal-section error-container-section">
                     <div className="inner-left-section">
                       <input
                         name="formationDate"
@@ -96,6 +150,12 @@ const GroupMaintenance = () => {
                         />
                       </div>
                     </div>
+                    <div className="error-display-section-left">
+                      {errors.formationDate && errors.formationDate}
+                    </div>
+                    <div className="error-display-section">
+                      {errors.regDate && errors.regDate}
+                    </div>
                   </div>
                 </div>
                 <div className="horizontal-section">
@@ -106,7 +166,7 @@ const GroupMaintenance = () => {
                     </span>
                     :
                   </div>
-                  <div className="right-horizontal-section">
+                  <div className="right-horizontal-section error-container-section">
                     <div className="inner-left-section">
                       <input
                         name="location"
@@ -132,9 +192,15 @@ const GroupMaintenance = () => {
                         />
                       </div>
                     </div>
+                    <div className="error-display-section-left">
+                      {errors.location && errors.location}
+                    </div>
+                    <div className="error-display-section">
+                      {errors.regNo && errors.regNo}
+                    </div>
                   </div>
                 </div>
-                <div className="horizontal-section">
+                <div className="horizontal-section error-container-section">
                   <div className="left-horizontal-section">
                     Village
                     <span className="text-danger mx-1">
@@ -150,6 +216,9 @@ const GroupMaintenance = () => {
                       type="text"
                     />
                   </div>
+                  <div className="error-display-section">
+                    {errors.village && errors.village}
+                  </div>
                 </div>
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">Sourced By :</div>
@@ -164,7 +233,7 @@ const GroupMaintenance = () => {
                 </div>
               </div>
               <div className="right-section">
-                <div className="horizontal-section">
+                <div className="horizontal-section error-container-section">
                   <div className="left-horizontal-section">
                     Credit Officer
                     <span className="text-danger mx-1">
@@ -180,8 +249,11 @@ const GroupMaintenance = () => {
                       type="text"
                     />
                   </div>
+                  <div className="error-display-section">
+                    {errors.creditOfficer && errors.creditOfficer}
+                  </div>
                 </div>
-                <div className="horizontal-section">
+                <div className="horizontal-section error-container-section">
                   <div className="left-horizontal-section">
                     Savings Product
                     <span className="text-danger mx-1">
@@ -197,8 +269,11 @@ const GroupMaintenance = () => {
                       type="text"
                     />
                   </div>
+                  <div className="error-display-section">
+                    {errors.savingsProductID && errors.savingsProductID}
+                  </div>
                 </div>
-                <div className="horizontal-section">
+                <div className="horizontal-section error-container-section">
                   <div className="left-horizontal-section">
                     Loan Product
                     <span className="text-danger mx-1">
@@ -214,6 +289,9 @@ const GroupMaintenance = () => {
                       type="text"
                     />
                   </div>
+                  <div className="error-display-section">
+                    {errors.loanProductID && errors.loanProductID}
+                  </div>
                 </div>
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">
@@ -223,7 +301,7 @@ const GroupMaintenance = () => {
                     </span>
                     :
                   </div>
-                  <div className="right-horizontal-section">
+                  <div className="right-horizontal-section error-container-section">
                     <div className="inner-left-section">
                       <input
                         name="maxMembers"
@@ -249,6 +327,12 @@ const GroupMaintenance = () => {
                         />
                       </div>
                     </div>
+                    <div className="error-display-section-left">
+                      {errors.maxMembers && errors.maxMembers}
+                    </div>
+                    <div className="error-display-section">
+                      {errors.minMembersLoanDisb && errors.minMembersLoanDisb}
+                    </div>
                   </div>
                 </div>
                 <div className="horizontal-section">
@@ -259,7 +343,7 @@ const GroupMaintenance = () => {
                     </span>
                     :
                   </div>
-                  <div className="right-horizontal-section">
+                  <div className="right-horizontal-section error-container-section">
                     <div className="inner-left-section select-section">
                       <select
                         className="form-control-input"
@@ -309,9 +393,15 @@ const GroupMaintenance = () => {
                         </select>
                       </div>
                     </div>
+                    <div className="error-display-section-left">
+                      {errors.meetingDay && errors.meetingDay}
+                    </div>
+                    <div className="error-display-section">
+                      {errors.meetingFreq && errors.meetingFreq}
+                    </div>
                   </div>
                 </div>
-                <div className="horizontal-section">
+                <div className="horizontal-section error-container-section">
                   <div className="left-horizontal-section">
                     Meeting Place
                     <span className="text-danger mx-1">
@@ -327,6 +417,9 @@ const GroupMaintenance = () => {
                       type="text"
                     />
                   </div>
+                  <div className="error-display-section">
+                    {errors.meetingPlace && errors.meetingPlace}
+                  </div>
                 </div>
 
                 <div className="submit-button-section">
@@ -339,6 +432,7 @@ const GroupMaintenance = () => {
                   <button
                     type="button"
                     className="add-customer-btn"
+                    onClick={clearErrors}
                   >
                     Cancel
                   </button>
