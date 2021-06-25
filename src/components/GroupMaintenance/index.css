@@ -137,4 +137,19 @@
   font-size: 12px;
 }
 
+.error-container-section {
+  position: relative;
+}
 
+.error-display-section,
+.error-display-section-left {
+  color: red;
+  position: absolute;
+  right: 0;
+  font-size: 11px;
+  bottom: -15px;
+}
+
+.error-display-section-left {
+  left: 0;
+}
