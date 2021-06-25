@@ -2,14 +2,22 @@ import {
   PostGroupMaintenanceRequest,
   GetGroupMaintenanceRequest,
   UpdateGroupMaintenanceRequest,
+  PostGroupMemberRequest,
+  FetchGroupMembersListRequest,
 } from '../utils/api';
 
 export const POST_GROUP_MAINTENANCE_SUCCESS = 'POST_GROUP_MAINTENANCE_SUCCESS';
+export const GROUP_MAINTENANCE_LIST = 'GROUP_MAINTENANCE_LIST';
 export const LOADING_CONTENT = 'LOADING_CONTENT';
 export const LOADING_ERROR = 'LOADING_ERROR';
 
 export const groupMaintenaceSucces = data => ({
   type: POST_GROUP_MAINTENANCE_SUCCESS,
+  payload: data,
+});
+
+export const groupMemberList = data => ({
+  type: GROUP_MAINTENANCE_LIST,
   payload: data,
 });
 
@@ -88,6 +96,28 @@ export const updateGroupMaintenance = (data, groupId, history) => async dispatch
   try {
     const response = await UpdateGroupMaintenanceRequest(method, values, path);
     history.push(`/groupmaintenanceview/${response.data.groupID}`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const postGroupMember = data => async dispatch => {
+  const path = '/api/Customers/SaveCustomerGroupMember';
+  const method = 'post';
+  try {
+    const response = await PostGroupMemberRequest(method, data, path);
+    dispatch(groupMemberList(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const fetchGroupMembersList = GroupId => async dispatch => {
+  const path = `/api/Customers/GetCustomerGroupMembers/${GroupId}`;
+  const method = 'get';
+  try {
+    const response = await FetchGroupMembersListRequest(method, path);
+    dispatch(groupMemberList(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
