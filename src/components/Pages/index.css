@@ -541,7 +541,7 @@
 }
 
 .right-lower-customer-info-section div {
-  border: 1px solid #F3F2F1;
+  border: 1px solid #f3f2f1;
   font-size: 11px;
   font-weight: 600;
   color: #d7d7d7;
@@ -557,7 +557,8 @@
 }
 
 .first-lower-customer-info-section input,
-.second-lower-customer-info-section input {
+.second-lower-customer-info-section input,
+.second-lower-customer-info-section select {
   height: 30px;
   border: none;
   border-radius: 3px;
@@ -587,5 +588,27 @@
 .members-listings {
   font-weight: 600;
   font-size: 13px;
-  background-color: #D7D7D7;
+  background-color: #d7d7d7;
+}
+
+.out-form-loop-section {
+  height: 180px;
+  overflow-y: auto;
+}
+
+.out-form-loop-section::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.error-content-section {
+  position: relative;
+}
+
+.error-notifier-section {
+  position: absolute;
+  font-size: 11px;
+  color: red;
+  bottom: -15px;
+  right: 0;
 }
