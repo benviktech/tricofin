@@ -63,8 +63,6 @@ const UpdateGroupMaintenance = () => {
     }
   };
 
-  console.log(errors, 'errors');
-
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -80,7 +78,7 @@ const UpdateGroupMaintenance = () => {
                   Object.keys(dataState).length > 0 ? (
                     <form className="main-form-color boder" onSubmit={updateCustomer}>
                       <div className="left-section">
-                        <div className="horizontal-section">
+                        <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Group Name
                             <span className="text-danger mx-1">
@@ -96,6 +94,9 @@ const UpdateGroupMaintenance = () => {
                               type="text"
                             />
                           </div>
+                          <div className="error-display-section">
+                            {errors.groupName && errors.groupName}
+                          </div>
                         </div>
                         <div className="horizontal-section">
                           <div className="left-horizontal-section">
@@ -105,7 +106,7 @@ const UpdateGroupMaintenance = () => {
                             </span>
                             :
                           </div>
-                          <div className="right-horizontal-section">
+                          <div className="right-horizontal-section error-container-section">
                             <div className="inner-left-section">
                               <input
                                 name="formationDate"
@@ -117,7 +118,7 @@ const UpdateGroupMaintenance = () => {
                                 type="date"
                               />
                             </div>
-                            <div className="inner-right-section">
+                            <div className="inner-right-section ">
                               <div className="inner-right-label">
                                 Reg Date
                                 <span className="text-danger mx-1">
@@ -137,6 +138,12 @@ const UpdateGroupMaintenance = () => {
                                 />
                               </div>
                             </div>
+                            <div className="error-display-section-left">
+                              {errors.formationDate && errors.formationDate}
+                            </div>
+                            <div className="error-display-section">
+                              {errors.regDate && errors.regDate}
+                            </div>
                           </div>
                         </div>
                         <div className="horizontal-section">
@@ -147,7 +154,7 @@ const UpdateGroupMaintenance = () => {
                             </span>
                             :
                           </div>
-                          <div className="right-horizontal-section">
+                          <div className="right-horizontal-section error-container-section">
                             <div className="inner-left-section">
                               <input
                                 name="location"
@@ -173,9 +180,15 @@ const UpdateGroupMaintenance = () => {
                                 />
                               </div>
                             </div>
+                            <div className="error-display-section-left">
+                              {errors.location && errors.location}
+                            </div>
+                            <div className="error-display-section">
+                              {errors.regNo && errors.regNo}
+                            </div>
                           </div>
                         </div>
-                        <div className="horizontal-section">
+                        <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Village
                             <span className="text-danger mx-1">
@@ -191,6 +204,9 @@ const UpdateGroupMaintenance = () => {
                               type="text"
                             />
                           </div>
+                          <div className="error-display-section">
+                            {errors.village && errors.village}
+                          </div>
                         </div>
                         <div className="horizontal-section">
                           <div className="left-horizontal-section">Sourced By :</div>
@@ -203,7 +219,7 @@ const UpdateGroupMaintenance = () => {
                             />
                           </div>
                         </div>
-                        <div className="horizontal-section">
+                        <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Credit Officer
                             <span className="text-danger mx-1">
@@ -219,10 +235,13 @@ const UpdateGroupMaintenance = () => {
                               type="text"
                             />
                           </div>
+                          <div className="error-display-section">
+                            {errors.creditOfficer && errors.creditOfficer}
+                          </div>
                         </div>
                       </div>
                       <div className="right-section">
-                        <div className="horizontal-section">
+                        <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Savings Product
                             <span className="text-danger mx-1">
@@ -238,8 +257,11 @@ const UpdateGroupMaintenance = () => {
                               type="text"
                             />
                           </div>
+                          <div className="error-display-section">
+                            {errors.savingsProductID && errors.savingsProductID}
+                          </div>
                         </div>
-                        <div className="horizontal-section">
+                        <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Loan Product
                             <span className="text-danger mx-1">
@@ -255,6 +277,9 @@ const UpdateGroupMaintenance = () => {
                               type="text"
                             />
                           </div>
+                          <div className="error-display-section">
+                            {errors.loanProductID && errors.loanProductID}
+                          </div>
                         </div>
                         <div className="horizontal-section">
                           <div className="left-horizontal-section">
@@ -264,7 +289,7 @@ const UpdateGroupMaintenance = () => {
                             </span>
                             :
                           </div>
-                          <div className="right-horizontal-section">
+                          <div className="right-horizontal-section error-container-section">
                             <div className="inner-left-section">
                               <input
                                 name="maxMembers"
@@ -290,6 +315,12 @@ const UpdateGroupMaintenance = () => {
                                 />
                               </div>
                             </div>
+                            <div className="error-display-section-left">
+                              {errors.maxMembers && errors.maxMembers}
+                            </div>
+                            <div className="error-display-section">
+                              {errors.minMembersLoanDisb && errors.minMembersLoanDisb}
+                            </div>
                           </div>
                         </div>
                         <div className="horizontal-section">
@@ -300,7 +331,7 @@ const UpdateGroupMaintenance = () => {
                             </span>
                             :
                           </div>
-                          <div className="right-horizontal-section">
+                          <div className="right-horizontal-section error-container-section">
                             <div className="inner-left-section select-section">
                               <select
                                 className="form-control-input"
@@ -350,9 +381,15 @@ const UpdateGroupMaintenance = () => {
                                 </select>
                               </div>
                             </div>
+                            <div className="error-display-section-left">
+                              {errors.meetingDay && errors.meetingDay}
+                            </div>
+                            <div className="error-display-section">
+                              {errors.meetingFreq && errors.meetingFreq}
+                            </div>
                           </div>
                         </div>
-                        <div className="horizontal-section">
+                        <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Meeting Place
                             <span className="text-danger mx-1">
@@ -367,6 +404,9 @@ const UpdateGroupMaintenance = () => {
                               onChange={handleChange}
                               type="text"
                             />
+                          </div>
+                          <div className="error-display-section">
+                            {errors.meetingPlace && errors.meetingPlace}
                           </div>
                         </div>
 
