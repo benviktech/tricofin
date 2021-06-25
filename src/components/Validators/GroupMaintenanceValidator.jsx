@@ -15,7 +15,7 @@ export default function GroupMaintenanceValidator(values, state = 'Create Group 
     errors.groupName = 'Group Name is Required';
   }
   if (!values.formationDate) {
-    errors.formationDate = 'Formation Date is Required';
+    errors.formationDate = 'Date is Required';
   }
   if (!values.location) {
     errors.location = 'Location is Required';
@@ -26,11 +26,11 @@ export default function GroupMaintenanceValidator(values, state = 'Create Group 
   }
 
   if (!values.regDate) {
-    errors.regDate = 'Registration Date is Required';
+    errors.regDate = 'Date is Required';
   }
 
   if (!values.regNo) {
-    errors.regNo = 'Registration Number is Required';
+    errors.regNo = 'Reg Number is Required';
   }
 
   if (!values.meetingDay) {
@@ -50,19 +50,23 @@ export default function GroupMaintenanceValidator(values, state = 'Create Group 
   }
 
   if (!values.savingsProductID) {
-    errors.savingsProductID = 'Savings ProductID is Required';
+    errors.savingsProductID = 'Savings Product ID is Required';
   }
 
   if (!values.loanProductID) {
-    errors.loanProductID = 'Loan ProductID Place is Required';
+    errors.loanProductID = 'Loan Product ID is Required';
   }
 
   if (!values.maxMembers) {
-    errors.maxMembers = 'Max Members is Required';
+    errors.maxMembers = 'Required';
+  } else if (isNaN(values.maxMembers)) {
+    errors.maxMembers = 'Must be Number';
   }
 
   if (!values.minMembersLoanDisb) {
     errors.minMembersLoanDisb = 'Required';
+  } else if (isNaN(values.minMembersLoanDisb)) {
+    errors.minMembersLoanDisb = 'Must be Number';
   }
 
   return errors;
