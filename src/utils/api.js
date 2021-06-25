@@ -116,3 +116,13 @@ export const UpdateGroupMaintenanceRequest = async (method, data, path) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const PostGroupMemberRequest = async (method, data, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const FetchGroupMembersListRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
