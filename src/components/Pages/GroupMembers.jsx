@@ -14,6 +14,7 @@ import {
 const GroupMembers = () => {
   const [groupMember, setGroupMember] = useState({});
   const [memberPost, setMemberPost] = useState([]);
+  const [errorWarning, setErrorWarning] = useState('');
   const [customerList, setCutomerList] = useState([]);
   const [memberSortedList, setMembersSortedList] = useState([]);
   const [errors, setErrors] = useState({});
@@ -181,6 +182,14 @@ const GroupMembers = () => {
     }
   }, [values]);
 
+  useEffect(() => {
+    if (membersList.error.includes('5423')) {
+      setErrorWarning('Member already in a Group');
+    }
+  }, [membersList.error]);
+
+  const hideWarning = () => setErrorWarning('');
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -204,6 +213,17 @@ const GroupMembers = () => {
                       { groupDetails.groupMaintenance.groupName }
                     </div>
                   </div>
+                  {
+                    errorWarning.length > 2 ? (
+                      <div className="submit-error-section">
+                        <i
+                          onClick={hideWarning}
+                          className="fas fa-times-circle"
+                        />
+                        {errorWarning}
+                      </div>
+                    ) : null
+                  }
                 </div>
                 <div className="customer-information-section border">
                   <div className="customer-more-info">

@@ -109,7 +109,8 @@ export const postGroupMember = data => async dispatch => {
     const response = await PostGroupMemberRequest(method, data, path);
     dispatch(groupMemberList(response.data));
   } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
+    const result = `${error.message} 5423`;
+    dispatch({ type: LOADING_ERROR, payload: result });
   }
 };
 
