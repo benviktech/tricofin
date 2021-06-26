@@ -7,7 +7,9 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import SearchCustomer from '../Customer/SearchCustomer';
-import { fetchGroupMembersList, getGroupMaintenance, postGroupMember } from '../../actions/groupMaintenance';
+import {
+  deleteGroupMember, fetchGroupMembersList, getGroupMaintenance, postGroupMember,
+} from '../../actions/groupMaintenance';
 
 const GroupMembers = () => {
   const [groupMember, setGroupMember] = useState({});
@@ -79,6 +81,16 @@ const GroupMembers = () => {
       };
       dispatch(postGroupMember(data));
       setErrors({});
+      setGroupMember({
+        foreName1: '',
+        surName: '',
+        rAddress: '',
+      });
+      setValues({
+        joinDate: '',
+        post: '',
+        resError: '',
+      });
     } else if (Object.keys(groupMember).length === 0) {
       setErrors({
         ...res,
@@ -139,6 +151,35 @@ const GroupMembers = () => {
   useEffect(() => {
     sortMembers();
   }, [membersList.listOfMembers]);
+
+  const deleteMember = mem => {
+    const data = {
+      groupID: id,
+      memberID: mem.custID,
+      post: mem.post,
+      createdBy: 'BENVIK',
+      modifiedBy: 'BENVIK',
+    };
+    dispatch(deleteGroupMember(data));
+  };
+
+  const cancelCreate = () => {
+    setErrors({});
+    setGroupMember({});
+    setValues({});
+  };
+
+  useEffect(() => {
+    if (Object.keys(groupMember).length === 3) {
+      setGroupMember({});
+    }
+  }, [groupMember]);
+
+  useEffect(() => {
+    if (Object.keys(values).includes('resError')) {
+      setValues({});
+    }
+  }, [values]);
 
   return (
     <div className="individual-customer-form">
@@ -355,7 +396,7 @@ const GroupMembers = () => {
                     <div>
                       {
                         memberSortedList.map(mem => (
-                          <div key={mem.groupID} className="middle-section">
+                          <div key={mem.custID} className="middle-section">
                             <div className="idcode-section-inner first-border-left">
                               {mem.custID}
                             </div>
@@ -383,6 +424,7 @@ const GroupMembers = () => {
                             <div className="idcode-section-inner delete-info">
                               <button
                                 type="button"
+                                onClick={() => deleteMember(mem)}
                               >
                                 Delete
                               </button>
@@ -404,6 +446,7 @@ const GroupMembers = () => {
                 </button>
                 <button
                   type="button"
+                  onClick={cancelCreate}
                 >
                   Cancel
                 </button>
