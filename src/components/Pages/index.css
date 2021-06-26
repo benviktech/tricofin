@@ -628,3 +628,15 @@
   bottom: -15px;
   right: 0;
 }
+
+.lower-folder-icon-section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lower-folder-icon-section i {
+  font-size: 30px;
+  color: gray;
+}

@@ -12,9 +12,9 @@ import {
 } from '../../actions/groupMaintenance';
 
 const GroupMembers = () => {
+  const [hideErrorDiv, setHideErrorDiv] = useState('d-none');
   const [groupMember, setGroupMember] = useState({});
   const [memberPost, setMemberPost] = useState([]);
-  const [errorWarning, setErrorWarning] = useState('');
   const [customerList, setCutomerList] = useState([]);
   const [memberSortedList, setMembersSortedList] = useState([]);
   const [errors, setErrors] = useState({});
@@ -81,6 +81,7 @@ const GroupMembers = () => {
         modifiedBy: 'BENVIK',
       };
       dispatch(postGroupMember(data));
+      setHideErrorDiv('');
       setErrors({});
       setGroupMember({
         foreName1: '',
@@ -166,8 +167,16 @@ const GroupMembers = () => {
 
   const cancelCreate = () => {
     setErrors({});
-    setGroupMember({});
-    setValues({});
+    setGroupMember({
+      foreName1: '',
+      surName: '',
+      rAddress: '',
+    });
+    setValues({
+      joinDate: '',
+      post: '',
+      resError: '',
+    });
   };
 
   useEffect(() => {
@@ -182,13 +191,7 @@ const GroupMembers = () => {
     }
   }, [values]);
 
-  useEffect(() => {
-    if (membersList.error.includes('5423')) {
-      setErrorWarning('Member already in a Group');
-    }
-  }, [membersList.error]);
-
-  const hideWarning = () => setErrorWarning('');
+  const displayError = () => setHideErrorDiv('d-none');
 
   return (
     <div className="individual-customer-form">
@@ -214,13 +217,14 @@ const GroupMembers = () => {
                     </div>
                   </div>
                   {
-                    errorWarning.length > 2 ? (
-                      <div className="submit-error-section">
+
+                    membersList.error.includes('5423') ? (
+                      <div className={`${hideErrorDiv} submit-error-section shadow`}>
                         <i
-                          onClick={hideWarning}
-                          className="fas fa-times-circle"
+                          onClick={displayError}
+                          className="far fa-times-circle"
                         />
-                        {errorWarning}
+                        Director already exist
                       </div>
                     ) : null
                   }
@@ -454,7 +458,11 @@ const GroupMembers = () => {
                       }
                     </div>
 
-                  ) : null
+                  ) : (
+                    <div className="middle-section lower-folder-icon-section">
+                      <i className="far fa-folder-open" />
+                    </div>
+                  )
                 }
 
               </div>
