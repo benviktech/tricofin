@@ -1,0 +1,81 @@
+.maintenance-customer-info {
+  color: #666;
+  font-weight: bold;
+  border-bottom: 3px solid #fff;
+  display: flex;
+  font-size: 14px;
+  padding: 5px;
+  justify-content: center;
+  background-color: #f3f2f1;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+.lower-downer-section {
+  display: flex;
+}
+
+.left-inner-form-section {
+  background-color: #d7d7d7;
+  padding: 10px 5px;
+  margin-right: 10px;
+  flex: 1;
+  z-index: 5;
+  height: 90vh;
+}
+
+.submit-form-top-section {
+  flex: 5;
+  display: flex;
+}
+
+.individual-customer-form {
+  /* position: relative; */
+}
+
+/* Tab screen sizes */
+
+@media only screen and (min-width: 1000px) {
+  .main-form-color {
+    flex-direction: column;
+  }
+
+  .upper-bottom-section {
+    margin-bottom: 60px;
+  }
+
+  .bottom-form-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bottom-form-section .form-group {
+    width: 100%;
+  }
+}
+
+.internal-headings {
+  color: #666;
+  font-size: 14px;
+}
+
+.page-refresh {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-self: center;
+  top: 50%;
+  left: 30%;
+  /* background-color: #0178d4; */
+}
+
+.required:after {
+  content: " *";
+  color: red;
+}
+
+.label {
+  color: #444;
+}
