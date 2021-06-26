@@ -4,6 +4,7 @@ import {
   UpdateGroupMaintenanceRequest,
   PostGroupMemberRequest,
   FetchGroupMembersListRequest,
+  DeleteGroupMemberRequest,
 } from '../utils/api';
 
 export const POST_GROUP_MAINTENANCE_SUCCESS = 'POST_GROUP_MAINTENANCE_SUCCESS';
@@ -119,6 +120,18 @@ export const fetchGroupMembersList = GroupId => async dispatch => {
     const response = await FetchGroupMembersListRequest(method, path);
     dispatch(groupMemberList(response.data));
   } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const deleteGroupMember = data => async dispatch => {
+  const path = 'api/Customers/DeleteCustomerGroupMember';
+  const method = 'delete';
+  try {
+    const response = await DeleteGroupMemberRequest(method, data, path);
+    dispatch(groupMemberList(response.data));
+  } catch (error) {
+    console.log(error.message);
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
