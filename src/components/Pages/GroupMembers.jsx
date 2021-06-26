@@ -224,7 +224,7 @@ const GroupMembers = () => {
                           onClick={displayError}
                           className="far fa-times-circle"
                         />
-                        Director already exist
+                        Member already exist in a group
                       </div>
                     ) : null
                   }
