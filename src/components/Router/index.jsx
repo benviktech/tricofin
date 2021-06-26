@@ -25,6 +25,7 @@ import SystemSecurityRoles from "../System/SystemSecurity/SystemRoles";
 import SystemSecurityRights from "../System/SystemSecurity/SystemRights";
 import SystemSecurityMaintenance from "../System/SystemSecurity/SystemMaintenance";
 import UpdateCompanyInfo from "../System/SystemSettings/UpdateCompanyInfo";
+import SystemHolidays from "../System/Holidays/SystemHolidays";
 
 const Router = () => (
   <div className="router-section">
@@ -101,6 +102,7 @@ const Router = () => (
           path="/system/systemsecurity/adduser"
           component={SystemSecurityMaintenance}
         />
+        <Route path="/system/holiday/holidays" component={SystemHolidays} />
       </Switch>
       <Footer />
     </BrowserRouter>
