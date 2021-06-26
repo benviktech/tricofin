@@ -126,3 +126,8 @@ export const FetchGroupMembersListRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
+
+export const DeleteGroupMemberRequest = async (method, values, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, { data: values });
+  return response;
+};
