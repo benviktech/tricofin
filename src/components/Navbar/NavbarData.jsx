@@ -1,155 +1,159 @@
 const NavbarData = [
   {
-    mainText: 'System',
+    mainText: "System",
     innerLinks: [
       {
-        to: '#',
-        linkText: 'Log Out',
+        to: "#",
+        linkText: "Log Out",
       },
       {
-        to: '/system/systemsecurity/roles',
-        linkText: 'System Security',
+        to: "/system/systemsecurity/roles",
+        linkText: "System Security",
       },
       {
-        to: '/systemsettingscompanyinfo',
-        linkText: 'System Settings',
-      }
-    ],
-  },
-  {
-    mainText: 'Customers',
-    innerLinks: [
-      {
-        to: '/individualcustomerform',
-        linkText: 'Individual Customers',
+        to: "/system/holiday/holidays",
+        linkText: "Public Holidays",
       },
       {
-        to: '/nonindidualcustomerform',
-        linkText: 'Non Individual Customers',
-      },
-      {
-        to: '#',
-        linkText: 'Group Maintenance',
+        to: "/systemsettingscompanyinfo",
+        linkText: "System Settings",
       },
     ],
   },
   {
-    mainText: 'Loans',
+    mainText: "Customers",
     innerLinks: [
       {
-        to: '#',
-        linkText: 'Action one',
+        to: "/individualcustomerform",
+        linkText: "Individual Customers",
       },
       {
-        to: '#',
-        linkText: 'Another action two',
+        to: "/nonindidualcustomerform",
+        linkText: "Non Individual Customers",
       },
       {
-        to: '#',
-        linkText: 'Something else there',
+        to: "#",
+        linkText: "Group Maintenance",
       },
     ],
   },
   {
-    mainText: 'Finance',
+    mainText: "Loans",
     innerLinks: [
       {
-        to: '#',
+        to: "#",
+        linkText: "Action one",
+      },
+      {
+        to: "#",
+        linkText: "Another action two",
+      },
+      {
+        to: "#",
+        linkText: "Something else there",
+      },
+    ],
+  },
+  {
+    mainText: "Finance",
+    innerLinks: [
+      {
+        to: "#",
 
-        linkText: 'Action',
+        linkText: "Action",
       },
       {
-        to: '#',
-        linkText: 'Another action',
+        to: "#",
+        linkText: "Another action",
       },
       {
-        to: '#',
-        linkText: 'Something else here',
-      },
-    ],
-  },
-  {
-    mainText: 'Savings',
-    innerLinks: [
-      {
-        to: '#',
-        linkText: 'Action',
-      },
-      {
-        to: '#',
-        linkText: 'Another action',
-      },
-      {
-        to: '#',
-        linkText: 'Something else here',
+        to: "#",
+        linkText: "Something else here",
       },
     ],
   },
   {
-    mainText: 'Utilities',
+    mainText: "Savings",
     innerLinks: [
       {
-        to: '#',
-        linkText: 'Action',
+        to: "#",
+        linkText: "Action",
       },
       {
-        to: '#',
-        linkText: 'Another action',
+        to: "#",
+        linkText: "Another action",
       },
       {
-        to: '#',
-        linkText: 'Something else here',
+        to: "#",
+        linkText: "Something else here",
       },
     ],
   },
   {
-    mainText: 'Processes',
+    mainText: "Utilities",
     innerLinks: [
       {
-        to: '#',
-        linkText: 'Action',
+        to: "#",
+        linkText: "Action",
       },
       {
-        to: '#',
-        linkText: 'Another action',
+        to: "#",
+        linkText: "Another action",
       },
       {
-        to: '#',
-        linkText: 'Something else here',
+        to: "#",
+        linkText: "Something else here",
       },
     ],
   },
   {
-    mainText: 'Reports',
+    mainText: "Processes",
     innerLinks: [
       {
-        to: '#',
-        linkText: 'Action',
+        to: "#",
+        linkText: "Action",
       },
       {
-        to: '#',
-        linkText: 'Another action',
+        to: "#",
+        linkText: "Another action",
       },
       {
-        to: '#',
-        linkText: 'Something else here',
+        to: "#",
+        linkText: "Something else here",
       },
     ],
   },
   {
-    mainText: 'Help',
+    mainText: "Reports",
     innerLinks: [
       {
-        to: '#',
-        linkText: 'Action',
+        to: "#",
+        linkText: "Action",
       },
       {
-        to: '#',
-        linkText: 'Another action',
+        to: "#",
+        linkText: "Another action",
       },
       {
-        to: '#',
-        linkText: 'Something else here',
+        to: "#",
+        linkText: "Something else here",
+      },
+    ],
+  },
+  {
+    mainText: "Help",
+    innerLinks: [
+      {
+        to: "#",
+        linkText: "Action",
+      },
+      {
+        to: "#",
+        linkText: "Another action",
+      },
+      {
+        to: "#",
+        linkText: "Something else here",
       },
     ],
   },
