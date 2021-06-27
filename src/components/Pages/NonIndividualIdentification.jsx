@@ -17,14 +17,14 @@ const NonIndividualIdentification = () => {
       />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Identification Information</span>
+          <span>Customer Secondary Contact</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
             <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">
-            <p>Identification section</p>
+            <p>Identification contact section</p>
             <MoreInfo modalOpener={modalOpener} />
           </div>
         </div>
