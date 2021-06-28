@@ -19,7 +19,7 @@
 
 .left-inner-form-section {
   background-color: #d7d7d7;
-  padding: 10px 5px;
+  /* padding: 10px 5px; */
   margin-right: 10px;
   flex: 1;
   z-index: 5;
@@ -149,8 +149,8 @@
 
 .user-maintenance-buttons-section {
   display: flex;
-  margin: 7px;
-  justify-content: flex-end;
+  margin-top: 30px;
+  /* justify-content: flex-end; */
 }
 
 .user-maintenancerole-buttons-section {
@@ -241,8 +241,8 @@
 }
 
 .usermaintenance-section {
-  flex: 7;
-  margin-top: 40px;
+  flex: 5;
+  /* margin-top: 40px; */
   display: flex;
 }
 
@@ -256,7 +256,7 @@
   flex-direction: column;
   flex: 2;
   border-left: 1px solid #666666;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .userroleadd-section {
@@ -270,13 +270,18 @@
 .userrole-create-header {
   color: #666666;
   font-weight: 700;
-  text-align: center;
+  /* text-align: center; */
+  margin-left: 160px;
 }
 
 .userdetails-create-header {
   color: #666666;
   font-weight: 700;
-  text-align: center;
+  margin-left: 160px;
+}
+
+.text-input-user {
+  width: 95%;
 }
 
 .input-div {
@@ -288,22 +293,48 @@
   position: relative;
 }
 
+.input-div-half2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.athrice-section-one {
+  margin-right: auto;
+}
+.athrice-section-two {
+  margin-left: 37px;
+}
+.athrice-section-two .text-input-userhalf {
+  padding-left: 0px;
+}
+.text-input-userhalf {
+  margin-left: 0px;
+}
 .input-div .label {
   width: 150px;
+}
+.label-half {
+  width: 150px;
+  color: #444444;
 }
 .input-box {
   width: 65%;
 }
 
-.input-box-password {
-  width: 55%;
-}
 .input-box-phone {
   width: 55%;
 }
 
+.checkbox-user {
+  height: 20px;
+  width: 20px;
+}
+
 .user-advanced-settings {
   margin-top: 20px;
+}
+.user-temporary-role {
+  margin-top: 30px;
 }
 
 .roles-container {
