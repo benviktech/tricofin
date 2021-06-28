@@ -120,12 +120,13 @@ const SystemSecurityRoles = () => {
           <div className="submit-form-top-section-role">
             <div className="create-role-section">
               <form className="form-role-section">
-                <div
-                  className={
-                    errors.roleID ? "role-id d-flex required" : "role-id d-flex"
-                  }
-                >
-                  <label htmlFor="role-id" className="form-label">
+                <div className="role-id d-flex">
+                  <label
+                    htmlFor="role-id"
+                    className={
+                      errors.roleID ? "required form-label" : "form-label"
+                    }
+                  >
                     {" "}
                     Role Id:
                   </label>
@@ -145,14 +146,13 @@ const SystemSecurityRoles = () => {
                     </>
                   )} */}
                 </div>
-                <div
-                  className={
-                    errors.description
-                      ? "required description my-2 d-flex"
-                      : "description my-2 d-flex"
-                  }
-                >
-                  <label htmlFor="description" className="form-label">
+                <div className="description my-2 d-flex">
+                  <label
+                    htmlFor="description"
+                    className={
+                      errors.description ? "required form-label" : "form-label"
+                    }
+                  >
                     {" "}
                     Description:
                   </label>
@@ -163,15 +163,6 @@ const SystemSecurityRoles = () => {
                     type="text"
                     className="form-input"
                   />
-
-                  {/* {errors.description && (
-                    <>
-                      <br />
-                      <span className="error-display">
-                        {errors.description}
-                      </span>
-                    </>
-                  )} */}
                 </div>
               </form>
             </div>
