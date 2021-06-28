@@ -266,17 +266,16 @@ const SystemSecurityMaintenance = () => {
                 <div className="userrole-create-header">User Role</div>
                 <form>
                   <div className="input-div">
-                    <div className="label">Search a Role ID</div>
-                    <div
-                      className={
-                        errors.roleID ? "required input-box" : "input-box"
-                      }
-                    >
+                    <div className={errors.roleID ? "required label" : "label"}>
+                      Search a Role ID
+                    </div>
+                    <div className="input-box">
                       <Input
                         value={formState.roleID}
                         name="roleID"
                         handleChange={filterRoles}
                         type="text"
+                        className="text-input-user"
                       />
                       {/* <br />
                       {errors.roleID && (
@@ -314,17 +313,18 @@ const SystemSecurityMaintenance = () => {
                 <div className="userdetails-create-header">User Details</div>
                 <form>
                   <div className="input-div">
-                    <div className="label">Login ID</div>
                     <div
-                      className={
-                        errors.userName ? "required input-box" : "input-box"
-                      }
+                      className={errors.userName ? "required label" : "label"}
                     >
+                      Login ID
+                    </div>
+                    <div className="input-box">
                       <Input
                         handleChange={filterTempUsers}
                         value={formState.userName}
                         name="userName"
                         type="text"
+                        className="text-input-user"
                       />
                       {/* <br />
                       {errors.userName && (
@@ -355,103 +355,88 @@ const SystemSecurityMaintenance = () => {
                       </div>
                     )}
                   </div>
+
                   <div className="input-div">
-                    <div className="input-div">
-                      <div className="label">Password</div>
-                      <div
-                        className={
-                          errors.userPassword
-                            ? "required input-box-password"
-                            : "input-box-password"
-                        }
-                      >
-                        <Input
-                          handleChange={handleChange}
-                          value={formState.userPassword}
-                          name="userPassword"
-                          type="password"
-                        />
-                        {/* <br />
-                        {errors.userPassword && (
-                          <span className="error-display">
-                            {errors.userPassword}
-                          </span>
-                        )} */}
-                      </div>
+                    <div
+                      className={
+                        errors.userPassword ? "required label" : "label"
+                      }
+                    >
+                      Password
                     </div>
-                    <div className="input-div">
-                      <div className="label">Confirm Password</div>
-                      <div
-                        className={
-                          errors.userPassword
-                            ? "required input-box-password"
-                            : "input-box-password"
-                        }
-                      >
-                        <Input
-                          handleChange={handleChange}
-                          value={formState.password}
-                          name="password"
-                          type="password"
-                        />
-                      </div>
+                    <div className="input-box">
+                      <Input
+                        handleChange={handleChange}
+                        value={formState.userPassword}
+                        name="userPassword"
+                        type="password"
+                        className="text-input-user"
+                      />
                     </div>
                   </div>
                   <div className="input-div">
-                    <div className="label">Surname</div>
                     <div
                       className={
-                        errors.surName ? "required input-box" : "input-box"
+                        errors.userPassword ? "required label" : "label"
                       }
                     >
+                      Confirm Password
+                    </div>
+                    <div className="input-box">
+                      <Input
+                        handleChange={handleChange}
+                        value={formState.password}
+                        name="password"
+                        type="password"
+                        className="text-input-user"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-div">
+                    <div
+                      className={errors.surName ? "required label" : "label"}
+                    >
+                      Surname
+                    </div>
+                    <div className="input-box">
                       <Input
                         handleChange={handleChange}
                         value={formState.surName}
                         name="surName"
                         type="text"
+                        className="text-input-user"
                       />
-                      {/* <br />
-                      {errors.surName && (
-                        <span className="error-display">{errors.surName}</span>
-                      )} */}
                     </div>
                   </div>
                   <div className="input-div">
-                    <div className="label">Other Names</div>
                     <div
-                      className={
-                        errors.otherNames ? "required input-box" : "input-box"
-                      }
+                      className={errors.otherNames ? "required label" : "label"}
                     >
+                      Other Names
+                    </div>
+                    <div className="input-box">
                       <Input
                         handleChange={handleChange}
                         value={formState.otherNames}
                         name="otherNames"
                         type="text"
+                        className="text-input-user"
                       />
-                      {/* <br />
-                      {errors.otherNames && (
-                        <span className="error-display">
-                          {errors.otherNames}
-                        </span>
-                      )} */}
                     </div>
                   </div>
                   <div className="input-div">
-                    <div className="input-div">
-                      <div className="label">Phone1</div>
-                      <div
-                        className={
-                          errors.phoneNo1
-                            ? "required input-box-phone"
-                            : "input-box-phone"
-                        }
-                      >
+                    <div className="input-div-half1">
+                      <div className="label-half">Phone1</div>
+                    </div>
+                    <div className="input-div-half2">
+                      <div className="athrice-section-one">
                         <Input
                           handleChange={handleChange}
                           value={formState.phoneNo1}
                           name="phoneNo1"
                           type="text"
+                          className="text-input-userhalf"
                         />
                         {/* <br />
                         {errors.phoneNo1 && (
@@ -460,42 +445,39 @@ const SystemSecurityMaintenance = () => {
                           </span>
                         )} */}
                       </div>
-                    </div>
-                    <div className="input-div">
-                      <div className="label">Phone2</div>
-                      <div className="input-box-phone">
+                      <div className="">Phone2</div>
+                      <div className="athrice-section-two">
                         <Input
                           handleChange={handleChange}
                           value={formState.phoneNo2}
                           name="phoneNo2"
                           type="text"
+                          className="text-input-userhalf"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="input-div">
                     <div className="label">Account is Verified</div>
-                    <div className="input-box">
-                      <Input
-                        handleChange={handleChecking}
-                        value={formState.isVerified}
-                        name="isVerified"
-                        type="checkbox"
-                        checked={formState.isVerified}
-                      />
-                    </div>
+                    <Input
+                      handleChange={handleChecking}
+                      value={formState.isVerified}
+                      name="isVerified"
+                      type="checkbox"
+                      checked={formState.isVerified}
+                      className="checkbox-user"
+                    />
                   </div>
                   <div className="input-div">
                     <div className="label">Account is Deleted</div>
-                    <div className="input-box">
-                      <Input
-                        handleChange={handleChecking}
-                        value={formState.isDeleted}
-                        name="isDeleted"
-                        type="checkbox"
-                        checked={formState.isDeleted}
-                      />
-                    </div>
+                    <Input
+                      handleChange={handleChecking}
+                      value={formState.isDeleted}
+                      name="isDeleted"
+                      type="checkbox"
+                      checked={formState.isDeleted}
+                      className="checkbox-user"
+                    />
                   </div>
                 </form>
               </div>
@@ -506,15 +488,14 @@ const SystemSecurityMaintenance = () => {
                 <form>
                   <div className="input-div">
                     <div className="label">Temporary Role</div>
-                    <div className="input-box">
-                      <Input
-                        handleChange={handleChecking}
-                        value={formState.tempRole}
-                        name="tempRole"
-                        type="checkbox"
-                        checked={formState.tempRole}
-                      />
-                    </div>
+                    <Input
+                      handleChange={handleChecking}
+                      value={formState.tempRole}
+                      name="tempRole"
+                      type="checkbox"
+                      checked={formState.tempRole}
+                      className="checkbox-user"
+                    />
                   </div>
 
                   <div className="input-div">
@@ -526,6 +507,7 @@ const SystemSecurityMaintenance = () => {
                         name="tempRoleID"
                         type="text"
                         handleChange={filterTempRoles}
+                        className="text-input-user"
                       />
                     </div>
                     {sortedTempRoles.length <= 0 ? (
@@ -566,6 +548,7 @@ const SystemSecurityMaintenance = () => {
                         name="tempExpiryDate"
                         type="date"
                         disabled={roleDisable}
+                        className="text-input-user"
                       />
                     </div>
                   </div>
@@ -585,6 +568,7 @@ const SystemSecurityMaintenance = () => {
                         value={formState.isCashier}
                         name="isCashier"
                         type="checkbox"
+                        className="checkbox-user"
                       />
                     </div>
                   </div>
@@ -596,6 +580,7 @@ const SystemSecurityMaintenance = () => {
                         disabled={isCashierDisable}
                         type="search"
                         placeholder="Search a GL"
+                        className="text-input-user"
                       />
                       <span></span>
                     </div>
@@ -608,6 +593,7 @@ const SystemSecurityMaintenance = () => {
                         value={formState.passwordNeverExpires}
                         name="passwordNeverExpires"
                         type="checkbox"
+                        className="checkbox-user"
                       />
                     </div>
                   </div>
@@ -622,6 +608,7 @@ const SystemSecurityMaintenance = () => {
                         value={formState.mustChangePassword}
                         name="mustChangePassword"
                         type="checkbox"
+                        className="checkbox-user"
                       />
                     </div>
                   </div>
@@ -634,6 +621,7 @@ const SystemSecurityMaintenance = () => {
                         value={formState.isDisabled}
                         name="isDisabled"
                         type="checkbox"
+                        className="checkbox-user"
                       />
                     </div>
                   </div>
@@ -641,9 +629,9 @@ const SystemSecurityMaintenance = () => {
 
                 <div className="user-maintenance-buttons-section">
                   <Button onClick={createUser} name="Add" />
-                  <Button onClick={updateUser} name="Update User" />
-                  <Button onClick={clearFields} name="Clear Data" />
-                  <Button onClick={deleteUser} name="Delete User" />
+                  <Button onClick={updateUser} name="Update" />
+                  <Button onClick={clearFields} name="Clear" />
+                  <Button onClick={deleteUser} name="Delete" />
                 </div>
               </div>
             </div>
