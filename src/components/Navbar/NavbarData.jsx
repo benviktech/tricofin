@@ -15,7 +15,7 @@ const NavbarData = [
         linkText: "Public Holidays",
       },
       {
-        to: "/systemsettingscompanyinfo",
+        to: "/system/systemsettings/updatecompanyinfo",
         linkText: "System Settings",
       },
     ],
