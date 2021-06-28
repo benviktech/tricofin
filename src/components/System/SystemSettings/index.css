@@ -27,7 +27,7 @@
 }
 
 .submit-form-top-section {
-  flex: 7;
+  flex: 5;
   margin-top: 40px;
 }
 
@@ -318,21 +318,33 @@
 
 .left-container-side {
   flex: 1;
-  /* align-self: flex-end; */
+  /* align-self: center; */
+  /* justify-content: space-evenly; */
 }
 .right-container-side {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   border-left: 1px solid #666;
   padding-left: 20px;
+}
+
+.password-policy {
+  flex: 3;
 }
 
 .form-label {
   width: 200px;
 }
 
+.number-input-settings {
+  width: 65%;
+}
+
 .form-item {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   align-items: center;
 }
 .form-input {
@@ -340,12 +352,28 @@
   margin-right: 10px;
   width: 55%;
 }
-
-.form-input-name {
-  font-size: 16px;
-  margin-left: 60px;
-  font-weight: 800;
+.form-input-number {
+  margin-left: 20px;
   margin-right: 10px;
+  width: 30%;
+}
+
+.form-input-item {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 0px 10px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  background-color: #f3f2f1;
+  margin-left: 10px !important;
+  width: 95%;
+}
+
+.text-input-settings {
+  width: 95%;
 }
 .form-control-1 {
   text-align: center;
@@ -367,12 +395,11 @@
   margin-bottom: 20px;
 }
 
-.buttons-action {
-  flex: 1;
-  margin-top: 30px;
+.buttons-section-settings {
+  flex: 2;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: space-evenly;
 }
 
 .buttons-link {

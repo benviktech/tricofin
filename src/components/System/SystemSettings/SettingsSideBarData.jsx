@@ -14,13 +14,6 @@ const SettingsSidebarData = [
     icon: <MdIcons.MdAccountBalance style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
-    path: "/systemsettingscompanyinfo",
-  },
-  {
-    title: "Update Information",
-    icon: <MdIcons.MdDashboard style={iconStyles} />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
     path: "/system/systemsettings/updatecompanyinfo",
   },
 ];
