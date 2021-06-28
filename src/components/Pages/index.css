@@ -640,3 +640,51 @@
   font-size: 30px;
   color: gray;
 }
+
+.delete-modal-section {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-modal-section button{
+  padding: 5px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.confirm-delete-section {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #444;
+  font-size: 14px;
+}
+
+.overal-delete-section {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.confirm-delete-button-section {
+  display: flex;
+  justify-content: center;
+}
+
+.confirm-delete-button-section .accept-delete-btn {
+  background-color: red;
+}
+
+.confirm-delete-button-section .cancel-delete-btn {
+  background-color: #666;
+}

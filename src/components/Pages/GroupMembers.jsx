@@ -10,6 +10,7 @@ import SearchCustomer from '../Customer/SearchCustomer';
 import {
   deleteGroupMember, fetchGroupMembersList, getGroupMaintenance, postGroupMember,
 } from '../../actions/groupMaintenance';
+import DeleteModal from './DeleteModal';
 
 const GroupMembers = () => {
   const [hideErrorDiv, setHideErrorDiv] = useState('d-none');
@@ -17,6 +18,8 @@ const GroupMembers = () => {
   const [memberPost, setMemberPost] = useState([]);
   const [customerList, setCutomerList] = useState([]);
   const [memberSortedList, setMembersSortedList] = useState([]);
+  const [deletionData, setDeletionData] = useState({});
+  const [deleteModal, setDeleteModal] = useState(false);
   const [errors, setErrors] = useState({});
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -162,7 +165,21 @@ const GroupMembers = () => {
       createdBy: 'BENVIK',
       modifiedBy: 'BENVIK',
     };
-    dispatch(deleteGroupMember(data));
+    setDeletionData(data);
+    setDeleteModal(true);
+  };
+
+  const continueDeleteFunction = () => {
+    if (Object.keys(deletionData).length > 0) {
+      dispatch(deleteGroupMember(deletionData));
+      setDeleteModal(false);
+      setDeletionData({});
+    }
+  };
+
+  const cancelDeleteFunction = () => {
+    setDeleteModal(false);
+    setDeletionData({});
   };
 
   const cancelCreate = () => {
@@ -195,6 +212,16 @@ const GroupMembers = () => {
 
   return (
     <div className="individual-customer-form">
+      {' '}
+      {
+      deleteModal && (
+      <DeleteModal
+        continueDelete={continueDeleteFunction}
+        cancelDelete={cancelDeleteFunction}
+        text="Member"
+      />
+      )
+    }
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>Group Members Section</span>
