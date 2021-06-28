@@ -16,6 +16,7 @@ export const Input = ({
   disabled,
   checked,
   maxlength,
+  className,
 }) => (
   <input
     onChange={handleChange}
@@ -27,5 +28,6 @@ export const Input = ({
     checked={checked}
     maxlength={maxlength}
     style={{ textTransform: "uppercase" }}
+    className={className}
   />
 );
