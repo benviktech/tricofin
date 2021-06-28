@@ -281,13 +281,14 @@ const SystemSecurityRoles = () => {
             <div className="modules-role-section">
               <div className="role-choose">
                 <div className="input-div">
-                  <div className="label">Role</div>
+                  <div className="label-role">Role</div>
                   <div className="input-box">
                     <Input
                       value={activeRole}
                       name="tempRoleID"
                       type="text"
                       handleChange={filterTempRoles}
+                      className="text-input-role"
                     />
                     <br />
                     {errors.roleID && (
@@ -377,7 +378,7 @@ const SystemSecurityRoles = () => {
                 <div className="module-rights-form">
                   <p
                     style={{
-                      marginBottom: "40px",
+                      marginBottom: "10px",
                       color: "",
                       fontSize: "14px",
                     }}
@@ -401,6 +402,7 @@ const SystemSecurityRoles = () => {
                             ? formState.canEdit
                             : false
                         }
+                        className="checkbox-role"
                       />
                     </div>
                   </div>
@@ -417,6 +419,7 @@ const SystemSecurityRoles = () => {
                             ? formState.canView
                             : false
                         }
+                        className="checkbox-role"
                       />
                     </div>
                   </div>
@@ -433,6 +436,7 @@ const SystemSecurityRoles = () => {
                             ? formState.canAdd
                             : false
                         }
+                        className="checkbox-role"
                       />
                     </div>
                   </div>
@@ -449,10 +453,11 @@ const SystemSecurityRoles = () => {
                             ? formState.canSupervise
                             : false
                         }
+                        className="checkbox-role"
                       />
                     </div>
                   </div>
-                  <div className="cancel-submit-buttons-section">
+                  <div className="buttons-section-role">
                     {!modulePresent && (
                       <Button
                         disabled={modulePresent}
