@@ -31,6 +31,24 @@
   display: flex;
 }
 
+.set-holiday-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.calender-section {
+  flex: 2;
+}
+.holiday-remarks {
+  flex: 2;
+}
+.buttons-add-holiday {
+  flex: 2;
+}
+.view-holidays-section {
+  flex: 1;
+}
+
 .individual-customer-form {
   /* position: relative; */
 }

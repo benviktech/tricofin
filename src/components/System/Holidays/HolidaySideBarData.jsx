@@ -10,7 +10,7 @@ const innerIconStyles = { fontSize: "1.2em" };
 
 const HolidaySidebarData = [
   {
-    title: "Holidays",
+    title: "Mark Holidays",
     icon: <RiIcons.RiCalendar2Fill style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
