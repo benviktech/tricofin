@@ -50,7 +50,7 @@ const UpdateCompanyInfo = () => {
     const response = updateCompanyInfoValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      dispatch(updateCompanyInfo(formState, history));
+      dispatch(updateCompanyInfo(formState));
     }
   };
 
@@ -75,84 +75,78 @@ const UpdateCompanyInfo = () => {
                 <hr />
                 <form>
                   <div class="form-item">
-                    <label for="name" class="col-form-label form-label">
+                    <label for="name" class="form-label">
                       Company Name
                     </label>
-                    <div class="form-input-name">{formState.companyName}</div>
+                    <div class="form-input">
+                      <div className="form-input-item">
+                        {formState.companyName}
+                      </div>
+                    </div>
                   </div>
                   <div class="form-item">
                     <label
                       for="physicaladdress"
-                      class=" col-form-label form-label"
+                      className={
+                        errors.pAddress ? "required form-label" : "form-label"
+                      }
                     >
                       Physical Adress
                     </label>
-                    <div
-                      class={
-                        errors.pAddress ? "required form-input" : "form-input"
-                      }
-                    >
+                    <div class="form-input">
                       <Input
                         handleChange={handleChange}
                         name="pAddress"
                         value={formState.pAddress}
                         type="text"
+                        className="text-input-settings"
                       />
-                      {/* <br />
-                      {errors.pAddress && (
-                        <span className="error-display">{errors.pAddress}</span>
-                      )} */}
                     </div>
                   </div>
                   <div class="form-item">
-                    <label for="pobox" class=" col-form-label form-label">
-                      P.O. Box Address
-                    </label>
-                    <div
-                      class={
-                        errors.boxAddress ? "required form-input" : "form-input"
+                    <label
+                      for="pobox"
+                      className={
+                        errors.boxAddress ? "required form-label" : "form-label"
                       }
                     >
+                      P.O. Box Address
+                    </label>
+                    <div class="form-input">
                       <Input
                         handleChange={handleChange}
                         value={formState.boxAddress}
                         name="boxAddress"
                         type="text"
+                        className="text-input-settings"
                       />
-                      {/* <br />
-                      {errors.boxAddress && (
-                        <span className="error-display">
-                          {errors.boxAddress}
-                        </span>
-                      )} */}
                     </div>
                   </div>
                   <div class="form-item">
-                    <label for="pobox" class="col-form-label form-label">
-                      Email Address 1
-                    </label>
-                    <div
-                      class={
-                        errors.email ? "required form-input" : "form-input"
+                    <label
+                      for="pobox"
+                      className={
+                        errors.email ? "required form-label" : "form-label"
                       }
                     >
+                      Email Address 1
+                    </label>
+                    <div class="form-input">
                       <Input
                         handleChange={handleChange}
                         value={formState.email}
                         name="email"
                         type="email"
                         placeholder="geshafinancialservices@gmail.com"
+                        className="text-input-settings"
                       />
-                      {/* <br />
-                      {errors.email && (
-                        <span className="error-display">{errors.email}</span>
-                      )} */}
                     </div>
                   </div>
-                  <div
-                    class={errors.phone ? "required form-item" : "form-item"}
-                  >
-                    <label for="pobox" class="col-form-label form-label">
+                  <div class="form-item">
+                    <label
+                      for="pobox"
+                      class={errors.phone ? "form-label" : "form-label"}
+                    >
                       Phone 1
                     </label>
                     <div class="form-input">
@@ -162,15 +156,12 @@ const UpdateCompanyInfo = () => {
                         name="phone"
                         type="text"
                         placeholder="+256785450481"
+                        className="text-input-settings"
                       />
-                      {/* <br />
-                      {errors.phone && (
-                        <span className="error-display">{errors.phone}</span>
-                      )} */}
                     </div>
                   </div>
                   <div class="form-item">
-                    <label for="pobox" class="col-form-label form-label">
+                    <label for="pobox" class="form-label">
                       Website
                     </label>
                     <div class="form-input">
@@ -180,11 +171,73 @@ const UpdateCompanyInfo = () => {
                         name="website"
                         type="text"
                         placeholder="www.geshamicrofinance.co.ug"
+                        className="text-input-settings"
                       />
                     </div>
                   </div>
                 </form>
-                <div className="buttons-action">
+              </div>
+              <div className="right-container-side">
+                <div className="password-policy">
+                  <h4 class="text-center">Password Policy</h4>
+                  <hr />
+                  <form>
+                    <div class="form-item">
+                      <Label name="Enforce Password History" />
+                      <div class="form-input-number">
+                        <Input
+                          handleChange={handleChange}
+                          value={formState.pswdHistory}
+                          name="pswdHistory"
+                          type="number"
+                          className="number-input-settings"
+                        />
+                      </div>
+                      <Label name="Passwords Remembered" icon="&#63;" />
+                    </div>
+                    <div class="form-item">
+                      <Label name="Maximum Password Age" />
+                      <div class="form-input-number">
+                        <Input
+                          handleChange={handleChange}
+                          value={formState.pswdAge}
+                          name="pswdAge"
+                          type="number"
+                          className="number-input-settings"
+                        />
+                      </div>
+                      <Label name="Days" icon="&#63;" />
+                    </div>
+                    <div class="form-item">
+                      <Label name="Minimum Password Length" />
+                      <div class="form-input-number">
+                        <Input
+                          handleChange={handleChange}
+                          value={formState.pswdLength}
+                          name="pswdLength"
+                          type="number"
+                          className="number-input-settings"
+                        />
+                      </div>
+                      <Label name="Characters" icon="&#63;" />
+                    </div>
+
+                    <div class="form-item">
+                      <Label name="Lock System After" />
+                      <div class="form-input-number">
+                        <Input
+                          handleChange={handleChange}
+                          value={formState.lockSysPeriod}
+                          name="lockSysPeriod"
+                          type="number"
+                          className="number-input-settings"
+                        />
+                      </div>
+                      <Label name="Secs" icon="&#63;" />
+                    </div>
+                  </form>
+                </div>
+                <div className="buttons-section-settings">
                   <button
                     type="button"
                     onClick={updateData}
@@ -201,67 +254,6 @@ const UpdateCompanyInfo = () => {
                   >
                     Cancel
                   </button>
-                </div>
-              </div>
-              <div className="right-container-side">
-                <div className="password-policy">
-                  <h4 class="text-center">Password Policy</h4>
-                  <hr />
-                  <form>
-                    <div class="form-item">
-                      <Label name="Enforce Password History" />
-                      <div class="form-input">
-                        <Input
-                          handleChange={handleChange}
-                          value={formState.pswdHistory}
-                          name="pswdHistory"
-                          type="number"
-                          class="form-input-input-select"
-                        />
-                      </div>
-                      <Label name="Passwords Remembered" icon="&#63;" />
-                    </div>
-                    <div class="form-item">
-                      <Label name="Maximum Password Age" />
-                      <div class="form-input">
-                        <Input
-                          handleChange={handleChange}
-                          value={formState.pswdAge}
-                          name="pswdAge"
-                          type="number"
-                          class="form-input-input-select"
-                        />
-                      </div>
-                      <Label name="Days" icon="&#63;" />
-                    </div>
-                    <div class="form-item">
-                      <Label name="Minimum Password Length" />
-                      <div class="form-input">
-                        <Input
-                          handleChange={handleChange}
-                          value={formState.pswdLength}
-                          name="pswdLength"
-                          type="number"
-                          class="form-input-input-select"
-                        />
-                      </div>
-                      <Label name="Characters" icon="&#63;" />
-                    </div>
-
-                    <div class="form-item">
-                      <Label name="Lock System After" />
-                      <div class="form-input">
-                        <Input
-                          handleChange={handleChange}
-                          value={formState.lockSysPeriod}
-                          name="lockSysPeriod"
-                          type="number"
-                          class="form-input-input-select"
-                        />
-                      </div>
-                      <Label name="Secs" icon="&#63;" />
-                    </div>
-                  </form>
                 </div>
               </div>
             </div>
