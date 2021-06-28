@@ -2,6 +2,7 @@ import {
   FetchCompanyInfoRequest,
   UpdateCompanyInfoRequest,
 } from "../utils/api";
+import { toast } from "react-toastify";
 
 export const FETCH_COMPANY_INFO_SUCCESS = "FETCH_COMPANY_INFO_SUCCESS";
 export const POST_COMPANY_INFO_SUCCESS = "POST_COMPANY_INFO_SUCCESS";
@@ -30,7 +31,7 @@ export const fetchCompanyInfo = () => async (dispatch) => {
   }
 };
 
-export const updateCompanyInfo = (data, history) => async (dispatch) => {
+export const updateCompanyInfo = (data) => async (dispatch) => {
   const method = "put";
   const path = "api/System/UpdateSystemSettings";
   const result = {
@@ -56,8 +57,9 @@ export const updateCompanyInfo = (data, history) => async (dispatch) => {
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await UpdateCompanyInfoRequest(method, result, path);
-    history.push(`/systemsettingscompanyinfo`);
+    toast.success(`Company ${data.companyID}'s Info Edited Successfully`);
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
+    toast.error(`Editing Company  ${data.userName}'s info Failed`);
   }
 };
