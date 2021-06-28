@@ -21,7 +21,7 @@ export default function Label({ name, icon }) {
             height: "20px",
             borderRadius: "20px",
             padding: "2px",
-            marginLeft: "2px",
+            marginLeft: "3px",
           }}
         >
           {icon}
