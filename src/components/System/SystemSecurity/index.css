@@ -310,20 +310,31 @@
 
 .input-div-half2 {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  width: 63%;
 }
 
 .athrice-section-one {
-  margin-right: auto;
+  /* margin-right: auto; */
+  width: 33%;
 }
 .athrice-section-two {
-  margin-left: 37px;
+  /* flex: 5;
+  align-self: flex-end; */
+  width: 33%;
 }
 .athrice-section-two .text-input-userhalf {
-  padding-left: 0px;
+  margin-left: auto;
 }
 .text-input-userhalf {
-  margin-left: 0px;
+  /* margin-left: 0px; */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.middle-label {
+  width: 33%;
+  text-align: center;
 }
 .input-div .label {
   width: 150px;
