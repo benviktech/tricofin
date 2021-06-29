@@ -193,7 +193,7 @@ const UpdateCompanyInfo = () => {
                           className="number-input-settings"
                         />
                       </div>
-                      <Label name="Passwords Remembered" icon="&#63;" />
+                      <Label name="Passwords" icon="&#63;" />
                     </div>
                     <div class="form-item">
                       <Label name="Maximum Password Age" />
