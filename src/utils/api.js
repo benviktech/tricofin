@@ -167,7 +167,7 @@ export const UpdateSystemsRoleRequest = async (method, path, data) => {
 };
 
 export const DeleteSystemsRoleRequest = async (method, path, data) => {
-  const response = await axios[method](`${baseUrl}/${path}`, data);
+  const response = await axios[method](`${baseUrl}/${path}`, data.roleID);
   return response;
 };
 
