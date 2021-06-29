@@ -2,6 +2,8 @@ import {
   FETCH_ROLE_INFO_SUCCESS,
   LOADING_CONTENT,
   LOADING_ERROR,
+  CREATE_ROLE_INFO_SUCCESS,
+  UPDATE_ROLE_INFO_SUCCESS,
 } from "../actions/systemRole";
 
 const initialState = {
@@ -13,6 +15,20 @@ const initialState = {
 const systemRoleReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ROLE_INFO_SUCCESS:
+      return {
+        ...state,
+        systemRoles: action.payload,
+        error: "",
+        loading: false,
+      };
+    case CREATE_ROLE_INFO_SUCCESS:
+      return {
+        ...state,
+        systemRoles: action.payload,
+        error: "",
+        loading: false,
+      };
+    case UPDATE_ROLE_INFO_SUCCESS:
       return {
         ...state,
         systemRoles: action.payload,
