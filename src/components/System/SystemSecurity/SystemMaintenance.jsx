@@ -445,7 +445,7 @@ const SystemSecurityMaintenance = () => {
                           </span>
                         )} */}
                       </div>
-                      <div className="">Phone2</div>
+                      <div className="middle-label">Phone2</div>
                       <div className="athrice-section-two">
                         <Input
                           handleChange={handleChange}
