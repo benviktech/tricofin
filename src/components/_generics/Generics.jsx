@@ -2,7 +2,12 @@ import React from "react";
 import "./index.css";
 
 export const Button = ({ name, onClick, type = "button", disabled }) => (
-  <button type={type} onClick={onClick} disabled={disabled}>
+  <button
+    type={type}
+    onClick={onClick}
+    disabled={disabled}
+    className={disabled ? "button-disabled" : "button-active"}
+  >
     {name}
   </button>
 );
