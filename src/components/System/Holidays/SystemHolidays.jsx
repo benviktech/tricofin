@@ -75,9 +75,6 @@ const SystemHolidays = () => {
   };
 
   const removeSystemHolidays = async () => {
-    // const response = HolidayValidator(workingDates);
-    // setErrors(response);
-    // if (Object.keys(response).length === 0) {
     axios
       .delete(`${baseUrl}/api/System/DeleteSystemHoliday`, {
         data: { ...holidate },
@@ -91,7 +88,6 @@ const SystemHolidays = () => {
       .catch(function (error) {
         toast.error(`Failed to Remove holiday`);
       });
-    // }
   };
 
   const clearDate = () => {
