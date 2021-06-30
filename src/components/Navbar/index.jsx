@@ -34,14 +34,35 @@ const Navbar = () => (
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                       {
                         navdata.innerLinks.map((link, index) => (
-                          <Link
-                            key={index}
-                            to={link.to}
-                            className="dropdown-item item-text-size"
-                          >
-                            { link.linkText }
-                          </Link>
-
+                          <div key={index}>
+                            { link.subNavList && link.subNavList.length > 0 ? (
+                              <div className="dropdown-item sub-nav-dropdown dropright">
+                                <div className="dropbtn dropdown-toggle dropdown-toggle-split p-0">
+                                  <span className="mr-4">{ link.linkText }</span>
+                                </div>
+                                <div className="dropdown-content">
+                                  {
+                                    link.subNavList.map((subData, index) => (
+                                      <Link
+                                        className="nav-link dropdown-toggle-style"
+                                        key={index}
+                                        to={subData.to}
+                                      >
+                                        {subData.linkText}
+                                      </Link>
+                                    ))
+                                    }
+                                </div>
+                              </div>
+                            ) : (
+                              <Link
+                                to={link.to}
+                                className="dropdown-item item-text-size"
+                              >
+                                { link.linkText }
+                              </Link>
+                            )}
+                          </div>
                         ))
                       }
                     </div>
