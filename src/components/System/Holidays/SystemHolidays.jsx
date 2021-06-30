@@ -85,6 +85,8 @@ const SystemHolidays = () => {
       .then(function (response) {
         setHolidays(response.data);
         toast.success(`Holiday Removed Successfully`);
+        setHolidate(initialHolidate);
+        setWorkingDates([]);
       })
       .catch(function (error) {
         toast.error(`Failed to Remove holiday`);
@@ -193,11 +195,6 @@ const SystemHolidays = () => {
                       selectsRange
                       inline
                     />
-                    <Button
-                      onClick={clearDate}
-                      disabled={workingDates.length <= 0}
-                      name="clear"
-                    />
                   </div>
                 </div>
               </div>
@@ -233,7 +230,11 @@ const SystemHolidays = () => {
                       onClick={createSystemHolidays}
                       name="Add"
                     />
-                    <Button name="Edit" />
+                    <Button
+                      onClick={clearDate}
+                      disabled={workingDates.length <= 0}
+                      name="clear"
+                    />
                     <Button name="Remove" onClick={removeSystemHolidays} />
                   </div>
                 </div>
