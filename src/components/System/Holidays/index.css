@@ -38,11 +38,14 @@
 }
 .calender-section {
   flex: 2;
+  margin-top: 30px;
 }
 .holiday-remarks {
-  flex: 2;
+  flex: 1;
+  margin-top: 30px;
 }
 .buttons-add-holiday {
+  display: flex;
   flex: 2;
 }
 .view-holidays-section {
@@ -96,4 +99,112 @@
 
 .label {
   color: #444;
+}
+
+.label-holiday {
+  color: #444;
+  width: 150px;
+  margin-top: 0px;
+  align-self: flex-start;
+  /* flex: 1; */
+}
+
+.calender-section .input-div {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-weight: 600;
+  margin-top: 10px;
+  position: relative;
+  /* width: 100%; */
+}
+
+.calender-section .input-box {
+  width: 65%;
+  /* flex: 5; */
+}
+
+.holiday-remarks .input-div {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-weight: 600;
+  margin-top: 10px;
+  position: relative;
+  /* width: 100%; */
+}
+
+.holiday-remarks.input-box {
+  width: 65%;
+  /* flex: 5; */
+}
+
+.react-datepicker {
+  width: 100% !important;
+}
+
+.react-datepicker__month-container {
+  width: 100% !important;
+}
+.react-datepicker__week {
+  width: 100% !important;
+}
+
+.text-input-holiday {
+  width: 100%;
+  margin-left: 0px !important;
+}
+
+.holiday-buttons-section {
+  /* flex: 1; */
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 150px;
+  width: 65%;
+}
+.holiday-buttons-section-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+}
+
+.holidays-listing-table {
+  height: 50vh;
+  overflow-y: scroll;
+  width: 85%;
+}
+
+.holidays-header-section {
+  font-weight: 700;
+  display: flex;
+}
+.holidays-rows-section {
+  font-weight: 700;
+  color: #666673;
+}
+
+.holidays-listings {
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  background-color: #aeaeae;
+  margin-top: 39px;
+  width: 85%;
+}
+
+.column-one,
+.column-two,
+.column-three {
+  flex: 1 1;
+  background-color: #aaa;
+  border-left: 1px solid #aeaeae;
+  border-bottom: 1px solid #aeaeae;
+  color: #000;
+  padding: 5px 10px;
+  background-color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
 }
