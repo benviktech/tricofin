@@ -10,7 +10,7 @@ import SetingsSidebar from "./SettingsSideBar";
 import axios from "axios";
 import "./index.css";
 import { updateCompanyInfo } from "../../../actions/systemCompanyInfo";
-import Spinner from "../../Spinner/Spinner";
+import Loader from "./Loader/Loader";
 import updateCompanyInfoValidator from "../../Validators/CompanyInfoValidator";
 import { Input } from "../../_generics/Generics";
 import Label from "./Label";
@@ -262,8 +262,8 @@ const UpdateCompanyInfo = () => {
       </div>
     </div>
   ) : (
-    <div className="spinner-companyinfo">
-      <Spinner />
+    <div className="spinner section">
+      <Loader headerText="System Settings: Company Information" />
     </div>
   );
 };
