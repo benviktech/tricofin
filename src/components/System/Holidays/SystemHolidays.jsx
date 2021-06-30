@@ -46,6 +46,17 @@ const SystemHolidays = () => {
       .catch(function (error) {});
   };
 
+  useEffect(() => {
+    fetchSystemHolidays();
+  }, []);
+  const formatDateTime = (datevalue) => {
+    let currentDate = new Date(datevalue);
+    let date = currentDate.getDate();
+    let month = currentDate.getMonth();
+    let year = currentDate.getFullYear();
+    return currentDate.toISOString().split("T")[0];
+  };
+
   const createSystemHolidays = async () => {
     const response = HolidayValidator(workingDates);
     setErrors(response);
@@ -61,6 +72,24 @@ const SystemHolidays = () => {
           toast.error(`Failed to create holiday`);
         });
     }
+  };
+
+  const removeSystemHolidays = async () => {
+    // const response = HolidayValidator(workingDates);
+    // setErrors(response);
+    // if (Object.keys(response).length === 0) {
+    axios
+      .delete(`${baseUrl}/api/System/DeleteSystemHoliday`, {
+        data: { ...holidate },
+      })
+      .then(function (response) {
+        setHolidays(response.data);
+        toast.success(`Holiday Removed Successfully`);
+      })
+      .catch(function (error) {
+        toast.error(`Failed to Remove holiday`);
+      });
+    // }
   };
 
   const clearDate = () => {
@@ -86,9 +115,10 @@ const SystemHolidays = () => {
     return dateArray;
   }
 
-  useEffect(() => {
-    console.log(workingDates);
-  }, [workingDates]);
+  // useEffect(() => {
+  //   // console.log(new Date(holidate.holidayDate));
+  //   setStartDate(new Date(holidate.holidayDate));
+  // }, [holidate]);
 
   const HolidayValidator = (datesArray) => {
     const result = {};
@@ -127,13 +157,13 @@ const SystemHolidays = () => {
     setErrors(newErrors);
     if (workingDates.length > 0) {
       workingDates.forEach((holiday) => {
-        holiday.remarks = value;
+        holiday.remarks = value.toUpperCase();
       });
     }
     setHolidate({ ...holidate, [name]: value });
   };
 
-  return holidays.length > 0 ? (
+  return holidays.length >= 0 ? (
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
@@ -199,12 +229,12 @@ const SystemHolidays = () => {
                 <div className="holiday-buttons-section">
                   <div className="holiday-buttons-section-container">
                     <Button
-                      // disabled={workingDates.length <= 0}
+                      disabled={workingDates.length <= 0}
                       onClick={createSystemHolidays}
                       name="Add"
                     />
                     <Button name="Edit" />
-                    <Button name="Remove" />
+                    <Button name="Remove" onClick={removeSystemHolidays} />
                   </div>
                 </div>
               </div>
@@ -216,10 +246,26 @@ const SystemHolidays = () => {
                   <div className="column-two">Holidate</div>
                   <div className="column-three">Remarks</div>
                 </div>
-                {holidays.map((role) => (
+                {holidays.map((holiday) => (
                   <div className="holidays-rows-section">
-                    <div className="column-two">Role ID</div>
-                    <div className="column-three">Description</div>
+                    <div
+                      className="column-two"
+                      onClick={() => {
+                        setHolidate(holiday);
+                        // setWorkingDates([]);
+                        // setStartDate(new Date(holiday.holidayDate));
+                      }}
+                    >
+                      {formatDateTime(holiday.holidayDate)}
+                    </div>
+                    <div
+                      className="column-three"
+                      onClick={() => {
+                        setHolidate(holiday);
+                      }}
+                    >
+                      {holiday.remarks}
+                    </div>
                   </div>
                 ))}
               </div>
