@@ -21,18 +21,63 @@ const baseUrl = "https://tricofin.azurewebsites.net";
 const SystemHolidays = () => {
   const dispatch = useDispatch();
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState(null);
+  const [holidays, setHolidays] = useState([]);
+  const [workingDates, setWorkingDates] = useState([]);
+
+  const fetchSystemHolidays = async () => {
+    axios
+      .get(`${baseUrl}/api/System/GetSystemHolidays`)
+      .then(function (response) {
+        setHolidays(response.data);
+      })
+      .catch(function (error) {});
+  };
+
+  const clearDate = () => {
+    setWorkingDates([]);
+    setStartDate("");
+    setEndDate(null);
+  };
+
+  Date.prototype.addDays = function (days) {
+    let date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+
+  function getDates(startDate, stopDate) {
+    var dateArray = new Array();
+    var currentDate = startDate;
+    while (currentDate <= stopDate) {
+      dateArray.push({ holidate: new Date(currentDate), remarks: "" });
+      currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
+  }
+
+  useEffect(() => {
+    console.log(workingDates);
+  }, [workingDates]);
+
+  useEffect(() => {
+    if (endDate !== null) {
+      setWorkingDates(getDates(startDate, endDate));
+      return;
+    } else if (startDate) {
+      const holidate = {
+        holidate: startDate,
+        remarks: "",
+      };
+      setWorkingDates((previousStates) => [holidate]);
+    }
+  }, [startDate, endDate]);
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    console.log(dates);
-  };
-
-  const isWeekday = (date) => {
-    const day = date.getDay();
-    return day !== 0 && day !== 6;
   };
 
   return true ? (
@@ -48,26 +93,69 @@ const SystemHolidays = () => {
           <div className="submit-form-top-section">
             <div className="set-holiday-section">
               <div className="calender-section">
-                <DatePicker
-                  selected={startDate}
-                  onChange={onChange}
-                  startDate={startDate}
-                  endDate={endDate}
-                  selectsRange
-                  inline
-                  filterDate={isWeekday}
-                />
+                <div className="input-div">
+                  <div className="label-holiday">Choose a Day(s)</div>
+                  <div className="input-box">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={onChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      selectsRange
+                      inline
+                    />
+                    <Button
+                      onClick={clearDate}
+                      disabled={workingDates.length <= 0}
+                      name="clear"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="holiday-remarks">
-                <h3>Remarks</h3>
+                {/* <h3>Remarks</h3> */}
+                <div className="input-div">
+                  <div
+                    className={
+                      false ? "required label-holiday" : "label-holiday"
+                    }
+                  >
+                    Remarks
+                  </div>
+                  <div className="input-box">
+                    <Input
+                      name="roleID"
+                      type="text"
+                      className="text-input-holiday"
+                    />
+                  </div>
+                </div>
               </div>
               <div className="buttons-add-holiday">
-                <h3>buttons</h3>
+                <div className="holiday-buttons-section">
+                  <div className="holiday-buttons-section-container">
+                    <Button disabled={workingDates.length <= 0} name="Add" />
+                    <Button name="Edit" />
+                    <Button name="Remove" />
+                  </div>
+                </div>
               </div>
             </div>
             <div className="view-holidays-section">
-              <h3>View Holidays</h3>
+              <div className="holidays-listings p-2">SYSTEM HOLIDAYS</div>
+              <div className="holidays-listing-table">
+                <div className="holidays-header-section">
+                  <div className="column-two">Holidate</div>
+                  <div className="column-three">Remarks</div>
+                </div>
+                {holidays.map((role) => (
+                  <div className="holidays-rows-section">
+                    <div className="column-two">Role ID</div>
+                    <div className="column-three">Description</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
