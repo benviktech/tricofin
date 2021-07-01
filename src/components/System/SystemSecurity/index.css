@@ -137,7 +137,7 @@
 
 .form-role-section {
   display: flex;
-  width: 56%;
+  width: 41%;
   flex-direction: column;
 }
 
@@ -154,8 +154,10 @@
 
 .role-buttons-section {
   display: flex;
-  padding: 30px;
-  justify-content: flex-end;
+  /* padding: 30px; */
+  margin-top: 35px;
+  margin-left: 450px;
+  justify-content: flex-start;
 }
 
 .user-maintenance-buttons-section {
@@ -260,14 +262,14 @@
 .user-details-section {
   display: flex;
   flex-direction: column;
-  flex: 3;
+  flex: 2;
 }
 .user-settings-section {
   display: flex;
   flex-direction: column;
   flex: 2;
   border-left: 1px solid #666666;
-  padding: 0 20px;
+  padding-left: 40px;
 }
 
 .userroleadd-section {
@@ -295,8 +297,27 @@
   width: 95%;
 }
 
+.user-details-section .input-div {
+  margin-bottom: 20px !important;
+}
+
+.user-settings-section .input-div {
+  margin-bottom: 10px !important;
+}
+
+.user-settings-section .input-box {
+  width: 70%;
+}
+
+.user-settings-section .text-input-user {
+}
+
+.number-role {
+  width: 100px;
+}
+
 .text-input-role {
-  width: 95%;
+  width: 98%;
 }
 
 .input-div {
@@ -345,6 +366,10 @@
 }
 .input-box {
   width: 65%;
+}
+
+.role-choose .input-box {
+  width: 85%;
 }
 
 .input-box-phone {
@@ -473,6 +498,7 @@
 .inner-section-modal-section-role {
   overflow-y: auto;
   height: 350px;
+  width: 215px;
 }
 .inner-section-modal-section-role-useredit {
   overflow-y: auto;
@@ -484,7 +510,7 @@
 }
 .inner-section-modal-section-user-useredit {
   overflow-y: auto;
-  height: 350px;
+  height: 330px;
   width: 215px;
 }
 

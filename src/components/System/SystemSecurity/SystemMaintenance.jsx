@@ -457,28 +457,6 @@ const SystemSecurityMaintenance = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="input-div">
-                    <div className="label">Account is Verified</div>
-                    <Input
-                      handleChange={handleChecking}
-                      value={formState.isVerified}
-                      name="isVerified"
-                      type="checkbox"
-                      checked={formState.isVerified}
-                      className="checkbox-user"
-                    />
-                  </div>
-                  <div className="input-div">
-                    <div className="label">Account is Deleted</div>
-                    <Input
-                      handleChange={handleChecking}
-                      value={formState.isDeleted}
-                      name="isDeleted"
-                      type="checkbox"
-                      checked={formState.isDeleted}
-                      className="checkbox-user"
-                    />
-                  </div>
                 </form>
               </div>
             </div>
