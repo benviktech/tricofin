@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -11,6 +13,8 @@ import UseForm from './UseForm';
 import meetingDays from './FormData';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchCustomer from './SearchCustomer';
+import SeeachOneCustomer from '../Customer/SearchCustomer';
+import SetSearchCustomer from './SetSearchCustomer';
 
 const GroupMaintenance = () => {
   const [systemFrequencies, setSystemFrequencies] = useState([]);
@@ -29,14 +33,40 @@ const GroupMaintenance = () => {
   }, []);
 
   const {
-    searchIndividualCustomer,
-    searchedCustomer, finalSortedList,
-    setSearchedCustomer,
+    searchIndividualCustomerGroup,
+    searchedCustomerGroup,
+    finalSortedListGroup,
+    setSearchedCustomerGroup,
   } = SearchCustomer();
 
-  console.log(setSearchedCustomer);
+  const {
+    searchIndividualCustomer,
+    searchedCustomer,
+    finalSortedList,
+    setSearchedCustomer,
+  } = SeeachOneCustomer();
+
+  const {
+    searchIndividualCustomerSet,
+    searchedCustomerSet,
+    finalSortedListSet,
+    setSearchedCustomerSet,
+  } = SetSearchCustomer();
+
+  console.log(setSearchedCustomerGroup);
   const clearErrors = () => {
     setErrors({});
+  };
+
+  const cutomerDataFunction = (custData, type) => {
+    if (type === 'source') {
+      setSearchedCustomer('');
+      values.sourcedBy = `${custData.title} ${custData.surName} ${custData.foreName1}`;
+    }
+    if (type === 'credit') {
+      setSearchedCustomerSet('');
+      values.creditOfficer = `${custData.title} ${custData.surName} ${custData.foreName1}`;
+    }
   };
 
   return (
@@ -60,19 +90,19 @@ const GroupMaintenance = () => {
                       autoComplete="off"
                       type="text"
                       name="searchcustomer"
-                      value={searchedCustomer}
-                      onChange={searchIndividualCustomer}
+                      value={searchedCustomerGroup}
+                      onChange={searchIndividualCustomerGroup}
                     />
                   </div>
                   {
-                         searchedCustomer === '' ? (
+                         searchedCustomerGroup === '' ? (
                            <div className="modal-hide-section" />
                          ) : (
 
                            <div className="modal-popup-section">
                              <div className="inner-section-modal-section">
                                {
-                              Array.from(new Set(finalSortedList)).map(customer => (
+                              Array.from(new Set(finalSortedListGroup)).map(customer => (
                                 <Link
                                   exact
                                   to={{
@@ -220,35 +250,114 @@ const GroupMaintenance = () => {
                     {errors.village && errors.village}
                   </div>
                 </div>
-                <div className="horizontal-section">
+                <div className="horizontal-section manage-drop-down-two ">
                   <div className="left-horizontal-section">Sourced By :</div>
                   <div className="right-horizontal-section">
-                    <input
-                      name="sourcedBy"
-                      value={values.sourcedBy}
-                      onChange={handleChange}
-                      type="text"
-                    />
+                    {
+                      values.sourcedBy.length > 0 ? (
+                        <input
+                          name="sourcedBy"
+                          value={values.sourcedBy}
+                          onChange={handleChange}
+                          type="text"
+                        />
+                      ) : (
+                        <input
+                          autoComplete="off"
+                          type="text"
+                          name="searchcustomer"
+                          value={searchedCustomer}
+                          onChange={searchIndividualCustomer}
+                        />
+                      )
+                    }
                   </div>
+                  {
+                         searchedCustomer === '' ? (
+                           <div className="modal-hide-section" />
+                         ) : (
+
+                           <div className="names-drop-down-section">
+                             <div className="names-drop-down-section-inner">
+                               {
+                              Array.from(new Set(finalSortedList)).map(customer => (
+                                <div
+                                  className="names-drop-down-section-inner-section"
+                                  key={customer.custID}
+                                  onClick={() => cutomerDataFunction(customer, 'source')}
+                                >
+                                  <div className="mr-1">
+                                    { customer.title }
+                                  </div>
+                                  <div className="mr-1">
+                                    { customer.surName }
+                                  </div>
+                                  <div>
+                                    { customer.foreName1 }
+                                  </div>
+                                </div>
+                              ))
+                            }
+                             </div>
+                           </div>
+                         )
+                      }
                 </div>
               </div>
               <div className="right-section">
-                <div className="horizontal-section error-container-section">
-                  <div className="left-horizontal-section">
-                    Credit Officer
-                    <span className="text-danger mx-1">
-                      *
-                    </span>
-                    :
-                  </div>
+                <div className="horizontal-section manage-drop-down-two error-container-section">
+                  <div className="left-horizontal-section">Credit Officer :</div>
                   <div className="right-horizontal-section">
-                    <input
-                      name="creditOfficer"
-                      value={values.creditOfficer}
-                      onChange={handleChange}
-                      type="text"
-                    />
+                    {
+                      values.creditOfficer.length > 0 ? (
+                        <input
+                          name="creditOfficer"
+                          value={values.creditOfficer}
+                          onChange={handleChange}
+                          type="text"
+                        />
+                      ) : (
+                        <input
+                          autoComplete="off"
+                          type="text"
+                          name="searchcustomer"
+                          value={searchedCustomerSet}
+                          onChange={searchIndividualCustomerSet}
+                        />
+                      )
+                    }
                   </div>
+                  {
+                         searchedCustomerSet === '' ? (
+                           <div className="modal-hide-section" />
+                         ) : (
+
+                           <div className="names-drop-down-section">
+                             <div className="names-drop-down-section-inner">
+                               {
+                              Array.from(new Set(finalSortedListSet)).map(customer => (
+                                <div
+                                  className="names-drop-down-section-inner-section"
+                                  key={customer.custID}
+                                  onClick={() => cutomerDataFunction(customer, 'credit')}
+                                >
+                                  <div className="mr-1">
+                                    { customer.title }
+                                  </div>
+                                  <div className="mr-1">
+                                    { customer.surName }
+                                  </div>
+                                  <div>
+                                    { customer.foreName1 }
+                                  </div>
+                                </div>
+                              ))
+                            }
+                             </div>
+                           </div>
+                         )
+                      }
+
                   <div className="error-display-section">
                     {errors.creditOfficer && errors.creditOfficer}
                   </div>
