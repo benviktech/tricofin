@@ -384,7 +384,7 @@ const SystemSecurityRoles = () => {
                       </div>
                     )
                   ) : (
-                    <div className="spinner-small">
+                    <div className="banner-rights">
                       <p className="indicator">
                         Please Select a Role to set its rights <br />
                         <RiIcons.RiTeamLine
@@ -539,7 +539,7 @@ const SystemSecurityRoles = () => {
                   </div>
                 </div>
               ) : (
-                <div className="select-module">
+                <div className="banner-access-rights">
                   <p className="indicator">
                     Kindly select a module to edit its right <br />
                     <RiIcons.RiUserAddLine
