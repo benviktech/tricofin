@@ -57,6 +57,12 @@ const SystemSecurityRoles = () => {
   const [activeModuleLabel, setActiveModuleLabel] = useState("");
   const [errors, setErrors] = useState({});
 
+  const [askPostingLimit, setAskPostingLimit] = useState(false);
+  const [askSupervision, setAskSupervision] = useState(false);
+  const [askEdit, setAskEdit] = useState(false);
+  const [askDelete, setAskDelete] = useState(false);
+  const [askAdd, setAskAdd] = useState(false);
+
   useEffect(() => {
     fetchSystemRoles();
   }, []);
@@ -89,6 +95,8 @@ const SystemSecurityRoles = () => {
           ...formState,
           createdBy: "BENEVIK",
           createdOn: new Date(),
+          postingLimit: parseInt(formState.postingLimit),
+          supervisionLimit: parseInt(formState.supervisionLimit),
         })
         .then(function (response) {
           // handle success
@@ -101,7 +109,7 @@ const SystemSecurityRoles = () => {
           );
         })
         .catch(function (error) {
-          toast.success(`Failed rights for ${response.data.roleID} `);
+          toast.error(`Failed rights for ${formState.roleID} `);
         });
     }
   };
@@ -116,6 +124,8 @@ const SystemSecurityRoles = () => {
           ...formState,
           createdBy: "BENEVIK",
           modifiedOn: new Date(),
+          postingLimit: parseInt(formState.postingLimit),
+          supervisionLimit: parseInt(formState.supervisionLimit),
         })
         .then(function (response) {
           toast.success(
@@ -123,7 +133,7 @@ const SystemSecurityRoles = () => {
           );
         })
         .catch(function (error) {
-          toast.error(`Failed to change rights for ${response.data.roleID}`);
+          toast.error(`Failed to change rights for ${formState.roleID}`);
         });
     }
   };
@@ -256,6 +266,15 @@ const SystemSecurityRoles = () => {
     }));
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name);
+    setFormState((previousState) => ({
+      ...previousState,
+      [name]: value,
+    }));
+  };
+
   const clearErrors = () => {
     setErrors({});
   };
@@ -333,19 +352,28 @@ const SystemSecurityRoles = () => {
                           key,
                           label,
                           activeKey,
-                          canView,
-                          canAdd,
-                          canEdit,
-                          canSupervise,
-                          canDelete,
+                          askAdd,
+                          askDelete,
+                          askEdit,
+                          askPostingLimit,
+                          askSupervision,
+
                           ...props
                         }) => {
                           const keys = key.split("/");
                           const level = keys.length;
                           key = keys[keys.length - 1];
                           console.log(props, "column id");
+                          //set module options for rights
+                          setAskPostingLimit(askPostingLimit);
+                          setAskSupervision(askSupervision);
+                          setAskEdit(askEdit);
+                          setAskDelete(askDelete);
+                          setAskAdd(askAdd);
+                          //set active module
                           setActiveModule(key);
                           setActiveModuleLabel(label);
+                          //fetch right using the key
                           fetchSystemModuleRight(key);
                         }}
                         data={cleanData}
@@ -389,23 +417,25 @@ const SystemSecurityRoles = () => {
                     </span>
                   </p>
                   <hr />
-                  <div className="input-div">
-                    <div className="label">Can Edit</div>
-                    <div className="input-box">
-                      <Input
-                        handleChange={handleChecking}
-                        value={formState.canEdit}
-                        name="canEdit"
-                        type="checkbox"
-                        checked={
-                          Object.keys(formState).length > 0
-                            ? formState.canEdit
-                            : false
-                        }
-                        className="checkbox-role"
-                      />
+                  {askEdit && (
+                    <div className="input-div">
+                      <div className="label">Can Edit</div>
+                      <div className="input-box">
+                        <Input
+                          handleChange={handleChecking}
+                          value={formState.canEdit}
+                          name="canEdit"
+                          type="checkbox"
+                          checked={
+                            Object.keys(formState).length > 0
+                              ? formState.canEdit
+                              : false
+                          }
+                          className="checkbox-role"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className="input-div">
                     <div className="label">Can View</div>
                     <div className="input-box">
@@ -423,40 +453,73 @@ const SystemSecurityRoles = () => {
                       />
                     </div>
                   </div>
-                  <div className="input-div">
-                    <div className="label">Can Add</div>
-                    <div className="input-box">
-                      <Input
-                        handleChange={handleChecking}
-                        value={formState.canAdd}
-                        name="canAdd"
-                        type="checkbox"
-                        checked={
-                          Object.keys(formState).length > 0
-                            ? formState.canAdd
-                            : false
-                        }
-                        className="checkbox-role"
-                      />
+
+                  {askAdd && (
+                    <div className="input-div">
+                      <div className="label">Can Add</div>
+                      <div className="input-box">
+                        <Input
+                          handleChange={handleChecking}
+                          value={formState.canAdd}
+                          name="canAdd"
+                          type="checkbox"
+                          checked={
+                            Object.keys(formState).length > 0
+                              ? formState.canAdd
+                              : false
+                          }
+                          className="checkbox-role"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="input-div">
-                    <div className="label">Can Supervise</div>
-                    <div className="input-box">
-                      <Input
-                        handleChange={handleChecking}
-                        value={formState.canSupervise}
-                        name="canSupervise"
-                        type="checkbox"
-                        checked={
-                          Object.keys(formState).length > 0
-                            ? formState.canSupervise
-                            : false
-                        }
-                        className="checkbox-role"
-                      />
+                  )}
+                  {askSupervision && (
+                    <div className="input-div">
+                      <div className="label">Can Supervise</div>
+                      <div className="input-box">
+                        <Input
+                          handleChange={handleChecking}
+                          value={formState.canSupervise}
+                          name="canSupervise"
+                          type="checkbox"
+                          checked={
+                            Object.keys(formState).length > 0
+                              ? formState.canSupervise
+                              : false
+                          }
+                          className="checkbox-role"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
+                  {askPostingLimit && (
+                    <div className="input-div">
+                      <div className="label">Posting Limit</div>
+                      <div className="input-box">
+                        <Input
+                          handleChange={handleChange}
+                          value={formState.postingLimit}
+                          name="postingLimit"
+                          type="number"
+                          className="number-role"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {askSupervision && (
+                    <div className="input-div">
+                      <div className="label">Supervision Limit</div>
+                      <div className="input-box">
+                        <Input
+                          handleChange={handleChange}
+                          value={formState.supervisionLimit}
+                          name="supervisionLimit"
+                          type="number"
+                          className="number-role"
+                        />
+                      </div>
+                    </div>
+                  )}
                   <div className="buttons-section-role">
                     {!modulePresent && (
                       <Button
