@@ -153,3 +153,34 @@
 .error-display-section-left {
   left: 0;
 }
+
+.manage-drop-down-two {
+  position: relative;
+}
+
+.names-drop-down-section {
+  position: absolute;
+  top: 40px;
+  height: 100px;
+  overflow-y: auto;
+  z-index: 10;
+  right: 0;
+  width: 300px;
+}
+
+.names-drop-down-section-inner {
+  background-color: #F3F2F1;
+}
+
+.names-drop-down-section-inner-section {
+  display: flex;
+  margin-bottom: 5px;
+  background-color: #1891DA;
+}
+
+.names-drop-down-section-inner-section div {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}

@@ -5,15 +5,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const SearchCustomer = () => {
-  const [searchedCustomer, setSearchedCustomer] = useState('');
-  const [finalSortedList, setFinalSortedList] = useState([]);
+  const [searchedCustomerGroup, setSearchedCustomerGroup] = useState('');
+  const [finalSortedListGroup, setFinalSortedListGroup] = useState([]);
   const [testState, settestState] = useState([]);
   const sortedCustomersList = [];
 
-  const searchIndividualCustomer = e => {
+  const searchIndividualCustomerGroup = e => {
     const { value } = e.target;
     displaySortedList(testState, value);
-    setSearchedCustomer(value);
+    setSearchedCustomerGroup(value);
   };
 
   useEffect(async () => {
@@ -36,14 +36,14 @@ const SearchCustomer = () => {
       });
     });
 
-    setFinalSortedList(sortedCustomersList);
+    setFinalSortedListGroup(sortedCustomersList);
   };
 
   return {
-    searchIndividualCustomer,
-    searchedCustomer,
-    finalSortedList,
-    setSearchedCustomer,
+    searchIndividualCustomerGroup,
+    searchedCustomerGroup,
+    finalSortedListGroup,
+    setSearchedCustomerGroup,
   };
 };
 
