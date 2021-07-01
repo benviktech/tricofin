@@ -57,16 +57,18 @@ export default function GroupMaintenanceValidator(values, state = 'Create Group 
     errors.loanProductID = 'Loan Product ID is Required';
   }
 
-  if (!values.maxMembers) {
+  if (!values.maxMembers && state === 'Create Group Maintenance') {
     errors.maxMembers = 'Required';
-  } else if (isNaN(values.maxMembers)) {
-    errors.maxMembers = 'Must be Number';
+  }
+  if (values.maxMembers && isNaN(values.maxMembers)) {
+    errors.maxMembers = 'Must be number';
   }
 
-  if (!values.minMembersLoanDisb) {
+  if (!values.minMembersLoanDisb && state === 'Create Group Maintenance') {
     errors.minMembersLoanDisb = 'Required';
-  } else if (isNaN(values.minMembersLoanDisb)) {
-    errors.minMembersLoanDisb = 'Must be Number';
+  }
+  if (values.minMembersLoanDisb && isNaN(values.minMembersLoanDisb)) {
+    errors.minMembersLoanDisb = 'Must be number';
   }
 
   return errors;

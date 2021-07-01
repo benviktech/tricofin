@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-nested-ternary */
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ import SetSearchCustomer from './SetSearchCustomer';
 
 const GroupMaintenance = () => {
   const [systemFrequencies, setSystemFrequencies] = useState([]);
+  const [numErrors, setNumErrors] = useState({});
   const {
     handleChange, values, handleSubmit, errors, setErrors,
   } = UseForm(GroupMaintenanceValidator);
@@ -69,6 +71,12 @@ const GroupMaintenance = () => {
     }
   };
 
+  useEffect(() => {
+    const state = 'Type session';
+    setNumErrors(GroupMaintenanceValidator(values, state));
+  }, [values]);
+
+  console.log(errors, 'new errors');
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -413,6 +421,7 @@ const GroupMaintenance = () => {
                   <div className="right-horizontal-section error-container-section">
                     <div className="inner-left-section">
                       <input
+                        autoComplete="off"
                         name="maxMembers"
                         value={values.maxMembers}
                         onChange={handleChange}
@@ -429,6 +438,7 @@ const GroupMaintenance = () => {
                       </div>
                       <div className="inner-right-input">
                         <input
+                          autoComplete="off"
                           name="minMembersLoanDisb"
                           value={values.minMembersLoanDisb}
                           onChange={handleChange}
@@ -437,10 +447,18 @@ const GroupMaintenance = () => {
                       </div>
                     </div>
                     <div className="error-display-section-left">
-                      {errors.maxMembers && errors.maxMembers}
+                      {numErrors.maxMembers
+                      && numErrors.maxMembers.length > 0 ? numErrors.maxMembers
+                        : errors.maxMembers
+                        && errors.maxMembers.length > 0 ? errors.maxMembers
+                          : null }
                     </div>
                     <div className="error-display-section">
-                      {errors.minMembersLoanDisb && errors.minMembersLoanDisb}
+                      {numErrors.minMembersLoanDisb
+                      && numErrors.minMembersLoanDisb.length > 0 ? numErrors.minMembersLoanDisb
+                        : errors.minMembersLoanDisb
+                      && errors.minMembersLoanDisb.length > 0 ? errors.minMembersLoanDisb
+                          : null }
                     </div>
                   </div>
                 </div>
