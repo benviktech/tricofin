@@ -63,11 +63,11 @@ const GroupMaintenance = () => {
   const cutomerDataFunction = (custData, type) => {
     if (type === 'source') {
       setSearchedCustomer('');
-      values.sourcedBy = `${custData.title} ${custData.surName} ${custData.foreName1}`;
+      values.sourcedBy = `${`${custData.custID},`} ${custData.title} ${custData.surName} ${custData.foreName1}`;
     }
     if (type === 'credit') {
       setSearchedCustomerSet('');
-      values.creditOfficer = `${custData.title} ${custData.surName} ${custData.foreName1}`;
+      values.creditOfficer = `${`${custData.custID},`} ${custData.title} ${custData.surName} ${custData.foreName1}`;
     }
   };
 
@@ -76,7 +76,6 @@ const GroupMaintenance = () => {
     setNumErrors(GroupMaintenanceValidator(values, state));
   }, [values]);
 
-  console.log(errors, 'new errors');
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -103,35 +102,34 @@ const GroupMaintenance = () => {
                     />
                   </div>
                   {
-                         searchedCustomerGroup === '' ? (
-                           <div className="modal-hide-section" />
-                         ) : (
-
-                           <div className="modal-popup-section">
-                             <div className="inner-section-modal-section">
-                               {
-                              Array.from(new Set(finalSortedListGroup)).map(customer => (
-                                <Link
-                                  exact
-                                  to={{
-                                    pathname: `/groupmaintenanceview/${customer.groupID}`,
-                                  }}
-                                  className="inner-section-modal-section-inner border"
-                                  key={customer.groupID}
-                                >
-                                  <div className="modal-customer-name-section mr-2">
-                                    { customer.groupName }
-                                  </div>
-                                  <div className="modal-customer-name-section mr-2">
-                                    { customer.location}
-                                  </div>
-                                </Link>
-                              ))
-                            }
-                             </div>
-                           </div>
-                         )
-                      }
+                    searchedCustomerGroup === '' ? (
+                      <div className="modal-hide-section" />
+                    ) : (
+                      <div className="modal-popup-section">
+                        <div className="inner-section-modal-section">
+                          {
+                            Array.from(new Set(finalSortedListGroup)).map(customer => (
+                              <Link
+                                exact
+                                to={{
+                                  pathname: `/groupmaintenanceview/${customer.groupID}`,
+                                }}
+                                className="inner-section-modal-section-inner border"
+                                key={customer.groupID}
+                              >
+                                <div className="modal-customer-name-section mr-2">
+                                  { customer.groupName }
+                                </div>
+                                <div className="modal-customer-name-section mr-2">
+                                  { customer.location}
+                                </div>
+                              </Link>
+                            ))
+                          }
+                        </div>
+                      </div>
+                    )
+                }
                 </div>
 
                 <div className="horizontal-section error-container-section">
@@ -265,7 +263,9 @@ const GroupMaintenance = () => {
                       values.sourcedBy.length > 0 ? (
                         <input
                           name="sourcedBy"
-                          value={values.sourcedBy}
+                          value={values.sourcedBy
+                            .split(',')[1]
+                            .trim()}
                           onChange={handleChange}
                           type="text"
                         />
@@ -320,7 +320,9 @@ const GroupMaintenance = () => {
                       values.creditOfficer.length > 0 ? (
                         <input
                           name="creditOfficer"
-                          value={values.creditOfficer}
+                          value={values.creditOfficer
+                            .split(',')[1]
+                            .trim()}
                           onChange={handleChange}
                           type="text"
                         />
