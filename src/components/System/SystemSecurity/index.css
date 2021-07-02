@@ -198,6 +198,70 @@
   height: 50vh;
 }
 
+.create-role-section {
+  padding: 10px;
+}
+
+input {
+  cursor: pointer;
+  width: 70%;
+}
+
+.roles-lower-form-section {
+  display: flex;
+  height: 350px;
+  border: 1px solid #f3f2f1;
+}
+
+.display-roles-section {
+  flex: 2;
+  padding: 10px;
+}
+
+.display-users-section {
+  flex: 3;
+  border-left: 1px solid #f3f2f1;
+  padding: 10px;
+}
+
+.roles-header-section {
+  display: flex;
+}
+
+.column-one,
+.column-two,
+.column-three {
+  flex: 1;
+  background-color: #aaa;
+  border-left: 1px solid #aeaeae;
+  border-bottom: 1px solid #aeaeae;
+  color: #000;
+  padding: 5px 10px;
+  background-color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+}
+
+.column-three {
+  flex: 2;
+  border-right: 1px solid #aeaeae;
+}
+
+.user-role-listings {
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  background-color: #aeaeae;
+}
+
+a {
+  text-decoration: none;
+  color: #666;
+  cursor: pointer;
+}
+
 /* Tab screen sizes */
 
 @media only screen and (min-width: 1000px) {
