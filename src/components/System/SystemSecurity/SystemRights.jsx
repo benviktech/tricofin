@@ -506,7 +506,7 @@ const SystemSecurityRoles = () => {
                       </div>
                     </div>
                   )}
-                  {askSupervision && (
+                  {askPostingLimit && (
                     <div className="input-div">
                       <div className="label">Supervision Limit</div>
                       <div className="input-box">
