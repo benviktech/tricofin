@@ -155,7 +155,7 @@
 .role-buttons-section {
   display: flex;
   /* padding: 30px; */
-  margin-top: 35px;
+  margin-top: 50px;
   margin-left: 450px;
   justify-content: flex-start;
 }
@@ -209,7 +209,7 @@ input {
 
 .roles-lower-form-section {
   display: flex;
-  height: 350px;
+  /* height: 350px; */
   border: 1px solid #f3f2f1;
 }
 
