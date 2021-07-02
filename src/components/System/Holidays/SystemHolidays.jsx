@@ -257,7 +257,7 @@ const SystemHolidays = () => {
                   <div className="holiday-buttons-section-container">
                     <Button
                       disabled={workingDates.length <= 0}
-                      // onClick={createSystemHolidays}
+                      onClick={createSystemHolidays}
                       name="Add"
                     />
                     <Button
