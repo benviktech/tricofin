@@ -21,7 +21,7 @@ const baseUrl = "https://tricofin.azurewebsites.net";
 const SystemHolidays = () => {
   const dispatch = useDispatch();
 
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [holidays, setHolidays] = useState([]);
   const [workingDates, setWorkingDates] = useState([]);
@@ -36,6 +36,8 @@ const SystemHolidays = () => {
     modifiedOn: "2021-06-30T15:06:28.108Z",
   };
   const [holidate, setHolidate] = useState(initialHolidate);
+  const [hasSelectedDate, setHasSelectedDate] = useState(false);
+  const [selected, setSelected] = useState(false);
 
   const fetchSystemHolidays = async () => {
     axios
@@ -84,6 +86,7 @@ const SystemHolidays = () => {
         toast.success(`Holiday Removed Successfully`);
         setHolidate(initialHolidate);
         setWorkingDates([]);
+        setSelected(false);
       })
       .catch(function (error) {
         toast.error(`Failed to Remove holiday`);
@@ -92,31 +95,37 @@ const SystemHolidays = () => {
 
   const clearDate = () => {
     setWorkingDates([]);
-    setStartDate("");
-    setEndDate(null);
+    setStartDate(null);
+    // setEndDate(null);
+    setHolidate(initialHolidate);
+    cancelAlert();
+  };
+
+  const cancelAlert = () => {
+    setSelected(false);
     setHolidate(initialHolidate);
   };
 
-  Date.prototype.addDays = function (days) {
-    let date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-  };
+  // Date.prototype.addDays = function (days) {
+  //   let date = new Date(this.valueOf());
+  //   date.setDate(date.getDate() + days);
+  //   return date;
+  // };
 
-  function getDates(startDate, stopDate) {
-    let dateArray = new Array();
-    let currentDate = startDate;
-    while (currentDate <= stopDate) {
-      dateArray.push({ ...holidate, holidayDate: currentDate.toISOString() });
-      currentDate = currentDate.addDays(1);
-    }
-    return dateArray;
-  }
+  // function getDates(startDate, stopDate) {
+  //   let dateArray = new Array();
+  //   let currentDate = startDate;
+  //   while (currentDate <= stopDate) {
+  //     dateArray.push({ ...holidate, holidayDate: currentDate.toISOString() });
+  //     currentDate = currentDate.addDays(1);
+  //   }
+  //   return dateArray;
+  // }
 
-  // useEffect(() => {
-  //   // console.log(new Date(holidate.holidayDate));
-  //   setStartDate(new Date(holidate.holidayDate));
-  // }, [holidate]);
+  useEffect(() => {
+    console.log(workingDates);
+    // setStartDate(new Date(holidate.holidayDate));
+  }, [workingDates]);
 
   const HolidayValidator = (datesArray) => {
     const result = {};
@@ -129,24 +138,38 @@ const SystemHolidays = () => {
     return result;
   };
 
+  function dateExists(holidayDate, arr) {
+    return arr.some(function (el) {
+      return el.holidayDate === holidayDate;
+    });
+  }
+
   useEffect(() => {
-    if (endDate !== null) {
-      setWorkingDates(getDates(startDate, endDate));
-      return;
-    } else if (startDate) {
-      setWorkingDates((previousStates) => [
-        ...previousStates,
-        { ...holidate, holidayDate: startDate.toISOString() },
-      ]);
-    }
-  }, [startDate, endDate]);
+    setWorkingDates([{ ...holidate, holidayDate: startDate?.toISOString() }]);
+  }, [startDate]);
 
   const onChange = (dates) => {
-    const [start, end] = dates;
+    // const [start, end] = dates;
     const { date, ...newErrors } = errors;
     setErrors(newErrors);
-    setStartDate(start);
-    setEndDate(end);
+    setStartDate(dates);
+    // setEndDate(end);
+    console.log("clicked");
+    cancelAlert();
+    // // setWorkingDates([]);
+    // if (end === null) {
+    //   console.log("selected one day", endDate);
+    //   setWorkingDates((previousStates) => [
+    //     ...previousStates,
+    //     { ...holidate, holidayDate: start?.toISOString() },
+    //   ]);
+    //   // setHasSelectedDate(false);
+    // } else {
+    //   console.log("selected a range between", startDate, endDate);
+    //   setWorkingDates(getDates(start, end));
+    //   // setHasSelectedDate(false);
+    // }
+    // // setHasSelectedDate(true);
   };
 
   const handleChange = (e) => {
@@ -172,6 +195,19 @@ const SystemHolidays = () => {
             <HolidaySidebar />
           </div>
           <div className="submit-form-top-section">
+            {selected && (
+              <div className="alert-bunner">
+                <p className="indicator">
+                  {`${holidate.holidayDate}`} <br /> {`${holidate.remarks}`}{" "}
+                  <br />
+                </p>
+                <div className="span-container">
+                  <span className="cancel-span" onClick={cancelAlert}>
+                    X
+                  </span>
+                </div>
+              </div>
+            )}
             <div className="set-holiday-section">
               <div className="calender-section">
                 <div className="input-div">
@@ -184,11 +220,9 @@ const SystemHolidays = () => {
                   </div>
                   <div className="input-box">
                     <DatePicker
+                      startDate={startDate}
                       selected={startDate}
                       onChange={onChange}
-                      startDate={startDate}
-                      endDate={endDate}
-                      selectsRange
                       inline
                     />
                   </div>
@@ -223,12 +257,12 @@ const SystemHolidays = () => {
                   <div className="holiday-buttons-section-container">
                     <Button
                       disabled={workingDates.length <= 0}
-                      onClick={createSystemHolidays}
+                      // onClick={createSystemHolidays}
                       name="Add"
                     />
                     <Button
                       onClick={clearDate}
-                      disabled={workingDates.length <= 0}
+                      // disabled={workingDates.length <= 0}
                       name="clear"
                     />
                     <Button name="Remove" onClick={removeSystemHolidays} />
@@ -249,8 +283,7 @@ const SystemHolidays = () => {
                       className="column-two"
                       onClick={() => {
                         setHolidate(holiday);
-                        // setWorkingDates([]);
-                        // setStartDate(new Date(holiday.holidayDate));
+                        setSelected(true);
                       }}
                     >
                       {formatDateTime(holiday.holidayDate)}
@@ -259,6 +292,7 @@ const SystemHolidays = () => {
                       className="column-three"
                       onClick={() => {
                         setHolidate(holiday);
+                        setSelected(true);
                       }}
                     >
                       {holiday.remarks}
