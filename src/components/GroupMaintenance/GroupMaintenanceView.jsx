@@ -12,6 +12,7 @@ import meetingDays from './FormData';
 const GroupMaintenanceView = () => {
   const { id } = useParams();
   const [frequencies, setFrequencies] = useState([]);
+  const [usersList, setUsersList] = useState([]);
   const dispatch = useDispatch();
 
   const groupDetails = useSelector(state => state.groupMaintenanceReducer);
@@ -23,7 +24,12 @@ const GroupMaintenanceView = () => {
   useEffect(() => {
     const fetchData = () => {
       axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemFrequencies')
-        .then(response => setFrequencies(response.data))
+        .then(response => {
+          setFrequencies(response.data);
+          axios.get('https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomers')
+            .then(response => setUsersList(response.data))
+            .catch(error => console.log(error.message));
+        })
         .catch(error => console.log(error.message));
     };
 
@@ -50,6 +56,18 @@ const GroupMaintenanceView = () => {
       });
     }
 
+    return result;
+  };
+
+  const displayCreditedBy = customerId => {
+    let result = '';
+    usersList.forEach(customer => {
+      if (customer.custID === customerId) {
+        result = `${customer.title} ${
+          customer.surName} ${
+          customer.foreName1}`;
+      }
+    });
     return result;
   };
 
@@ -134,7 +152,7 @@ const GroupMaintenanceView = () => {
                       information
                     </div>
                     <div className="information-section">
-                      {groupDetails.groupMaintenance.sourcedBy}
+                      {displayCreditedBy(groupDetails.groupMaintenance.sourcedBy)}
                     </div>
                   </div>
                 </div>
@@ -145,7 +163,7 @@ const GroupMaintenanceView = () => {
                       information
                     </div>
                     <div className="information-section">
-                      {groupDetails.groupMaintenance.creditOfficer}
+                      {displayCreditedBy(groupDetails.groupMaintenance.creditOfficer)}
                     </div>
                   </div>
                 </div>
