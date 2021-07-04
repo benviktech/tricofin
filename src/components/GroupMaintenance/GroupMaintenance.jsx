@@ -300,8 +300,7 @@ const GroupMaintenance = () => {
                         <input
                           name="sourcedBy"
                           value={values.sourcedBy
-                            .split(',')[1]
-                            .trim()}
+                            .split(',')[1]}
                           onChange={handleChange}
                           type="text"
                         />
@@ -356,8 +355,7 @@ const GroupMaintenance = () => {
                         <input
                           name="creditOfficer"
                           value={values.creditOfficer
-                            .split(',')[1]
-                            .trim()}
+                            .split(',')[1]}
                           onChange={handleChange}
                           type="text"
                         />
@@ -402,7 +400,6 @@ const GroupMaintenance = () => {
                            </div>
                          )
                       }
-
                   <div className="error-display-section">
                     {errors.creditOfficer && errors.creditOfficer}
                   </div>
