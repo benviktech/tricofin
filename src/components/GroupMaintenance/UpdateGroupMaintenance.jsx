@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
@@ -11,9 +13,13 @@ import MoreInfo from './MoreInfo';
 import meetingDays from './FormData';
 import { getGroupMaintenance, updateGroupMaintenance } from '../../actions/groupMaintenance';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
+import SearchOneCustomer from '../Customer/SearchCustomer';
 
 const UpdateGroupMaintenance = () => {
+  const [systemBranches, setSystemBranches] = useState([]);
   const [systemFrequencies, setSystemFrequencies] = useState([]);
+  const [usersList, setUsersList] = useState([]);
+  const [currentID, setCurrentID] = useState('');
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const [dataState, setDataState] = useState({});
@@ -31,14 +37,41 @@ const UpdateGroupMaintenance = () => {
   }, []);
 
   useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
+      .then(response => setSystemBranches(response.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomers')
+      .then(response => setUsersList(response.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
     dispatch(getGroupMaintenance(id));
   }, []);
+
+  const {
+    searchIndividualCustomer,
+    searchedCustomer,
+    finalSortedList,
+    setSearchedCustomer,
+  } = SearchOneCustomer();
+
+  const cutomerDataFunction = (custData, type) => {
+    if (type === 'source') {
+      setSearchedCustomer('');
+      dataState.sourcedBy = custData.custID;
+    }
+  };
 
   const groupDetails = useSelector(state => state.groupMaintenanceReducer);
 
   useEffect(() => {
     if (Object.keys(groupDetails.groupMaintenance).length > 0) {
       setDataState(groupDetails.groupMaintenance);
+      setCurrentID(groupDetails.groupMaintenance.sourcedBy);
     }
   }, [groupDetails.groupMaintenance]);
 
@@ -57,10 +90,19 @@ const UpdateGroupMaintenance = () => {
     setErrors(response);
     if (Object.values(response).includes('Updating')) {
       if (Object.keys(response).length === 1) {
-        console.log(dataState, 'new values');
         dispatch(updateGroupMaintenance(dataState, id, history));
       }
     }
+  };
+
+  const displayCreditedBy = customerId => {
+    let result = '';
+    usersList.forEach(customer => {
+      if (customer.custID === customerId) {
+        result = `${`${customer.custID},`} ${customer.title} ${customer.surName} ${customer.foreName1}`;
+      }
+    });
+    return result;
   };
 
   return (
@@ -148,7 +190,7 @@ const UpdateGroupMaintenance = () => {
                         </div>
                         <div className="horizontal-section">
                           <div className="left-horizontal-section">
-                            Location
+                            Branch ID
                             <span className="text-danger mx-1">
                               *
                             </span>
@@ -156,12 +198,23 @@ const UpdateGroupMaintenance = () => {
                           </div>
                           <div className="right-horizontal-section error-container-section">
                             <div className="inner-left-section">
-                              <input
-                                name="location"
-                                value={dataState.location}
+                              <select
+                                name="branchID"
+                                value={dataState.branchID}
                                 onChange={handleChange}
-                                type="text"
-                              />
+                              >
+                                <option value="" disabled selected hidden>Select</option>
+                                {
+                                  systemBranches.map((branch, index) => (
+                                    <option
+                                      key={index}
+                                      value={branch.branchID}
+                                    >
+                                      {branch.branchName}
+                                    </option>
+                                  ))
+                                }
+                              </select>
                             </div>
                             <div className="inner-right-section">
                               <div className="inner-right-label">
@@ -190,6 +243,26 @@ const UpdateGroupMaintenance = () => {
                         </div>
                         <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
+                            Location
+                            <span className="text-danger mx-1">
+                              *
+                            </span>
+                            :
+                          </div>
+                          <div className="right-horizontal-section">
+                            <input
+                              name="location"
+                              value={dataState.location}
+                              onChange={handleChange}
+                              type="text"
+                            />
+                          </div>
+                          <div className="error-display-section">
+                            {errors.location && errors.location}
+                          </div>
+                        </div>
+                        <div className="horizontal-section error-container-section">
+                          <div className="left-horizontal-section">
                             Village
                             <span className="text-danger mx-1">
                               *
@@ -208,17 +281,63 @@ const UpdateGroupMaintenance = () => {
                             {errors.village && errors.village}
                           </div>
                         </div>
-                        <div className="horizontal-section">
+                        <div className="horizontal-section manage-drop-down-two">
                           <div className="left-horizontal-section">Sourced By :</div>
                           <div className="right-horizontal-section">
-                            <input
-                              name="sourcedBy"
-                              value={dataState.sourcedBy}
-                              onChange={handleChange}
-                              type="text"
-                            />
+                            {
+                              Object.keys(dataState).length > 0
+                              && dataState.sourcedBy.length === currentID.length
+                                ? (
+                                  <input
+                                    autoComplete="off"
+                                    value={((displayCreditedBy(dataState.sourcedBy)).split(','))[1]}
+                                    name="sourcedBy"
+                                    onChange={handleChange}
+                                    type="text"
+                                  />
+                                ) : (
+                                  <input
+                                    autoComplete="off"
+                                    name="searchcustomer"
+                                    value={searchedCustomer}
+                                    onChange={searchIndividualCustomer}
+                                    type="text"
+                                  />
+                                )
+                            }
                           </div>
+                          {
+                            searchedCustomer === '' ? (
+                              <div className="modal-hide-section" />
+                            ) : (
+                              <div className="names-drop-down-section">
+                                <div className="names-drop-down-section-inner">
+                                  {
+                                    Array.from(new Set(finalSortedList)).map(customer => (
+                                      <div
+                                        className="names-drop-down-section-inner-section"
+                                        key={customer.custID}
+                                        onClick={() => cutomerDataFunction(customer, 'source')}
+                                      >
+                                        <div className="mr-1">
+                                          { customer.title }
+                                        </div>
+                                        <div className="mr-1">
+                                          { customer.surName }
+                                        </div>
+                                        <div>
+                                          { customer.foreName1 }
+                                        </div>
+                                      </div>
+                                    ))
+                                  }
+                                </div>
+                              </div>
+                            )
+                          }
                         </div>
+                      </div>
+                      <div className="right-section">
                         <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Credit Officer
@@ -239,8 +358,6 @@ const UpdateGroupMaintenance = () => {
                             {errors.creditOfficer && errors.creditOfficer}
                           </div>
                         </div>
-                      </div>
-                      <div className="right-section">
                         <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
                             Savings Product

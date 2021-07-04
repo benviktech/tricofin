@@ -75,6 +75,7 @@ export const updateGroupMaintenance = (data, groupId, history) => async dispatch
 
   const values = {
     groupID: groupId,
+    branchID: data.branchID,
     groupName: (data.groupName).toUpperCase(),
     formationDate: data.formationDate,
     location: (data.location).toUpperCase(),

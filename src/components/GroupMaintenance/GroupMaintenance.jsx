@@ -14,7 +14,7 @@ import UseForm from './UseForm';
 import meetingDays from './FormData';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchCustomer from './SearchCustomer';
-import SeeachOneCustomer from '../Customer/SearchCustomer';
+import SearchOneCustomer from '../Customer/SearchCustomer';
 import SetSearchCustomer from './SetSearchCustomer';
 
 const GroupMaintenance = () => {
@@ -52,7 +52,7 @@ const GroupMaintenance = () => {
     searchedCustomer,
     finalSortedList,
     setSearchedCustomer,
-  } = SeeachOneCustomer();
+  } = SearchOneCustomer();
 
   const {
     searchIndividualCustomerSet,
@@ -317,35 +317,34 @@ const GroupMaintenance = () => {
                     }
                   </div>
                   {
-                         searchedCustomer === '' ? (
-                           <div className="modal-hide-section" />
-                         ) : (
-
-                           <div className="names-drop-down-section">
-                             <div className="names-drop-down-section-inner">
-                               {
-                              Array.from(new Set(finalSortedList)).map(customer => (
-                                <div
-                                  className="names-drop-down-section-inner-section"
-                                  key={customer.custID}
-                                  onClick={() => cutomerDataFunction(customer, 'source')}
-                                >
-                                  <div className="mr-1">
-                                    { customer.title }
-                                  </div>
-                                  <div className="mr-1">
-                                    { customer.surName }
-                                  </div>
-                                  <div>
-                                    { customer.foreName1 }
-                                  </div>
-                                </div>
-                              ))
-                            }
-                             </div>
-                           </div>
-                         )
-                      }
+                      searchedCustomer === '' ? (
+                        <div className="modal-hide-section" />
+                      ) : (
+                        <div className="names-drop-down-section">
+                          <div className="names-drop-down-section-inner">
+                            {
+                          Array.from(new Set(finalSortedList)).map(customer => (
+                            <div
+                              className="names-drop-down-section-inner-section"
+                              key={customer.custID}
+                              onClick={() => cutomerDataFunction(customer, 'source')}
+                            >
+                              <div className="mr-1">
+                                { customer.title }
+                              </div>
+                              <div className="mr-1">
+                                { customer.surName }
+                              </div>
+                              <div>
+                                { customer.foreName1 }
+                              </div>
+                            </div>
+                          ))
+                        }
+                          </div>
+                        </div>
+                      )
+                  }
                 </div>
               </div>
               <div className="right-section">
