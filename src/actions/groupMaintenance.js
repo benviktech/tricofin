@@ -28,6 +28,7 @@ export const postGroupMaintenance = (data, history) => async dispatch => {
   const values = {
     groupName: (data.groupName).toUpperCase(),
     formationDate: data.formationDate,
+    branchID: data.branchID,
     location: (data.location).toUpperCase(),
     village: (data.village).toUpperCase(),
     regDate: data.regDate,

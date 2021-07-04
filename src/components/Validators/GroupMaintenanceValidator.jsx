@@ -21,6 +21,10 @@ export default function GroupMaintenanceValidator(values, state = 'Create Group 
     errors.location = 'Location is Required';
   }
 
+  if (!values.branchID) {
+    errors.branchID = 'Branch Required';
+  }
+
   if (!values.village) {
     errors.village = 'Village is Required';
   }

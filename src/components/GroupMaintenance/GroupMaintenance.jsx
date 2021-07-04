@@ -19,6 +19,7 @@ import SetSearchCustomer from './SetSearchCustomer';
 
 const GroupMaintenance = () => {
   const [systemFrequencies, setSystemFrequencies] = useState([]);
+  const [systemBranches, setSystemBranches] = useState([]);
   const [numErrors, setNumErrors] = useState({});
   const {
     handleChange, values, handleSubmit, errors, setErrors,
@@ -27,7 +28,12 @@ const GroupMaintenance = () => {
   useEffect(() => {
     const fetchData = () => {
       axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemFrequencies')
-        .then(response => setSystemFrequencies(response.data))
+        .then(response => {
+          setSystemFrequencies(response.data);
+          axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
+            .then(response => setSystemBranches(response.data))
+            .catch(error => console.log(error.message));
+        })
         .catch(error => console.log(error.message));
     };
 
@@ -92,7 +98,6 @@ const GroupMaintenance = () => {
                 <div className="horizontal-section manage-drop-down ">
                   <div className="left-horizontal-section">Search Group Name:</div>
                   <div className="right-horizontal-section">
-
                     <input
                       autoComplete="off"
                       type="text"
@@ -196,7 +201,7 @@ const GroupMaintenance = () => {
                 </div>
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">
-                    Location
+                    Branch ID
                     <span className="text-danger mx-1">
                       *
                     </span>
@@ -204,12 +209,23 @@ const GroupMaintenance = () => {
                   </div>
                   <div className="right-horizontal-section error-container-section">
                     <div className="inner-left-section">
-                      <input
-                        name="location"
-                        value={values.location}
+                      <select
+                        name="branchID"
+                        value={values.branchID}
                         onChange={handleChange}
-                        type="text"
-                      />
+                      >
+                        <option value="" disabled selected hidden>Select</option>
+                        {
+                          systemBranches.map((branch, index) => (
+                            <option
+                              key={index}
+                              value={branch.branchID}
+                            >
+                              {branch.branchName}
+                            </option>
+                          ))
+                        }
+                      </select>
                     </div>
                     <div className="inner-right-section">
                       <div className="inner-right-label">
@@ -229,11 +245,31 @@ const GroupMaintenance = () => {
                       </div>
                     </div>
                     <div className="error-display-section-left">
-                      {errors.location && errors.location}
+                      {errors.branchID && errors.branchID}
                     </div>
                     <div className="error-display-section">
                       {errors.regNo && errors.regNo}
                     </div>
+                  </div>
+                </div>
+                <div className="horizontal-section error-container-section">
+                  <div className="left-horizontal-section">
+                    Location
+                    <span className="text-danger mx-1">
+                      *
+                    </span>
+                    :
+                  </div>
+                  <div className="right-horizontal-section">
+                    <input
+                      name="location"
+                      value={values.location}
+                      onChange={handleChange}
+                      type="text"
+                    />
+                  </div>
+                  <div className="error-display-section">
+                    {errors.location && errors.location}
                   </div>
                 </div>
                 <div className="horizontal-section error-container-section">

@@ -12,6 +12,7 @@ const UseForm = validate => {
     village: '',
     regDate: '',
     regNo: '',
+    branchID: '',
     meetingDay: '',
     meetingFreq: '',
     meetingPlace: '',

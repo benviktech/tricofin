@@ -11,6 +11,7 @@
 }
 
 .horizontal-section input,
+.horizontal-section select,
 .bottom-form-section .info-details,
 .information-section,
 .information-section-left {
@@ -26,6 +27,11 @@
   background-color: #f3f2f1;
   width: 100%;
 }
+
+.horizontal-section select{
+  padding: 5px;
+}
+
 
 .information-section {
   display: flex;
