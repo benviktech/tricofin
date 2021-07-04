@@ -82,13 +82,22 @@ const UpdateGroupMaintenance = () => {
 
   const updateCustomer = e => {
     e.preventDefault();
+    const re = /^[0-9]+$/;
     const state = 'Update Group Maintenance';
-    const response = GroupMaintenanceValidator(dataState, state);
+    const resp = GroupMaintenanceValidator(dataState, state);
+    let response;
+    if (re.test(dataState.creditOfficer)) {
+      response = resp;
+    } else {
+      response = {
+        ...resp,
+        creditOfficer: 'Credit Officer Required',
+      };
+    }
     setErrors(response);
     if (Object.values(response).includes('Updating')) {
       if (Object.keys(response).length === 1) {
         console.log(dataState, 'datastate');
-        const re = /^[0-9]+$/;
         if (re.test(dataState.sourcedBy)) {
           dispatch(updateGroupMaintenance(dataState, id, history, 'newSource'));
         } else {
@@ -426,6 +435,9 @@ const UpdateGroupMaintenance = () => {
                               </div>
                             )
                           }
+                          <div className="error-display-section">
+                            {errors.creditOfficer && errors.creditOfficer}
+                          </div>
                         </div>
                         <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
