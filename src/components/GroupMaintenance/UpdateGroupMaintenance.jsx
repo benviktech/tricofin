@@ -14,12 +14,14 @@ import meetingDays from './FormData';
 import { getGroupMaintenance, updateGroupMaintenance } from '../../actions/groupMaintenance';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchOneCustomer from '../Customer/SearchCustomer';
+import SetSearchCustomer from './SetSearchCustomer';
 
 const UpdateGroupMaintenance = () => {
   const [systemBranches, setSystemBranches] = useState([]);
   const [systemFrequencies, setSystemFrequencies] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [currentID, setCurrentID] = useState('');
+  const [currentCreditor, setCurrentCreditor] = useState('');
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const [dataState, setDataState] = useState({});
@@ -59,19 +61,13 @@ const UpdateGroupMaintenance = () => {
     setSearchedCustomer,
   } = SearchOneCustomer();
 
-  const cutomerDataFunction = (custData, type) => {
-    if (type === 'source') {
-      setSearchedCustomer('');
-      dataState.sourcedBy = custData.custID;
-    }
-  };
-
   const groupDetails = useSelector(state => state.groupMaintenanceReducer);
 
   useEffect(() => {
     if (Object.keys(groupDetails.groupMaintenance).length > 0) {
       setDataState(groupDetails.groupMaintenance);
       setCurrentID(groupDetails.groupMaintenance.sourcedBy);
+      setCurrentCreditor(groupDetails.groupMaintenance.creditOfficer);
     }
   }, [groupDetails.groupMaintenance]);
 
@@ -103,6 +99,24 @@ const UpdateGroupMaintenance = () => {
       }
     });
     return result;
+  };
+
+  const {
+    searchIndividualCustomerSet,
+    searchedCustomerSet,
+    finalSortedListSet,
+    setSearchedCustomerSet,
+  } = SetSearchCustomer();
+
+  const cutomerDataFunction = (custData, type) => {
+    if (type === 'source') {
+      setSearchedCustomer('');
+      dataState.sourcedBy = custData.custID;
+    }
+    if (type === 'credit') {
+      setSearchedCustomerSet('');
+      dataState.creditOfficer = custData.custID;
+    }
   };
 
   return (
@@ -338,25 +352,60 @@ const UpdateGroupMaintenance = () => {
                         </div>
                       </div>
                       <div className="right-section">
-                        <div className="horizontal-section error-container-section">
-                          <div className="left-horizontal-section">
-                            Credit Officer
-                            <span className="text-danger mx-1">
-                              *
-                            </span>
-                            :
-                          </div>
+                        <div className="horizontal-section manage-drop-down-two">
+                          <div className="left-horizontal-section">Credit Officer :</div>
                           <div className="right-horizontal-section">
-                            <input
-                              name="creditOfficer"
-                              value={dataState.creditOfficer}
-                              onChange={handleChange}
-                              type="text"
-                            />
+                            {
+                              Object.keys(dataState).length > 0
+                              && dataState.creditOfficer.length === currentCreditor.length
+                                ? (
+                                  <input
+                                    autoComplete="off"
+                                    value={((displayCreditedBy(dataState.creditOfficer)).split(','))[1]}
+                                    name="creditOfficer"
+                                    onChange={handleChange}
+                                    type="text"
+                                  />
+                                ) : (
+                                  <input
+                                    autoComplete="off"
+                                    name="searchcustomer"
+                                    value={searchedCustomerSet}
+                                    onChange={searchIndividualCustomerSet}
+                                    type="text"
+                                  />
+                                )
+                            }
                           </div>
-                          <div className="error-display-section">
-                            {errors.creditOfficer && errors.creditOfficer}
-                          </div>
+                          {
+                            searchedCustomerSet === '' ? (
+                              <div className="modal-hide-section" />
+                            ) : (
+                              <div className="names-drop-down-section">
+                                <div className="names-drop-down-section-inner">
+                                  {
+                                    Array.from(new Set(finalSortedListSet)).map(customer => (
+                                      <div
+                                        className="names-drop-down-section-inner-section"
+                                        key={customer.custID}
+                                        onClick={() => cutomerDataFunction(customer, 'credit')}
+                                      >
+                                        <div className="mr-1">
+                                          { customer.title }
+                                        </div>
+                                        <div className="mr-1">
+                                          { customer.surName }
+                                        </div>
+                                        <div>
+                                          { customer.foreName1 }
+                                        </div>
+                                      </div>
+                                    ))
+                                  }
+                                </div>
+                              </div>
+                            )
+                          }
                         </div>
                         <div className="horizontal-section error-container-section">
                           <div className="left-horizontal-section">
