@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-nested-ternary */
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
@@ -86,7 +87,13 @@ const UpdateGroupMaintenance = () => {
     setErrors(response);
     if (Object.values(response).includes('Updating')) {
       if (Object.keys(response).length === 1) {
-        dispatch(updateGroupMaintenance(dataState, id, history));
+        console.log(dataState, 'datastate');
+        const re = /^[0-9]+$/;
+        if (re.test(dataState.sourcedBy)) {
+          dispatch(updateGroupMaintenance(dataState, id, history, 'newSource'));
+        } else {
+          dispatch(updateGroupMaintenance(dataState, id, history, 'emptySource'));
+        }
       }
     }
   };
@@ -95,7 +102,7 @@ const UpdateGroupMaintenance = () => {
     let result = '';
     usersList.forEach(customer => {
       if (customer.custID === customerId) {
-        result = `${`${customer.custID},`} ${customer.title} ${customer.surName} ${customer.foreName1}`;
+        result = `${`${customer.custID.trim()},`} ${(customer.title).trim()} ${customer.surName.trim()} ${customer.foreName1.trim()}`;
       }
     });
     return result;
@@ -301,6 +308,7 @@ const UpdateGroupMaintenance = () => {
                             {
                               Object.keys(dataState).length > 0
                               && dataState.sourcedBy.length === currentID.length
+                              && dataState.sourcedBy.length > 0
                                 ? (
                                   <input
                                     autoComplete="off"
@@ -309,15 +317,27 @@ const UpdateGroupMaintenance = () => {
                                     onChange={handleChange}
                                     type="text"
                                   />
-                                ) : (
-                                  <input
-                                    autoComplete="off"
-                                    name="searchcustomer"
-                                    value={searchedCustomer}
-                                    onChange={searchIndividualCustomer}
-                                    type="text"
-                                  />
                                 )
+                                : Object.keys(dataState).length > 0
+                                  && currentID.length === 0
+                                  && dataState.sourcedBy.length > 0
+                                  ? (
+                                    <input
+                                      autoComplete="off"
+                                      value={((displayCreditedBy(dataState.sourcedBy)).split(','))[1]}
+                                      name="sourcedBy"
+                                      onChange={handleChange}
+                                      type="text"
+                                    />
+                                  ) : (
+                                    <input
+                                      autoComplete="off"
+                                      name="searchcustomer"
+                                      value={searchedCustomer}
+                                      onChange={searchIndividualCustomer}
+                                      type="text"
+                                    />
+                                  )
                             }
                           </div>
                           {

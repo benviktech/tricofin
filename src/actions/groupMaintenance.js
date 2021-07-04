@@ -69,9 +69,17 @@ export const getGroupMaintenance = GroupId => async dispatch => {
   }
 };
 
-export const updateGroupMaintenance = (data, groupId, history) => async dispatch => {
+export const updateGroupMaintenance = (data, groupId, history, sourceState) => async dispatch => {
   const method = 'put';
   const path = '/api/Customers/UpdateCustomerGroup';
+  let sourceResult = '';
+  if (sourceState === 'newSource') {
+    sourceResult = data.sourcedBy;
+  }
+  if (sourceResult === 'emptySource') {
+    sourceResult = '';
+    console.log('inside');
+  }
 
   const values = {
     groupID: groupId,
@@ -85,7 +93,7 @@ export const updateGroupMaintenance = (data, groupId, history) => async dispatch
     meetingDay: parseInt(data.meetingDay, 10),
     meetingFreq: (data.meetingFreq).toUpperCase(),
     meetingPlace: (data.meetingPlace).toUpperCase(),
-    sourcedBy: (data.sourcedBy).toUpperCase(),
+    sourcedBy: (sourceResult).toUpperCase(),
     creditOfficer: (data.creditOfficer).toUpperCase(),
     savingsProductID: (data.savingsProductID).toUpperCase(),
     loanProductID: (data.loanProductID).toUpperCase(),
@@ -96,6 +104,7 @@ export const updateGroupMaintenance = (data, groupId, history) => async dispatch
     modifiedOn: (new Date()).toISOString(),
     modifiedBy: 'BENVIK',
   };
+  console.log(values, 'values');
   try {
     const response = await UpdateGroupMaintenanceRequest(method, values, path);
     history.push(`/groupmaintenanceview/${response.data.groupID}`);

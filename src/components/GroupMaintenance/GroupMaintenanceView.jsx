@@ -12,6 +12,7 @@ import meetingDays from './FormData';
 const GroupMaintenanceView = () => {
   const { id } = useParams();
   const [frequencies, setFrequencies] = useState([]);
+  const [systemBranches, setSystemBranches] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const dispatch = useDispatch();
 
@@ -59,6 +60,12 @@ const GroupMaintenanceView = () => {
     return result;
   };
 
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
+      .then(response => setSystemBranches(response.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
   const displayCreditedBy = customerId => {
     let result = '';
     usersList.forEach(customer => {
@@ -66,6 +73,16 @@ const GroupMaintenanceView = () => {
         result = `${customer.title} ${
           customer.surName} ${
           customer.foreName1}`;
+      }
+    });
+    return result;
+  };
+
+  const displayBranch = branchId => {
+    let result = '';
+    systemBranches.forEach(branch => {
+      if (branch.branchID === branchId) {
+        result = branch.branchName;
       }
     });
     return result;
@@ -119,11 +136,11 @@ const GroupMaintenanceView = () => {
                   </div>
                 </div>
                 <div className="horizontal-section">
-                  <div className="left-horizontal-section">Location :</div>
+                  <div className="left-horizontal-section">Branch ID :</div>
                   <div className="right-horizontal-section">
                     <div className="inner-left-section">
                       <div className="information-section">
-                        {groupDetails.groupMaintenance.location}
+                        {displayBranch(groupDetails.groupMaintenance.branchID)}
                       </div>
                     </div>
                     <div className="inner-right-section">
@@ -134,6 +151,14 @@ const GroupMaintenanceView = () => {
                           && (groupDetails.groupMaintenance.regNo).toUpperCase()}
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="horizontal-section">
+                  <div className="left-horizontal-section">Location :</div>
+                  <div className="right-horizontal-section">
+                    <div className="information-section">
+                      {groupDetails.groupMaintenance.location}
                     </div>
                   </div>
                 </div>
@@ -156,6 +181,8 @@ const GroupMaintenanceView = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="right-section">
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">Credit Officer :</div>
                   <div className="right-horizontal-section">
@@ -167,8 +194,6 @@ const GroupMaintenanceView = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="right-section">
                 <div className="horizontal-section">
                   <div className="left-horizontal-section">Savings Product :</div>
                   <div className="right-horizontal-section">
