@@ -16,6 +16,8 @@ import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchCustomer from './SearchCustomer';
 import SearchOneCustomer from '../Customer/SearchCustomer';
 import SetSearchCustomer from './SetSearchCustomer';
+import systemsProduct from './SystemsProduct';
+import systemsLoan from './SytemLoansProduct';
 
 const GroupMaintenance = () => {
   const [systemFrequencies, setSystemFrequencies] = useState([]);
@@ -46,6 +48,20 @@ const GroupMaintenance = () => {
     finalSortedListGroup,
     setSearchedCustomerGroup,
   } = SearchCustomer();
+
+  const {
+    searchIndividualCustomerProduct,
+    searchedCustomerProduct,
+    finalSortedListProduct,
+    setSearchedCustomerProduct,
+  } = systemsProduct();
+
+  const {
+    searchIndividualCustomerLoan,
+    searchedCustomerLoan,
+    finalSortedListLoan,
+    setSearchedCustomerLoan,
+  } = systemsLoan();
 
   const {
     searchIndividualCustomer,
@@ -81,6 +97,17 @@ const GroupMaintenance = () => {
     const state = 'Type session';
     setNumErrors(GroupMaintenanceValidator(values, state));
   }, [values]);
+
+  const SystemDataFunction = (system, type) => {
+    if (type === 'savings') {
+      setSearchedCustomerProduct('');
+      values.savingsProductID = `${`${system.system.trim()},`} ${system.name.trim()}`;
+    }
+    if (type === 'loan') {
+      setSearchedCustomerLoan('');
+      values.loanProductID = `${`${system.system.trim()},`} ${system.name.trim()}`;
+    }
+  };
 
   return (
     <div className="individual-customer-form">
@@ -404,42 +431,104 @@ const GroupMaintenance = () => {
                     {errors.creditOfficer && errors.creditOfficer}
                   </div>
                 </div>
-                <div className="horizontal-section error-container-section">
-                  <div className="left-horizontal-section">
-                    Savings Product
-                    <span className="text-danger mx-1">
-                      *
-                    </span>
-                    :
-                  </div>
+                <div className="horizontal-section manage-drop-down-two error-container-section">
+                  <div className="left-horizontal-section">Savings Product :</div>
                   <div className="right-horizontal-section">
-                    <input
-                      name="savingsProductID"
-                      value={values.savingsProductID}
-                      onChange={handleChange}
-                      type="text"
-                    />
+                    {
+                      values.savingsProductID.length > 0 ? (
+                        <input
+                          autoComplete="off"
+                          name="savingsProductID"
+                          value={values.savingsProductID.split(',')[1]}
+                          onChange={handleChange}
+                          type="text"
+                        />
+                      ) : (
+                        <input
+                          autoComplete="off"
+                          type="text"
+                          name="searchcustomer"
+                          value={searchedCustomerProduct}
+                          onChange={searchIndividualCustomerProduct}
+                        />
+                      )
+                    }
                   </div>
+                  {
+                         searchedCustomerProduct === '' ? (
+                           <div className="modal-hide-section" />
+                         ) : (
+
+                           <div className="names-drop-down-section">
+                             <div className="names-drop-down-section-inner">
+                               {
+                              Array.from(new Set(finalSortedListProduct)).map(system => (
+                                <div
+                                  className="names-drop-down-section-inner-section"
+                                  key={system.id}
+                                  onClick={() => SystemDataFunction(system, 'savings')}
+                                >
+                                  <div className="mr-1">
+                                    { system.name }
+                                  </div>
+                                </div>
+                              ))
+                            }
+                             </div>
+                           </div>
+                         )
+                      }
                   <div className="error-display-section">
                     {errors.savingsProductID && errors.savingsProductID}
                   </div>
                 </div>
-                <div className="horizontal-section error-container-section">
-                  <div className="left-horizontal-section">
-                    Loan Product
-                    <span className="text-danger mx-1">
-                      *
-                    </span>
-                    :
-                  </div>
+                <div className="horizontal-section manage-drop-down-two error-container-section">
+                  <div className="left-horizontal-section">Loan Product :</div>
                   <div className="right-horizontal-section">
-                    <input
-                      name="loanProductID"
-                      value={values.loanProductID}
-                      onChange={handleChange}
-                      type="text"
-                    />
+                    {
+                      values.loanProductID.length > 0 ? (
+                        <input
+                          autoComplete="off"
+                          name="savingsProductID"
+                          value={values.loanProductID.split(',')[1]}
+                          onChange={handleChange}
+                          type="text"
+                        />
+                      ) : (
+                        <input
+                          autoComplete="off"
+                          type="text"
+                          name="searchcustomer"
+                          value={searchedCustomerLoan}
+                          onChange={searchIndividualCustomerLoan}
+                        />
+                      )
+                    }
                   </div>
+                  {
+                         searchedCustomerLoan === '' ? (
+                           <div className="modal-hide-section" />
+                         ) : (
+
+                           <div className="names-drop-down-section">
+                             <div className="names-drop-down-section-inner">
+                               {
+                              Array.from(new Set(finalSortedListLoan)).map(system => (
+                                <div
+                                  className="names-drop-down-section-inner-section"
+                                  key={system.id}
+                                  onClick={() => SystemDataFunction(system, 'loan')}
+                                >
+                                  <div className="mr-1">
+                                    { system.name }
+                                  </div>
+                                </div>
+                              ))
+                            }
+                             </div>
+                           </div>
+                         )
+                      }
                   <div className="error-display-section">
                     {errors.loanProductID && errors.loanProductID}
                   </div>

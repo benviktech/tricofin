@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
@@ -16,13 +17,19 @@ import { getGroupMaintenance, updateGroupMaintenance } from '../../actions/group
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchOneCustomer from '../Customer/SearchCustomer';
 import SetSearchCustomer from './SetSearchCustomer';
+import systemsProduct from './SystemsProduct';
+import { systemsLoanDetails, systemsSavings } from './systemProducts';
+import systemsLoan from './SytemLoansProduct';
 
 const UpdateGroupMaintenance = () => {
   const [systemBranches, setSystemBranches] = useState([]);
   const [systemFrequencies, setSystemFrequencies] = useState([]);
+  const [numErrors, setNumErrors] = useState({});
   const [usersList, setUsersList] = useState([]);
   const [currentID, setCurrentID] = useState('');
   const [currentCreditor, setCurrentCreditor] = useState('');
+  const [currentSavingProduct, setCurrentSavingProduct] = useState('');
+  const [currentLoanProduct, setCurrentLoanProduct] = useState('');
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const [dataState, setDataState] = useState({});
@@ -62,6 +69,20 @@ const UpdateGroupMaintenance = () => {
     setSearchedCustomer,
   } = SearchOneCustomer();
 
+  const {
+    searchIndividualCustomerProduct,
+    searchedCustomerProduct,
+    finalSortedListProduct,
+    setSearchedCustomerProduct,
+  } = systemsProduct();
+
+  const {
+    searchIndividualCustomerLoan,
+    searchedCustomerLoan,
+    finalSortedListLoan,
+    setSearchedCustomerLoan,
+  } = systemsLoan();
+
   const groupDetails = useSelector(state => state.groupMaintenanceReducer);
 
   useEffect(() => {
@@ -69,6 +90,8 @@ const UpdateGroupMaintenance = () => {
       setDataState(groupDetails.groupMaintenance);
       setCurrentID(groupDetails.groupMaintenance.sourcedBy);
       setCurrentCreditor(groupDetails.groupMaintenance.creditOfficer);
+      setCurrentSavingProduct(groupDetails.groupMaintenance.savingsProductID);
+      setCurrentLoanProduct(groupDetails.groupMaintenance.loanProductID);
     }
   }, [groupDetails.groupMaintenance]);
 
@@ -117,6 +140,26 @@ const UpdateGroupMaintenance = () => {
     return result;
   };
 
+  const displaySavingsProduct = systemId => {
+    let result = '';
+    systemsSavings.forEach(saving => {
+      if (saving.system === systemId) {
+        result = `${`${saving.system.trim()},`} ${(saving.name).trim()}`;
+      }
+    });
+    return result;
+  };
+
+  const displayLoanProduct = systemId => {
+    let result = '';
+    systemsLoanDetails.forEach(loan => {
+      if (loan.system === systemId) {
+        result = `${`${loan.system.trim()},`} ${(loan.name).trim()}`;
+      }
+    });
+    return result;
+  };
+
   const {
     searchIndividualCustomerSet,
     searchedCustomerSet,
@@ -134,6 +177,22 @@ const UpdateGroupMaintenance = () => {
       dataState.creditOfficer = custData.custID;
     }
   };
+
+  const systemProductFunction = (sysData, type) => {
+    if (type === 'saving') {
+      setSearchedCustomerProduct('');
+      dataState.savingsProductID = sysData.system;
+    }
+    if (type === 'loan') {
+      setSearchedCustomerLoan('');
+      dataState.loanProductID = sysData.system;
+    }
+  };
+
+  useEffect(() => {
+    const state = 'Type session';
+    setNumErrors(GroupMaintenanceValidator(dataState, state));
+  }, [dataState]);
 
   return (
     <div className="individual-customer-form">
@@ -439,44 +498,108 @@ const UpdateGroupMaintenance = () => {
                             {errors.creditOfficer && errors.creditOfficer}
                           </div>
                         </div>
-                        <div className="horizontal-section error-container-section">
-                          <div className="left-horizontal-section">
-                            Savings Product
-                            <span className="text-danger mx-1">
-                              *
-                            </span>
-                            :
-                          </div>
+                        <div className="horizontal-section manage-drop-down-two">
+                          <div className="left-horizontal-section">Savings Product :</div>
                           <div className="right-horizontal-section">
-                            <input
-                              name="savingsProductID"
-                              value={dataState.savingsProductID}
-                              onChange={handleChange}
-                              type="text"
-                            />
+                            {
+                              Object.keys(dataState).length > 0
+                              && dataState.savingsProductID.length === currentSavingProduct.length
+                                ? (
+                                  <input
+                                    autoComplete="off"
+                                    value={((displaySavingsProduct(dataState.savingsProductID)).split(','))[1]}
+                                    name="savingsProductID"
+                                    onChange={handleChange}
+                                    type="text"
+                                  />
+                                ) : (
+                                  <input
+                                    autoComplete="off"
+                                    type="text"
+                                    name="searchcustomer"
+                                    value={searchedCustomerProduct}
+                                    onChange={searchIndividualCustomerProduct}
+                                  />
+                                )
+                            }
                           </div>
+                          {
+                            searchedCustomerProduct === '' ? (
+                              <div className="modal-hide-section" />
+                            ) : (
+                              <div className="names-drop-down-section">
+                                <div className="names-drop-down-section-inner">
+                                  {
+                                    Array.from(new Set(finalSortedListProduct)).map(saving => (
+                                      <div
+                                        className="names-drop-down-section-inner-section"
+                                        key={saving.custID}
+                                        onClick={() => systemProductFunction(saving, 'saving')}
+                                      >
+                                        <div className="mr-1">
+                                          { saving.name }
+                                        </div>
+                                      </div>
+                                    ))
+                                  }
+                                </div>
+                              </div>
+                            )
+                          }
                           <div className="error-display-section">
                             {errors.savingsProductID && errors.savingsProductID}
                           </div>
                         </div>
-                        <div className="horizontal-section error-container-section">
-                          <div className="left-horizontal-section">
-                            Loan Product
-                            <span className="text-danger mx-1">
-                              *
-                            </span>
-                            :
-                          </div>
+                        <div className="horizontal-section manage-drop-down-two">
+                          <div className="left-horizontal-section">Loan Product :</div>
                           <div className="right-horizontal-section">
-                            <input
-                              name="loanProductID"
-                              value={dataState.loanProductID}
-                              onChange={handleChange}
-                              type="text"
-                            />
+                            {
+                              Object.keys(dataState).length > 0
+                              && dataState.loanProductID.length === currentLoanProduct.length
+                                ? (
+                                  <input
+                                    autoComplete="off"
+                                    value={((displayLoanProduct(dataState.loanProductID)).split(','))[1]}
+                                    name="loanProductID"
+                                    onChange={handleChange}
+                                    type="text"
+                                  />
+                                ) : (
+                                  <input
+                                    autoComplete="off"
+                                    type="text"
+                                    name="searchcustomer"
+                                    value={searchedCustomerLoan}
+                                    onChange={searchIndividualCustomerLoan}
+                                  />
+                                )
+                            }
                           </div>
+                          {
+                            searchedCustomerLoan === '' ? (
+                              <div className="modal-hide-section" />
+                            ) : (
+                              <div className="names-drop-down-section">
+                                <div className="names-drop-down-section-inner">
+                                  {
+                                    Array.from(new Set(finalSortedListLoan)).map(saving => (
+                                      <div
+                                        className="names-drop-down-section-inner-section"
+                                        key={saving.custID}
+                                        onClick={() => systemProductFunction(saving, 'loan')}
+                                      >
+                                        <div className="mr-1">
+                                          { saving.name }
+                                        </div>
+                                      </div>
+                                    ))
+                                  }
+                                </div>
+                              </div>
+                            )
+                          }
                           <div className="error-display-section">
-                            {errors.loanProductID && errors.loanProductID}
+                            {errors.savingsProductID && errors.savingsProductID}
                           </div>
                         </div>
                         <div className="horizontal-section">
@@ -490,6 +613,7 @@ const UpdateGroupMaintenance = () => {
                           <div className="right-horizontal-section error-container-section">
                             <div className="inner-left-section">
                               <input
+                                autoComplete="off"
                                 name="maxMembers"
                                 value={dataState.maxMembers}
                                 onChange={handleChange}
@@ -506,6 +630,7 @@ const UpdateGroupMaintenance = () => {
                               </div>
                               <div className="inner-right-input">
                                 <input
+                                  autoComplete="off"
                                   name="minMembersLoanDisb"
                                   value={dataState.minMembersLoanDisb}
                                   onChange={handleChange}
@@ -514,10 +639,20 @@ const UpdateGroupMaintenance = () => {
                               </div>
                             </div>
                             <div className="error-display-section-left">
-                              {errors.maxMembers && errors.maxMembers}
+                              {numErrors.maxMembers
+                                && numErrors.maxMembers.length > 0 ? numErrors.maxMembers
+                                : errors.maxMembers
+                                  && errors.maxMembers.length > 0 ? errors.maxMembers
+                                  : null }
                             </div>
                             <div className="error-display-section">
-                              {errors.minMembersLoanDisb && errors.minMembersLoanDisb}
+                              {numErrors.minMembersLoanDisb
+                                && numErrors.minMembersLoanDisb.length > 0
+                                ? numErrors.minMembersLoanDisb
+                                : errors.minMembersLoanDisb
+                                  && errors.minMembersLoanDisb.length > 0
+                                  ? errors.minMembersLoanDisb
+                                  : null }
                             </div>
                           </div>
                         </div>
@@ -608,12 +743,20 @@ const UpdateGroupMaintenance = () => {
                           </div>
                         </div>
 
-                        <div className="submit-button-section">
+                        <div className="submit-button-section cancel-btn-background">
+                          <Link
+                            className="add-customer-btn bg-secondary text-white "
+                            to={{
+                              pathname: `/groupmaintenanceview/${id}`,
+                            }}
+                          >
+                            Cancel
+                          </Link>
                           <button
                             type="submit"
                             className="add-customer-btn"
                           >
-                            Update
+                            Save
                           </button>
                         </div>
                       </div>

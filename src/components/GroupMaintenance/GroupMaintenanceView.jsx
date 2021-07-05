@@ -8,6 +8,7 @@ import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import './index.css';
 import MoreInfo from './MoreInfo';
 import meetingDays from './FormData';
+import { systemsLoanDetails, systemsSavings } from './systemProducts';
 
 const GroupMaintenanceView = () => {
   const { id } = useParams();
@@ -21,6 +22,26 @@ const GroupMaintenanceView = () => {
   useEffect(() => {
     dispatch(getGroupMaintenance(id));
   }, []);
+
+  const sortSavingsProduct = savingId => {
+    let result = '';
+    systemsSavings.forEach(val => {
+      if (val.system === savingId) {
+        result = val.name;
+      }
+    });
+    return result;
+  };
+
+  const sortLoanProduct = loanId => {
+    let result = '';
+    systemsLoanDetails.forEach(val => {
+      if (val.system === loanId) {
+        result = val.name;
+      }
+    });
+    return result;
+  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -201,7 +222,7 @@ const GroupMaintenanceView = () => {
                       information
                     </div>
                     <div className="information-section">
-                      {groupDetails.groupMaintenance.savingsProductID}
+                      {sortSavingsProduct(groupDetails.groupMaintenance.savingsProductID)}
                     </div>
                   </div>
                 </div>
@@ -212,7 +233,7 @@ const GroupMaintenanceView = () => {
                       information
                     </div>
                     <div className="information-section">
-                      {groupDetails.groupMaintenance.savingsProductID}
+                      {sortLoanProduct(groupDetails.groupMaintenance.savingsProductID)}
                     </div>
                   </div>
                 </div>
