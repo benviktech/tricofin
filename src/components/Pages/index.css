@@ -608,8 +608,9 @@
 }
 
 .out-form-loop-section {
-  height: 180px;
+  height: 140px;
   overflow-y: auto;
+  margin-bottom: 10px;
 }
 
 .out-form-loop-section::-webkit-scrollbar {
