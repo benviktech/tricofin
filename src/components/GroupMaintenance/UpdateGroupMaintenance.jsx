@@ -18,7 +18,7 @@ import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchOneCustomer from '../Customer/SearchCustomer';
 import SetSearchCustomer from './SetSearchCustomer';
 import systemsProduct from './SystemsProduct';
-import { systemsLoanDetails, systemsSavings } from './systemProducts';
+import systemProductRequest from './systemProducts';
 import systemsLoan from './SytemLoansProduct';
 
 const UpdateGroupMaintenance = () => {
@@ -35,6 +35,10 @@ const UpdateGroupMaintenance = () => {
   const [dataState, setDataState] = useState({});
   const dispatch = useDispatch();
   const { id } = useParams();
+  const {
+    systemsLoanDetails,
+    systemsSavings,
+  } = systemProductRequest();
 
   useEffect(() => {
     const fetchData = () => {
@@ -103,20 +107,34 @@ const UpdateGroupMaintenance = () => {
     });
   };
 
-  const updateCustomer = e => {
-    e.preventDefault();
+  const updateValidator = () => {
+    console.log(dataState.savingsProductID, 'dataState.savingsProductID');
     const re = /^[0-9]+$/;
+    const hasNumber = /\d/;
+    const updateErrors = {};
+    if (!re.test(dataState.creditOfficer)) {
+      updateErrors.creditOfficer = 'Credit Officer Required';
+    }
+    if (!hasNumber.test(dataState.savingsProductID)) {
+      updateErrors.savingsProductID = 'Savings Product Required';
+    }
+    if (!hasNumber.test(dataState.loanProductID)) {
+      updateErrors.loanProductID = 'Loan Product Required';
+    }
+
+    return updateErrors;
+  };
+
+  const updateCustomer = e => {
+    const re = /^[0-9]+$/;
+    e.preventDefault();
     const state = 'Update Group Maintenance';
     const resp = GroupMaintenanceValidator(dataState, state);
-    let response;
-    if (re.test(dataState.creditOfficer)) {
-      response = resp;
-    } else {
-      response = {
-        ...resp,
-        creditOfficer: 'Credit Officer Required',
-      };
-    }
+    const errorUpdateResult = updateValidator();
+    const response = {
+      ...resp,
+      ...errorUpdateResult,
+    };
     setErrors(response);
     if (Object.values(response).includes('Updating')) {
       if (Object.keys(response).length === 1) {
@@ -143,8 +161,8 @@ const UpdateGroupMaintenance = () => {
   const displaySavingsProduct = systemId => {
     let result = '';
     systemsSavings.forEach(saving => {
-      if (saving.system === systemId) {
-        result = `${`${saving.system.trim()},`} ${(saving.name).trim()}`;
+      if (saving.productID === systemId) {
+        result = `${`${saving.productID.trim()},`} ${(saving.productName).trim()}`;
       }
     });
     return result;
@@ -153,8 +171,8 @@ const UpdateGroupMaintenance = () => {
   const displayLoanProduct = systemId => {
     let result = '';
     systemsLoanDetails.forEach(loan => {
-      if (loan.system === systemId) {
-        result = `${`${loan.system.trim()},`} ${(loan.name).trim()}`;
+      if (loan.productID === systemId) {
+        result = `${`${loan.productID.trim()},`} ${(loan.productName).trim()}`;
       }
     });
     return result;
@@ -181,11 +199,11 @@ const UpdateGroupMaintenance = () => {
   const systemProductFunction = (sysData, type) => {
     if (type === 'saving') {
       setSearchedCustomerProduct('');
-      dataState.savingsProductID = sysData.system;
+      dataState.savingsProductID = sysData.productID;
     }
     if (type === 'loan') {
       setSearchedCustomerLoan('');
-      dataState.loanProductID = sysData.system;
+      dataState.loanProductID = sysData.productID;
     }
   };
 
@@ -441,7 +459,13 @@ const UpdateGroupMaintenance = () => {
                       </div>
                       <div className="right-section">
                         <div className="horizontal-section manage-drop-down-two">
-                          <div className="left-horizontal-section">Credit Officer :</div>
+                          <div className="left-horizontal-section">
+                            Credit Officer
+                            <span className="text-danger mx-1">
+                              *
+                            </span>
+                            :
+                          </div>
                           <div className="right-horizontal-section">
                             {
                               Object.keys(dataState).length > 0
@@ -499,7 +523,13 @@ const UpdateGroupMaintenance = () => {
                           </div>
                         </div>
                         <div className="horizontal-section manage-drop-down-two">
-                          <div className="left-horizontal-section">Savings Product :</div>
+                          <div className="left-horizontal-section">
+                            Savings Product
+                            <span className="text-danger mx-1">
+                              *
+                            </span>
+                            :
+                          </div>
                           <div className="right-horizontal-section">
                             {
                               Object.keys(dataState).length > 0
@@ -533,11 +563,11 @@ const UpdateGroupMaintenance = () => {
                                     Array.from(new Set(finalSortedListProduct)).map(saving => (
                                       <div
                                         className="names-drop-down-section-inner-section"
-                                        key={saving.custID}
+                                        key={saving.productID}
                                         onClick={() => systemProductFunction(saving, 'saving')}
                                       >
                                         <div className="mr-1">
-                                          { saving.name }
+                                          { saving.productName }
                                         </div>
                                       </div>
                                     ))
@@ -551,7 +581,13 @@ const UpdateGroupMaintenance = () => {
                           </div>
                         </div>
                         <div className="horizontal-section manage-drop-down-two">
-                          <div className="left-horizontal-section">Loan Product :</div>
+                          <div className="left-horizontal-section">
+                            Loan Product
+                            <span className="text-danger mx-1">
+                              *
+                            </span>
+                            :
+                          </div>
                           <div className="right-horizontal-section">
                             {
                               Object.keys(dataState).length > 0
@@ -585,11 +621,11 @@ const UpdateGroupMaintenance = () => {
                                     Array.from(new Set(finalSortedListLoan)).map(saving => (
                                       <div
                                         className="names-drop-down-section-inner-section"
-                                        key={saving.custID}
+                                        key={saving.productID}
                                         onClick={() => systemProductFunction(saving, 'loan')}
                                       >
                                         <div className="mr-1">
-                                          { saving.name }
+                                          { saving.productName }
                                         </div>
                                       </div>
                                     ))
@@ -599,7 +635,7 @@ const UpdateGroupMaintenance = () => {
                             )
                           }
                           <div className="error-display-section">
-                            {errors.savingsProductID && errors.savingsProductID}
+                            {errors.loanProductID && errors.loanProductID}
                           </div>
                         </div>
                         <div className="horizontal-section">

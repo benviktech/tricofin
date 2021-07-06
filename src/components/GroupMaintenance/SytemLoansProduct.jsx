@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const systemsLoan = () => {
   const [searchedCustomerLoan, setSearchedCustomerLoan] = useState('');
@@ -16,14 +17,12 @@ const systemsLoan = () => {
   };
 
   useEffect(() => {
-    const systemsLoan = [
-      { id: 1, system: 'RE', name: 'FIRST LOANS SYSTEM' },
-      { id: 2, system: 'DF', name: 'SECOND LOANS SYSTEM' },
-      { id: 3, system: 'TZ', name: 'THIRD LOANS SYSTEM' },
-      { id: 4, system: 'ZU', name: 'FORTH LOANS SYSTEM' },
-      { id: 5, system: 'DQ', name: 'FIFTH LOANS SYSTEM' },
-    ];
-    settestState(systemsLoan);
+    const fetchData = async () => {
+      await axios.get('https://tricofin.azurewebsites.net/api/Loans/GetLoanProducts')
+        .then(response => settestState(response.data))
+        .catch(error => console.log(error.message));
+    };
+    fetchData();
   }, []);
 
   const displaySortedList = (data, value) => {

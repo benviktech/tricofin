@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const systemsProduct = () => {
   const [searchedCustomerProduct, setSearchedCustomerProduct] = useState('');
@@ -16,14 +17,12 @@ const systemsProduct = () => {
   };
 
   useEffect(() => {
-    const systemsProduct = [
-      { id: 1, system: 'RE', name: 'FIRST SAVINGS SYSTEM' },
-      { id: 2, system: 'DF', name: 'SECOND SAVINGS SYSTEM' },
-      { id: 3, system: 'TZ', name: 'THIRD SAVINGS SYSTEM' },
-      { id: 4, system: 'ZU', name: 'FORTH SAVINGS SYSTEM' },
-      { id: 5, system: 'DQ', name: 'FIFTH SAVINGS SYSTEM' },
-    ];
-    settestState(systemsProduct);
+    const fetchData = async () => {
+      await axios.get('https://tricofin.azurewebsites.net/api/Savings/GetSavingsProducts')
+        .then(response => settestState(response.data))
+        .catch(error => console.log(error.message));
+    };
+    fetchData();
   }, []);
 
   const displaySortedList = (data, value) => {

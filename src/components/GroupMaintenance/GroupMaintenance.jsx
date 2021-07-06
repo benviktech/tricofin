@@ -101,11 +101,11 @@ const GroupMaintenance = () => {
   const SystemDataFunction = (system, type) => {
     if (type === 'savings') {
       setSearchedCustomerProduct('');
-      values.savingsProductID = `${`${system.system.trim()},`} ${system.name.trim()}`;
+      values.savingsProductID = `${`${system.productID.trim()},`} ${system.productName.trim()}`;
     }
     if (type === 'loan') {
       setSearchedCustomerLoan('');
-      values.loanProductID = `${`${system.system.trim()},`} ${system.name.trim()}`;
+      values.loanProductID = `${`${system.productID.trim()},`} ${system.productName.trim()}`;
     }
   };
 
@@ -375,7 +375,13 @@ const GroupMaintenance = () => {
               </div>
               <div className="right-section">
                 <div className="horizontal-section manage-drop-down-two error-container-section">
-                  <div className="left-horizontal-section">Credit Officer :</div>
+                  <div className="left-horizontal-section">
+                    Credit Officer
+                    <span className="text-danger mx-1">
+                      *
+                    </span>
+                    :
+                  </div>
                   <div className="right-horizontal-section">
                     {
                       values.creditOfficer.length > 0 ? (
@@ -432,7 +438,13 @@ const GroupMaintenance = () => {
                   </div>
                 </div>
                 <div className="horizontal-section manage-drop-down-two error-container-section">
-                  <div className="left-horizontal-section">Savings Product :</div>
+                  <div className="left-horizontal-section">
+                    Savings Product
+                    <span className="text-danger mx-1">
+                      *
+                    </span>
+                    :
+                  </div>
                   <div className="right-horizontal-section">
                     {
                       values.savingsProductID.length > 0 ? (
@@ -465,11 +477,11 @@ const GroupMaintenance = () => {
                               Array.from(new Set(finalSortedListProduct)).map(system => (
                                 <div
                                   className="names-drop-down-section-inner-section"
-                                  key={system.id}
+                                  key={system.productID}
                                   onClick={() => SystemDataFunction(system, 'savings')}
                                 >
                                   <div className="mr-1">
-                                    { system.name }
+                                    { system.productName }
                                   </div>
                                 </div>
                               ))
@@ -483,7 +495,13 @@ const GroupMaintenance = () => {
                   </div>
                 </div>
                 <div className="horizontal-section manage-drop-down-two error-container-section">
-                  <div className="left-horizontal-section">Loan Product :</div>
+                  <div className="left-horizontal-section">
+                    Loan Product
+                    <span className="text-danger mx-1">
+                      *
+                    </span>
+                    :
+                  </div>
                   <div className="right-horizontal-section">
                     {
                       values.loanProductID.length > 0 ? (
@@ -516,11 +534,11 @@ const GroupMaintenance = () => {
                               Array.from(new Set(finalSortedListLoan)).map(system => (
                                 <div
                                   className="names-drop-down-section-inner-section"
-                                  key={system.id}
+                                  key={system.productID}
                                   onClick={() => SystemDataFunction(system, 'loan')}
                                 >
                                   <div className="mr-1">
-                                    { system.name }
+                                    { system.productName }
                                   </div>
                                 </div>
                               ))
