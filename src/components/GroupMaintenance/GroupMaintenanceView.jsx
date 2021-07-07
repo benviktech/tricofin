@@ -93,7 +93,7 @@ const GroupMaintenanceView = () => {
     let result = '';
     usersList.forEach(customer => {
       if (customer.custID === customerId) {
-        result = `${customer.title} ${
+        result = `${`${customer.title.trim()},`} ${
           customer.surName} ${
           customer.foreName1}`;
       }
@@ -197,10 +197,14 @@ const GroupMaintenanceView = () => {
                   <div className="left-horizontal-section">Sourced By :</div>
                   <div className="right-horizontal-section">
                     <div className="information-section-left">
-                      information
+                      {groupDetails.groupMaintenance.sourcedBy
+                      && (displayCreditedBy(groupDetails.groupMaintenance.sourcedBy))
+                        .split(',')[0]}
                     </div>
                     <div className="information-section">
-                      {displayCreditedBy(groupDetails.groupMaintenance.sourcedBy)}
+                      {groupDetails.groupMaintenance.sourcedBy
+                      && (displayCreditedBy(groupDetails.groupMaintenance.sourcedBy))
+                        .split(',')[1]}
                     </div>
                   </div>
                 </div>
@@ -210,10 +214,14 @@ const GroupMaintenanceView = () => {
                   <div className="left-horizontal-section">Credit Officer :</div>
                   <div className="right-horizontal-section">
                     <div className="information-section-left">
-                      information
+                      {groupDetails.groupMaintenance.creditOfficer
+                      && (displayCreditedBy(groupDetails.groupMaintenance.creditOfficer))
+                        .split(',')[0]}
                     </div>
                     <div className="information-section">
-                      {displayCreditedBy(groupDetails.groupMaintenance.creditOfficer)}
+                      {groupDetails.groupMaintenance.creditOfficer
+                      && (displayCreditedBy(groupDetails.groupMaintenance.creditOfficer))
+                        .split(',')[1]}
                     </div>
                   </div>
                 </div>
@@ -221,7 +229,7 @@ const GroupMaintenanceView = () => {
                   <div className="left-horizontal-section">Savings Product :</div>
                   <div className="right-horizontal-section">
                     <div className="information-section-left">
-                      information
+                      {groupDetails.groupMaintenance.savingsProductID}
                     </div>
                     <div className="information-section">
                       {sortSavingsProduct(groupDetails.groupMaintenance.savingsProductID)}
@@ -232,7 +240,7 @@ const GroupMaintenanceView = () => {
                   <div className="left-horizontal-section">Loan Product :</div>
                   <div className="right-horizontal-section">
                     <div className="information-section-left">
-                      information
+                      {groupDetails.groupMaintenance.loanProductID}
                     </div>
                     <div className="information-section">
                       {sortLoanProduct(groupDetails.groupMaintenance.loanProductID)}
