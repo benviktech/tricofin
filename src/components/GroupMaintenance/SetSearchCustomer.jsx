@@ -18,7 +18,7 @@ const SearchCustomer = () => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get('https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomers');
+      const response = await axios.get('https://tricofin.azurewebsites.net/api/System/GetSystemUsers');
       settestState(response.data);
     } catch (error) {
       console.log(error.message);
@@ -29,7 +29,8 @@ const SearchCustomer = () => {
     data.forEach(customer => {
       Object.values(customer).forEach(element => {
         if (isNaN(element)) {
-          if (element.indexOf(value.toLocaleUpperCase()) !== -1) {
+          const elementResult = element.toLowerCase();
+          if (elementResult.indexOf(value.toLowerCase()) !== -1) {
             sortedCustomersList.push(customer);
           }
         }
