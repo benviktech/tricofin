@@ -14,7 +14,7 @@ import UseForm from './UseForm';
 import meetingDays from './FormData';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
 import SearchCustomer from './SearchCustomer';
-import SearchOneCustomer from '../Customer/SearchCustomer';
+import SearchOneCustomer from './SourceSearchCustomer';
 import SetSearchCustomer from './SetSearchCustomer';
 import systemsProduct from './SystemsProduct';
 import systemsLoan from './SytemLoansProduct';
@@ -46,7 +46,7 @@ const GroupMaintenance = () => {
     searchIndividualCustomerGroup,
     searchedCustomerGroup,
     finalSortedListGroup,
-    setSearchedCustomerGroup,
+    // setSearchedCustomerGroup,
   } = SearchCustomer();
 
   const {
@@ -64,10 +64,10 @@ const GroupMaintenance = () => {
   } = systemsLoan();
 
   const {
-    searchIndividualCustomer,
-    searchedCustomer,
-    finalSortedList,
-    setSearchedCustomer,
+    searchIndividualCustomerSourced,
+    searchedCustomerSourced,
+    finalSortedListSourced,
+    setSearchedCustomerSourced,
   } = SearchOneCustomer();
 
   const {
@@ -77,19 +77,18 @@ const GroupMaintenance = () => {
     setSearchedCustomerSet,
   } = SetSearchCustomer();
 
-  console.log(setSearchedCustomerGroup);
   const clearErrors = () => {
     setErrors({});
   };
 
   const cutomerDataFunction = (custData, type) => {
     if (type === 'source') {
-      setSearchedCustomer('');
-      values.sourcedBy = `${`${custData.custID},`} ${custData.title} ${custData.surName} ${custData.foreName1}`;
+      setSearchedCustomerSourced('');
+      values.sourcedBy = `${`${custData.userName},`} ${custData.surName} ${custData.otherNames}`;
     }
     if (type === 'credit') {
       setSearchedCustomerSet('');
-      values.creditOfficer = `${`${custData.custID},`} ${custData.title} ${custData.surName} ${custData.foreName1}`;
+      values.creditOfficer = `${`${custData.userName},`} ${custData.surName} ${custData.otherNames}`;
     }
   };
 
@@ -336,33 +335,30 @@ const GroupMaintenance = () => {
                           autoComplete="off"
                           type="text"
                           name="searchcustomer"
-                          value={searchedCustomer}
-                          onChange={searchIndividualCustomer}
+                          value={searchedCustomerSourced}
+                          onChange={searchIndividualCustomerSourced}
                         />
                       )
                     }
                   </div>
                   {
-                      searchedCustomer === '' ? (
+                      searchedCustomerSourced === '' ? (
                         <div className="modal-hide-section" />
                       ) : (
                         <div className="names-drop-down-section">
                           <div className="names-drop-down-section-inner">
                             {
-                          Array.from(new Set(finalSortedList)).map(customer => (
+                          Array.from(new Set(finalSortedListSourced)).map(customer => (
                             <div
                               className="names-drop-down-section-inner-section"
                               key={customer.custID}
                               onClick={() => cutomerDataFunction(customer, 'source')}
                             >
                               <div className="mr-1">
-                                { customer.title }
-                              </div>
-                              <div className="mr-1">
                                 { customer.surName }
                               </div>
                               <div>
-                                { customer.foreName1 }
+                                { customer.otherNames }
                               </div>
                             </div>
                           ))
@@ -418,13 +414,10 @@ const GroupMaintenance = () => {
                                   onClick={() => cutomerDataFunction(customer, 'credit')}
                                 >
                                   <div className="mr-1">
-                                    { customer.title }
-                                  </div>
-                                  <div className="mr-1">
                                     { customer.surName }
                                   </div>
                                   <div>
-                                    { customer.foreName1 }
+                                    { customer.otherNames }
                                   </div>
                                 </div>
                               ))
