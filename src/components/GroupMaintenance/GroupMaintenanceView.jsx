@@ -50,7 +50,7 @@ const GroupMaintenanceView = () => {
       axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemFrequencies')
         .then(response => {
           setFrequencies(response.data);
-          axios.get('https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomers')
+          axios.get('https://tricofin.azurewebsites.net/api/System/GetSystemUsers')
             .then(response => setUsersList(response.data))
             .catch(error => console.log(error.message));
         })
@@ -89,13 +89,13 @@ const GroupMaintenanceView = () => {
       .catch(error => console.log(error.message));
   }, []);
 
-  const displayCreditedBy = customerId => {
+  const displayCreditedBy = userDetail => {
     let result = '';
-    usersList.forEach(customer => {
-      if (customer.custID === customerId) {
-        result = `${`${customer.title.trim()},`} ${
-          customer.surName} ${
-          customer.foreName1}`;
+    usersList.forEach(user => {
+      if ((user.userName.toUpperCase()) === userDetail) {
+        result = `${`${user.userName.trim()},`} ${
+          user.surName.toUpperCase()} ${
+          user.otherNames.toUpperCase()}`;
       }
     });
     return result;
@@ -302,6 +302,14 @@ const GroupMaintenanceView = () => {
                     }}
                   >
                     Update
+                  </Link>
+                  <Link
+                    className="add-customer-btn"
+                    to={{
+                      pathname: '/groupmaintenanceform',
+                    }}
+                  >
+                    Cancel
                   </Link>
                 </div>
               </div>
