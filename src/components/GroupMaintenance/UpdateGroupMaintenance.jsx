@@ -15,7 +15,7 @@ import MoreInfo from './MoreInfo';
 import meetingDays from './FormData';
 import { getGroupMaintenance, updateGroupMaintenance } from '../../actions/groupMaintenance';
 import GroupMaintenanceValidator from '../Validators/GroupMaintenanceValidator';
-import SearchOneCustomer from '../Customer/SearchCustomer';
+import SearchOneCustomer from './SourceSearchCustomer';
 import SetSearchCustomer from './SetSearchCustomer';
 import systemsProduct from './SystemsProduct';
 import systemProductRequest from './systemProducts';
@@ -57,7 +57,7 @@ const UpdateGroupMaintenance = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Customers/GetIndividualCustomers')
+    axios.get('https://tricofin.azurewebsites.net/api/System/GetSystemUsers')
       .then(response => setUsersList(response.data))
       .catch(error => console.log(error.message));
   }, []);
@@ -67,10 +67,10 @@ const UpdateGroupMaintenance = () => {
   }, []);
 
   const {
-    searchIndividualCustomer,
-    searchedCustomer,
-    finalSortedList,
-    setSearchedCustomer,
+    searchIndividualCustomerSourced,
+    searchedCustomerSourced,
+    finalSortedListSourced,
+    setSearchedCustomerSourced,
   } = SearchOneCustomer();
 
   const {
@@ -108,11 +108,9 @@ const UpdateGroupMaintenance = () => {
   };
 
   const updateValidator = () => {
-    console.log(dataState.savingsProductID, 'dataState.savingsProductID');
-    const re = /^[0-9]+$/;
     const hasNumber = /\d/;
     const updateErrors = {};
-    if (!re.test(dataState.creditOfficer)) {
+    if (dataState.creditOfficer.indexOf(' ') >= 0) {
       updateErrors.creditOfficer = 'Credit Officer Required';
     }
     if (!hasNumber.test(dataState.savingsProductID)) {
@@ -126,7 +124,6 @@ const UpdateGroupMaintenance = () => {
   };
 
   const updateCustomer = e => {
-    const re = /^[0-9]+$/;
     e.preventDefault();
     const state = 'Update Group Maintenance';
     const resp = GroupMaintenanceValidator(dataState, state);
@@ -138,24 +135,13 @@ const UpdateGroupMaintenance = () => {
     setErrors(response);
     if (Object.values(response).includes('Updating')) {
       if (Object.keys(response).length === 1) {
-        console.log(dataState, 'datastate');
-        if (re.test(dataState.sourcedBy)) {
+        if (!(dataState.sourcedBy.indexOf(' ') >= 0)) {
           dispatch(updateGroupMaintenance(dataState, id, history, 'newSource'));
         } else {
           dispatch(updateGroupMaintenance(dataState, id, history, 'emptySource'));
         }
       }
     }
-  };
-
-  const displayCreditedBy = customerId => {
-    let result = '';
-    usersList.forEach(customer => {
-      if (customer.custID === customerId) {
-        result = `${`${customer.custID.trim()},`} ${(customer.title).trim()} ${customer.surName.trim()} ${customer.foreName1.trim()}`;
-      }
-    });
-    return result;
   };
 
   const displaySavingsProduct = systemId => {
@@ -185,14 +171,27 @@ const UpdateGroupMaintenance = () => {
     setSearchedCustomerSet,
   } = SetSearchCustomer();
 
+  const displayCreditedBy = userId => {
+    let result = '';
+    usersList.forEach(user => {
+      if ((user.userName).toUpperCase() === userId) {
+        result = `${`${user.userName.trim()},`} ${
+          user.surName.trim()} ${user.otherNames.trim()}`;
+      }
+    });
+    return result;
+  };
+
   const cutomerDataFunction = (custData, type) => {
     if (type === 'source') {
-      setSearchedCustomer('');
-      dataState.sourcedBy = custData.custID;
+      setSearchedCustomerSourced('');
+      setCurrentID(custData.userName);
+      dataState.sourcedBy = (custData.userName).toUpperCase();
     }
     if (type === 'credit') {
       setSearchedCustomerSet('');
-      dataState.creditOfficer = custData.custID;
+      setCurrentCreditor(custData.userName);
+      dataState.creditOfficer = (custData.userName).toUpperCase();
     }
   };
 
@@ -419,34 +418,31 @@ const UpdateGroupMaintenance = () => {
                                     <input
                                       autoComplete="off"
                                       name="searchcustomer"
-                                      value={searchedCustomer}
-                                      onChange={searchIndividualCustomer}
+                                      value={searchedCustomerSourced}
+                                      onChange={searchIndividualCustomerSourced}
                                       type="text"
                                     />
                                   )
                             }
                           </div>
                           {
-                            searchedCustomer === '' ? (
+                            searchedCustomerSourced === '' ? (
                               <div className="modal-hide-section" />
                             ) : (
                               <div className="names-drop-down-section">
                                 <div className="names-drop-down-section-inner">
                                   {
-                                    Array.from(new Set(finalSortedList)).map(customer => (
+                                    Array.from(new Set(finalSortedListSourced)).map(user => (
                                       <div
                                         className="names-drop-down-section-inner-section"
-                                        key={customer.custID}
-                                        onClick={() => cutomerDataFunction(customer, 'source')}
+                                        key={user.userName}
+                                        onClick={() => cutomerDataFunction(user, 'source')}
                                       >
                                         <div className="mr-1">
-                                          { customer.title }
-                                        </div>
-                                        <div className="mr-1">
-                                          { customer.surName }
+                                          { user.surName }
                                         </div>
                                         <div>
-                                          { customer.foreName1 }
+                                          { user.otherNames }
                                         </div>
                                       </div>
                                     ))
@@ -496,20 +492,17 @@ const UpdateGroupMaintenance = () => {
                               <div className="names-drop-down-section">
                                 <div className="names-drop-down-section-inner">
                                   {
-                                    Array.from(new Set(finalSortedListSet)).map(customer => (
+                                    Array.from(new Set(finalSortedListSet)).map(user => (
                                       <div
                                         className="names-drop-down-section-inner-section"
-                                        key={customer.custID}
-                                        onClick={() => cutomerDataFunction(customer, 'credit')}
+                                        key={user.userName}
+                                        onClick={() => cutomerDataFunction(user, 'credit')}
                                       >
                                         <div className="mr-1">
-                                          { customer.title }
-                                        </div>
-                                        <div className="mr-1">
-                                          { customer.surName }
+                                          { user.surName }
                                         </div>
                                         <div>
-                                          { customer.foreName1 }
+                                          { user.otherNames }
                                         </div>
                                       </div>
                                     ))
