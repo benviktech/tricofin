@@ -301,6 +301,15 @@ const ViewIndividualCustomer = () => {
                       >
                         Update
                       </Link>
+                      <Link
+                        type="button"
+                        className="edit-button"
+                        to={{
+                          pathname: '/individualcustomerform',
+                        }}
+                      >
+                        Cancel
+                      </Link>
                     </div>
                   </div>
                 </div>
