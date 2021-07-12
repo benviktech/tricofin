@@ -41,7 +41,6 @@ export const createSystemRole = (data) => async (dispatch) => {
   const method = "post";
   const path = "api/System/SaveRole";
   try {
-    console.log(data);
     const response = await PostSystemsRoleRequest(method, path, data);
     dispatch(systemRoleSuccessCreate(response.data));
     toast.success(`Role ${data.roleID} Created Successfully`);
@@ -55,7 +54,6 @@ export const UpdateSystemRole = (data) => async (dispatch) => {
   const method = "put";
   const path = "/api/System/UpdateRole";
   try {
-    console.log(data);
     const response = await UpdateSystemsRoleRequest(method, path, data);
     dispatch(systemRoleSuccessUpdate(response.data));
     toast.success(`Role ${data.roleID} Updated Successfully`);
@@ -70,7 +68,6 @@ export const DeleteSystemRole = (data) => async (dispatch) => {
   const path = `​/api​/System​/DeleteRole​/${data.roleID}`;
   try {
     const response = await DeleteSystemsRoleRequest(method, path, data);
-    console.log(response);
     toast.success(`Role ${data.roleID} Removed Successfully`);
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
