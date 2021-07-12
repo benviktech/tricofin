@@ -25,7 +25,6 @@ const SystemHolidays = () => {
   const [endDate, setEndDate] = useState(null);
   const [holidays, setHolidays] = useState([]);
   const [workingDates, setWorkingDates] = useState([]);
-  // const [remarks, setRemarks] = useState("");
   const [errors, setErrors] = useState({});
   const initialHolidate = {
     holidayDate: startDate,
@@ -63,7 +62,6 @@ const SystemHolidays = () => {
     const response = HolidayValidator(workingDates);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      console.log(workingDates);
       axios
         .post(`${baseUrl}/api/System/SaveSystemHolidays`, workingDates)
         .then(function (response) {
@@ -106,27 +104,6 @@ const SystemHolidays = () => {
     setHolidate(initialHolidate);
   };
 
-  // Date.prototype.addDays = function (days) {
-  //   let date = new Date(this.valueOf());
-  //   date.setDate(date.getDate() + days);
-  //   return date;
-  // };
-
-  // function getDates(startDate, stopDate) {
-  //   let dateArray = new Array();
-  //   let currentDate = startDate;
-  //   while (currentDate <= stopDate) {
-  //     dateArray.push({ ...holidate, holidayDate: currentDate.toISOString() });
-  //     currentDate = currentDate.addDays(1);
-  //   }
-  //   return dateArray;
-  // }
-
-  useEffect(() => {
-    console.log(workingDates);
-    // setStartDate(new Date(holidate.holidayDate));
-  }, [workingDates]);
-
   const HolidayValidator = (datesArray) => {
     const result = {};
     if (datesArray.length <= 0) {
@@ -149,27 +126,10 @@ const SystemHolidays = () => {
   }, [startDate]);
 
   const onChange = (dates) => {
-    // const [start, end] = dates;
     const { date, ...newErrors } = errors;
     setErrors(newErrors);
     setStartDate(dates);
-    // setEndDate(end);
-    console.log("clicked");
     cancelAlert();
-    // // setWorkingDates([]);
-    // if (end === null) {
-    //   console.log("selected one day", endDate);
-    //   setWorkingDates((previousStates) => [
-    //     ...previousStates,
-    //     { ...holidate, holidayDate: start?.toISOString() },
-    //   ]);
-    //   // setHasSelectedDate(false);
-    // } else {
-    //   console.log("selected a range between", startDate, endDate);
-    //   setWorkingDates(getDates(start, end));
-    //   // setHasSelectedDate(false);
-    // }
-    // // setHasSelectedDate(true);
   };
 
   const handleChange = (e) => {

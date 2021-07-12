@@ -76,20 +76,14 @@ const SystemSecurityRoles = () => {
       .get(`${baseUrl}/api/System/GetRoles`)
       .then(function (response) {
         // handle success
-        console.log(response.data);
         setRoles(response.data);
       })
-      .catch(function (error) {
-        // handle error
-        // console.log(error);
-        // setDataLoadFailed(true);
-      });
+      .catch(function (error) {});
   };
   const createSystemRight = async () => {
     const response = accessRightsValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      console.log(formState);
       axios
         .post(`${baseUrl}/api/System/SaveRoleRights`, {
           ...formState,
@@ -101,7 +95,6 @@ const SystemSecurityRoles = () => {
         .then(function (response) {
           // handle success
           const { columnID, ...stateData } = response.data;
-          console.log(stateData);
           setFormState(stateData);
           setModulePresent(true);
           toast.success(
@@ -118,7 +111,6 @@ const SystemSecurityRoles = () => {
     const response = accessRightsValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      console.log(formState);
       axios
         .put(`${baseUrl}/api/System/UpdateRoleRights`, {
           ...formState,
@@ -139,23 +131,19 @@ const SystemSecurityRoles = () => {
   };
 
   const fetchSystemModules = async () => {
-    console.log("fired a get roles request");
     axios
       .get(`${baseUrl}/api/StaticData/GetSystemModules`)
       .then(function (response) {
         // handle success
-        console.log(response.data);
         setSystemModules(response.data);
         setLoading(false);
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
       });
   };
 
   const fetchSystemModuleRight = async (moduleID) => {
-    console.log("fired a get modulerights reques request");
     axios
       .get(
         `${baseUrl}/api/System/GetRoleModuleRights/${activeRole}/${moduleID}`
@@ -163,17 +151,14 @@ const SystemSecurityRoles = () => {
       .then(function (response) {
         // handle success
         const { columnID, ...stateData } = response.data;
-        console.log(stateData);
         setFormState(stateData);
         setModulePresent(true);
       })
       .catch(function (error) {
         // handle error
-        console.log("reset form state");
         const bestModule = systemModules.find(
           (module) => module.moduleID === moduleID
         );
-        console.log(bestModule, "Best module");
         setFormState({
           ...initialFormstate,
           roleID: activeRole,
@@ -192,7 +177,6 @@ const SystemSecurityRoles = () => {
     for (let i = 0; i < arrayData.length; i++) {
       arrayData[i].label = arrayData[i].module;
       arrayData[i].key = arrayData[i].moduleID;
-      console.log(arrayData[i]);
     }
     setTempData(arrayData);
   }
@@ -208,7 +192,6 @@ const SystemSecurityRoles = () => {
   }, [tempData]);
 
   useEffect(() => {
-    console.log(systemData, "systemdata");
     setCleanData(makeTree(systemData, "0"));
   }, [systemData]);
 
@@ -234,7 +217,6 @@ const SystemSecurityRoles = () => {
       const filteredtemproles = roles.filter((role) =>
         role.roleID.toLowerCase().includes(value.toLowerCase())
       );
-      console.log(filteredtemproles);
       setSortedTempRoles(filteredtemproles);
     } else {
       setSortedTempRoles([]);
@@ -247,7 +229,6 @@ const SystemSecurityRoles = () => {
   };
 
   const selectTempRole = (e) => {
-    console.log(e.target.dataset.selected, "role set");
     setFormState({
       ...formState,
       roleID: e.target.dataset.selected,
@@ -259,7 +240,6 @@ const SystemSecurityRoles = () => {
 
   const handleChecking = (e) => {
     const { name, checked } = e.target;
-    console.log(name);
     setFormState((previousState) => ({
       ...previousState,
       [name]: checked,
@@ -268,7 +248,6 @@ const SystemSecurityRoles = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name);
     setFormState((previousState) => ({
       ...previousState,
       [name]: value,
@@ -280,11 +259,6 @@ const SystemSecurityRoles = () => {
   };
 
   const companyInfo = useSelector((state) => state.companyInfoReducer);
-  // console.log(companyInfo)
-
-  useEffect(() => {
-    console.log(selectedModule);
-  }, [selectedModule]);
 
   return companyInfo ? (
     <div className="individual-customer-form">
@@ -363,7 +337,6 @@ const SystemSecurityRoles = () => {
                           const keys = key.split("/");
                           const level = keys.length;
                           key = keys[keys.length - 1];
-                          console.log(props, "column id");
                           //set module options for rights
                           setAskPostingLimit(askPostingLimit);
                           setAskSupervision(askSupervision);
