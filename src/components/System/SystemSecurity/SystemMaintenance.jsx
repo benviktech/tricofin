@@ -28,7 +28,6 @@ const SystemSecurityMaintenance = () => {
   const [sortedRoles, setSortedRoles] = useState([]);
   const [sortedTempRoles, setSortedTempRoles] = useState([]);
   const [sortedTempUsers, setSortedTempUsers] = useState([]);
-  // const [value, setValue] = useState("");
   const [formState, setFormState] = useState({});
   const [errors, setErrors] = useState({});
   const [users, setUsers] = useState([]);
@@ -277,10 +276,6 @@ const SystemSecurityMaintenance = () => {
                         type="text"
                         className="text-input-user"
                       />
-                      {/* <br />
-                      {errors.roleID && (
-                        <span className="error-display">{errors.roleID}</span>
-                      )} */}
                     </div>
                     {sortedRoles.length <= 0 ? (
                       <div className="modal-hide-section" />
@@ -326,10 +321,6 @@ const SystemSecurityMaintenance = () => {
                         type="text"
                         className="text-input-user"
                       />
-                      {/* <br />
-                      {errors.userName && (
-                        <span className="error-display">{errors.userName}</span>
-                      )} */}
                     </div>
                     {sortedTempUsers.length <= 0 ? (
                       <div className="modal-hide-section-user-useredit" />

@@ -43,7 +43,6 @@ const SystemSecurityRoles = () => {
   }, []);
 
   const handleChange = (e) => {
-    console.log("clicked");
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -59,15 +58,10 @@ const SystemSecurityRoles = () => {
     if (!values.roleID.trim("")) {
       result.roleID = "Role ID is required";
     }
-    // if (values.roleID.length > 4) {
-    //   result.roleID = "Max Length is 4 Characters";
-    // }
-
     return result;
   };
 
   const updateRole = () => {
-    console.log("fired");
     const response = RoleValidator(values);
     setErrors(response);
     if (Object.keys(response).length === 0) {
@@ -90,13 +84,6 @@ const SystemSecurityRoles = () => {
       dispatch(DeleteSystemRole(values));
     }
   };
-
-  // useEffect(() => {
-  //   if (Object.keys(errors).length === 0) {
-  //     console.log(values);
-  //     dispatch(createSystemRole(values));
-  //   }
-  // }, [errors]);
 
   const clearFields = () => {
     setErrors({});
@@ -138,13 +125,6 @@ const SystemSecurityRoles = () => {
                     maxlength="4"
                     className="form-input"
                   />
-
-                  {/* {errors.roleID && (
-                    <>
-                      <br />
-                      <span className="error-display">{errors.roleID}</span>
-                    </>
-                  )} */}
                 </div>
                 <div className="description my-2 d-flex">
                   <label
