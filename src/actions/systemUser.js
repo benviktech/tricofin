@@ -80,7 +80,6 @@ export const updateSystemUser = (data) => async (dispatch) => {
 
   try {
     dispatch({ type: LOADING_CONTENT });
-    console.log(userData);
     const response = await UpdateSystemUserRequest(method, path, userData);
     toast.success(`User ${data.userName} Updated Successfully`);
   } catch (error) {
