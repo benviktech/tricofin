@@ -28,6 +28,7 @@ import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
 import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
 import GroupMembers from '../Pages/GroupMembers';
 import UpdateGroupMaintenance from '../GroupMaintenance/UpdateGroupMaintenance';
+import GeneralLedgerMaintenance from '../Finance/GeneralLedger/GeneralLedgerMaintenance';
 
 const Router = () => (
   <div className="router-section">
@@ -60,6 +61,7 @@ const Router = () => (
         <Route path="/system/systemsecurity/rights" component={SystemSecurityRights} />
         <Route path="/system/systemsecurity/adduser" component={SystemSecurityMaintenance} />
         <Route path="/system/holiday/holidays" component={SystemHolidays} />
+        <Route path="generaledgermaintenance" component={GeneralLedgerMaintenance} />
       </Switch>
       <Footer />
     </BrowserRouter>
