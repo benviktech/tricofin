@@ -276,6 +276,15 @@ const NonIndividualCustomerView = () => {
                       >
                         Update
                       </Link>
+                      <Link
+                        type="button"
+                        className="add-customer-btn"
+                        to={{
+                          pathname: '/nonindidualcustomerform',
+                        }}
+                      >
+                        Cancel
+                      </Link>
                     </div>
                   </div>
                 </div>

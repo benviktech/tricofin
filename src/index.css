@@ -16,3 +16,7 @@ input,
 textarea {
   text-transform: uppercase;
 }
+
+a {
+  text-decoration: none !important;
+}
