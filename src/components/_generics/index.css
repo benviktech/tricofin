@@ -32,5 +32,5 @@ input {
   outline: none;
   cursor: pointer;
   background-color: #f3f2f1;
-  margin-left: 10px !important;
+  /* margin-left: 10px !important; */
 }
