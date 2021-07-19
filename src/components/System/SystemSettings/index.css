@@ -1,4 +1,4 @@
-.maintenance-customer-info {
+.system-maintenance-customer-info {
   color: #666;
   font-weight: bold;
   border-bottom: 3px solid #fff;
@@ -13,11 +13,15 @@
   width: 100%;
 }
 
-.lower-downer-section {
+.system-individual-customer-form {
+  margin-top: 60px;
+}
+
+.settings-lower-downer-section {
   display: flex;
 }
 
-.left-inner-form-section {
+.settings-left-inner-form-section {
   background-color: #d7d7d7;
   padding: 10px 5px;
   margin-right: 10px;
@@ -26,7 +30,7 @@
   height: 90vh;
 }
 
-.submit-form-top-section {
+.settings-submit-form-top-section {
   flex: 5;
   margin-top: 40px;
 }
@@ -276,31 +280,6 @@
   border: 1px solid #fff;
   font-size: 13px;
   font-weight: bold;
-}
-
-/* Tab screen sizes */
-
-@media only screen and (max-width: 1000px) {
-  .main-form-color {
-    flex-direction: column;
-  }
-
-  .submit-form-top-section {
-    flex: 5;
-  }
-
-  .upper-bottom-section {
-    margin-bottom: 60px;
-  }
-
-  .bottom-form-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .bottom-form-section .form-group {
-    width: 100%;
-  }
 }
 
 .container-main {

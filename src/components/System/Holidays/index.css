@@ -1,4 +1,4 @@
-.maintenance-customer-info {
+.system-maintenance-customer-info {
   color: #666;
   font-weight: bold;
   border-bottom: 3px solid #fff;
@@ -13,11 +13,11 @@
   width: 100%;
 }
 
-.lower-downer-section {
+.security-lower-downer-section {
   display: flex;
 }
 
-.left-inner-form-section {
+.security-left-inner-form-section {
   background-color: #d7d7d7;
   padding: 10px 5px;
   margin-right: 10px;
@@ -26,7 +26,7 @@
   height: 90vh;
 }
 
-.submit-form-top-section {
+.security-submit-form-top-section {
   flex: 5;
   display: flex;
 }
@@ -52,29 +52,8 @@
   flex: 1;
 }
 
-.individual-customer-form {
+.system-individual-customer-form {
   /* position: relative; */
-}
-
-/* Tab screen sizes */
-
-@media only screen and (min-width: 1000px) {
-  .main-form-color {
-    flex-direction: column;
-  }
-
-  .upper-bottom-section {
-    margin-bottom: 60px;
-  }
-
-  .bottom-form-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .bottom-form-section .form-group {
-    width: 100%;
-  }
 }
 
 .internal-headings {

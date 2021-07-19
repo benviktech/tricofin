@@ -19,7 +19,6 @@ import NonIndividualSecondaryContact from "../Pages/NonIndividualSecondaryContac
 import NonIndividualPrimaryContact from "../Pages/NonIndividualPrimaryContact";
 import NonIndividualIdentification from "../Pages/NonIndividualIdentification";
 import DirectorsInfo from "../Pages/DirectorsInfo";
-import SystemSettingsOtherSettings from "../System/SystemSettings/OtherSettings";
 import SystemSecurityRoles from "../System/SystemSecurity/SystemRoles";
 import SystemSecurityRights from "../System/SystemSecurity/SystemRights";
 import SystemSecurityMaintenance from "../System/SystemSecurity/SystemMaintenance";
@@ -49,10 +48,6 @@ const Router = () => (
         <Route
           path="/identificationinfo/:id"
           component={NonIndividualIdentification}
-        />
-        <Route
-          path="/systemsettingsothersettings"
-          component={SystemSettingsOtherSettings}
         />
         <Route
           path="/system/systemsettings/updatecompanyinfo"

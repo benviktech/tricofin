@@ -250,13 +250,13 @@ const SystemSecurityMaintenance = () => {
   };
 
   return roles.length > 0 ? (
-    <div className="individual-customer-form">
-      <div className="lower-form-section">
-        <div className="maintenance-customer-info">
+    <div className="system-individual-customer-form">
+      <div className="system-lower-form-section">
+        <div className="system-maintenance-customer-info">
           <span>System Security: User Maintenance</span>
         </div>
-        <div className="lower-downer-section">
-          <div className="left-inner-form-section">
+        <div className="security-lower-downer-section">
+          <div className="security-left-inner-form-section">
             <SecuritySidebar />
           </div>
           <div className="usermaintenance-section">

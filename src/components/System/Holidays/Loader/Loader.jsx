@@ -6,15 +6,15 @@ import "./index.css";
 function Loader({ headerText }) {
   return (
     <div className="view-individual-customer-form">
-      <div className="lower-form-section">
-        <div className="maintenance-customer-info">
+      <div className="system-lower-form-section">
+        <div className="system-maintenance-customer-info">
           <span>{headerText}</span>
         </div>
-        <div className="lower-downer-section">
-          <div className="left-inner-form-section update-side-loader-height">
+        <div className="security-lower-downer-section">
+          <div className="security-left-inner-form-section  update-side-loader-height">
             <HolidaySidebar />
           </div>
-          <div className="submit-form-top-section loader-middle-section">
+          <div className="security-submit-form-top-section loader-middle-section">
             <div className="loader-middle-section-spinner">
               <Spinner />
             </div>
