@@ -468,3 +468,224 @@
   background-color: #fff;
   padding: 10px;
 }
+
+.main-groups-section {
+  margin-right: 5px;
+}
+
+.id-display-section {
+  display: flex;
+  position: relative;
+}
+
+.submit-error-section {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 5px;
+  color: red;
+  font-size: 11px;
+  font-weight: 600;
+  height: 30px;
+}
+
+.submit-error-section i {
+  color: red;
+}
+
+.main-group-top-left {
+  flex: 1;
+  display: flex;
+  font-size: 12px;
+  font-weight: 600;
+  align-items: center;
+}
+
+.main-group-top-right {
+  flex: 6;
+  display: flex;
+  font-weight: 600;
+}
+
+.group-top-input-left {
+  padding: 5px 20px;
+  margin-right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.group-top-input-right {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px;
+  border-radius: 3px;
+}
+
+.main-group-top-right div {
+  font-size: 12px;
+}
+
+.customer-information-section {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.customer-more-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: #d7d7d7;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lower-customer-info-section {
+  display: flex;
+}
+
+.left-lower-customer-info-section {
+  flex: 1;
+}
+
+.right-lower-customer-info-section {
+  width: 300px;
+  padding: 0 20px;
+}
+
+.right-lower-customer-info-section div {
+  border: 1px solid #f3f2f1;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d7d7d7;
+  height: 100%;
+}
+
+.first-lower-customer-info-section,
+.second-lower-customer-info-section {
+  display: flex;
+  margin-bottom: 10px;
+  margin-right: 2px;
+  justify-content: space-between;
+}
+
+.first-lower-customer-info-section input,
+.second-lower-customer-info-section input,
+.second-lower-customer-info-section select {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  margin-left: auto;
+  background-color: #f3f2f1;
+  width: 100%;
+}
+
+.input-lower-customer-info-section {
+  flex: 2;
+}
+
+.label-lower-customer-info-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.members-listings {
+  font-weight: 600;
+  font-size: 13px;
+  background-color: #d7d7d7;
+}
+
+.out-form-loop-section {
+  height: 140px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.out-form-loop-section::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.error-content-section {
+  position: relative;
+}
+
+.error-notifier-section {
+  position: absolute;
+  font-size: 11px;
+  color: red;
+  bottom: -15px;
+  right: 0;
+}
+
+.lower-folder-icon-section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lower-folder-icon-section i {
+  font-size: 30px;
+  color: gray;
+}
+
+.delete-modal-section {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-modal-section button{
+  padding: 5px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.confirm-delete-section {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #444;
+  font-size: 14px;
+}
+
+.overal-delete-section {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.confirm-delete-button-section {
+  display: flex;
+  justify-content: center;
+}
+
+.confirm-delete-button-section .accept-delete-btn {
+  background-color: red;
+}
+
+.confirm-delete-button-section .cancel-delete-btn {
+  background-color: #666;
+}

@@ -101,3 +101,33 @@ export const DeleteCustomerDirector = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
+
+export const PostGroupMaintenanceRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const GetGroupMaintenanceRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+
+export const UpdateGroupMaintenanceRequest = async (method, data, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const PostGroupMemberRequest = async (method, data, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const FetchGroupMembersListRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+
+export const DeleteGroupMemberRequest = async (method, values, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`, { data: values });
+  return response;
+};

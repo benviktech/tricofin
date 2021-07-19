@@ -1,0 +1,194 @@
+.left-section,
+.right-section {
+  flex: 1;
+  padding: 10px;
+}
+
+.horizontal-section {
+  margin-bottom: 18px;
+  display: flex;
+  flex: 1;
+}
+
+.horizontal-section input,
+.horizontal-section select,
+.bottom-form-section .info-details,
+.information-section,
+.information-section-left {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  margin-left: auto;
+  background-color: #f3f2f1;
+  width: 100%;
+}
+
+.horizontal-section select {
+  padding: 5px;
+}
+
+.information-section {
+  display: flex;
+  align-items: center;
+}
+
+.information-section-left {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  margin-right: 2px;
+}
+
+.left-horizontal-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.right-horizontal-section {
+  flex: 3;
+  display: flex;
+}
+
+.inner-right-section {
+  display: flex;
+  flex: 3;
+  font-weight: 600;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.inner-left-section {
+  flex: 2;
+}
+
+.inner-right-input {
+  flex: 1;
+  margin-left: auto;
+}
+
+.inner-right-label {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.members-number {
+  width: 120px;
+}
+
+.select-section {
+  flex: 1;
+}
+
+.select-section select {
+  width: 100%;
+}
+
+.select-section-two {
+  display: flex;
+  flex: 2;
+}
+
+.select-section-two select {
+  width: 100%;
+}
+
+.bottom-form-section {
+  display: flex;
+  font-weight: 600;
+}
+
+.left-bottom-section,
+.right-bottom-section {
+  flex: 1;
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  margin-bottom: 5px;
+}
+
+.right-bottom-section {
+  margin-left: 20px;
+}
+
+.lower-horizontal-section {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.lower-label-section {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.lower-label-section,
+.lower-input-section {
+  flex: 1;
+}
+
+.bottom-form-section .info-details {
+  background-color: #fff;
+  height: 25px;
+  font-size: 12px;
+}
+
+.error-container-section {
+  position: relative;
+}
+
+.error-display-section,
+.error-display-section-left {
+  color: red;
+  position: absolute;
+  right: 0;
+  font-size: 11px;
+  bottom: -15px;
+}
+
+.error-display-section-left {
+  left: 0;
+}
+
+.manage-drop-down-two {
+  position: relative;
+}
+
+.names-drop-down-section {
+  position: absolute;
+  top: 40px;
+  height: 100px;
+  overflow-y: auto;
+  z-index: 10;
+  right: 0;
+  width: 300px;
+}
+
+.names-drop-down-section-inner {
+  background-color: #f3f2f1;
+}
+
+.names-drop-down-section-inner-section {
+  display: flex;
+  margin-bottom: 5px;
+  background-color: #1891da;
+}
+
+.names-drop-down-section-inner-section div {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-btn-background a {
+  text-decoration: none;
+}

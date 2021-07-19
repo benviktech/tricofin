@@ -69,3 +69,24 @@ export const NonIndidualCustomerSidebarData = [
     ],
   },
 ];
+
+export const GroupMaintenanceData = [
+  {
+    title: 'Groups Information',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'Groups Members',
+        path: '/groupmembers',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
+      },
+      {
+        title: 'Special Conditions',
+        path: '/specialconditions',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+    ],
+  },
+];

@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import {
   IndividualCustomerSidebarData,
   NonIndidualCustomerSidebarData,
+  GroupMaintenanceData,
 } from './SidebarData';
 import SidebarMenu from './SidebarMenu';
 import NonIndividualSidebarMenu from './NonIdividualSidebarMenu';
+import GroupMaintenanceMenu from './GroupMaintenanceMenu';
 
 const SideBar = styled.nav`
     width: 100%
@@ -39,6 +41,20 @@ export const NonIdividualSidebar = () => (
             <NonIndividualSidebarMenu item={item} key={item.title} />
           ))
       }
+      </SidebarWrap>
+    </SideBar>
+  </div>
+);
+
+export const GroupMaintenanceSidebar = () => (
+  <div className="sidebar-section">
+    <SideBar>
+      <SidebarWrap>
+        {
+        GroupMaintenanceData.map(item => (
+          <GroupMaintenanceMenu item={item} key={item.title} />
+        ))
+    }
       </SidebarWrap>
     </SideBar>
   </div>
