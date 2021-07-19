@@ -202,10 +202,10 @@
   padding: 10px;
 }
 
-input {
+/* input {
   cursor: pointer;
   width: 70%;
-}
+} */
 
 .roles-lower-form-section {
   display: flex;
