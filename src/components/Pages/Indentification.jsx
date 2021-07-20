@@ -3,6 +3,7 @@
 /* eslint-disable  no-nested-ternary */
 /* eslint-disable  jsx-a11y/click-events-have-key-events */
 /* eslint-disable  jsx-a11y/no-static-element-interactions */
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';

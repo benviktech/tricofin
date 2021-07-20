@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-restricted-globals */
+/* eslint-disable react-hooks/rules-of-hooks */
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
