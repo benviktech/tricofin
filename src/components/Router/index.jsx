@@ -23,7 +23,7 @@ import SystemSecurityRoles from "../System/SystemSecurity/SystemRoles";
 import SystemSecurityRights from "../System/SystemSecurity/SystemRights";
 import SystemSecurityMaintenance from "../System/SystemSecurity/SystemMaintenance";
 import UpdateCompanyInfo from "../System/SystemSettings/UpdateCompanyInfo";
-import SystemHolidays from "../System/Holidays/SystemHolidays";
+import SystemHolidays from "../System/SystemSettings/SystemHolidays";
 
 const Router = () => (
   <div className="router-section">

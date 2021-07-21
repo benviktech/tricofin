@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import HolidaySidebar from "./HolidaySideBar";
+import SetingsSidebar from "./SettingsSideBar";
 import "./index.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,20 +21,21 @@ const baseUrl = "https://tricofin.azurewebsites.net";
 const SystemHolidays = () => {
   const dispatch = useDispatch();
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null)
   const [holidays, setHolidays] = useState([]);
-  const [workingDates, setWorkingDates] = useState([]);
+  // const [workingDates, setWorkingDates] = useState({});
   const [errors, setErrors] = useState({});
   const initialHolidate = {
     holidayDate: startDate,
     remarks: "",
-    createdOn: "2021-06-30T15:06:28.108Z",
+    createdOn: formatDateTime(new Date()),
     modifiedBy: "BENEVIK",
     createdBy: "BENEVIK",
-    modifiedOn: "2021-06-30T15:06:28.108Z",
+    modifiedOn: formatDateTime(new Date()),
   };
-  const [holidate, setHolidate] = useState(initialHolidate);
+  const [workingDates, setWorkingDates] = useState(initialHolidate);
+  // const [holidate, setHolidate] = useState(initialHolidate);
   const [hasSelectedDate, setHasSelectedDate] = useState(false);
   const [selected, setSelected] = useState(false);
 
@@ -42,7 +43,13 @@ const SystemHolidays = () => {
     axios
       .get(`${baseUrl}/api/System/GetSystemHolidays`)
       .then(function (response) {
-        setHolidays(response.data);
+        console.log(response.data)
+        setHolidays([...response.data.map(holiday=>({
+          ...holiday,
+          holidayDate: formatDateTime(holiday.holidayDate),
+          createdOn: formatDateTime(holiday.createdOn),
+          modifiedOn: formatDateTime(holiday.modifiedOn),
+        }))]);
       })
       .catch(function (error) {});
   };
@@ -50,22 +57,43 @@ const SystemHolidays = () => {
   useEffect(() => {
     fetchSystemHolidays();
   }, []);
-  const formatDateTime = (datevalue) => {
-    let currentDate = new Date(datevalue);
-    let date = currentDate.getDate();
-    let month = currentDate.getMonth();
-    let year = currentDate.getFullYear();
-    return currentDate.toISOString().split("T")[0];
+  function formatDateTime (datevalue){
+    if(typeof datevalue === 'object') {
+      console.log(typeof datevalue)
+      let currentDate = datevalue;
+      let date = currentDate.getDate();
+      let month = currentDate.getMonth();
+      let year = currentDate.getFullYear();
+      return currentDate.toISOString().split("T")[0];
+    }
+    if(typeof datevalue === 'string'){
+      return datevalue.split("T")[0];
+    }
+  };
+
+  function formatDisplayTime (datevalue){
+    if(typeof datevalue === 'string'){
+      let date = (parseInt(datevalue.split("T")[0].split("-")[2],10) + 1).toString()
+      let dateArray = datevalue.split("T")[0].split("-");
+      dateArray[2] = date;
+      return dateArray.join("-");
+    }
   };
 
   const createSystemHolidays = async () => {
     const response = HolidayValidator(workingDates);
     setErrors(response);
     if (Object.keys(response).length === 0) {
+      console.log(workingDates)
       axios
         .post(`${baseUrl}/api/System/SaveSystemHolidays`, workingDates)
         .then(function (response) {
-          setHolidays(response.data);
+          setHolidays([...response.data.map(holiday=>({
+            ...holiday,
+            holidayDate: formatDateTime(holiday.holidayDate),
+            createdOn: formatDateTime(holiday.createdOn),
+            modifiedOn: formatDateTime(holiday.modifiedOn),
+          }))]);
           toast.success(`Holiday set Successfully`);
         })
         .catch(function (error) {
@@ -77,39 +105,46 @@ const SystemHolidays = () => {
   const removeSystemHolidays = async () => {
     axios
       .delete(`${baseUrl}/api/System/DeleteSystemHoliday`, {
-        data: { ...holidate },
+        data: { ...workingDates },
       })
       .then(function (response) {
-        setHolidays(response.data);
+        setHolidays([...response.data.map(holiday=>({
+          ...holiday,
+          holidayDate: formatDateTime(holiday.holidayDate),
+          createdOn: formatDateTime(holiday.createdOn),
+          modifiedOn: formatDateTime(holiday.modifiedOn),
+        }))]);
         toast.success(`Holiday Removed Successfully`);
-        setHolidate(initialHolidate);
-        setWorkingDates([]);
+        setWorkingDates(initialHolidate);
+        setSelectedDate(null)
         setSelected(false);
       })
       .catch(function (error) {
-        toast.error(`Failed to Remove holiday`);
+        toast.error(`Failed to Remove holiday!!`);
       });
   };
 
   const clearDate = () => {
-    setWorkingDates([]);
-    setStartDate(null);
-    // setEndDate(null);
-    setHolidate(initialHolidate);
+    setWorkingDates({});
+    setSelected(false);
+    setSelectedDate(null)
+    // setHolidate(initialHolidate);
     cancelAlert();
   };
 
   const cancelAlert = () => {
     setSelected(false);
-    setHolidate(initialHolidate);
+    setSelectedDate(null)
+    setWorkingDates(initialHolidate);
+    setStartDate(new Date())
   };
 
-  const HolidayValidator = (datesArray) => {
+  const HolidayValidator = (datesObject) => {
     const result = {};
-    if (datesArray.length <= 0) {
+    if (Object.keys(datesObject).length === 0) {
       result.date = "Choose a Date";
     }
-    if (!holidate.remarks.trim("")) {
+    if (!workingDates.remarks.trim("")) {
       result.remarks = "A holiday Date must have a remark";
     }
     return result;
@@ -121,27 +156,27 @@ const SystemHolidays = () => {
     });
   }
 
-  useEffect(() => {
-    setWorkingDates([{ ...holidate, holidayDate: startDate?.toISOString() }]);
-  }, [startDate]);
+  // useEffect(() => {
+  //   setWorkingDates({ ...holidate, holidayDate: formatDateTime(startDate) });
+  // }, [startDate]);
 
   const onChange = (dates) => {
-    const { date, ...newErrors } = errors;
-    setErrors(newErrors);
+    // const { date, ...newErrors } = errors;
+    // setErrors(newErrors);
+    // console.log(formatDateTime(dates))
+    // console.log(typeof dates)
     setStartDate(dates);
-    cancelAlert();
+    console.log(dates)
+    setWorkingDates(currentWorkingDates =>({ ...currentWorkingDates, holidayDate: formatDateTime(dates) }));
+    // cancelAlert();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const { remarks, ...newErrors } = errors;
-    setErrors(newErrors);
-    if (workingDates.length > 0) {
-      workingDates.forEach((holiday) => {
-        holiday.remarks = value.toUpperCase();
-      });
-    }
-    setHolidate({ ...holidate, [name]: value });
+    // const { remarks, ...newErrors } = errors;
+    // console.log(name,value)
+    // setErrors(newErrors);
+    setWorkingDates(currentState =>({ ...currentState, [name]: value.toUpperCase() }));
   };
 
   return holidays.length >= 0 ? (
@@ -150,15 +185,15 @@ const SystemHolidays = () => {
         <div className="system-maintenance-customer-info">
           <span>Public Holidays: Mark Holidays</span>
         </div>
-        <div className="security-lower-downer-section">
-          <div className="security-left-inner-form-section ">
-            <HolidaySidebar />
+        <div className="settings-lower-downer-section">
+          <div className="settings-left-inner-form-section ">
+            <SetingsSidebar/>
           </div>
           <div className="security-submit-form-top-section">
             {selected && (
               <div className="alert-bunner">
                 <p className="indicator">
-                  {`${holidate.holidayDate}`} <br /> {`${holidate.remarks}`}{" "}
+                  {`${workingDates.holidayDate}`} <br /> {`${workingDates.remarks}`}{" "}
                   <br />
                 </p>
                 <div className="span-container">
@@ -176,12 +211,12 @@ const SystemHolidays = () => {
                       errors.date ? "required label-holiday" : "label-holiday"
                     }
                   >
-                    Choose a Day(s)
+                    Choose a Day
                   </div>
                   <div className="input-box">
                     <DatePicker
-                      startDate={startDate}
-                      selected={startDate}
+                      startDate={startDate }
+                      selected={selectedDate}
                       onChange={onChange}
                       inline
                     />
@@ -205,7 +240,7 @@ const SystemHolidays = () => {
                     <Input
                       name="remarks"
                       type="text"
-                      value={holidate.remarks}
+                      value={workingDates.remarks}
                       className="text-input-holiday"
                       handleChange={handleChange}
                     />
@@ -242,16 +277,20 @@ const SystemHolidays = () => {
                     <div
                       className="column-two"
                       onClick={() => {
-                        setHolidate(holiday);
+                        setWorkingDates(holiday);
+                        setSelectedDate(null)
+                        setSelectedDate(new Date(formatDisplayTime(holiday.holidayDate)))
                         setSelected(true);
                       }}
                     >
-                      {formatDateTime(holiday.holidayDate)}
+                      {formatDisplayTime(holiday.holidayDate)}
                     </div>
                     <div
                       className="column-three"
                       onClick={() => {
-                        setHolidate(holiday);
+                        setWorkingDates(holiday);
+                        setSelectedDate(null)
+                        setSelectedDate(new Date(formatDisplayTime(holiday.holidayDate)))
                         setSelected(true);
                       }}
                     >

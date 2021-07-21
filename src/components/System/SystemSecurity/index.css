@@ -142,6 +142,7 @@
 }
 
 .security-submit-form-top-section {
+  margin-top: 40px;
   flex: 5;
   display: flex;
 }

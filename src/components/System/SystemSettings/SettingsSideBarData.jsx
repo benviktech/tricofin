@@ -16,6 +16,13 @@ const SettingsSidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     path: "/system/systemsettings/updatecompanyinfo",
   },
+  {
+    title: "Mark Holidays",
+    icon: <RiIcons.RiCalendar2Fill style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    path: "/system/holiday/holidays",
+  },
 ];
 
 export default SettingsSidebarData;
