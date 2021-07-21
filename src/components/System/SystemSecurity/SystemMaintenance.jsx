@@ -236,6 +236,7 @@ const SystemSecurityMaintenance = () => {
       surName:"",
       otherNames:"",
       phoneNo1:"",
+      phoneNo2:"",
       tempRoleID:"",
       tempExpiryDate:""
      })
