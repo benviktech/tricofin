@@ -122,7 +122,7 @@ const SystemSecurityRoles = () => {
                     handleChange={handleChange}
                     value={values.roleID}
                     type="text"
-                    maxlength="4"
+                    maxlength="5"
                     className="form-input"
                   />
                 </div>

@@ -36,6 +36,8 @@ const SystemSecurityMaintenance = () => {
   const [roleDisable, setRoleDisable] = useState(false);
   const [isCashierDisable, setIsCashierDisable] = useState(false);
   const [dataLoadFailed, setDataLoadFailed] = useState(false);
+  const [actveAddButton, setActiveAddButton]  = useState(true);
+  const [errorsPresent, setErrorsPresent] = useState(false);
 
   const companyInfo = useSelector((state) => state.companyInfoReducer);
   const user = useSelector((state) => state?.systemUserReducer?.systemUser);
@@ -130,6 +132,8 @@ const SystemSecurityMaintenance = () => {
           password: response.data.userPassword,
         });
         setErrors({});
+        setActiveAddButton(false)
+        setErrorsPresent(true);
         if (response.data.tempRole) {
           setRoleDisable(false);
         } else if (!response.data.tempRole) {
@@ -223,30 +227,45 @@ const SystemSecurityMaintenance = () => {
 
   const clearFields = () => {
     setErrors({});
+    setErrorsPresent(false)
+    setFormState({ 
+      roleID:"",
+      userName:"",
+      userPassword:"",
+      password:"",
+      surName:"",
+      otherNames:"",
+      phoneNo1:"",
+      tempRoleID:"",
+      tempExpiryDate:""
+     })
   };
 
   const createUser = () => {
     const response = userMaintenanceValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      dispatch(createSystemUser(formState));
+      return dispatch(createSystemUser(formState));
     }
+    setErrorsPresent(true)
   };
 
   const updateUser = () => {
     const response = userMaintenanceValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      dispatch(updateSystemUser(formState));
+      return dispatch(updateSystemUser(formState));
     }
+    setErrorsPresent(true)
   };
 
   const deleteUser = () => {
     const response = userMaintenanceValidator(formState);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      dispatch(deleteSystemUser(formState));
+      return dispatch(deleteSystemUser(formState));
     }
+    setErrorsPresent(true)
   };
 
   return roles.length > 0 ? (
@@ -311,7 +330,7 @@ const SystemSecurityMaintenance = () => {
                     <div
                       className={errors.userName ? "required label" : "label"}
                     >
-                      Login ID
+                      Search a Login ID
                     </div>
                     <div className="input-box">
                       <Input
@@ -597,10 +616,10 @@ const SystemSecurityMaintenance = () => {
                 </form>
 
                 <div className="user-maintenance-buttons-section">
-                  <Button onClick={createUser} name="Add" />
-                  <Button onClick={updateUser} name="Update" />
-                  <Button onClick={clearFields} name="Clear" />
-                  <Button onClick={deleteUser} name="Delete" />
+                  <Button onClick={createUser} disabled={!actveAddButton} name="Add" />
+                  <Button onClick={updateUser} disabled={actveAddButton} name="Update" />
+                  <Button onClick={clearFields} disabled={ !errorsPresent } name="Clear" />
+                  <Button onClick={deleteUser} disabled={actveAddButton} name="Delete" />
                 </div>
               </div>
             </div>
