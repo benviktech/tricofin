@@ -12,7 +12,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "./Loader/Loader";
 import { Button, Input } from "../../_generics/Generics";
-import Spinner from "../../Spinner/Spinner";
 import axios from "axios";
 import * as RiIcons from "react-icons/ri";
 
@@ -24,7 +23,6 @@ const SystemHolidays = () => {
   const [startDate, setStartDate] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null)
   const [holidays, setHolidays] = useState([]);
-  // const [workingDates, setWorkingDates] = useState({});
   const [errors, setErrors] = useState({});
   const initialHolidate = {
     holidayDate: startDate,
@@ -35,7 +33,6 @@ const SystemHolidays = () => {
     modifiedOn: formatDateTime(new Date()),
   };
   const [workingDates, setWorkingDates] = useState(initialHolidate);
-  // const [holidate, setHolidate] = useState(initialHolidate);
   const [hasSelectedDate, setHasSelectedDate] = useState(false);
   const [selected, setSelected] = useState(false);
 
@@ -97,7 +94,7 @@ const SystemHolidays = () => {
           toast.success(`Holiday set Successfully`);
         })
         .catch(function (error) {
-          toast.error(`Failed to create holiday`);
+          toast.warn(`Holiday Already Exists`);
         });
     }
   };
