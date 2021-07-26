@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';

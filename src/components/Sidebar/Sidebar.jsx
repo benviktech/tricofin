@@ -4,10 +4,12 @@ import {
   IndividualCustomerSidebarData,
   NonIndidualCustomerSidebarData,
   GroupMaintenanceData,
+  GeneralLedgerData,
 } from './SidebarData';
 import SidebarMenu from './SidebarMenu';
 import NonIndividualSidebarMenu from './NonIdividualSidebarMenu';
 import GroupMaintenanceMenu from './GroupMaintenanceMenu';
+import GeneralLedger from './GeneralLedger';
 
 const SideBar = styled.nav`
     width: 100%
@@ -55,6 +57,20 @@ export const GroupMaintenanceSidebar = () => (
           <GroupMaintenanceMenu item={item} key={item.title} />
         ))
     }
+      </SidebarWrap>
+    </SideBar>
+  </div>
+);
+
+export const GeneralLedgerSidebar = () => (
+  <div className="sidebar-section">
+    <SideBar>
+      <SidebarWrap>
+        {
+      GeneralLedgerData.map(item => (
+        <GeneralLedger item={item} key={item.title} />
+      ))
+  }
       </SidebarWrap>
     </SideBar>
   </div>

@@ -3,8 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useState } from 'react';
-// import { useSelector } from 'react-redux';
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import {
   SidebarLink,
   SidebarLabel,
@@ -14,12 +13,9 @@ import {
 
 const GeneralLedger = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
-  const { id } = useParams();
 
   const showSubnav = () => setSubnav(!subnav);
   const { url } = useRouteMatch();
-
-//   const currentUser = useSelector(state => state.individualCustomersReducer);
 
   React.useEffect(() => {
     if (url.split('/')[1] === 'glidentification'
@@ -45,8 +41,7 @@ const GeneralLedger = ({ item }) => {
         </div>
       </SidebarLink>
       {
-        (Object.keys(currentUser.individualCustomer).length > 0
-        && url.split('/')[1] !== 'glaccounts')
+        (url.split('/')[1] !== 'glaccounts')
         || url.split('/')[1] === 'glidentification'
         || url.split('/')[1] === 'bulkauthorize'
         || url.split('/')[1] === 'glsubtypes'
@@ -59,7 +54,7 @@ const GeneralLedger = ({ item }) => {
                   background: '#AEAEAE',
                 }}
                 exact
-                to={`${item.path}/${id}`}
+                to={`${item.path}`}
                 key={index}
               >
                 <DropdownLinkIcon>
