@@ -2,18 +2,20 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-prototype-builtins */
 
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import SetingsSidebar from "./SettingsSideBar";
-import axios from "axios";
-import "./index.css";
-import { updateCompanyInfo } from "../../../actions/systemCompanyInfo";
-import Loader from "./Loader/Loader";
-import updateCompanyInfoValidator from "../../Validators/CompanyInfoValidator";
-import { Input } from "../../_generics/Generics";
-import Label from "./Label";
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import SetingsSidebar from './SettingsSideBar';
+import './index.css';
+import { updateCompanyInfo } from '../../../actions/systemCompanyInfo';
+import Loader from './Loader/Loader';
+import updateCompanyInfoValidator from '../../Validators/CompanyInfoValidator';
+import { Input } from '../../_generics/Generics';
+import Label from './Label';
 
 const UpdateCompanyInfo = () => {
   const dispatch = useDispatch();
@@ -22,13 +24,13 @@ const UpdateCompanyInfo = () => {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     if (errors.hasOwnProperty(name)) {
-      console.log("inside");
-      setErrors({ ...errors, [name]: "" });
+      console.log('inside');
+      setErrors({ ...errors, [name]: '' });
     }
-    console.log(formState, "data state");
+    console.log(formState, 'data state');
     setFormState(() => ({
       ...formState,
       [name]: value,
@@ -38,14 +40,14 @@ const UpdateCompanyInfo = () => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get(`https://tricofin.azurewebsites.net/api/System/GetSystemSettings`)
-        .then((response) => setFormState(response.data))
-        .catch((error) => console.log(error.message));
+        .get('https://tricofin.azurewebsites.net/api/System/GetSystemSettings')
+        .then(response => setFormState(response.data))
+        .catch(error => console.log(error.message));
     };
     fetchData();
   }, []);
 
-  const updateData = (e) => {
+  const updateData = e => {
     e.preventDefault();
     const response = updateCompanyInfoValidator(formState);
     setErrors(response);
@@ -71,29 +73,29 @@ const UpdateCompanyInfo = () => {
           <div className="settings-submit-form-top-section ">
             <div className="container-main  ">
               <div className="left-container-side">
-                <h4 class="text-center">Contact Information</h4>
+                <h4 className="text-center">Contact Information</h4>
                 <hr />
                 <form>
-                  <div class="form-item">
-                    <label for="name" class="form-label">
+                  <div className="form-item">
+                    <label htmlFor="name" className="form-label">
                       Company Name
                     </label>
-                    <div class="form-input">
+                    <div className="form-input">
                       <div className="form-input-item">
                         {formState.companyName}
                       </div>
                     </div>
                   </div>
-                  <div class="form-item">
+                  <div className="form-item">
                     <label
-                      for="physicaladdress"
+                      htmlFor="physicaladdress"
                       className={
-                        errors.pAddress ? "required form-label" : "form-label"
+                        errors.pAddress ? 'required form-label' : 'form-label'
                       }
                     >
                       Physical Adress
                     </label>
-                    <div class="form-input">
+                    <div className="form-input">
                       <Input
                         handleChange={handleChange}
                         name="pAddress"
@@ -103,16 +105,16 @@ const UpdateCompanyInfo = () => {
                       />
                     </div>
                   </div>
-                  <div class="form-item">
+                  <div className="form-item">
                     <label
-                      for="pobox"
+                      htmlFor="pobox"
                       className={
-                        errors.boxAddress ? "required form-label" : "form-label"
+                        errors.boxAddress ? 'required form-label' : 'form-label'
                       }
                     >
                       P.O. Box Address
                     </label>
-                    <div class="form-input">
+                    <div className="form-input">
                       <Input
                         handleChange={handleChange}
                         value={formState.boxAddress}
@@ -122,16 +124,16 @@ const UpdateCompanyInfo = () => {
                       />
                     </div>
                   </div>
-                  <div class="form-item">
+                  <div className="form-item">
                     <label
-                      for="pobox"
+                      htmlFor="pobox"
                       className={
-                        errors.email ? "required form-label" : "form-label"
+                        errors.email ? 'required form-label' : 'form-label'
                       }
                     >
                       Email Address 1
                     </label>
-                    <div class="form-input">
+                    <div className="form-input">
                       <Input
                         handleChange={handleChange}
                         value={formState.email}
@@ -142,14 +144,14 @@ const UpdateCompanyInfo = () => {
                       />
                     </div>
                   </div>
-                  <div class="form-item">
+                  <div className="form-item">
                     <label
-                      for="pobox"
-                      class={errors.phone ? "form-label" : "form-label"}
+                      htmlFor="pobox"
+                      className={errors.phone ? 'form-label' : 'form-label'}
                     >
                       Phone 1
                     </label>
-                    <div class="form-input">
+                    <div className="form-input">
                       <Input
                         handleChange={handleChange}
                         value={formState.phone}
@@ -160,11 +162,11 @@ const UpdateCompanyInfo = () => {
                       />
                     </div>
                   </div>
-                  <div class="form-item">
-                    <label for="pobox" class="form-label">
+                  <div className="form-item">
+                    <label htmlFor="pobox" className="form-label">
                       Website
                     </label>
-                    <div class="form-input">
+                    <div className="form-input">
                       <Input
                         handleChange={handleChange}
                         value={formState.website}
@@ -179,12 +181,12 @@ const UpdateCompanyInfo = () => {
               </div>
               <div className="right-container-side">
                 <div className="password-policy">
-                  <h4 class="text-center">Password Policy</h4>
+                  <h4 className="text-center">Password Policy</h4>
                   <hr />
                   <form>
-                    <div class="form-item">
+                    <div className="form-item">
                       <Label name="Enforce Password History" />
-                      <div class="form-input-number">
+                      <div className="form-input-number">
                         <Input
                           handleChange={handleChange}
                           value={formState.pswdHistory}
@@ -195,9 +197,9 @@ const UpdateCompanyInfo = () => {
                       </div>
                       <Label name="Passwords" icon="&#63;" />
                     </div>
-                    <div class="form-item">
+                    <div className="form-item">
                       <Label name="Maximum Password Age" />
-                      <div class="form-input-number">
+                      <div className="form-input-number">
                         <Input
                           handleChange={handleChange}
                           value={formState.pswdAge}
@@ -208,9 +210,9 @@ const UpdateCompanyInfo = () => {
                       </div>
                       <Label name="Days" icon="&#63;" />
                     </div>
-                    <div class="form-item">
+                    <div className="form-item">
                       <Label name="Minimum Password Length" />
-                      <div class="form-input-number">
+                      <div className="form-input-number">
                         <Input
                           handleChange={handleChange}
                           value={formState.pswdLength}
@@ -222,9 +224,9 @@ const UpdateCompanyInfo = () => {
                       <Label name="Characters" icon="&#63;" />
                     </div>
 
-                    <div class="form-item">
+                    <div className="form-item">
                       <Label name="Lock System After" />
-                      <div class="form-input-number">
+                      <div className="form-input-number">
                         <Input
                           handleChange={handleChange}
                           value={formState.lockSysPeriod}
@@ -241,7 +243,7 @@ const UpdateCompanyInfo = () => {
                   <button
                     type="button"
                     onClick={updateData}
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: 'none' }}
                     className="buttons-link"
                   >
                     Update Info
@@ -249,7 +251,7 @@ const UpdateCompanyInfo = () => {
                   <button
                     type="button"
                     onClick={clearForm}
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: 'none' }}
                     className="buttons-link"
                   >
                     Cancel

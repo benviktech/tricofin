@@ -1,27 +1,29 @@
+/* eslint-disable no-unused-vars */
+
+import { toast } from 'react-toastify';
 import {
   FetchCompanyInfoRequest,
   UpdateCompanyInfoRequest,
-} from "../utils/api";
-import { toast } from "react-toastify";
+} from '../utils/api';
 
-export const FETCH_COMPANY_INFO_SUCCESS = "FETCH_COMPANY_INFO_SUCCESS";
-export const POST_COMPANY_INFO_SUCCESS = "POST_COMPANY_INFO_SUCCESS";
-export const LOADING_CONTENT = "LOADING_CONTENT";
-export const LOADING_ERROR = "LOADING_ERROR";
+export const FETCH_COMPANY_INFO_SUCCESS = 'FETCH_COMPANY_INFO_SUCCESS';
+export const POST_COMPANY_INFO_SUCCESS = 'POST_COMPANY_INFO_SUCCESS';
+export const LOADING_CONTENT = 'LOADING_CONTENT';
+export const LOADING_ERROR = 'LOADING_ERROR';
 
-export const companyInfoSuccessFetch = (data) => ({
+export const companyInfoSuccessFetch = data => ({
   type: FETCH_COMPANY_INFO_SUCCESS,
   payload: data,
 });
 
-export const companyInfoSuccessPost = (data) => ({
+export const companyInfoSuccessPost = data => ({
   type: POST_COMPANY_INFO_SUCCESS,
   payload: data,
 });
 
-export const fetchCompanyInfo = () => async (dispatch) => {
-  const method = "get";
-  const path = "/api/System/GetSystemSettings";
+export const fetchCompanyInfo = () => async dispatch => {
+  const method = 'get';
+  const path = '/api/System/GetSystemSettings';
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await FetchCompanyInfoRequest(method, path);
@@ -31,9 +33,9 @@ export const fetchCompanyInfo = () => async (dispatch) => {
   }
 };
 
-export const updateCompanyInfo = (data) => async (dispatch) => {
-  const method = "put";
-  const path = "api/System/UpdateSystemSettings";
+export const updateCompanyInfo = data => async dispatch => {
+  const method = 'put';
+  const path = 'api/System/UpdateSystemSettings';
   const result = {
     companyID: data.companyID,
     companyName: data.companyName,

@@ -5,7 +5,7 @@ export default function accessRightsValidator(values) {
   const errors = {};
 
   if (!values.roleID.trim()) {
-    errors.roleID = "Choose a Role to set its Rights";
+    errors.roleID = 'Choose a Role to set its Rights';
   }
 
   // if (!values.columnID) {
