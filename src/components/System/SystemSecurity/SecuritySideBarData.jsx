@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable key-spacing */
+/* eslint-disable no-multiple-empty-lines */
+
 import React from 'react';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';

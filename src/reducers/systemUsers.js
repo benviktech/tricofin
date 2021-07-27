@@ -1,8 +1,8 @@
-import { LOADING_CONTENT, LOADING_ERROR } from "../actions/systemUser";
+import { LOADING_CONTENT, LOADING_ERROR } from '../actions/systemUser';
 
 const initialState = {
   systemUser: {},
-  error: "",
+  error: '',
   loading: true,
 };
 
@@ -12,7 +12,7 @@ const systemUserReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: "",
+        error: '',
       };
     case LOADING_ERROR:
       return {

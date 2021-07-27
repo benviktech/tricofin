@@ -1,35 +1,35 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from "../Home";
-import Navbar from "../Navbar";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import IndividualCustomerForm from "../Customer/IndividualCustomerForm";
-import ViewIndividualCustomer from "../Customer/IndividualCustomerView";
-import UpdateIndividualCustomer from "../Customer/UpdateIndividualCustomer";
-import Footer from "../Footer/Footer";
-import Signature from "../Pages/Signature";
-import Indentification from "../Pages/Indentification";
-import PrimaryContactInfo from "../Pages/PrimaryContactInfo";
-import SecondaryContactInfo from "../Pages/SecondaryContactInfo";
-import NonIndidualCustomerForm from "../NonIdividual/NonIndidualForm";
-import NonIndividualCustomerView from "../NonIdividual/NonIndividualCustomerView";
-import UpdateNonIndidualCustomerForm from "../NonIdividual/UpdateNonIndividual";
-import NonIndividualSecondaryContact from "../Pages/NonIndividualSecondaryContact";
-import NonIndividualPrimaryContact from "../Pages/NonIndividualPrimaryContact";
-import NonIndividualIdentification from "../Pages/NonIndividualIdentification";
-import DirectorsInfo from "../Pages/DirectorsInfo";
-import SystemSecurityRoles from "../System/SystemSecurity/SystemRoles";
-import SystemSecurityRights from "../System/SystemSecurity/SystemRights";
-import SystemSecurityMaintenance from "../System/SystemSecurity/SystemMaintenance";
-import UpdateCompanyInfo from "../System/SystemSettings/UpdateCompanyInfo";
-import SystemHolidays from "../System/SystemSettings/SystemHolidays";
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import Home from '../Home';
+import Navbar from '../Navbar';
+import 'react-toastify/dist/ReactToastify.css';
+import IndividualCustomerForm from '../Customer/IndividualCustomerForm';
+import ViewIndividualCustomer from '../Customer/IndividualCustomerView';
+import UpdateIndividualCustomer from '../Customer/UpdateIndividualCustomer';
+import Footer from '../Footer/Footer';
+import Signature from '../Pages/Signature';
+import Indentification from '../Pages/Indentification';
+import PrimaryContactInfo from '../Pages/PrimaryContactInfo';
+import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
+import NonIndidualCustomerForm from '../NonIdividual/NonIndidualForm';
+import NonIndividualCustomerView from '../NonIdividual/NonIndividualCustomerView';
+import UpdateNonIndidualCustomerForm from '../NonIdividual/UpdateNonIndividual';
+import NonIndividualSecondaryContact from '../Pages/NonIndividualSecondaryContact';
+import NonIndividualPrimaryContact from '../Pages/NonIndividualPrimaryContact';
+import NonIndividualIdentification from '../Pages/NonIndividualIdentification';
+import DirectorsInfo from '../Pages/DirectorsInfo';
+import SystemSecurityRoles from '../System/SystemSecurity/SystemRoles';
+import SystemSecurityRights from '../System/SystemSecurity/SystemRights';
+import SystemSecurityMaintenance from '../System/SystemSecurity/SystemMaintenance';
+import UpdateCompanyInfo from '../System/SystemSettings/UpdateCompanyInfo';
+import SystemHolidays from '../System/SystemSettings/SystemHolidays';
 
 const Router = () => (
   <div className="router-section">
     <BrowserRouter>
       <Navbar />
-      <ToastContainer hideProgressBar={true} limit={1} />
+      <ToastContainer hideProgressBar limit={1} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/individualcustomerform" component={IndividualCustomerForm} />

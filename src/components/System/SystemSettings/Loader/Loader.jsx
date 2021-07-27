@@ -1,7 +1,9 @@
-import React from "react";
-import Spinner from "../../../Spinner/Spinner";
-import SettingsSidebar from "../SettingsSideBar";
-import "./index.css";
+/* eslint-disable react/prop-types */
+
+import React from 'react';
+import Spinner from '../../../Spinner/Spinner';
+import SettingsSidebar from '../SettingsSideBar';
+import './index.css';
 
 function Loader({ headerText }) {
   return (

@@ -4,11 +4,11 @@ import {
   LOADING_ERROR,
   CREATE_ROLE_INFO_SUCCESS,
   UPDATE_ROLE_INFO_SUCCESS,
-} from "../actions/systemRole";
+} from '../actions/systemRole';
 
 const initialState = {
   systemRoles: [],
-  error: "",
+  error: '',
   loading: true,
 };
 
@@ -18,28 +18,28 @@ const systemRoleReducer = (state = initialState, action) => {
       return {
         ...state,
         systemRoles: action.payload,
-        error: "",
+        error: '',
         loading: false,
       };
     case CREATE_ROLE_INFO_SUCCESS:
       return {
         ...state,
         systemRoles: action.payload,
-        error: "",
+        error: '',
         loading: false,
       };
     case UPDATE_ROLE_INFO_SUCCESS:
       return {
         ...state,
         systemRoles: action.payload,
-        error: "",
+        error: '',
         loading: false,
       };
     case LOADING_CONTENT:
       return {
         ...state,
         loading: true,
-        error: "",
+        error: '',
       };
     case LOADING_ERROR:
       return {

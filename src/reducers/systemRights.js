@@ -2,11 +2,11 @@ import {
   FETCH_MODULE_INFO_SUCCESS,
   LOADING_CONTENT,
   LOADING_ERROR,
-} from "../actions/systemRight";
+} from '../actions/systemRight';
 
 const initialState = {
   systemModules: [],
-  error: "",
+  error: '',
   loading: false,
 };
 
@@ -16,14 +16,14 @@ const systemModuleReducer = (state = initialState, action) => {
       return {
         ...state,
         systemModules: action.payload,
-        error: "",
+        error: '',
         loading: false,
       };
     case LOADING_CONTENT:
       return {
         ...state,
         loading: true,
-        error: "",
+        error: '',
       };
     case LOADING_ERROR:
       return {

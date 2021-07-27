@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
-import { useParams } from "react-router";
-import axios from "axios";
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 
-const baseUrl = "https://tricofin.azurewebsites.net";
+import React, { useEffect, useState } from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router';
+import axios from 'axios';
+
+const baseUrl = 'https://tricofin.azurewebsites.net';
 
 const RoleMembers = () => {
   const { id } = useParams();
@@ -14,17 +17,15 @@ const RoleMembers = () => {
   const fetchSystemUsers = async () => {
     axios
       .get(`${baseUrl}/api/System/GetSystemUsers`)
-      .then(function (response) {
+      .then(response => {
         setUsers(response.data);
       })
-      .catch(function (error) {});
+      .catch(error => {});
   };
 
-  const filterUsers = (id) => {
+  const filterUsers = id => {
     if (id) {
-      const filteredtempusers = users.filter((user) =>
-        user.roleID.toLowerCase().includes(id.toLowerCase())
-      );
+      const filteredtempusers = users.filter(user => user.roleID.toLowerCase().includes(id.toLowerCase()));
       setFilteredUsers(filteredtempusers);
     } else {
       setFilteredUsers([]);
@@ -48,7 +49,7 @@ const RoleMembers = () => {
             <div className="column-two">UserName</div>
             <div className="column-three">Surname</div>
           </div>
-          {filteredUsers.map((user) => (
+          {filteredUsers.map(user => (
             <div key={user.userName} className="roles-header-section">
               <div className="column-two">{user.userName}</div>
               <div className="column-three">{user.surName}</div>

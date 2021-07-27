@@ -2,47 +2,52 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-key */
 
-import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch, Switch, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
-import SecuritySidebar from "./SecuritySideBar";
-import "./index.css";
-import Loader from "./Loader/Loader";
-import RoleMembers from "./RoleMembers";
-import { Button, Input } from "../../_generics/Generics";
+import React, { useEffect, useState } from 'react';
+import {
+  Link, useRouteMatch, Switch, Route,
+} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import SecuritySidebar from './SecuritySideBar';
+import './index.css';
+import Loader from './Loader/Loader';
+import RoleMembers from './RoleMembers';
+import { Button, Input } from '../../_generics/Generics';
 import {
   createSystemRole,
   fetchSystemRoles,
   UpdateSystemRole,
   DeleteSystemRole,
-} from "../../../actions/systemRole";
+} from '../../../actions/systemRole';
 
 const SystemSecurityRoles = () => {
   const dispatch = useDispatch();
   const initialState = {
-    roleID: "",
-    description: "",
-    createdOn: "2021-05-30T15:02:01.437Z",
-    createdBy: "BENVIK",
-    modifiedOn: "2021-05-30T15:02:01.437Z",
-    modifiedBy: "BENVIK",
+    roleID: '',
+    description: '',
+    createdOn: '2021-05-30T15:02:01.437Z',
+    createdBy: 'BENVIK',
+    modifiedOn: '2021-05-30T15:02:01.437Z',
+    modifiedBy: 'BENVIK',
   };
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const { path, url } = useRouteMatch();
 
-  const roles = useSelector((state) => state.systemRoleReducer);
-  const role = useSelector((state) => state.systemRoleReducer?.systemRoles);
-  const loadingError = useSelector((state) => state.systemRoleReducer?.error);
-  const companyInfo = useSelector((state) => state.companyInfoReducer);
+  const roles = useSelector(state => state.systemRoleReducer);
+  const role = useSelector(state => state.systemRoleReducer?.systemRoles);
+  const loadingError = useSelector(state => state.systemRoleReducer?.error);
+  const companyInfo = useSelector(state => state.companyInfoReducer);
 
   useEffect(() => {
     dispatch(fetchSystemRoles());
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -50,13 +55,13 @@ const SystemSecurityRoles = () => {
     });
   };
 
-  const RoleValidator = (values) => {
+  const RoleValidator = values => {
     const result = {};
-    if (!values.description.trim("")) {
-      result.description = "Description is required";
+    if (!values.description.trim('')) {
+      result.description = 'Description is required';
     }
-    if (!values.roleID.trim("")) {
-      result.roleID = "Role ID is required";
+    if (!values.roleID.trim('')) {
+      result.roleID = 'Role ID is required';
     }
     return result;
   };
@@ -111,10 +116,10 @@ const SystemSecurityRoles = () => {
                   <label
                     htmlFor="role-id"
                     className={
-                      errors.roleID ? "required form-label" : "form-label"
+                      errors.roleID ? 'required form-label' : 'form-label'
                     }
                   >
-                    {" "}
+                    {' '}
                     Role Id:
                   </label>
                   <Input
@@ -130,10 +135,10 @@ const SystemSecurityRoles = () => {
                   <label
                     htmlFor="description"
                     className={
-                      errors.description ? "required form-label" : "form-label"
+                      errors.description ? 'required form-label' : 'form-label'
                     }
                   >
-                    {" "}
+                    {' '}
                     Description:
                   </label>
                   <Input
@@ -154,7 +159,7 @@ const SystemSecurityRoles = () => {
                     <div className="column-two">Role ID</div>
                     <div className="column-three">Description</div>
                   </div>
-                  {roles.systemRoles.map((role) => (
+                  {roles.systemRoles.map(role => (
                     <div className="roles-header-section">
                       <Link
                         to={{
@@ -177,13 +182,11 @@ const SystemSecurityRoles = () => {
                           pathname: `${url}/${role.roleID}`,
                         }}
                         className="column-three"
-                        onClick={() =>
-                          setValues({
-                            ...values,
-                            roleID: role.roleID,
-                            description: role.description,
-                          })
-                        }
+                        onClick={() => setValues({
+                          ...values,
+                          roleID: role.roleID,
+                          description: role.description,
+                        })}
                       >
                         {role.description}
                       </Link>
@@ -193,7 +196,7 @@ const SystemSecurityRoles = () => {
               </div>
               <div className="display-users-section">
                 <Switch>
-                  <Route path={`${path}/:id`} component={RoleMembers}></Route>
+                  <Route path={`${path}/:id`} component={RoleMembers} />
                 </Switch>
               </div>
             </div>
