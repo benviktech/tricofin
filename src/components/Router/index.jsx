@@ -24,6 +24,10 @@ import SystemSecurityRights from '../System/SystemSecurity/SystemRights';
 import SystemSecurityMaintenance from '../System/SystemSecurity/SystemMaintenance';
 import UpdateCompanyInfo from '../System/SystemSettings/UpdateCompanyInfo';
 import SystemHolidays from '../System/SystemSettings/SystemHolidays';
+import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
+import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
+import GroupMembers from '../Pages/GroupMembers';
+import UpdateGroupMaintenance from '../GroupMaintenance/UpdateGroupMaintenance';
 
 const Router = () => (
   <div className="router-section">
@@ -45,26 +49,16 @@ const Router = () => (
         <Route path="/nonindividualsecondarycontactinfo/:id" component={NonIndividualSecondaryContact} />
         <Route path="/nonindividualprimarycontactinfo/:id" component={NonIndividualPrimaryContact} />
         <Route path="/directorsinformation/:id" component={DirectorsInfo} />
-        <Route
-          path="/identificationinfo/:id"
-          component={NonIndividualIdentification}
-        />
-        <Route
-          path="/system/systemsettings/updatecompanyinfo"
-          component={UpdateCompanyInfo}
-        />
-        <Route
-          path="/system/systemsecurity/roles"
-          component={SystemSecurityRoles}
-        />
-        <Route
-          path="/system/systemsecurity/rights"
-          component={SystemSecurityRights}
-        />
-        <Route
-          path="/system/systemsecurity/adduser"
-          component={SystemSecurityMaintenance}
-        />
+        <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
+        <Route path="/groupmaintenanceform" component={GroupMaintenance} />
+        <Route path="/groupmaintenanceview/:id" component={GroupMaintenanceView} />
+        <Route path="/groupmembers/:id" component={GroupMembers} />
+        <Route path="/updategroupmember/:id" component={UpdateGroupMaintenance} />
+        <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
+        <Route path="/system/systemsettings/updatecompanyinfo" component={UpdateCompanyInfo} />
+        <Route path="/system/systemsecurity/roles" component={SystemSecurityRoles} />
+        <Route path="/system/systemsecurity/rights" component={SystemSecurityRights} />
+        <Route path="/system/systemsecurity/adduser" component={SystemSecurityMaintenance} />
         <Route path="/system/holiday/holidays" component={SystemHolidays} />
       </Switch>
       <Footer />
