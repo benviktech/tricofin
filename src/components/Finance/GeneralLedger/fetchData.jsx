@@ -29,7 +29,7 @@ const fetchData = () => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get('  https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerIDs');
+      const response = await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerIDs');
       setResponseData(response.data);
     } catch (error) {
       console.log(error.message);
