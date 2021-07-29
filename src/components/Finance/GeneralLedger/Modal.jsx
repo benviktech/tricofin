@@ -13,7 +13,7 @@ const Modal = () => (
             Balance:
           </div>
           <div className="scenes-details">
-            0.00
+            <span className="mr-2">0.00</span>
           </div>
         </div>
         <div className="each-scene">
@@ -21,7 +21,7 @@ const Modal = () => (
             Un supervised CR:
           </div>
           <div className="scenes-details">
-            0.00
+            <span className="mr-2">0.00</span>
           </div>
         </div>
         <div className="each-scene">
@@ -29,7 +29,7 @@ const Modal = () => (
             Un supervised DR:
           </div>
           <div className="scenes-details">
-            0.00
+            <span className="mr-2">0.00</span>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@ const Modal = () => (
             CR TurnOver:
           </div>
           <div className="scenes-details">
-            0.00
+            <span className="mr-2">0.00</span>
           </div>
         </div>
         <div className="each-scene">
@@ -47,7 +47,7 @@ const Modal = () => (
             DR TurnOver:
           </div>
           <div className="scenes-details">
-            0.00
+            <span className="mr-2">0.00</span>
           </div>
         </div>
       </div>

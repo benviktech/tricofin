@@ -107,19 +107,57 @@
 }
 
 .scenes-span,
-.scenes-details {
+.scenes-details,
+.scenes-details-buttons {
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  padding: 5px 20px 5px 0;
+  padding: 5px 0;
   font-weight: 600;
   font-size: 12px;
 }
 
-.scenes-details {
+.scenes-span {
+  padding-right: 20px;
+}
+.scenes-details,
+.scenes-details-buttons {
   background-color: #fff;
   flex: 2;
   cursor: pointer;
+}
+
+.scenes-details span,
+.scenes-details-buttons span {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.scenes-details-last-one,
+.scenes-details-last-two {
+  padding: 5px;
+  background-color: #fff;
+}
+
+.scenes-details-last-one {
+  flex: 1;
+  margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.scenes-details-last-two {
+  right: 0;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scenes-details-buttons {
+  background-color: #F3F2F1;
+  padding: 0;
+  justify-content: flex-start;
 }
 
 .left-inner-subtypes-section,
@@ -162,6 +200,7 @@
 }
 
 .left-subtypes-input select,
+.right-subtypes-input select,
 .current-type-number {
   height: 30px;
   border: none;
@@ -305,4 +344,19 @@
   font-weight: 600;
   top: 35px;
   left: 0;
+}
+
+.id-information-section {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  background-color: #f3f2f1;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
