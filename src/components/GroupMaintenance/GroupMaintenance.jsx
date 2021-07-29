@@ -136,8 +136,8 @@ const GroupMaintenance = () => {
                     searchedCustomerGroup === '' ? (
                       <div className="modal-hide-section" />
                     ) : (
-                      <div className="modal-popup-section">
-                        <div className="inner-section-modal-section">
+                      <div className="modal-popup-section-new">
+                        <div className="inner-section-modal-section-new">
                           {
                             Array.from(new Set(finalSortedListGroup)).map(customer => (
                               <Link
@@ -145,7 +145,7 @@ const GroupMaintenance = () => {
                                 to={{
                                   pathname: `/groupmaintenanceview/${customer.groupID}`,
                                 }}
-                                className="inner-section-modal-section-inner border"
+                                className="inner-section-modal-section-inner-new border"
                                 key={customer.groupID}
                               >
                                 <div className="modal-customer-name-section mr-2">
