@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { getGeneralLedgerID } from '../../../actions/generalLedger';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
@@ -90,7 +91,15 @@ const SingleGeneralLedgerId = () => {
               </div>
               <div className="submit-section">
                 <button type="submit"> Update </button>
-                <button type="button"> Cancel </button>
+                <Link
+                  type="button"
+                  className="ml-1 edit-button"
+                  to={{
+                    pathname: '/glidentification',
+                  }}
+                >
+                  Cancel
+                </Link>
               </div>
             </form>
             {
