@@ -2,6 +2,8 @@ import {
   GetGeneralLedgerSubTypes,
   PostGeneralLedgerSubTypes,
   UpdateGeneralLedgerSubType,
+  SaveGeneralLedgerID,
+  GetGeneralLedgerID,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -9,6 +11,7 @@ export const LOADING_CONTENT = 'LOADING_CONTENT';
 export const LOADING_ERROR = 'LOADING_ERROR';
 export const FETCH_SINGLE_GENERAL_LEDGER = 'FETCH_SINGLE_GENERAL_LEDGER';
 export const FETCH_SINGLE_GENERAL_LEDGER_UPDATE = 'FETCH_SINGLE_GENERAL_LEDGER_UPDATE';
+export const POST_GENERAL_LEDGER_ID = 'POST_GENERAL_LEDGER_ID';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -22,6 +25,11 @@ export const singleGeneralLedgerSubTypes = data => ({
 
 export const changeGeneralLedgerSubTypes = data => ({
   type: FETCH_SINGLE_GENERAL_LEDGER_UPDATE,
+  payload: data,
+});
+
+export const postGeneralLedgerID = data => ({
+  type: POST_GENERAL_LEDGER_ID,
   payload: data,
 });
 
@@ -43,9 +51,9 @@ export const postGeneralLedgerSubTypes = data => async dispatch => {
   const values = {
     glSubType: data.description,
     glTypeID: data.subtype,
-    createdOn: '2021-07-24T20:16:20.638Z',
+    createdOn: (new Date()).toISOString(),
     createdBy: 'BENVIK',
-    modifiedOn: '2021-07-24T20:16:20.638Z',
+    modifiedOn: (new Date()).toISOString(),
     modifiedBy: 'BENVIK',
   };
   try {
@@ -63,8 +71,40 @@ export const updateGeneralLedgerSubType = data => async dispatch => {
   try {
     dispatch({ type: LOADING_CONTENT });
     const response = await UpdateGeneralLedgerSubType(method, path, data);
-    console.log(response.data, 'updated data');
     dispatch(changeGeneralLedgerSubTypes(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const saveGeneralLedgerID = (values, history) => async dispatch => {
+  const path = '/api/Finance/SaveGeneralLedgerID';
+  const method = 'post';
+  const data = {
+    glName: values.name,
+    glType: values.glMainType,
+    glSubType: values.glSubType,
+    createdOn: (new Date()).toISOString(),
+    createdBy: 'BENVIK',
+    modifiedOn: (new Date()).toISOString(),
+    modifiedBy: 'BENVIK',
+  };
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await SaveGeneralLedgerID(method, path, data);
+    history.push(`/genlidentification/${response.data.glid}`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const getGeneralLedgerID = id => async dispatch => {
+  const path = `/api/Finance/GetGeneralLedgerID/${id}`;
+  const method = 'get';
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await GetGeneralLedgerID(method, path);
+    dispatch(postGeneralLedgerID(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
