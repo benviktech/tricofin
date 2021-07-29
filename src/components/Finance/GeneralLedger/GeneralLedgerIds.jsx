@@ -1,12 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import IdModal from './IdModal';
 import { saveGeneralLedgerID } from '../../../actions/generalLedger';
+import fetchData from './fetchData';
 
 const initialState = {
   glMainType: '',
@@ -15,30 +15,11 @@ const initialState = {
 };
 
 const GeneralLedgerIds = () => {
-  const [glTypes, setGlTypes] = useState([]);
-  const [glSubTypes, setGlSubTypes] = useState([]);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialState);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerTypes')
-        .then(response => setGlTypes(response.data))
-        .catch(error => console.log(error.message));
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerSubTypes')
-        .then(response => setGlSubTypes(response.data))
-        .catch(error => console.log(error.message));
-    };
-    fetchData();
-  }, []);
+  const { glTypes, glSubTypes } = fetchData();
 
   const handleChange = e => {
     const { name, value } = e.target;
