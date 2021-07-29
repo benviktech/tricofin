@@ -1,7 +1,7 @@
 .nav-section {
-  position:fixed;
-  width:100%;
-  top:0;
+  position: fixed;
+  width: 100%;
+  top: 0;
   z-index: 20;
   margin-bottom: 60px;
 }
@@ -12,7 +12,7 @@
 }
 
 .navbar-light {
-  background-color: #0178D4;
+  background-color: #0178d4;
   height: 60px;
 }
 
@@ -29,3 +29,33 @@
 .link-fa-user div {
   margin-left: -120px;
 }
+
+.sub-nav-dropdown {
+  position: relative;
+}
+
+.dropbtn {
+  border: none;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 0;
+  left: 161px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 5px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover { background-color: #ddd; }
+
+.sub-nav-dropdown:hover .dropdown-content { display: block; }

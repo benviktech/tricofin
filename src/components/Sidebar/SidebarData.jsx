@@ -90,3 +90,34 @@ export const GroupMaintenanceData = [
     ],
   },
 ];
+
+export const GeneralLedgerData = [
+  {
+    title: 'General Ledger',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'GL IDs',
+        path: '/glidentification',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
+      },
+      {
+        title: 'Bulk Authorize Accounts',
+        path: '/bulkauthorize',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+      {
+        title: 'GL Subtypes',
+        path: '/glsubtypes',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+      {
+        title: 'Replicate GL',
+        path: '/glreplicate',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+    ],
+  },
+];

@@ -146,6 +146,11 @@ export const FetchSystemModuleRequest = async (method, path) => {
   return response;
 };
 
+export const GetGeneralLedgerSubTypes = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+
 export const FetchSystemRoleRequest = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
@@ -157,6 +162,11 @@ export const PostSystemsRoleRequest = async (method, path, data) => {
 };
 
 export const UpdateSystemsRoleRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const PostGeneralLedgerSubTypes = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
@@ -177,6 +187,20 @@ export const UpdateSystemUserRequest = async (method, path, data) => {
 };
 
 export const DeleteSystemUserRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+export const UpdateGeneralLedgerSubType = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const SaveGeneralLedgerID = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const GetGeneralLedgerID = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };

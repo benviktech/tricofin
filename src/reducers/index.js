@@ -8,6 +8,7 @@ import companyInfoReducer from './systemCompanyInfos';
 import systemModuleReducer from './systemRights';
 import systemRoleReducer from './systemRoles';
 import systemUserReducer from './systemUsers';
+import generalLedgerReducer from './generalLedger';
 
 const rootReducer = combineReducers({
   individualCustomersReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   systemModuleReducer,
   systemRoleReducer,
   systemUserReducer,
+  generalLedgerReducer,
 });
 
 export default rootReducer;

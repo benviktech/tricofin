@@ -28,6 +28,11 @@ import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
 import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
 import GroupMembers from '../Pages/GroupMembers';
 import UpdateGroupMaintenance from '../GroupMaintenance/UpdateGroupMaintenance';
+import GeneralLedgerMaintenance from '../Finance/GeneralLedger/GeneralLedgerMaintenance';
+import Transaction from '../Finance/Transactions/Transaction';
+import GeneralLedgerSubtypes from '../Finance/GeneralLedger/GeneralLedgerSubtypes';
+import GeneralLedgerIds from '../Finance/GeneralLedger/GeneralLedgerIds';
+import SingleGeneralLedgerId from '../Finance/GeneralLedger/SingleGeneralLedgerId';
 
 const Router = () => (
   <div className="router-section">
@@ -60,6 +65,12 @@ const Router = () => (
         <Route path="/system/systemsecurity/rights" component={SystemSecurityRights} />
         <Route path="/system/systemsecurity/adduser" component={SystemSecurityMaintenance} />
         <Route path="/system/holiday/holidays" component={SystemHolidays} />
+        <Route path="generaledgermaintenance" component={GeneralLedgerMaintenance} />
+        <Route path="/generaledgermaintenance" component={GeneralLedgerMaintenance} />
+        <Route path="/transactions" component={Transaction} />
+        <Route path="/glsubtypes" component={GeneralLedgerSubtypes} />
+        <Route path="/glidentification" component={GeneralLedgerIds} />
+        <Route exact path="/genlidentification/:id" component={SingleGeneralLedgerId} />
       </Switch>
       <Footer />
     </BrowserRouter>

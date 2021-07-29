@@ -56,15 +56,37 @@ const NavbarData = [
       {
         to: '#',
 
-        linkText: 'Action',
+        linkText: 'General Ledger',
+        subNavList: [
+          {
+            to: '/generaledgermaintenance',
+            linkText: 'GL Maintenance',
+          },
+          {
+            to: '/generaledgerpayments',
+            linkText: 'General Ledger Payments',
+          },
+          {
+            to: '/generaledgerreports',
+            linkText: 'General Ledger Reports',
+          },
+        ],
       },
       {
         to: '#',
-        linkText: 'Another action',
+        linkText: 'Transactions',
       },
       {
         to: '#',
-        linkText: 'Something else here',
+        linkText: 'Batch Transactions',
+      },
+      {
+        to: '#',
+        linkText: 'Transaction Codes',
+      },
+      {
+        to: '#',
+        linkText: 'Fixed Accounts',
       },
     ],
   },
