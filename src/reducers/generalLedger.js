@@ -5,12 +5,14 @@ import {
   LOADING_ERROR,
   FETCH_SINGLE_GENERAL_LEDGER,
   FETCH_SINGLE_GENERAL_LEDGER_UPDATE,
+  POST_GENERAL_LEDGER_ID,
 } from '../actions/generalLedger';
 
 const initialState = {
   error: '',
   loading: false,
   subTypeList: [],
+  generalLedgerID: {},
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -19,6 +21,13 @@ const generalLedgerReducer = (state = initialState, action) => {
       return {
         ...state,
         subTypeList: action.payload,
+        error: '',
+        loading: false,
+      };
+    case POST_GENERAL_LEDGER_ID:
+      return {
+        ...state,
+        generalLedgerID: action.payload,
         error: '',
         loading: false,
       };
