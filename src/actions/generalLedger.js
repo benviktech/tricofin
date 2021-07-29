@@ -4,6 +4,7 @@ import {
   UpdateGeneralLedgerSubType,
   SaveGeneralLedgerID,
   GetGeneralLedgerID,
+  UpdateGeneralLedgerID,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -105,6 +106,18 @@ export const getGeneralLedgerID = id => async dispatch => {
     dispatch({ type: LOADING_CONTENT });
     const response = await GetGeneralLedgerID(method, path);
     dispatch(postGeneralLedgerID(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const updateGeneralLedgerID = data => async dispatch => {
+  const path = '/api/Finance/UpdateGeneralLedgerID';
+  const method = 'put';
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await UpdateGeneralLedgerID(method, path, data);
+    dispatch(postGeneralLedgerID(response?.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
