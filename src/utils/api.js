@@ -194,3 +194,13 @@ export const UpdateGeneralLedgerSubType = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const SaveGeneralLedgerID = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const GetGeneralLedgerID = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
