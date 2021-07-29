@@ -2,34 +2,40 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable consistent-return */
+/* eslint-disable import/order */
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-use-before-define */
 
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import SetingsSidebar from "./SettingsSideBar";
-import "./index.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Loader from "./Loader/Loader";
-import { Button, Input } from "../../_generics/Generics";
-import axios from "axios";
-import * as RiIcons from "react-icons/ri";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import * as RiIcons from 'react-icons/ri';
+import axios from 'axios';
+import SetingsSidebar from './SettingsSideBar';
+import './index.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import Loader from './Loader/Loader';
+import { Button, Input } from '../../_generics/Generics';
 
-const baseUrl = "https://tricofin.azurewebsites.net";
+const baseUrl = 'https://tricofin.azurewebsites.net';
 
 const SystemHolidays = () => {
   const dispatch = useDispatch();
 
   const [startDate, setStartDate] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(null);
   const [holidays, setHolidays] = useState([]);
   const [errors, setErrors] = useState({});
   const initialHolidate = {
     holidayDate: startDate,
-    remarks: "",
+    remarks: '',
     createdOn: formatDateTime(new Date()),
-    modifiedBy: "BENEVIK",
-    createdBy: "BENEVIK",
+    modifiedBy: 'BENEVIK',
+    createdBy: 'BENEVIK',
     modifiedOn: formatDateTime(new Date()),
   };
   const [workingDates, setWorkingDates] = useState(initialHolidate);
@@ -39,62 +45,62 @@ const SystemHolidays = () => {
   const fetchSystemHolidays = async () => {
     axios
       .get(`${baseUrl}/api/System/GetSystemHolidays`)
-      .then(function (response) {
-        console.log(response.data)
-        setHolidays([...response.data.map(holiday=>({
+      .then(response => {
+        console.log(response.data);
+        setHolidays([...response.data.map(holiday => ({
           ...holiday,
           holidayDate: formatDateTime(holiday.holidayDate),
           createdOn: formatDateTime(holiday.createdOn),
           modifiedOn: formatDateTime(holiday.modifiedOn),
         }))]);
       })
-      .catch(function (error) {});
+      .catch(error => {});
   };
 
   useEffect(() => {
     fetchSystemHolidays();
   }, []);
-  function formatDateTime (datevalue){
-    if(typeof datevalue === 'object') {
-      console.log(typeof datevalue)
-      let currentDate = datevalue;
-      let date = currentDate.getDate();
-      let month = currentDate.getMonth();
-      let year = currentDate.getFullYear();
-      return currentDate.toISOString().split("T")[0];
+  function formatDateTime(datevalue) {
+    if (typeof datevalue === 'object') {
+      console.log(typeof datevalue);
+      const currentDate = datevalue;
+      const date = currentDate.getDate();
+      const month = currentDate.getMonth();
+      const year = currentDate.getFullYear();
+      return currentDate.toISOString().split('T')[0];
     }
-    if(typeof datevalue === 'string'){
-      return datevalue.split("T")[0];
+    if (typeof datevalue === 'string') {
+      return datevalue.split('T')[0];
     }
-  };
+  }
 
-  function formatDisplayTime (datevalue){
-    if(typeof datevalue === 'string'){
-      let date = (parseInt(datevalue.split("T")[0].split("-")[2],10) + 1).toString()
-      let dateArray = datevalue.split("T")[0].split("-");
+  function formatDisplayTime(datevalue) {
+    if (typeof datevalue === 'string') {
+      const date = (parseInt(datevalue.split('T')[0].split('-')[2], 10) + 1).toString();
+      const dateArray = datevalue.split('T')[0].split('-');
       dateArray[2] = date;
-      return dateArray.join("-");
+      return dateArray.join('-');
     }
-  };
+  }
 
   const createSystemHolidays = async () => {
     const response = HolidayValidator(workingDates);
     setErrors(response);
     if (Object.keys(response).length === 0) {
-      console.log(workingDates)
+      console.log(workingDates);
       axios
         .post(`${baseUrl}/api/System/SaveSystemHolidays`, workingDates)
-        .then(function (response) {
-          setHolidays([...response.data.map(holiday=>({
+        .then(response => {
+          setHolidays([...response.data.map(holiday => ({
             ...holiday,
             holidayDate: formatDateTime(holiday.holidayDate),
             createdOn: formatDateTime(holiday.createdOn),
             modifiedOn: formatDateTime(holiday.modifiedOn),
           }))]);
-          toast.success(`Holiday set Successfully`);
+          toast.success('Holiday set Successfully');
         })
-        .catch(function (error) {
-          toast.warn(`Holiday Already Exists`);
+        .catch(error => {
+          toast.warn('Holiday Already Exists');
         });
     }
   };
@@ -104,76 +110,74 @@ const SystemHolidays = () => {
       .delete(`${baseUrl}/api/System/DeleteSystemHoliday`, {
         data: { ...workingDates },
       })
-      .then(function (response) {
-        setHolidays([...response.data.map(holiday=>({
+      .then(response => {
+        setHolidays([...response.data.map(holiday => ({
           ...holiday,
           holidayDate: formatDateTime(holiday.holidayDate),
           createdOn: formatDateTime(holiday.createdOn),
           modifiedOn: formatDateTime(holiday.modifiedOn),
         }))]);
-        toast.success(`Holiday Removed Successfully`);
+        toast.success('Holiday Removed Successfully');
         setWorkingDates(initialHolidate);
-        setSelectedDate(null)
+        setSelectedDate(null);
         setSelected(false);
       })
-      .catch(function (error) {
-        toast.error(`Failed to Remove holiday!!`);
+      .catch(error => {
+        toast.error('Failed to Remove holiday!!');
       });
   };
 
   const clearDate = () => {
     setWorkingDates({});
     setSelected(false);
-    setSelectedDate(null)
+    setSelectedDate(null);
     // setHolidate(initialHolidate);
     cancelAlert();
   };
 
   const cancelAlert = () => {
     setSelected(false);
-    setSelectedDate(null)
+    setSelectedDate(null);
     setWorkingDates(initialHolidate);
-    setStartDate(new Date())
+    setStartDate(new Date());
   };
 
-  const HolidayValidator = (datesObject) => {
+  const HolidayValidator = datesObject => {
     const result = {};
     if (Object.keys(datesObject).length === 0) {
-      result.date = "Choose a Date";
+      result.date = 'Choose a Date';
     }
-    if (!workingDates.remarks.trim("")) {
-      result.remarks = "A holiday Date must have a remark";
+    if (!workingDates.remarks.trim('')) {
+      result.remarks = 'A holiday Date must have a remark';
     }
     return result;
   };
 
   function dateExists(holidayDate, arr) {
-    return arr.some(function (el) {
-      return el.holidayDate === holidayDate;
-    });
+    return arr.some(el => el.holidayDate === holidayDate);
   }
 
   // useEffect(() => {
   //   setWorkingDates({ ...holidate, holidayDate: formatDateTime(startDate) });
   // }, [startDate]);
 
-  const onChange = (dates) => {
+  const onChange = dates => {
     // const { date, ...newErrors } = errors;
     // setErrors(newErrors);
     // console.log(formatDateTime(dates))
     // console.log(typeof dates)
     setStartDate(dates);
-    console.log(dates)
-    setWorkingDates(currentWorkingDates =>({ ...currentWorkingDates, holidayDate: formatDateTime(dates) }));
+    console.log(dates);
+    setWorkingDates(currentWorkingDates => ({ ...currentWorkingDates, holidayDate: formatDateTime(dates) }));
     // cancelAlert();
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     // const { remarks, ...newErrors } = errors;
     // console.log(name,value)
     // setErrors(newErrors);
-    setWorkingDates(currentState =>({ ...currentState, [name]: value.toUpperCase() }));
+    setWorkingDates(currentState => ({ ...currentState, [name]: value.toUpperCase() }));
   };
 
   return holidays.length >= 0 ? (
@@ -184,13 +188,18 @@ const SystemHolidays = () => {
         </div>
         <div className="settings-lower-downer-section">
           <div className="settings-left-inner-form-section ">
-            <SetingsSidebar/>
+            <SetingsSidebar />
           </div>
           <div className="security-submit-form-top-section">
             {selected && (
               <div className="alert-bunner">
                 <p className="indicator">
-                  {`${workingDates.holidayDate}`} <br /> {`${workingDates.remarks}`}{" "}
+                  {`${workingDates.holidayDate}`}
+                  {' '}
+                  <br />
+                  {' '}
+                  {`${workingDates.remarks}`}
+                  {' '}
                   <br />
                 </p>
                 <div className="span-container">
@@ -205,14 +214,14 @@ const SystemHolidays = () => {
                 <div className="input-div">
                   <div
                     className={
-                      errors.date ? "required label-holiday" : "label-holiday"
+                      errors.date ? 'required label-holiday' : 'label-holiday'
                     }
                   >
                     Choose a Day
                   </div>
                   <div className="input-box">
                     <DatePicker
-                      startDate={startDate }
+                      startDate={startDate}
                       selected={selectedDate}
                       onChange={onChange}
                       inline
@@ -227,8 +236,8 @@ const SystemHolidays = () => {
                   <div
                     className={
                       errors.remarks
-                        ? "required label-holiday"
-                        : "label-holiday"
+                        ? 'required label-holiday'
+                        : 'label-holiday'
                     }
                   >
                     Remarks
@@ -269,14 +278,14 @@ const SystemHolidays = () => {
                   <div className="column-two">Holidate</div>
                   <div className="column-three">Remarks</div>
                 </div>
-                {holidays.map((holiday) => (
+                {holidays.map(holiday => (
                   <div className="holidays-rows-section">
                     <div
                       className="column-two"
                       onClick={() => {
                         setWorkingDates(holiday);
-                        setSelectedDate(null)
-                        setSelectedDate(new Date(formatDisplayTime(holiday.holidayDate)))
+                        setSelectedDate(null);
+                        setSelectedDate(new Date(formatDisplayTime(holiday.holidayDate)));
                         setSelected(true);
                       }}
                     >
@@ -286,8 +295,8 @@ const SystemHolidays = () => {
                       className="column-three"
                       onClick={() => {
                         setWorkingDates(holiday);
-                        setSelectedDate(null)
-                        setSelectedDate(new Date(formatDisplayTime(holiday.holidayDate)))
+                        setSelectedDate(null);
+                        setSelectedDate(new Date(formatDisplayTime(holiday.holidayDate)));
                         setSelected(true);
                       }}
                     >

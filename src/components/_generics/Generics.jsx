@@ -1,12 +1,17 @@
-import React from "react";
-import "./index.css";
+/* eslint-disable react/prop-types */
+/* eslint-disable react/button-has-type */
 
-export const Button = ({ name, onClick, type = "button", disabled }) => (
+import React from 'react';
+import './index.css';
+
+export const Button = ({
+  name, onClick, type = 'button', disabled,
+}) => (
   <button
     type={type}
     onClick={onClick}
     disabled={disabled}
-    className={disabled ? "button-disabled" : "button-active"}
+    className={disabled ? 'button-disabled' : 'button-active'}
   >
     {name}
   </button>
@@ -31,8 +36,8 @@ export const Input = ({
     placeholder={placeholder}
     disabled={disabled}
     checked={checked}
-    maxlength={maxlength}
-    style={{ textTransform: "uppercase" }}
+    maxLength={maxlength}
+    style={{ textTransform: 'uppercase' }}
     className={className}
   />
 );

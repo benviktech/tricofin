@@ -202,7 +202,8 @@
   display: none;
 }
 
-.modal-popup-section {
+.modal-popup-section,
+.modal-popup-section-new {
   position: absolute;
   padding: 10px;
   z-index: 20;
@@ -211,12 +212,14 @@
   right: 0;
 }
 
-.inner-section-modal-section {
+.inner-section-modal-section,
+.inner-section-modal-section-new {
   overflow-y: auto;
   height: 350px;
 }
 
-.inner-section-modal-section-inner {
+.inner-section-modal-section-inner,
+.inner-section-modal-section-inner-new {
   display: flex;
   width: 250px;
   background-color: #1991da;

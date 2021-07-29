@@ -1,16 +1,18 @@
+/* eslint-disable no-unused-vars */
+
+import { toast } from 'react-toastify';
 import {
   PostSystemUserRequest,
   UpdateSystemUserRequest,
   DeleteSystemUserRequest,
-} from "../utils/api";
-import { toast } from "react-toastify";
+} from '../utils/api';
 
-export const LOADING_CONTENT = "LOADING_CONTENT";
-export const LOADING_ERROR = "LOADING_ERROR";
+export const LOADING_CONTENT = 'LOADING_CONTENT';
+export const LOADING_ERROR = 'LOADING_ERROR';
 
-export const createSystemUser = (data) => async (dispatch) => {
-  const path = "api/System/SaveSystemUser";
-  const method = "post";
+export const createSystemUser = data => async dispatch => {
+  const path = 'api/System/SaveSystemUser';
+  const method = 'post';
 
   const userData = {
     userName: data.userName,
@@ -21,7 +23,7 @@ export const createSystemUser = (data) => async (dispatch) => {
     phoneNo1: data.phoneNo1,
     phoneNo2: data.phoneNo2,
     isCashier: data.isCashier,
-    cashierGL: "00056778",
+    cashierGL: '00056778',
     passwordNeverExpires: data.passwordNeverExpires,
     mustChangePassword: data.mustChangePassword,
     tempRole: data.tempRole,
@@ -31,11 +33,11 @@ export const createSystemUser = (data) => async (dispatch) => {
     isDeleted: data.isDeleted,
     isVerified: data.isVerified,
     verifiedOn: new Date(),
-    verifiedBy: "BENEVIK",
+    verifiedBy: 'BENEVIK',
     createdOn: new Date(),
-    createdBy: "BENEVIK",
+    createdBy: 'BENEVIK',
     modifiedOn: new Date(),
-    modifiedBy: "BENEVIK",
+    modifiedBy: 'BENEVIK',
   };
 
   try {
@@ -48,9 +50,9 @@ export const createSystemUser = (data) => async (dispatch) => {
   }
 };
 
-export const updateSystemUser = (data) => async (dispatch) => {
-  const path = "api/System/UpdateSystemUser";
-  const method = "put";
+export const updateSystemUser = data => async dispatch => {
+  const path = 'api/System/UpdateSystemUser';
+  const method = 'put';
 
   const userData = {
     userName: data.userName,
@@ -70,12 +72,12 @@ export const updateSystemUser = (data) => async (dispatch) => {
     isDisabled: data.isDisabled,
     isDeleted: data.isDeleted,
     isVerified: data.isVerified,
-    verifiedOn: "2021-06-01T00:50:40.606Z",
-    verifiedBy: "BENEVIK",
-    createdOn: "2021-06-01T00:50:40.606Z",
-    createdBy: "BENEVIK",
-    modifiedOn: "2021-06-01T00:50:40.606Z",
-    modifiedBy: "BENEVIK",
+    verifiedOn: '2021-06-01T00:50:40.606Z',
+    verifiedBy: 'BENEVIK',
+    createdOn: '2021-06-01T00:50:40.606Z',
+    createdBy: 'BENEVIK',
+    modifiedOn: '2021-06-01T00:50:40.606Z',
+    modifiedBy: 'BENEVIK',
   };
 
   try {
@@ -88,9 +90,9 @@ export const updateSystemUser = (data) => async (dispatch) => {
   }
 };
 
-export const deleteSystemUser = (data) => async (dispatch) => {
+export const deleteSystemUser = data => async dispatch => {
   const path = `api/System/DeleteSystemUser/${data.userName}`;
-  const method = "delete";
+  const method = 'delete';
   try {
     const response = await DeleteSystemUserRequest(method, path);
     toast.success(`User ${data.userName} Deleted Successfully`);

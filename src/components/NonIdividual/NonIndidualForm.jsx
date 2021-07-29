@@ -103,8 +103,8 @@ const NonIndidualCustomerForm = () => {
                            <div className="modal-hide-section" />
                          ) : (
 
-                           <div className="modal-popup-section">
-                             <div className="inner-section-modal-section">
+                           <div className="modal-popup-section-new">
+                             <div className="inner-section-modal-section-new">
                                {
                               Array.from(new Set(finalSortedList)).map(customer => (
                                 <Link
@@ -112,7 +112,7 @@ const NonIndidualCustomerForm = () => {
                                   to={{
                                     pathname: `/viewnonindividualcustomerform/${customer.custID}`,
                                   }}
-                                  className="inner-section-modal-section-inner border"
+                                  className="inner-section-modal-section-inner-new border"
                                   key={customer.custID}
                                 >
                                   <div className="modal-customer-name-section mr-2">

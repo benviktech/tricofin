@@ -2,24 +2,30 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable consistent-return */
+/* eslint-disable max-len */
+/* eslint-disable import/order */
 
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
-import SecuritySidebar from "./SecuritySideBar";
-import "./index.css";
-import Loader from "./Loader/Loader";
-import { Button, Input } from "../../_generics/Generics";
-import { fetchSystemRoles } from "../../../actions/systemRole";
-import userMaintenanceValidator from "../../Validators/UserMaintenanceValidator";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import SecuritySidebar from './SecuritySideBar';
+import './index.css';
+import Loader from './Loader/Loader';
+import { Button, Input } from '../../_generics/Generics';
+import { fetchSystemRoles } from '../../../actions/systemRole';
+import userMaintenanceValidator from '../../Validators/UserMaintenanceValidator';
+import axios from 'axios';
 import {
   createSystemUser,
   updateSystemUser,
   deleteSystemUser,
-} from "../../../actions/systemUser";
+} from '../../../actions/systemUser';
 
-const baseUrl = "https://tricofin.azurewebsites.net";
+const baseUrl = 'https://tricofin.azurewebsites.net';
 
 const SystemSecurityMaintenance = () => {
   const dispatch = useDispatch();
@@ -36,11 +42,11 @@ const SystemSecurityMaintenance = () => {
   const [roleDisable, setRoleDisable] = useState(false);
   const [isCashierDisable, setIsCashierDisable] = useState(false);
   const [dataLoadFailed, setDataLoadFailed] = useState(false);
-  const [actveAddButton, setActiveAddButton]  = useState(true);
+  const [actveAddButton, setActiveAddButton] = useState(true);
   const [errorsPresent, setErrorsPresent] = useState(false);
 
-  const companyInfo = useSelector((state) => state.companyInfoReducer);
-  const user = useSelector((state) => state?.systemUserReducer?.systemUser);
+  const companyInfo = useSelector(state => state.companyInfoReducer);
+  const user = useSelector(state => state?.systemUserReducer?.systemUser);
 
   useEffect(() => {
     fetchSystemUsers();
@@ -61,10 +67,10 @@ const SystemSecurityMaintenance = () => {
     }
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     if (errors.hasOwnProperty(name)) {
-      setErrors({ ...errors, [name]: "" });
+      setErrors({ ...errors, [name]: '' });
     }
     setFormState(() => ({
       ...formState,
@@ -72,20 +78,20 @@ const SystemSecurityMaintenance = () => {
     }));
   };
 
-  const handleChecking = (e) => {
+  const handleChecking = e => {
     const { name, checked } = e.target;
-    if (name === "tempRole" && !checked) {
+    if (name === 'tempRole' && !checked) {
       setRoleDisable(true);
-    } else if (name === "tempRole" && checked) {
+    } else if (name === 'tempRole' && checked) {
       setRoleDisable(false);
     }
-    if (name === "isCashier" && !checked) {
+    if (name === 'isCashier' && !checked) {
       setIsCashierDisable(true);
-    } else if (name === "isCashier" && checked) {
+    } else if (name === 'isCashier' && checked) {
       setIsCashierDisable(false);
     }
     if (errors.hasOwnProperty(name)) {
-      setErrors({ ...errors, [name]: "" });
+      setErrors({ ...errors, [name]: '' });
     }
     setFormState(() => ({
       ...formState,
@@ -93,46 +99,46 @@ const SystemSecurityMaintenance = () => {
     }));
   };
 
-  const selectRole = (e) => {
+  const selectRole = e => {
     setFormState(() => ({
       ...formState,
       [e.target.dataset.name]: e.target.dataset.selected,
     }));
     if (errors.hasOwnProperty(e.target.dataset.name)) {
-      setErrors({ ...errors, [e.target.dataset.name]: "" });
+      setErrors({ ...errors, [e.target.dataset.name]: '' });
     }
     setSortedRoles([]);
   };
 
-  const selectTempRole = (e) => {
+  const selectTempRole = e => {
     setFormState(() => ({
       ...formState,
       [e.target.dataset.name]: e.target.dataset.selected,
     }));
     if (errors.hasOwnProperty(e.target.dataset.name)) {
-      setErrors({ ...errors, [e.target.dataset.name]: "" });
+      setErrors({ ...errors, [e.target.dataset.name]: '' });
     }
     setSortedTempRoles([]);
   };
 
-  const selectTempUser = (e) => {
+  const selectTempUser = e => {
     fetchSelectedUser(e.target.dataset.selected);
     if (errors.hasOwnProperty(e.target.dataset.name)) {
-      setErrors({ ...errors, [e.target.dataset.name]: "" });
+      setErrors({ ...errors, [e.target.dataset.name]: '' });
     }
     setSortedTempUsers([]);
   };
 
-  const fetchSelectedUser = async (userName) => {
+  const fetchSelectedUser = async userName => {
     axios
       .get(`${baseUrl}/api/System/GetSystemUser/${userName}`)
-      .then(function (response) {
+      .then(response => {
         setFormState({
           ...response.data,
           password: response.data.userPassword,
         });
         setErrors({});
-        setActiveAddButton(false)
+        setActiveAddButton(false);
         setErrorsPresent(true);
         if (response.data.tempRole) {
           setRoleDisable(false);
@@ -145,7 +151,7 @@ const SystemSecurityMaintenance = () => {
           setIsCashierDisable(true);
         }
       })
-      .catch(function (error) {
+      .catch(error => {
         setDataLoadFailed(true);
       });
   };
@@ -153,93 +159,87 @@ const SystemSecurityMaintenance = () => {
   const fetchSystemUsers = async () => {
     axios
       .get(`${baseUrl}/api/System/GetSystemUsers`)
-      .then(function (response) {
+      .then(response => {
         setUsers(response.data);
         axios
           .get(`${baseUrl}/api/System/GetRoles`)
-          .then(function (response) {
+          .then(response => {
             setRoles(response.data);
           })
-          .catch(function (error) {
+          .catch(error => {
             setDataLoadFailed(true);
           });
       })
-      .catch(function (error) {
+      .catch(error => {
         setDataLoadFailed(true);
       });
   };
 
-  const filterRoles = (e) => {
+  const filterRoles = e => {
     const { name, value } = e.target;
     setFormState(() => ({
       ...formState,
       [name]: value,
     }));
     if (value.trim().length > 0) {
-      const filteredroles = roles.filter((role) =>
-        role.roleID.toLowerCase().includes(value.toLowerCase())
-      );
+      const filteredroles = roles.filter(role => role.roleID.toLowerCase().includes(value.toLowerCase()));
       setSortedRoles(filteredroles);
     } else {
       setSortedRoles([]);
     }
   };
 
-  const filterTempRoles = (e) => {
+  const filterTempRoles = e => {
     const { name, value } = e.target;
     setFormState(() => ({
       ...formState,
       [name]: value,
     }));
     if (value.trim().length > 0) {
-      const filteredtemproles = roles.filter((role) =>
-        role.roleID.toLowerCase().includes(value.toLowerCase())
-      );
+      const filteredtemproles = roles.filter(role => role.roleID.toLowerCase().includes(value.toLowerCase()));
       setSortedTempRoles(filteredtemproles);
     } else {
       setSortedTempRoles([]);
     }
   };
 
-  const filterTempUsers = (e) => {
+  const filterTempUsers = e => {
     const { name, value } = e.target;
     setFormState(() => ({
       ...formState,
       [name]: value,
     }));
     if (value.trim().length > 0) {
-      const filteredtempusers = users.filter((user) =>
-        user.userName.toLowerCase().includes(value.toLowerCase())
-      );
+      const filteredtempusers = users.filter(user => user.userName.toLowerCase().includes(value.toLowerCase()));
       setSortedTempUsers(filteredtempusers);
     } else {
       setSortedTempUsers([]);
     }
   };
 
-  const formatDateTime = (datevalue) => {
-    let currentDate = new Date(datevalue);
-    let date = currentDate.getDate();
-    let month = currentDate.getMonth();
-    let year = currentDate.getFullYear();
-    return currentDate.toISOString().split("T")[0];
+  const formatDateTime = datevalue => {
+    const currentDate = new Date(datevalue);
+    const date = currentDate.getDate();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    return currentDate.toISOString().split('T')[0];
   };
 
   const clearFields = () => {
     setErrors({});
-    setErrorsPresent(false)
-    setFormState({ 
-      roleID:"",
-      userName:"",
-      userPassword:"",
-      password:"",
-      surName:"",
-      otherNames:"",
-      phoneNo1:"",
-      phoneNo2:"",
-      tempRoleID:"",
-      tempExpiryDate:""
-     })
+    setErrorsPresent(false);
+    setFormState({
+      roleID: '',
+      userName: '',
+      userPassword: '',
+      password: '',
+      surName: '',
+      otherNames: '',
+      phoneNo1: '',
+      phoneNo2: '',
+      tempRoleID: '',
+      tempExpiryDate: '',
+    });
   };
 
   const createUser = () => {
@@ -248,7 +248,7 @@ const SystemSecurityMaintenance = () => {
     if (Object.keys(response).length === 0) {
       return dispatch(createSystemUser(formState));
     }
-    setErrorsPresent(true)
+    setErrorsPresent(true);
   };
 
   const updateUser = () => {
@@ -257,7 +257,7 @@ const SystemSecurityMaintenance = () => {
     if (Object.keys(response).length === 0) {
       return dispatch(updateSystemUser(formState));
     }
-    setErrorsPresent(true)
+    setErrorsPresent(true);
   };
 
   const deleteUser = () => {
@@ -266,7 +266,7 @@ const SystemSecurityMaintenance = () => {
     if (Object.keys(response).length === 0) {
       return dispatch(deleteSystemUser(formState));
     }
-    setErrorsPresent(true)
+    setErrorsPresent(true);
   };
 
   return roles.length > 0 ? (
@@ -285,7 +285,7 @@ const SystemSecurityMaintenance = () => {
                 <div className="userrole-create-header">User Role</div>
                 <form>
                   <div className="input-div">
-                    <div className={errors.roleID ? "required label" : "label"}>
+                    <div className={errors.roleID ? 'required label' : 'label'}>
                       Search a Role ID
                     </div>
                     <div className="input-box">
@@ -302,7 +302,7 @@ const SystemSecurityMaintenance = () => {
                     ) : (
                       <div className="modal-popup-section">
                         <div className="inner-section-modal-section">
-                          {sortedRoles.map((role) => (
+                          {sortedRoles.map(role => (
                             <div
                               className="inner-section-modal-section-inner border"
                               key={role.roleID}
@@ -329,7 +329,7 @@ const SystemSecurityMaintenance = () => {
                 <form>
                   <div className="input-div">
                     <div
-                      className={errors.userName ? "required label" : "label"}
+                      className={errors.userName ? 'required label' : 'label'}
                     >
                       Search a Login ID
                     </div>
@@ -347,7 +347,7 @@ const SystemSecurityMaintenance = () => {
                     ) : (
                       <div className="modal-popup-section">
                         <div className="inner-section-modal-section-user-useredit">
-                          {sortedTempUsers.map((user) => (
+                          {sortedTempUsers.map(user => (
                             <div
                               className="inner-section-modal-section-inner-user-useredit border"
                               key={user.userName}
@@ -370,7 +370,7 @@ const SystemSecurityMaintenance = () => {
                   <div className="input-div">
                     <div
                       className={
-                        errors.userPassword ? "required label" : "label"
+                        errors.userPassword ? 'required label' : 'label'
                       }
                     >
                       Password
@@ -388,7 +388,7 @@ const SystemSecurityMaintenance = () => {
                   <div className="input-div">
                     <div
                       className={
-                        errors.userPassword ? "required label" : "label"
+                        errors.userPassword ? 'required label' : 'label'
                       }
                     >
                       Confirm Password
@@ -406,7 +406,7 @@ const SystemSecurityMaintenance = () => {
 
                   <div className="input-div">
                     <div
-                      className={errors.surName ? "required label" : "label"}
+                      className={errors.surName ? 'required label' : 'label'}
                     >
                       Surname
                     </div>
@@ -422,7 +422,7 @@ const SystemSecurityMaintenance = () => {
                   </div>
                   <div className="input-div">
                     <div
-                      className={errors.otherNames ? "required label" : "label"}
+                      className={errors.otherNames ? 'required label' : 'label'}
                     >
                       Other Names
                     </div>
@@ -504,7 +504,7 @@ const SystemSecurityMaintenance = () => {
                     ) : (
                       <div className="modal-popup-section">
                         <div className="inner-section-modal-section-role">
-                          {sortedTempRoles.map((role) => (
+                          {sortedTempRoles.map(role => (
                             <div
                               className="inner-section-modal-section-inner-role border"
                               key={role.roleID}
@@ -571,7 +571,7 @@ const SystemSecurityMaintenance = () => {
                         placeholder="Search a GL"
                         className="text-input-user"
                       />
-                      <span></span>
+                      <span />
                     </div>
                   </div>
                   <div className="input-div">
@@ -619,7 +619,7 @@ const SystemSecurityMaintenance = () => {
                 <div className="user-maintenance-buttons-section">
                   <Button onClick={createUser} disabled={!actveAddButton} name="Add" />
                   <Button onClick={updateUser} disabled={actveAddButton} name="Update" />
-                  <Button onClick={clearFields} disabled={ !errorsPresent } name="Clear" />
+                  <Button onClick={clearFields} disabled={!errorsPresent} name="Clear" />
                   <Button onClick={deleteUser} disabled={actveAddButton} name="Delete" />
                 </div>
               </div>

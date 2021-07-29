@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-multiple-empty-lines */
 
 import React, { useState } from 'react';
 import { NavLink, Link, useRouteMatch } from 'react-router-dom';
@@ -33,10 +35,10 @@ const SidebarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
-  let match = useRouteMatch();
+  const match = useRouteMatch();
   return (
-    <NavLink to={item.path} style={{textDecoration:"none",display:"block"}} activeStyle={{backgroundColor:"#F3F2F1",color:"#777" }} >
-      <SidebarLink >
+    <NavLink to={item.path} style={{ textDecoration: 'none', display: 'block' }} activeStyle={{ backgroundColor: '#F3F2F1', color: '#777' }}>
+      <SidebarLink>
         <div>
           {item.icon}
           <SidebarLabel>{item.title}</SidebarLabel>

@@ -1,35 +1,44 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from "../Home";
-import Navbar from "../Navbar";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import IndividualCustomerForm from "../Customer/IndividualCustomerForm";
-import ViewIndividualCustomer from "../Customer/IndividualCustomerView";
-import UpdateIndividualCustomer from "../Customer/UpdateIndividualCustomer";
-import Footer from "../Footer/Footer";
-import Signature from "../Pages/Signature";
-import Indentification from "../Pages/Indentification";
-import PrimaryContactInfo from "../Pages/PrimaryContactInfo";
-import SecondaryContactInfo from "../Pages/SecondaryContactInfo";
-import NonIndidualCustomerForm from "../NonIdividual/NonIndidualForm";
-import NonIndividualCustomerView from "../NonIdividual/NonIndividualCustomerView";
-import UpdateNonIndidualCustomerForm from "../NonIdividual/UpdateNonIndividual";
-import NonIndividualSecondaryContact from "../Pages/NonIndividualSecondaryContact";
-import NonIndividualPrimaryContact from "../Pages/NonIndividualPrimaryContact";
-import NonIndividualIdentification from "../Pages/NonIndividualIdentification";
-import DirectorsInfo from "../Pages/DirectorsInfo";
-import SystemSecurityRoles from "../System/SystemSecurity/SystemRoles";
-import SystemSecurityRights from "../System/SystemSecurity/SystemRights";
-import SystemSecurityMaintenance from "../System/SystemSecurity/SystemMaintenance";
-import UpdateCompanyInfo from "../System/SystemSettings/UpdateCompanyInfo";
-import SystemHolidays from "../System/SystemSettings/SystemHolidays";
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import Home from '../Home';
+import Navbar from '../Navbar';
+import 'react-toastify/dist/ReactToastify.css';
+import IndividualCustomerForm from '../Customer/IndividualCustomerForm';
+import ViewIndividualCustomer from '../Customer/IndividualCustomerView';
+import UpdateIndividualCustomer from '../Customer/UpdateIndividualCustomer';
+import Footer from '../Footer/Footer';
+import Signature from '../Pages/Signature';
+import Indentification from '../Pages/Indentification';
+import PrimaryContactInfo from '../Pages/PrimaryContactInfo';
+import SecondaryContactInfo from '../Pages/SecondaryContactInfo';
+import NonIndidualCustomerForm from '../NonIdividual/NonIndidualForm';
+import NonIndividualCustomerView from '../NonIdividual/NonIndividualCustomerView';
+import UpdateNonIndidualCustomerForm from '../NonIdividual/UpdateNonIndividual';
+import NonIndividualSecondaryContact from '../Pages/NonIndividualSecondaryContact';
+import NonIndividualPrimaryContact from '../Pages/NonIndividualPrimaryContact';
+import NonIndividualIdentification from '../Pages/NonIndividualIdentification';
+import DirectorsInfo from '../Pages/DirectorsInfo';
+import SystemSecurityRoles from '../System/SystemSecurity/SystemRoles';
+import SystemSecurityRights from '../System/SystemSecurity/SystemRights';
+import SystemSecurityMaintenance from '../System/SystemSecurity/SystemMaintenance';
+import UpdateCompanyInfo from '../System/SystemSettings/UpdateCompanyInfo';
+import SystemHolidays from '../System/SystemSettings/SystemHolidays';
+import GroupMaintenance from '../GroupMaintenance/GroupMaintenance';
+import GroupMaintenanceView from '../GroupMaintenance/GroupMaintenanceView';
+import GroupMembers from '../Pages/GroupMembers';
+import UpdateGroupMaintenance from '../GroupMaintenance/UpdateGroupMaintenance';
+import GeneralLedgerMaintenance from '../Finance/GeneralLedger/GeneralLedgerMaintenance';
+import Transaction from '../Finance/Transactions/Transaction';
+import GeneralLedgerSubtypes from '../Finance/GeneralLedger/GeneralLedgerSubtypes';
+import GeneralLedgerIds from '../Finance/GeneralLedger/GeneralLedgerIds';
+import SingleGeneralLedgerId from '../Finance/GeneralLedger/SingleGeneralLedgerId';
 
 const Router = () => (
   <div className="router-section">
     <BrowserRouter>
       <Navbar />
-      <ToastContainer hideProgressBar={true} limit={1} />
+      <ToastContainer hideProgressBar limit={1} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/individualcustomerform" component={IndividualCustomerForm} />
@@ -45,27 +54,23 @@ const Router = () => (
         <Route path="/nonindividualsecondarycontactinfo/:id" component={NonIndividualSecondaryContact} />
         <Route path="/nonindividualprimarycontactinfo/:id" component={NonIndividualPrimaryContact} />
         <Route path="/directorsinformation/:id" component={DirectorsInfo} />
-        <Route
-          path="/identificationinfo/:id"
-          component={NonIndividualIdentification}
-        />
-        <Route
-          path="/system/systemsettings/updatecompanyinfo"
-          component={UpdateCompanyInfo}
-        />
-        <Route
-          path="/system/systemsecurity/roles"
-          component={SystemSecurityRoles}
-        />
-        <Route
-          path="/system/systemsecurity/rights"
-          component={SystemSecurityRights}
-        />
-        <Route
-          path="/system/systemsecurity/adduser"
-          component={SystemSecurityMaintenance}
-        />
+        <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
+        <Route path="/groupmaintenanceform" component={GroupMaintenance} />
+        <Route path="/groupmaintenanceview/:id" component={GroupMaintenanceView} />
+        <Route path="/groupmembers/:id" component={GroupMembers} />
+        <Route path="/updategroupmember/:id" component={UpdateGroupMaintenance} />
+        <Route path="/identificationinfo/:id" component={NonIndividualIdentification} />
+        <Route path="/system/systemsettings/updatecompanyinfo" component={UpdateCompanyInfo} />
+        <Route path="/system/systemsecurity/roles" component={SystemSecurityRoles} />
+        <Route path="/system/systemsecurity/rights" component={SystemSecurityRights} />
+        <Route path="/system/systemsecurity/adduser" component={SystemSecurityMaintenance} />
         <Route path="/system/holiday/holidays" component={SystemHolidays} />
+        <Route path="generaledgermaintenance" component={GeneralLedgerMaintenance} />
+        <Route path="/generaledgermaintenance" component={GeneralLedgerMaintenance} />
+        <Route path="/transactions" component={Transaction} />
+        <Route path="/glsubtypes" component={GeneralLedgerSubtypes} />
+        <Route path="/glidentification" component={GeneralLedgerIds} />
+        <Route exact path="/genlidentification/:id" component={SingleGeneralLedgerId} />
       </Switch>
       <Footer />
     </BrowserRouter>

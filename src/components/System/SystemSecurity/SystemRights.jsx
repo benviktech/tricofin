@@ -2,28 +2,35 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
+/* eslint-disable radix */
+/* eslint-disable no-param-reassign */
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-plusplus */
 
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import SecuritySidebar from "./SecuritySideBar";
-import "./index.css";
-import Loader from "../../Loader/Loader";
-import { Button, Input } from "../../_generics/Generics";
-import accessRightsValidator from "../../Validators/AccessRightsValidator";
-import Spinner from "../../Spinner/Spinner";
-import TreeMenu from "react-simple-tree-menu";
-import "../../../../node_modules/react-simple-tree-menu/dist/main.css";
-import axios from "axios";
-import * as RiIcons from "react-icons/ri";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import TreeMenu from 'react-simple-tree-menu';
+import * as RiIcons from 'react-icons/ri';
+import SecuritySidebar from './SecuritySideBar';
+import './index.css';
+import Loader from '../../Loader/Loader';
+import { Button, Input } from '../../_generics/Generics';
+import accessRightsValidator from '../../Validators/AccessRightsValidator';
+import Spinner from '../../Spinner/Spinner';
+import '../../../../node_modules/react-simple-tree-menu/dist/main.css';
 
-const baseUrl = "https://tricofin.azurewebsites.net";
+const baseUrl = 'https://tricofin.azurewebsites.net';
 
 const SystemSecurityRoles = () => {
   const dispatch = useDispatch();
 
-  const [activeRole, setActiveRole] = useState("");
-  const [activeModule, setActiveModule] = useState("");
+  const [activeRole, setActiveRole] = useState('');
+  const [activeModule, setActiveModule] = useState('');
   const [formState, setFormState] = useState({});
   const initialFormstate = {
     roleID: activeRole,
@@ -35,14 +42,14 @@ const SystemSecurityRoles = () => {
     postingLimit: 0,
     canSupervise: false,
     supervisionLimit: 0,
-    createdOn: "",
-    createdBy: "BENEVIK",
-    modifiedOn: "",
-    modifiedBy: "BENEVIK",
+    createdOn: '',
+    createdBy: 'BENEVIK',
+    modifiedOn: '',
+    modifiedBy: 'BENEVIK',
   };
 
-  const [role, setRole] = useState("");
-  const [description, setDescription] = useState("");
+  const [role, setRole] = useState('');
+  const [description, setDescription] = useState('');
   const [users, setUsers] = useState([]);
   const [sortedTempRoles, setSortedTempRoles] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -50,11 +57,11 @@ const SystemSecurityRoles = () => {
   const [tempData, setTempData] = useState([]);
   const [cleanData, setCleanData] = useState([]);
   const [systemModules, setSystemModules] = useState([]);
-  const [selectedModule, setSelectedModule] = useState("");
+  const [selectedModule, setSelectedModule] = useState('');
   const [loading, setLoading] = useState(true);
   const [modulePresent, setModulePresent] = useState(false);
 
-  const [activeModuleLabel, setActiveModuleLabel] = useState("");
+  const [activeModuleLabel, setActiveModuleLabel] = useState('');
   const [errors, setErrors] = useState({});
 
   const [askPostingLimit, setAskPostingLimit] = useState(false);
@@ -74,11 +81,11 @@ const SystemSecurityRoles = () => {
   const fetchSystemRoles = async () => {
     axios
       .get(`${baseUrl}/api/System/GetRoles`)
-      .then(function (response) {
+      .then(response => {
         // handle success
         setRoles(response.data);
       })
-      .catch(function (error) {});
+      .catch(error => {});
   };
   const createSystemRight = async () => {
     const response = accessRightsValidator(formState);
@@ -87,21 +94,21 @@ const SystemSecurityRoles = () => {
       axios
         .post(`${baseUrl}/api/System/SaveRoleRights`, {
           ...formState,
-          createdBy: "BENEVIK",
+          createdBy: 'BENEVIK',
           createdOn: new Date(),
           postingLimit: parseInt(formState.postingLimit),
           supervisionLimit: parseInt(formState.supervisionLimit),
         })
-        .then(function (response) {
+        .then(response => {
           // handle success
           const { columnID, ...stateData } = response.data;
           setFormState(stateData);
           setModulePresent(true);
           toast.success(
-            `Added rights for ${response.data.roleID}  successfully`
+            `Added rights for ${response.data.roleID}  successfully`,
           );
         })
-        .catch(function (error) {
+        .catch(error => {
           toast.error(`Failed rights for ${formState.roleID} `);
         });
     }
@@ -114,17 +121,17 @@ const SystemSecurityRoles = () => {
       axios
         .put(`${baseUrl}/api/System/UpdateRoleRights`, {
           ...formState,
-          createdBy: "BENEVIK",
+          createdBy: 'BENEVIK',
           modifiedOn: new Date(),
           postingLimit: parseInt(formState.postingLimit),
           supervisionLimit: parseInt(formState.supervisionLimit),
         })
-        .then(function (response) {
+        .then(response => {
           toast.success(
-            `Edited rights for ${response.data.roleID}  successfully`
+            `Edited rights for ${response.data.roleID}  successfully`,
           );
         })
-        .catch(function (error) {
+        .catch(error => {
           toast.error(`Failed to change rights for ${formState.roleID}`);
         });
     }
@@ -133,31 +140,31 @@ const SystemSecurityRoles = () => {
   const fetchSystemModules = async () => {
     axios
       .get(`${baseUrl}/api/StaticData/GetSystemModules`)
-      .then(function (response) {
+      .then(response => {
         // handle success
         setSystemModules(response.data);
         setLoading(false);
       })
-      .catch(function (error) {
+      .catch(error => {
         // handle error
       });
   };
 
-  const fetchSystemModuleRight = async (moduleID) => {
+  const fetchSystemModuleRight = async moduleID => {
     axios
       .get(
-        `${baseUrl}/api/System/GetRoleModuleRights/${activeRole}/${moduleID}`
+        `${baseUrl}/api/System/GetRoleModuleRights/${activeRole}/${moduleID}`,
       )
-      .then(function (response) {
+      .then(response => {
         // handle success
         const { columnID, ...stateData } = response.data;
         setFormState(stateData);
         setModulePresent(true);
       })
-      .catch(function (error) {
+      .catch(error => {
         // handle error
         const bestModule = systemModules.find(
-          (module) => module.moduleID === moduleID
+          module => module.moduleID === moduleID,
         );
         setFormState({
           ...initialFormstate,
@@ -167,7 +174,7 @@ const SystemSecurityRoles = () => {
           createdOn: new Date(),
         });
         toast.warn(
-          `No Rights set for role ${activeRole} on module ${bestModule.module}`
+          `No Rights set for role ${activeRole} on module ${bestModule.module}`,
         );
         setModulePresent(false);
       });
@@ -192,12 +199,12 @@ const SystemSecurityRoles = () => {
   }, [tempData]);
 
   useEffect(() => {
-    setCleanData(makeTree(systemData, "0"));
+    setCleanData(makeTree(systemData, '0'));
   }, [systemData]);
 
   function makeTree(moduleNodes, parentId) {
     return moduleNodes
-      .filter((node) => node.mainModule === parentId)
+      .filter(node => node.mainModule === parentId)
       .reduce(
         (tree, node) => [
           ...tree,
@@ -206,29 +213,27 @@ const SystemSecurityRoles = () => {
             nodes: makeTree(moduleNodes, node.moduleID),
           },
         ],
-        []
+        [],
       );
   }
 
-  const filterTempRoles = (e) => {
+  const filterTempRoles = e => {
     const { name, value } = e.target;
     setActiveRole(() => e.target.dataset.selected);
     if (value.trim().length > 0) {
-      const filteredtemproles = roles.filter((role) =>
-        role.roleID.toLowerCase().includes(value.toLowerCase())
-      );
+      const filteredtemproles = roles.filter(role => role.roleID.toLowerCase().includes(value.toLowerCase()));
       setSortedTempRoles(filteredtemproles);
     } else {
       setSortedTempRoles([]);
       setFormState({
         ...initialFormstate,
-        roleID: "",
+        roleID: '',
       });
-      setActiveModule("");
+      setActiveModule('');
     }
   };
 
-  const selectTempRole = (e) => {
+  const selectTempRole = e => {
     setFormState({
       ...formState,
       roleID: e.target.dataset.selected,
@@ -238,17 +243,17 @@ const SystemSecurityRoles = () => {
     // setActiveModule("")
   };
 
-  const handleChecking = (e) => {
+  const handleChecking = e => {
     const { name, checked } = e.target;
-    setFormState((previousState) => ({
+    setFormState(previousState => ({
       ...previousState,
       [name]: checked,
     }));
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormState((previousState) => ({
+    setFormState(previousState => ({
       ...previousState,
       [name]: value,
     }));
@@ -258,7 +263,7 @@ const SystemSecurityRoles = () => {
     setErrors({});
   };
 
-  const companyInfo = useSelector((state) => state.companyInfoReducer);
+  const companyInfo = useSelector(state => state.companyInfoReducer);
 
   return companyInfo ? (
     <div className="system-individual-customer-form">
@@ -293,7 +298,7 @@ const SystemSecurityRoles = () => {
                   ) : (
                     <div className="modal-popup-section-role-choose">
                       <div className="inner-section-modal-section-role-choose">
-                        {sortedTempRoles.map((role) => (
+                        {sortedTempRoles.map(role => (
                           <div
                             className="inner-section-modal-section-inner-role-choose border"
                             key={role.roleID}
@@ -334,19 +339,19 @@ const SystemSecurityRoles = () => {
 
                           ...props
                         }) => {
-                          const keys = key.split("/");
+                          const keys = key.split('/');
                           const level = keys.length;
                           key = keys[keys.length - 1];
-                          //set module options for rights
+                          // set module options for rights
                           setAskPostingLimit(askPostingLimit);
                           setAskSupervision(askSupervision);
                           setAskEdit(askEdit);
                           setAskDelete(askDelete);
                           setAskAdd(askAdd);
-                          //set active module
+                          // set active module
                           setActiveModule(key);
                           setActiveModuleLabel(label);
-                          //fetch right using the key
+                          // fetch right using the key
                           fetchSystemModuleRight(key);
                         }}
                         data={cleanData}
@@ -359,12 +364,14 @@ const SystemSecurityRoles = () => {
                   ) : (
                     <div className="banner-rights">
                       <p className="indicator">
-                        Please Select a Role to set its rights <br />
+                        Please Select a Role to set its rights
+                        {' '}
+                        <br />
                         <RiIcons.RiTeamLine
                           style={{
-                            color: "black",
-                            textAlign: "center",
-                            fontSize: "1.8em",
+                            color: 'black',
+                            textAlign: 'center',
+                            fontSize: '1.8em',
                           }}
                         />
                       </p>
@@ -379,13 +386,14 @@ const SystemSecurityRoles = () => {
                 <div className="module-rights-form">
                   <p
                     style={{
-                      marginBottom: "10px",
-                      color: "",
-                      fontSize: "14px",
+                      marginBottom: '10px',
+                      color: '',
+                      fontSize: '14px',
                     }}
                   >
-                    Rights for{" "}
-                    <span style={{ fontWeight: "600", fontSize: "14px" }}>
+                    Rights for
+                    {' '}
+                    <span style={{ fontWeight: '600', fontSize: '14px' }}>
                       {activeModuleLabel}
                     </span>
                   </p>
@@ -514,12 +522,14 @@ const SystemSecurityRoles = () => {
               ) : (
                 <div className="banner-access-rights">
                   <p className="indicator">
-                    Kindly select a module to edit its right <br />
+                    Kindly select a module to edit its right
+                    {' '}
+                    <br />
                     <RiIcons.RiUserAddLine
                       style={{
-                        color: "black",
-                        textAlign: "center",
-                        fontSize: "1.8em",
+                        color: 'black',
+                        textAlign: 'center',
+                        fontSize: '1.8em',
                       }}
                     />
                   </p>

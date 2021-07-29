@@ -2,11 +2,11 @@ import {
   FETCH_COMPANY_INFO_SUCCESS,
   LOADING_CONTENT,
   LOADING_ERROR,
-} from "../actions/systemCompanyInfo";
+} from '../actions/systemCompanyInfo';
 
 const initialState = {
   companyInfo: {},
-  error: "",
+  error: '',
   loading: false,
 };
 
@@ -16,14 +16,14 @@ const companyInfoReducer = (state = initialState, action) => {
       return {
         ...state,
         companyInfo: action.payload,
-        error: "",
+        error: '',
         loading: false,
       };
     case LOADING_CONTENT:
       return {
         ...state,
         loading: true,
-        error: "",
+        error: '',
       };
     case LOADING_ERROR:
       return {
