@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import IdModal from './IdModal';
 import { saveGeneralLedgerID } from '../../../actions/generalLedger';
@@ -19,7 +20,13 @@ const GeneralLedgerIds = () => {
   const [values, setValues] = useState(initialState);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { glTypes, glSubTypes } = fetchData();
+  const {
+    glTypes, glSubTypes,
+    searchIndividualCustomer,
+    searchedCustomer,
+    finalSortedList,
+    setSearchedCustomer,
+  } = fetchData();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -53,6 +60,12 @@ const GeneralLedgerIds = () => {
     }
   }, [errors]);
 
+  const cancelSubmit = () => {
+    setValues(initialState);
+    setErrors({});
+    setSearchedCustomer('');
+  };
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -71,9 +84,39 @@ const GeneralLedgerIds = () => {
                     <div className="left-subtypes-span">Search GL:</div>
                     <div className="left-subtypes-input">
                       <input
+                        autoComplete="off"
                         name="description"
                         type="text"
+                        value={searchedCustomer}
+                        onChange={searchIndividualCustomer}
                       />
+                      {
+                           searchedCustomer === '' ? (
+                             <div className="modal-hide-section" />
+                           ) : (
+
+                             <div className="modal-popup-section">
+                               <div className="inner-section-modal-section">
+                                 {
+                                Array.from(new Set(finalSortedList)).map(customer => (
+                                  <Link
+                                    exact
+                                    to={{
+                                      pathname: `/genlidentification/${customer.glid}`,
+                                    }}
+                                    className="inner-section-modal-section-inner border"
+                                    key={customer.glid}
+                                  >
+                                    <div className="modal-customer-name-section mr-2">
+                                      { customer.glName }
+                                    </div>
+                                  </Link>
+                                ))
+                              }
+                               </div>
+                             </div>
+                           )
+                        }
                     </div>
                   </div>
                   <div className="left-inner-subtypes-section mt-4">
@@ -167,7 +210,7 @@ const GeneralLedgerIds = () => {
               </div>
               <div className="submit-section">
                 <button type="submit"> Add </button>
-                <button type="button"> Cancel </button>
+                <button type="button" onClick={cancelSubmit}> Cancel </button>
               </div>
             </form>
             <IdModal />
