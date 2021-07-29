@@ -337,13 +337,18 @@
   margin-bottom: 10px;
 }
 
-.form-error-section {
+.form-error-section,
+.form-error-section-update {
   position: absolute;
   font-size: 11px;
   color: red;
   font-weight: 600;
   top: 35px;
   left: 0;
+}
+
+.form-error-section-update {
+  top: 30px;
 }
 
 .id-information-section {
