@@ -9,6 +9,7 @@ import fetchData from './fetchData';
 
 const SingleGeneralLedgerId = () => {
   const { id } = useParams();
+  const [sortedList, setSortedList] = useState([]);
   const dispatch = useDispatch();
   const [update, setUpdate] = useState(false);
   const generalLedgerID = useSelector(state => state.generalLedgerReducer.generalLedgerID);
@@ -85,6 +86,14 @@ const SingleGeneralLedgerId = () => {
       }
     }
   }, [errors]);
+
+  useEffect(() => {
+    if (glSubTypes.length > 0) {
+      setSortedList(glSubTypes.filter(
+        element => element.glTypeID === updateData.glType,
+      ));
+    }
+  }, [updateData.glType]);
 
   return (
     <div className="individual-customer-form">
@@ -171,7 +180,7 @@ const SingleGeneralLedgerId = () => {
                             >
                               <option value="" disabled selected hidden>Select</option>
                               {
-                                glSubTypes.map(type => (
+                                sortedList.map(type => (
                                   <option key={type.glSubTypeID} value={type.glSubTypeID}>
                                     {type.glSubType}
                                   </option>

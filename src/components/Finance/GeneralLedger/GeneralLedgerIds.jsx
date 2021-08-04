@@ -18,6 +18,7 @@ const initialState = {
 const GeneralLedgerIds = () => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialState);
+  const [sortedList, setSortedList] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
   const {
@@ -65,6 +66,19 @@ const GeneralLedgerIds = () => {
     setErrors({});
     setSearchedCustomer('');
   };
+
+  useEffect(() => {
+    if (glSubTypes.length > 0) {
+      setSortedList(glSubTypes.filter(element => element.glTypeID === values.glMainType));
+    }
+  }, [values]);
+
+  useEffect(() => {
+    setValues({
+      ...values,
+      glMainType: 'A',
+    });
+  }, [glSubTypes]);
 
   return (
     <div className="individual-customer-form">
@@ -160,6 +174,7 @@ const GeneralLedgerIds = () => {
                     <div className="right-subtypes-span">GL Name:</div>
                     <div className="right-subtypes-input">
                       <input
+                        autoComplete="off"
                         name="name"
                         onChange={handleChange}
                         value={values.name}
@@ -175,7 +190,7 @@ const GeneralLedgerIds = () => {
                     <div className="right-subtypes-span">GL Sub Types:</div>
                     <div className="right-subtypes-input">
                       {
-                          glSubTypes.length > 0 ? (
+                          sortedList.length > 0 ? (
                             <select
                               name="glSubType"
                               className="w-100"
@@ -184,7 +199,7 @@ const GeneralLedgerIds = () => {
                             >
                               <option value="" disabled selected hidden>Select </option>
                               {
-                                glSubTypes.map((subType, index) => (
+                                sortedList.map((subType, index) => (
                                   <option
                                     key={index}
                                     value={subType.glSubTypeID}
