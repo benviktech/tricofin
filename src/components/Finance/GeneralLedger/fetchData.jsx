@@ -48,10 +48,8 @@ const fetchData = () => {
   const displaySortedList = (data, value) => {
     data.forEach(customer => {
       Object.values(customer).forEach(element => {
-        if (isNaN(element)) {
-          if (element.indexOf(value.toLocaleUpperCase()) !== -1) {
-            sortedCustomersList.push(customer);
-          }
+        if (element.indexOf(value.toLocaleUpperCase()) !== -1) {
+          sortedCustomersList.push(customer);
         }
       });
     });

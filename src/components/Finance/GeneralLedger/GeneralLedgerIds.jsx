@@ -122,6 +122,9 @@ const GeneralLedgerIds = () => {
                                     key={customer.glid}
                                   >
                                     <div className="modal-customer-name-section mr-2">
+                                      { customer.glid }
+                                    </div>
+                                    <div className="modal-customer-name-section mr-2">
                                       { customer.glName }
                                     </div>
                                   </Link>
