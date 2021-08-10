@@ -18,9 +18,9 @@ const UpdateSubtype = ({ typeUpdate, setModal }) => {
         glSubTypeID: typeUpdate.glSubTypeID,
         glSubType: newType.toUpperCase(),
         glTypeID: typeUpdate.glTypeID,
-        createdOn: '2021-07-24T22:15:38.196Z',
+        createdOn: (new Date()).toISOString(),
         createdBy: 'BENVIK',
-        modifiedOn: '2021-07-24T22:15:38.196Z',
+        modifiedOn: (new Date()).toISOString(),
         modifiedBy: 'BENVIK',
       };
       await dispatch(updateGeneralLedgerSubType(data));
