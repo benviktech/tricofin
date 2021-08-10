@@ -15,10 +15,15 @@
   margin-bottom: 15px;
 }
 
-.input-section {
+.input-section,
+.input-section-two {
   flex: 4;
   display: flex;
   justify-content: flex-end;
+}
+
+.input-section-two {
+  justify-content: space-between;
 }
 
 .span-section,
@@ -39,6 +44,8 @@
 }
 
 .submit-form-top-section input,
+.submit-form-top-section select,
+.submit-form-top-section .branch-details-section,
 .sub-type-update-container-input input {
   height: 30px;
   border: none;
@@ -362,6 +369,30 @@
   cursor: pointer;
   background-color: #f3f2f1;
   width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.select-branch-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.select-branch-name div,
+.select-branch-name-two .current-branc-name {
+  background-color: #F3F2F1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 20px;
+  margin-left: 20px;
+  border-radius: 3px;
+}
+
+.branch-details-section {
   display: flex;
   align-items: center;
 }
