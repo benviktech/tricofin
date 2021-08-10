@@ -63,7 +63,9 @@ const fetchData = () => {
     finalSortedList,
     setSearchedCustomer,
     glTypes,
+    setFinalSortedList,
     glSubTypes,
+    responseData,
   };
 };
 
