@@ -317,7 +317,7 @@ const GeneralLedgerView = () => {
                 </div>
               </div>
             </div>
-            <Modal />
+            <Modal generalLedger={generalLedger} />
           </div>
         </div>
       </div>
