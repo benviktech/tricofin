@@ -327,6 +327,10 @@
   align-items: center;
 }
 
+.top-z-index {
+  z-index: 10 !important;
+}
+
 .inner-sub-type-update-container {
   padding:20px;
   background-color: #fff;
@@ -395,4 +399,12 @@
 .branch-details-section {
   display: flex;
   align-items: center;
+}
+
+.gl-error-section {
+  font-size: 11px;
+  font-weight: 600;
+  color: red;
+  position: absolute;
+  top: 30px;
 }
