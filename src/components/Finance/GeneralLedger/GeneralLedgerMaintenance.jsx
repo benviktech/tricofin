@@ -44,7 +44,7 @@ const GeneralLedgerMaintenance = () => {
     searchIndividualCustomerSet,
     searchedCustomerSet,
     finalSortedListSet,
-    // setSearchedCustomerSet,
+    setSearchedCustomerSet,
   } = SearchCustomerSet();
 
   useEffect(() => {
@@ -121,7 +121,12 @@ const GeneralLedgerMaintenance = () => {
     }
   }, [errors]);
 
-  const cancelGLSubmit = () => setErrors({});
+  const cancelGLSubmit = () => {
+    setSearchedCustomerSet('');
+    setBranchDetail('');
+    setSearchedCustomer('');
+    setErrors({});
+  };
 
   useEffect(() => {
     setFirstDrop(true);
