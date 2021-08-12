@@ -48,8 +48,11 @@ const fetchData = () => {
   const displaySortedList = (data, value) => {
     data.forEach(customer => {
       Object.values(customer).forEach(element => {
-        if (element.indexOf(value.toLocaleUpperCase()) !== -1) {
-          sortedCustomersList.push(customer);
+        if (typeof element === 'string') {
+          const elementResult = element.toLowerCase();
+          if (elementResult.indexOf(value.toLowerCase()) !== -1) {
+            sortedCustomersList.push(customer);
+          }
         }
       });
     });
