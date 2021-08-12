@@ -5,12 +5,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import Modal from './Modal';
 import fetchData from './fetchData';
 import { saveGeneralLedger } from '../../../actions/generalLedger';
+import SearchCustomerSet from './SearchGL';
 
 const initialState = {
   branch: '',
@@ -19,6 +21,8 @@ const initialState = {
 
 const GeneralLedgerMaintenance = () => {
   const [systemBranches, setSystemBranches] = useState([]);
+  const [firstDrop, setFirstDrop] = useState(false);
+  const [secondDrop, setSecondDrop] = useState(false);
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [currentBranch, setCurrentBranch] = useState('');
@@ -26,6 +30,7 @@ const GeneralLedgerMaintenance = () => {
   const [submissionData, setSubmissionData] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
+
   const {
     glTypes, glSubTypes,
     searchIndividualCustomer,
@@ -34,6 +39,13 @@ const GeneralLedgerMaintenance = () => {
     setSearchedCustomer,
     setFinalSortedList,
   } = fetchData();
+
+  const {
+    searchIndividualCustomerSet,
+    searchedCustomerSet,
+    finalSortedListSet,
+    // setSearchedCustomerSet,
+  } = SearchCustomerSet();
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -102,14 +114,24 @@ const GeneralLedgerMaintenance = () => {
   };
 
   useEffect(() => {
-    console.log(errors, 'errors');
     if (Object.keys(errors).includes('state')) {
       if (Object.keys(errors).length === 1) {
-        console.log('inside the submit section');
         dispatch(saveGeneralLedger(submissionData, history));
       }
     }
   }, [errors]);
+
+  const cancelGLSubmit = () => setErrors({});
+
+  useEffect(() => {
+    setFirstDrop(true);
+    setSecondDrop(false);
+  }, [searchedCustomerSet]);
+
+  useEffect(() => {
+    setFirstDrop(false);
+    setSecondDrop(true);
+  }, [searchedCustomer]);
 
   return (
     <div className="individual-customer-form">
@@ -124,13 +146,50 @@ const GeneralLedgerMaintenance = () => {
           <div className="submit-form-top-section">
             <form className="ledger-form" onSubmit={submitFormData}>
               <div className="left-form-section">
-                <div className="ledger-account">
+                <div className="ledger-account manage-drop-down ">
                   <div className="span-section">
-                    <span>GL Account ID:</span>
+                    <span>Search Account:</span>
                   </div>
                   <div className="input-section">
-                    <input type="text" />
+                    <input
+                      autoComplete="off"
+                      type="text"
+                      name="searchcustomer"
+                      value={searchedCustomerSet}
+                      onChange={searchIndividualCustomerSet}
+                    />
                   </div>
+                  {
+                    searchedCustomerSet === '' ? (
+                      <div className="modal-hide-section" />
+                    ) : (
+                      firstDrop ? (
+                        <div className="modal-popup-section-new">
+                          <div className="inner-section-modal-section">
+                            {
+                              Array.from(new Set(finalSortedListSet)).map(customer => (
+                                <Link
+                                  exact
+                                  to={{
+                                    pathname: `/generaledgermaintenance/${customer.accountID}`,
+                                  }}
+                                  className="inner-section-modal-section-inner border"
+                                  key={customer.accountID}
+                                >
+                                  <div className="modal-customer-name-section mr-2">
+                                    { customer.accountID }
+                                  </div>
+                                  <div className="modal-customer-name-section mr-2">
+                                    { customer.accountName}
+                                  </div>
+                                </Link>
+                              ))
+                            }
+                          </div>
+                        </div>
+                      ) : null
+                    )
+                }
                 </div>
                 <div className="ledger-account">
                   <div className="span-section">
@@ -182,27 +241,29 @@ const GeneralLedgerMaintenance = () => {
                       searchedCustomer === '' ? (
                         <div className="modal-hide-section" />
                       ) : (
-
-                        <div className="modal-popup-section">
-                          <div className="inner-section-modal-section">
-                            {
-                              Array.from(new Set(finalSortedList)).map(customer => (
-                                <div
-                                  onClick={() => currentBranchDetails(customer)}
-                                  className="inner-section-modal-section-inner border"
-                                  key={customer.glid}
-                                >
-                                  <div className="modal-customer-name-section mr-2">
-                                    { customer.glid }
-                                  </div>
-                                  <div className="modal-customer-name-section mr-2">
-                                    { customer.glName }
-                                  </div>
-                                </div>
-                              ))
-                            }
+                        secondDrop ? (
+                          <div className="modal-popup-section">
+                            <div className="inner-section-modal-section">
+                              {
+                                    Array.from(new Set(finalSortedList)).map(customer => (
+                                      <div
+                                        onClick={() => currentBranchDetails(customer)}
+                                        className="inner-section-modal-section-inner border"
+                                        key={customer.glid}
+                                      >
+                                        <div className="modal-customer-name-section mr-2">
+                                          { customer.glid }
+                                        </div>
+                                        <div className="modal-customer-name-section mr-2">
+                                          { customer.glName }
+                                        </div>
+                                      </div>
+                                    ))
+                                  }
+                            </div>
                           </div>
-                        </div>
+
+                        ) : null
                       )
                     }
                     <div className="current-branc-name w-50">
@@ -211,6 +272,9 @@ const GeneralLedgerMaintenance = () => {
                           ? branchDetail.glName
                           : (`${branchDetail.glName.substring(0, 21)} ...`)
                       ) : null }
+                    </div>
+                    <div className="gl-error-section">
+                      { errors.glId && errors.glId}
                     </div>
                   </div>
                 </div>
@@ -256,7 +320,7 @@ const GeneralLedgerMaintenance = () => {
                     <button type="submit">Add</button>
                   </div>
                   <div className="cancel-button">
-                    <button type="button">Cancel</button>
+                    <button type="button" onClick={cancelGLSubmit}>Cancel</button>
                   </div>
                 </div>
               </div>
