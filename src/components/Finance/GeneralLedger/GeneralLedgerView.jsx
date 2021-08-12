@@ -1,9 +1,10 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import axios from 'axios';
 import { GetGeneralLedger, UpdateGeneralLedger } from '../../../actions/generalLedger';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
@@ -13,10 +14,12 @@ import fetchData from './fetchData';
 const GeneralLedgerView = () => {
   const [systemBranches, setSystemBranches] = useState([]);
   const [values, setValues] = useState({});
-  const [branchDetail, setBranchDetail] = useState('');
+  const [branchDetail, setBranchDetail] = useState({});
   const [updateState, setUpdateState] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const history = useHistory();
+
   const generalLedger = useSelector(state => state.generalLedgerReducer.generalLedger);
 
   const changeUpdateState = () => {
@@ -33,6 +36,16 @@ const GeneralLedgerView = () => {
     setFinalSortedList,
     responseData,
   } = fetchData();
+
+  useEffect(() => {
+    if (updateState) {
+      responseData.forEach(element => {
+        if (element.glid === generalLedger.glid) {
+          setBranchDetail(element);
+        }
+      });
+    }
+  }, [updateState]);
 
   const handleChange = e => {
     const { value, name } = e.target;
@@ -61,8 +74,6 @@ const GeneralLedgerView = () => {
   }, []);
 
   const displayID = id => {
-    console.log(id, 'id');
-    console.log(glTypes, 'id');
     let result = '';
     glTypes.forEach(element => {
       if (element.glTypeID === id) {
@@ -100,6 +111,19 @@ const GeneralLedgerView = () => {
     return result;
   };
 
+  const displaySystemBranch = branch => {
+    let result = '';
+    systemBranches.forEach(val => {
+      if (val.branchID === branch) {
+        result = val.branchName;
+      }
+    });
+    return result;
+  };
+
+  const cancelGLUpdate = () => setUpdateState(false);
+  const returnPage = () => history.push('/generaledgermaintenance');
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -119,11 +143,11 @@ const GeneralLedgerView = () => {
                   </div>
                   <div className="input-section">
                     {
-                        Object.keys(generalLedger).length > 0 ? (
-                          <div className="branch-details-section">
-                            { generalLedger.accountID }
-                          </div>
-                        ) : <div className="branch-details-section" />
+                      Object.keys(generalLedger).length > 0 ? (
+                        <div className="branch-details-section">
+                          { generalLedger.accountID }
+                        </div>
+                      ) : <div className="branch-details-section" />
                     }
                   </div>
                 </div>
@@ -133,42 +157,41 @@ const GeneralLedgerView = () => {
                   </div>
                   <div className={updateState ? 'input-section select-branch-name' : 'input-section'}>
                     {
-                        Object.keys(generalLedger).length > 0
-                        && updateState === false ? (
-                          <div className="branch-details-section">
-                            { generalLedger.branchID }
-                          </div>
+                      Object.keys(generalLedger).length > 0
+                      && updateState === false ? (
+                        <div className="branch-details-section">
+                          { displaySystemBranch(generalLedger.branchID) }
+                        </div>
+                        )
+                        : (
+                          systemBranches.length > 0 && updateState ? (
+                            <select
+                              name="branchID"
+                              value={values.branchID}
+                              onChange={handleChange}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
+                                systemBranches.map(branch => (
+                                  <option
+                                    key={branch.branchID}
+                                    value={branch.branchID}
+                                  >
+                                    {branch.branchName}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          ) : (
+                            <select>
+                              <option value="" disabled selected hidden>Select</option>
+                            </select>
                           )
-                          : (
-                            systemBranches.length > 0 && updateState ? (
-                              <select
-                                name="branchID"
-                                value={values.branchID}
-                                onChange={handleChange}
-                              >
-                                <option value="" disabled selected hidden>Select</option>
-                                {
-                                      systemBranches.map(branch => (
-                                        <option
-                                          key={branch.branchID}
-                                          value={branch.branchID}
-                                        >
-                                          {branch.branchName}
-                                        </option>
-                                      ))
-                                    }
-                              </select>
-                            ) : (
-                              <select>
-                                <option value="" disabled selected hidden>Select</option>
-                              </select>
-                            )
-                          )
+                        )
                       }
                     {
-                        updateState ? <div>sample</div> : null
+                      updateState ? <div>sample</div> : null
                     }
-
                   </div>
                 </div>
                 <div className="ledger-account">
@@ -197,7 +220,6 @@ const GeneralLedgerView = () => {
                           searchedCustomer === '' ? (
                             <div className="modal-hide-section" />
                           ) : (
-
                             <div className="modal-popup-section">
                               <div className="inner-section-modal-section">
                                 {
@@ -258,19 +280,23 @@ const GeneralLedgerView = () => {
                     </div>
                   </div>
                 </div>
-                <div className="ledger-subtypes">
-                  <div className="right-span-section">
-                    <span>GL Account Exist in all Branches:</span>
-                  </div>
-                  <div className="right-input-section">
-                    <select
-                      name="multiple"
-                    >
-                      <option value="No" selected>No</option>
-                      <option value="Yes">Yes</option>
-                    </select>
-                  </div>
-                </div>
+                {
+                  updateState ? (
+                    <div className="ledger-subtypes">
+                      <div className="right-span-section">
+                        <span>GL Account Exist in all Branches:</span>
+                      </div>
+                      <div className="right-input-section">
+                        <select
+                          name="multiple"
+                        >
+                          <option value="No" selected>No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                  ) : null
+                }
                 <div className="button-section">
                   <div className="add-button">
                     <button
@@ -281,7 +307,12 @@ const GeneralLedgerView = () => {
                     </button>
                   </div>
                   <div className="cancel-button">
-                    <button type="button">Cancel</button>
+                    <button
+                      type="button"
+                      onClick={updateState ? cancelGLUpdate : returnPage}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
