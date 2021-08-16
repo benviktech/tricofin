@@ -204,3 +204,23 @@ export const GetGeneralLedgerID = async (method, path) => {
   const response = await axios[method](`${baseUrl}/${path}`);
   return response;
 };
+
+export const UpdateGeneralLedgerID = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const SaveGeneralLedger = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
+
+export const GetGeneralLedgerRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
+
+export const UpdateGeneralLedgerRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
