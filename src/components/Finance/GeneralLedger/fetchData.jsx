@@ -29,7 +29,7 @@ const fetchData = () => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get('  https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerIDs');
+      const response = await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerIDs');
       setResponseData(response.data);
     } catch (error) {
       console.log(error.message);
@@ -48,8 +48,9 @@ const fetchData = () => {
   const displaySortedList = (data, value) => {
     data.forEach(customer => {
       Object.values(customer).forEach(element => {
-        if (isNaN(element)) {
-          if (element.indexOf(value.toLocaleUpperCase()) !== -1) {
+        if (typeof element === 'string') {
+          const elementResult = element.toLowerCase();
+          if (elementResult.indexOf(value.toLowerCase()) !== -1) {
             sortedCustomersList.push(customer);
           }
         }
@@ -65,7 +66,9 @@ const fetchData = () => {
     finalSortedList,
     setSearchedCustomer,
     glTypes,
+    setFinalSortedList,
     glSubTypes,
+    responseData,
   };
 };
 

@@ -15,10 +15,15 @@
   margin-bottom: 15px;
 }
 
-.input-section {
+.input-section,
+.input-section-two {
   flex: 4;
   display: flex;
   justify-content: flex-end;
+}
+
+.input-section-two {
+  justify-content: space-between;
 }
 
 .span-section,
@@ -39,6 +44,8 @@
 }
 
 .submit-form-top-section input,
+.submit-form-top-section select,
+.submit-form-top-section .branch-details-section,
 .sub-type-update-container-input input {
   height: 30px;
   border: none;
@@ -320,6 +327,10 @@
   align-items: center;
 }
 
+.top-z-index {
+  z-index: 10 !important;
+}
+
 .inner-sub-type-update-container {
   padding:20px;
   background-color: #fff;
@@ -337,13 +348,18 @@
   margin-bottom: 10px;
 }
 
-.form-error-section {
+.form-error-section,
+.form-error-section-update {
   position: absolute;
   font-size: 11px;
   color: red;
   font-weight: 600;
   top: 35px;
   left: 0;
+}
+
+.form-error-section-update {
+  top: 30px;
 }
 
 .id-information-section {
@@ -359,4 +375,36 @@
   width: 100%;
   display: flex;
   align-items: center;
+}
+
+.select-branch-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.select-branch-name div,
+.select-branch-name-two .current-branc-name {
+  background-color: #F3F2F1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 20px;
+  margin-left: 20px;
+  border-radius: 3px;
+}
+
+.branch-details-section {
+  display: flex;
+  align-items: center;
+}
+
+.gl-error-section {
+  font-size: 11px;
+  font-weight: 600;
+  color: red;
+  position: absolute;
+  top: 30px;
 }

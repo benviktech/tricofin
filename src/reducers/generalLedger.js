@@ -6,6 +6,7 @@ import {
   FETCH_SINGLE_GENERAL_LEDGER,
   FETCH_SINGLE_GENERAL_LEDGER_UPDATE,
   POST_GENERAL_LEDGER_ID,
+  FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   loading: false,
   subTypeList: [],
   generalLedgerID: {},
+  generalLedger: {},
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -37,6 +39,13 @@ const generalLedgerReducer = (state = initialState, action) => {
         error: '',
         loading: false,
         subTypeList: [...state.subTypeList, action.payload],
+      };
+    case FETCH_SINGLE_GENERAL_LEDGER_DETAILS:
+      return {
+        ...state,
+        error: '',
+        loading: false,
+        generalLedger: action.payload,
       };
     case FETCH_SINGLE_GENERAL_LEDGER_UPDATE:
       return {

@@ -4,6 +4,10 @@ import {
   UpdateGeneralLedgerSubType,
   SaveGeneralLedgerID,
   GetGeneralLedgerID,
+  UpdateGeneralLedgerID,
+  SaveGeneralLedger,
+  GetGeneralLedgerRequest,
+  UpdateGeneralLedgerRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -12,6 +16,7 @@ export const LOADING_ERROR = 'LOADING_ERROR';
 export const FETCH_SINGLE_GENERAL_LEDGER = 'FETCH_SINGLE_GENERAL_LEDGER';
 export const FETCH_SINGLE_GENERAL_LEDGER_UPDATE = 'FETCH_SINGLE_GENERAL_LEDGER_UPDATE';
 export const POST_GENERAL_LEDGER_ID = 'POST_GENERAL_LEDGER_ID';
+export const FETCH_SINGLE_GENERAL_LEDGER_DETAILS = 'FETCH_SINGLE_GENERAL_LEDGER_DETAILS';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -30,6 +35,11 @@ export const changeGeneralLedgerSubTypes = data => ({
 
 export const postGeneralLedgerID = data => ({
   type: POST_GENERAL_LEDGER_ID,
+  payload: data,
+});
+
+export const singleGeneralLedger = data => ({
+  type: FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
   payload: data,
 });
 
@@ -105,6 +115,81 @@ export const getGeneralLedgerID = id => async dispatch => {
     dispatch({ type: LOADING_CONTENT });
     const response = await GetGeneralLedgerID(method, path);
     dispatch(postGeneralLedgerID(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const updateGeneralLedgerID = data => async dispatch => {
+  const path = '/api/Finance/UpdateGeneralLedgerID';
+  const method = 'put';
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await UpdateGeneralLedgerID(method, path, data);
+    dispatch(postGeneralLedgerID(response?.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const saveGeneralLedger = (data, history) => async dispatch => {
+  const path = 'api/Finance/SaveGeneralLedger';
+  const method = 'post';
+  const values = {
+    accountID: `${data.branch}${data.glid}`,
+    branchID: data.branch,
+    accountName: data.glName,
+    accountSeq: '',
+    glid: data.glid,
+    prevBalance: 0,
+    balance: 0,
+    shadowBalance: 0,
+    unSupervisedCredit: 0,
+    unSupervisedDebit: 0,
+    creditTurnOver: 0,
+    debitTurnOver: 0,
+    lastCrTranDate: (new Date()).toISOString(),
+    lastCrTranAmt: 0,
+    lastDrTranDate: (new Date()).toISOString(),
+    lastDrTranAmt: 0,
+    isVerified: true,
+    verifiedOn: null,
+    verifiedBy: '',
+    isDeleted: false,
+    createdOn: (new Date()).toISOString(),
+    createdBy: 'BENVIK',
+    modifiedOn: (new Date()).toISOString(),
+    modifiedBy: 'BENVIK',
+    prevEOYPLBal: 0,
+    closedOn: null,
+    closedBy: '',
+  };
+  try {
+    dispatch({ type: LOADING_CONTENT });
+    const response = await SaveGeneralLedger(method, path, values);
+    history.push(`/generaledgermaintenance/${response.data.accountID}`);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const GetGeneralLedger = accountID => async dispatch => {
+  const method = 'get';
+  const path = `/api/Finance/GetGeneralLedger/${accountID}`;
+  try {
+    const response = await GetGeneralLedgerRequest(method, path);
+    dispatch(singleGeneralLedger(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const UpdateGeneralLedger = data => async dispatch => {
+  const method = 'put';
+  const path = '/api/Finance/UpdateGeneralLedger';
+  try {
+    const response = await UpdateGeneralLedgerRequest(method, path, data);
+    dispatch(singleGeneralLedger(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
