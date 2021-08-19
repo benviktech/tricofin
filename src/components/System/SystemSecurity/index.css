@@ -724,3 +724,9 @@ a {
 .input-div .label-role {
   width: 100px;
 }
+
+.center-loader {
+  text-align: center;
+  margin-top: 50px;
+}
+

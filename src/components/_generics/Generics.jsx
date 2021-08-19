@@ -2,10 +2,11 @@
 /* eslint-disable react/button-has-type */
 
 import React from 'react';
+import { ButtonSpinner } from './ButtonSpinner';
 import './index.css';
 
 export const Button = ({
-  name, onClick, type = 'button', disabled,
+  name, onClick, type = 'button', disabled, showSpinner,
 }) => (
   <button
     type={type}
@@ -13,7 +14,8 @@ export const Button = ({
     disabled={disabled}
     className={disabled ? 'button-disabled' : 'button-active'}
   >
-    {name}
+    <span>{name}</span>
+    {showSpinner && <span><ButtonSpinner /></span>}
   </button>
 );
 

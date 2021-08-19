@@ -69,6 +69,7 @@ const SystemSecurityRoles = () => {
   const [askEdit, setAskEdit] = useState(false);
   const [askDelete, setAskDelete] = useState(false);
   const [askAdd, setAskAdd] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     fetchSystemRoles();
@@ -89,6 +90,7 @@ const SystemSecurityRoles = () => {
   };
   const createSystemRight = async () => {
     const response = accessRightsValidator(formState);
+    setDone(true);
     setErrors(response);
     if (Object.keys(response).length === 0) {
       axios
@@ -104,11 +106,13 @@ const SystemSecurityRoles = () => {
           const { columnID, ...stateData } = response.data;
           setFormState(stateData);
           setModulePresent(true);
+          setDone(false);
           toast.success(
             `Added rights for ${response.data.roleID}  successfully`,
           );
         })
         .catch(error => {
+          setDone(false);
           toast.error(`Failed rights for ${formState.roleID} `);
         });
     }
@@ -116,6 +120,7 @@ const SystemSecurityRoles = () => {
 
   const updateSystemRight = async () => {
     const response = accessRightsValidator(formState);
+    setDone(true);
     setErrors(response);
     if (Object.keys(response).length === 0) {
       axios
@@ -127,11 +132,13 @@ const SystemSecurityRoles = () => {
           supervisionLimit: parseInt(formState.supervisionLimit),
         })
         .then(response => {
+          setDone(false);
           toast.success(
             `Edited rights for ${response.data.roleID}  successfully`,
           );
         })
         .catch(error => {
+          setDone(false);
           toast.error(`Failed to change rights for ${formState.roleID}`);
         });
     }
@@ -507,6 +514,7 @@ const SystemSecurityRoles = () => {
                         disabled={modulePresent}
                         onClick={createSystemRight}
                         name="Add"
+                        showSpinner={done}
                       />
                     )}
                     {modulePresent && (
@@ -514,6 +522,7 @@ const SystemSecurityRoles = () => {
                         disabled={!modulePresent}
                         onClick={updateSystemRight}
                         name="Update"
+                        showSpinner={done}
                       />
                     )}
                     <Button onClick={clearErrors} name="Cancel" />
