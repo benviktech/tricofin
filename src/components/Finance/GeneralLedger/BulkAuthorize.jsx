@@ -12,13 +12,17 @@ const BulkAuthorize = () => {
   const [values, setValues] = useState(initialState);
   const [sortedList, setSortedList] = useState([]);
   const [checkSorted, setCheckedSorted] = useState([]);
+  const [verificationState, setVerificationState] = useState(false);
+  const [alterDisplay, setAlterDisplay] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+  const fetchData = async () => {
+    await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
       .then(response => setLedgerAccounts(response?.data))
       .catch(error => console.log(error.message));
-  }, []);
+  };
+
+  useEffect(() => { fetchData(); }, []);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -29,6 +33,13 @@ const BulkAuthorize = () => {
       .catch(error => error.message);
   }, []);
 
+  useEffect(async () => {
+    if (verificationState) {
+      await fetchData();
+      setAlterDisplay(true);
+    }
+  }, [verificationState]);
+
   const handleChange = e => {
     const { value, name } = e.target;
     setValues({
@@ -38,16 +49,20 @@ const BulkAuthorize = () => {
   };
 
   const filterSelectedGLs = id => {
+    setAlterDisplay(false);
     if (id !== '') {
-      setSortedList(ledgerAccounts.filter(element => element.branchID === id));
+      setSortedList(ledgerAccounts.filter(
+        element => element.branchID === id && element.isVerified === false,
+      ));
     } else {
-      setSortedList(ledgerAccounts);
+      setSortedList(ledgerAccounts.filter(element => element.isVerified === false));
     }
   };
 
   useEffect(() => {
     filterSelectedGLs(values.bulk);
-  }, [values]);
+    setVerificationState(false);
+  }, [values, alterDisplay]);
 
   const handleSort = e => {
     const { name, checked } = e.target;
@@ -66,10 +81,11 @@ const BulkAuthorize = () => {
     setCheckedSorted(sortedList.filter(element => element.isChecked === true));
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (checkSorted.length > 0) {
       const results = checkSorted.map(ledger => ledger.accountID);
-      dispatch(verifyGLs(results));
+      await dispatch(verifyGLs(results));
+      setVerificationState(true);
     }
   }, [checkSorted]);
 
