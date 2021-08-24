@@ -200,8 +200,7 @@ export const verifyGLs = data => async dispatch => {
   const method = 'put';
   const path = '/api/Finance/VerifyGeneralLegders/ILUMU';
   try {
-    const response = await VerifyGeneralLedgers(method, path, data);
-    console.log(response?.data, 'response data');
+    await VerifyGeneralLedgers(method, path, data);
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
