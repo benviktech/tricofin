@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  BrowserRouter, Route, Link,
+  BrowserRouter as Router, Route, NavLink, useRouteMatch,
 } from 'react-router-dom';
-import { useRouteMatch } from 'react-router';
 
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import CopySingle from './CopySingle';
@@ -20,18 +19,31 @@ const ReplicateGL = () => {
           <div className="left-inner-form-section">
             <GeneralLedgerSidebar />
           </div>
-          <div className="submit-form-top-section">
-            <BrowserRouter>
+          <Router>
+            <div className="submit-form-top-section">
               <div className="navigation-gl-header">
-                <Link to={`${url}`} className="copy-single-GL">Copy Single GL to branches</Link>
-                <Link to={`${url}/copymultiple`} className="copy-single-GL">Copy Multiple GLs from one Branch to others</Link>
+                <NavLink
+                  to={`${url}`}
+                  exact
+                  activeClassName="active-gl-verify"
+                  className="copy-single-GL"
+                >
+                  Copy Single GL to branches
+                </NavLink>
+                <NavLink
+                  to={`${url}/copymultiple`}
+                  activeClassName="active-gl-verify"
+                  className="copy-single-GL"
+                >
+                  Copy Multiple GLs from one Branch to others
+                </NavLink>
               </div>
               <div className="router-content-section">
                 <Route exact path={`${path}`} component={CopySingle} />
-                <Route path={`${path}/copymultiple`} component={CopyMultiple} />
+                <Route exact path={`${path}/copymultiple`} component={CopyMultiple} />
               </div>
-            </BrowserRouter>
-          </div>
+            </div>
+          </Router>
         </div>
       </div>
     </div>
