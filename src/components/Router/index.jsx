@@ -74,9 +74,8 @@ const Router = () => (
         <Route path="/glidentification" component={GeneralLedgerIds} />
         <Route exact path="/genlidentification/:id" component={SingleGeneralLedgerId} />
         <Route exact path="/generaledgermaintenance/:id" component={GeneralLedgerView} />
-        <Route exact path="/bulkauthorize" component={BulkAuthorize} />
-        <Route exact path="/bulkauthorize" component={BulkAuthorize} />
-        <Route exact path="/glreplicate" component={ReplicateGL} />
+        <Route path="/bulkauthorize" component={BulkAuthorize} />
+        <Route path="/glreplicate" component={ReplicateGL} />
       </Switch>
       <Footer />
     </BrowserRouter>
