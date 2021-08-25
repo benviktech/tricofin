@@ -522,7 +522,176 @@
 
 .copy-single-GL {
   padding: 5px 20px;
-  background-color: blue;
+  background-color: #f3f2f1;
   text-align: center;
+  font-weight: 600;
   cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.router-content-section {
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.active-gl-verify {
+  background-color: #aeaeae;
+  color: #fff;
+}
+
+.active-gl-verify:hover {
+  color: #fff;
+}
+
+.copy-single-section {
+  display: grid;
+  grid-template-columns: 5fr 4fr 1fr;
+  grid-column-gap: 30px;
+  margin-top: 20px;
+}
+
+.gl-account-id-section,
+.gl-branch-id-section {
+  display: grid;
+  grid-template-columns: 1fr 4fr 3fr;
+  grid-column-gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.gl-account-id-section span,
+.gl-branch-id-section span {
+  font-size: 12px;
+}
+
+.gl-account-id-section div,
+.gl-branch-id-section div {
+  display: flex;
+  align-items: center;
+}
+
+.gl-account-id-section .gl-account-name,
+.gl-branch-id-section .details-gl-branch-id-section,
+.gl-branch-id-section .details-gl-branch-name-section {
+  background-color: #f3f2f1;
+  border-radius: 3px;
+  padding-left: 10px;
+}
+
+.lower-copy-single-section {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5px;
+}
+
+.gl-exists-section,
+.gl-does-not-exist-section {
+  background-color: #f3f2f1;
+}
+
+.gl-exists-section .gl-exists-section-header,
+.gl-does-not-exist-section .gl-does-not-exist-section-header {
+  background-color: #aeaeae;
+}
+
+.gl-exists-section-header,
+.gl-does-not-exist-section-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: #444;
+  padding: 5px 20px;
+}
+
+.gl-exists-details-section {
+  display: grid;
+  grid-template-columns: 2fr 4fr 4fr;
+  grid-column-gap: 2px;
+  margin: 2px 2px;
+}
+
+.gl-exists-details-section div {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 0;
+}
+
+.main-gl-exists-details-section {
+  max-height: 300px;
+  min-height: 200px;
+  overflow-y: auto;
+  cursor: pointer;
+}
+
+.main-gl-exists-details-section::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.bg-secondary-header {
+  background: #c2c2c2 !important;
+  color: #fff !important;
+}
+
+.lower-gl-does-not-exist-section-header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  margin: 2px;
+  padding: 2px;
+}
+
+.lower-gl-does-not-exist-section-header .first-lower-gl-does-not-exist-section-header,
+.lower-gl-does-not-exist-section-header .checkbox-label {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.lower-gl-does-not-exist-section-header .checkbox-label {
+  width: 100px;
+}
+
+.gl-does-not-exist-section-outter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2px;
+  margin: 2px;
+}
+
+.gl-does-not-exist-section-first,
+.gl-does-not-exist-section-second {
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.top-outer-gl-header-section div {
+  background-color: #c2c2c2;
+  color: #fff;
+}
+
+.gl-does-not-exist-section-first-loop {
+  display: flex;
+}
+
+.gl-does-not-exist-section-first-loop .gl-does-not-exist-section-first-chechbox,
+.gl-does-not-exist-section-first-loop .gl-does-not-exist-section-first-brID {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 10px;
 }
