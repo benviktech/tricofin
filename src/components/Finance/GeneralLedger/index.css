@@ -512,3 +512,17 @@
   width: 0;
   height: 0;
 }
+
+.navigation-gl-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+  margin-right: 20px;
+}
+
+.copy-single-GL {
+  padding: 5px 20px;
+  background-color: blue;
+  text-align: center;
+  cursor: pointer;
+}
