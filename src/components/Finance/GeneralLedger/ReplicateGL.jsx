@@ -13,7 +13,7 @@ const ReplicateGL = () => {
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Replicate GL Accounts</span>
+          <span>Copy GL between Branches</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">

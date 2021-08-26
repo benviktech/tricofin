@@ -45,6 +45,7 @@ const SearchCustomer = () => {
     searchedCustomerSet,
     finalSortedListSet,
     setSearchedCustomerSet,
+    setFinalSortedListSet,
   };
 };
 

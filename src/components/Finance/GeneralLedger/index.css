@@ -560,12 +560,18 @@
   font-weight: 600;
 }
 
+.gl-account-id-section-many,
+.gl-branch-id-section-many{
+  grid-template-columns: 1fr 4fr;
+}
+
 .gl-account-id-section span,
 .gl-branch-id-section span {
   font-size: 12px;
 }
 
-.gl-account-id-section div,
+.gl-account-id-section .inner-gl-account-id-section,
+.gl-account-id-section .gl-account-name,
 .gl-branch-id-section div {
   display: flex;
   align-items: center;
@@ -666,6 +672,10 @@
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 2px;
   margin: 2px;
+}
+
+.gl-does-not-exist-section-outter-many {
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .gl-does-not-exist-section-first,
