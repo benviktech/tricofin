@@ -8,6 +8,7 @@ import {
   SaveGeneralLedger,
   GetGeneralLedgerRequest,
   UpdateGeneralLedgerRequest,
+  VerifyGeneralLedgers,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -152,7 +153,7 @@ export const saveGeneralLedger = (data, history) => async dispatch => {
     lastCrTranAmt: 0,
     lastDrTranDate: (new Date()).toISOString(),
     lastDrTranAmt: 0,
-    isVerified: true,
+    isVerified: false,
     verifiedOn: null,
     verifiedBy: '',
     isDeleted: false,
@@ -190,6 +191,16 @@ export const UpdateGeneralLedger = data => async dispatch => {
   try {
     const response = await UpdateGeneralLedgerRequest(method, path, data);
     dispatch(singleGeneralLedger(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const verifyGLs = data => async dispatch => {
+  const method = 'put';
+  const path = '/api/Finance/VerifyGeneralLegders/ILUMU';
+  try {
+    await VerifyGeneralLedgers(method, path, data);
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }

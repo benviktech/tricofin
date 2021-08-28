@@ -34,6 +34,8 @@ import GeneralLedgerSubtypes from '../Finance/GeneralLedger/GeneralLedgerSubtype
 import GeneralLedgerIds from '../Finance/GeneralLedger/GeneralLedgerIds';
 import SingleGeneralLedgerId from '../Finance/GeneralLedger/SingleGeneralLedgerId';
 import GeneralLedgerView from '../Finance/GeneralLedger/GeneralLedgerView';
+import BulkAuthorize from '../Finance/GeneralLedger/BulkAuthorize';
+import ReplicateGL from '../Finance/GeneralLedger/ReplicateGL';
 
 const Router = () => (
   <div className="router-section">
@@ -72,6 +74,8 @@ const Router = () => (
         <Route path="/glidentification" component={GeneralLedgerIds} />
         <Route exact path="/genlidentification/:id" component={SingleGeneralLedgerId} />
         <Route exact path="/generaledgermaintenance/:id" component={GeneralLedgerView} />
+        <Route path="/bulkauthorize" component={BulkAuthorize} />
+        <Route path="/glreplicate" component={ReplicateGL} />
       </Switch>
       <Footer />
     </BrowserRouter>
