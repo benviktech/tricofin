@@ -127,6 +127,7 @@
 .scenes-span {
   padding-right: 20px;
 }
+
 .scenes-details,
 .scenes-details-buttons {
   background-color: #fff;
@@ -162,7 +163,7 @@
 }
 
 .scenes-details-buttons {
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
   padding: 0;
   justify-content: flex-start;
 }
@@ -332,7 +333,7 @@
 }
 
 .inner-sub-type-update-container {
-  padding:20px;
+  padding: 20px;
   background-color: #fff;
 }
 
@@ -382,10 +383,9 @@
   justify-content: space-between;
 }
 
-
 .select-branch-name div,
 .select-branch-name-two .current-branc-name {
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -407,4 +407,301 @@
   color: red;
   position: absolute;
   top: 30px;
+}
+
+.top-bulk-selection-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bulk-selection {
+  display: flex;
+  flex: 2;
+  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+}
+
+.verification-button-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.verification-button-section button {
+  padding: 5px 20px;
+  border-radius: 3px;
+  border: none;
+}
+
+.inner-select-all-section {
+  background-color: #f3f2f1;
+  display: flex;
+  margin-top: 20px;
+  padding: 5px 20px;
+  margin-right: 20px;
+}
+
+.inner-select-all-section div {
+  font-size: 12px;
+  font-weight: 600;
+  color: 666;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.inner-select-all-section .checkbox-label {
+  width: 80px;
+}
+
+.selected-gl-verification-list {
+  display: flex;
+  background-color: #aeaeae;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 20px;
+  margin-top: 5px;
+  margin-right: 20px;
+}
+
+.selected-gl-verification-list .branch-id-header,
+.selected-gl-verification-list .account-id-header,
+.selected-gl-verification-list .account-name-header,
+.selected-gl-verification-list .created-by-header,
+.selected-gl-verification-list .created-on-header {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  border-right: 1px solid #fff;
+  padding: 5px 0;
+  font-size: 12px;
+}
+
+.selected-gl-verification-list .created-on-header {
+  border-right: unset;
+}
+
+.lower-list-content {
+  background-color: #f3f2f1;
+  margin-top: 0;
+  border-bottom: 1px solid #fff;
+  margin-right: 0;
+  cursor: pointer;
+}
+
+.branch-id-header .lower-check-box {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.branch-id-header .lower-check-box input {
+  height: 18px;
+  border: none;
+}
+
+.display-sorted-gl-accounts {
+  height: 300px;
+  overflow-y: auto;
+  margin-right: 20px;
+}
+
+.display-sorted-gl-accounts::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.navigation-gl-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+  margin-right: 20px;
+}
+
+.copy-single-GL {
+  padding: 5px 20px;
+  background-color: #f3f2f1;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.router-content-section {
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.active-gl-verify {
+  background-color: #aeaeae;
+  color: #fff;
+}
+
+.active-gl-verify:hover {
+  color: #fff;
+}
+
+.copy-single-section {
+  display: grid;
+  grid-template-columns: 5fr 4fr 1fr;
+  grid-column-gap: 30px;
+  margin-top: 20px;
+}
+
+.gl-account-id-section,
+.gl-branch-id-section {
+  display: grid;
+  grid-template-columns: 1fr 4fr 3fr;
+  grid-column-gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.gl-account-id-section-many,
+.gl-branch-id-section-many{
+  grid-template-columns: 1fr 4fr;
+}
+
+.gl-account-id-section span,
+.gl-branch-id-section span {
+  font-size: 12px;
+}
+
+.gl-account-id-section .inner-gl-account-id-section,
+.gl-account-id-section .gl-account-name,
+.gl-branch-id-section div {
+  display: flex;
+  align-items: center;
+}
+
+.gl-account-id-section .gl-account-name,
+.gl-branch-id-section .details-gl-branch-id-section,
+.gl-branch-id-section .details-gl-branch-name-section {
+  background-color: #f3f2f1;
+  border-radius: 3px;
+  padding-left: 10px;
+}
+
+.lower-copy-single-section {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5px;
+}
+
+.gl-exists-section,
+.gl-does-not-exist-section {
+  background-color: #f3f2f1;
+}
+
+.gl-exists-section .gl-exists-section-header,
+.gl-does-not-exist-section .gl-does-not-exist-section-header {
+  background-color: #aeaeae;
+}
+
+.gl-exists-section-header,
+.gl-does-not-exist-section-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: #444;
+  padding: 5px 20px;
+}
+
+.gl-exists-details-section {
+  display: grid;
+  grid-template-columns: 2fr 4fr 4fr;
+  grid-column-gap: 2px;
+  margin: 2px 2px;
+}
+
+.gl-exists-details-section div {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 0;
+}
+
+.main-gl-exists-details-section {
+  max-height: 300px;
+  min-height: 200px;
+  overflow-y: auto;
+  cursor: pointer;
+}
+
+.main-gl-exists-details-section::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.bg-secondary-header {
+  background: #c2c2c2 !important;
+  color: #fff !important;
+}
+
+.lower-gl-does-not-exist-section-header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  margin: 2px;
+  padding: 2px;
+}
+
+.lower-gl-does-not-exist-section-header .first-lower-gl-does-not-exist-section-header,
+.lower-gl-does-not-exist-section-header .checkbox-label {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.lower-gl-does-not-exist-section-header .checkbox-label {
+  width: 100px;
+}
+
+.gl-does-not-exist-section-outter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2px;
+  margin: 2px;
+}
+
+.gl-does-not-exist-section-outter-many {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gl-does-not-exist-section-first,
+.gl-does-not-exist-section-second {
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.top-outer-gl-header-section div {
+  background-color: #c2c2c2;
+  color: #fff;
+}
+
+.gl-does-not-exist-section-first-loop {
+  display: flex;
+}
+
+.gl-does-not-exist-section-first-loop .gl-does-not-exist-section-first-chechbox,
+.gl-does-not-exist-section-first-loop .gl-does-not-exist-section-first-brID {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 10px;
 }
