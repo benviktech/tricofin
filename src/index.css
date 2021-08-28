@@ -1,0 +1,22 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #444;
+}
+
+input,
+textarea {
+  text-transform: uppercase;
+}
+
+a {
+  text-decoration: none !important;
+}

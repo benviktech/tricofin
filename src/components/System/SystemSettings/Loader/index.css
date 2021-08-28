@@ -1,0 +1,15 @@
+.update-side-loader-height {
+  height: 90vh;
+}
+
+.loader-middle-section {
+  height: 75vh;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.loader-middle-section-spinner {
+  bottom: 10px !important;
+  margin: auto;
+}
