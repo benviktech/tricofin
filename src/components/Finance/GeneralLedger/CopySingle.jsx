@@ -16,6 +16,7 @@ const CopySingle = () => {
   const [branchList, setBranchList] = useState([]);
   const [differenceIdArray, setDifferenceIdArray] = useState([]);
   const [rightBranchArray, setRightBranchArray] = useState([]);
+  const [checkSorted, setCheckedSorted] = useState([]);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -73,19 +74,6 @@ const CopySingle = () => {
     setDifferenceIdArray(difference);
   }, [filtereLedgers]);
 
-  const handleSort = e => {
-    const { name, checked } = e.target;
-    if (name === 'allSelect') {
-      const tempGL = sortedList.map(ledger => ({ ...ledger, isChecked: checked }));
-      setSortedList(tempGL);
-    } else {
-      const tempGL = sortedList.map(
-        ledger => (ledger.accountID === name ? { ...ledger, isChecked: checked } : ledger),
-      );
-      setSortedList(tempGL);
-    }
-  };
-
   const filterBranch = id => {
     let resultBranch = '';
     branches.forEach(bran => {
@@ -107,6 +95,31 @@ const CopySingle = () => {
     });
     setRightBranchArray(finalArray);
   }, [differenceIdArray]);
+
+  useEffect(() => {
+    setSortedList(rightBranchArray);
+  }, [rightBranchArray]);
+
+  const handleSort = e => {
+    const { name, checked } = e.target;
+    if (name === 'allSelect') {
+      const tempGL = sortedList.map(ledger => ({ ...ledger, isChecked: checked }));
+      setSortedList(tempGL);
+    } else {
+      const tempGL = sortedList.map(
+        ledger => (ledger.branchID === name ? { ...ledger, isChecked: checked } : ledger),
+      );
+      setSortedList(tempGL);
+    }
+  };
+
+  const CopySingleGL = () => {
+    setCheckedSorted(sortedList.filter(element => element.isChecked === true));
+  };
+
+  useEffect(() => {
+    console.log(checkSorted, 'checkSorted to be submitted');
+  }, [checkSorted]);
 
   return (
     <div className="main-copy-single-section">
@@ -178,7 +191,7 @@ const CopySingle = () => {
             </span>
           </div>
         </div>
-        <button type="button" className="btn btn-success">
+        <button onClick={CopySingleGL} type="button" className="btn btn-success">
           <i className="far fa-check-circle mr-2" />
           Submit
         </button>
@@ -224,7 +237,7 @@ const CopySingle = () => {
           </div>
           <div className="main-gl-does-not-exist-section">
             {
-                rightBranchArray.map(element => (
+                sortedList.map(element => (
                   <div key={element.branchID} className="gl-does-not-exist-section-outter">
                     <div className="gl-does-not-exist-section-first gl-does-not-exist-section-first-loop">
                       <div className="gl-does-not-exist-section-first-chechbox">
