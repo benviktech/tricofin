@@ -10,11 +10,12 @@ const CopySingle = () => {
   const [sortedList, setSortedList] = useState([]);
   const [branchDetail, setBranchDetail] = useState('');
   const [branches, setBranches] = useState([]);
-
-  const data = [{ BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' },
-    { BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' },
-    { BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' },
-    { BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' }];
+  const [ledgerList, setLedgerList] = useState([]);
+  const [currentGlid, setCurrentGlid] = useState('');
+  const [filtereLedgers, setFilteredLedgers] = useState([]);
+  const [branchList, setBranchList] = useState([]);
+  const [differenceIdArray, setDifferenceIdArray] = useState([]);
+  const [rightBranchArray, setRightBranchArray] = useState([]);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -33,8 +34,44 @@ const CopySingle = () => {
   const currentBranchDetails = data => setBranchDetail(data);
   useEffect(() => {
     setSearchedCustomerSet(branchDetail.accountID);
+    setCurrentGlid(branchDetail.glid);
     setFinalSortedListSet([]);
   }, [branchDetail]);
+
+  useEffect(() => {
+    const result = ledgerList.filter(
+      element => element.glid === currentGlid,
+    );
+
+    setFilteredLedgers(result);
+  }, [currentGlid]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
+      .then(response => setBranchList(response?.data))
+      .catch(error => console.log(error.message));
+  }, [filtereLedgers]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+      .then(response => setLedgerList(response?.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
+    const resultOne = [];
+    const resultTwo = [];
+    if (branchList.length > 0) {
+      branchList.forEach(branch => resultOne.push(branch.branchID));
+    }
+
+    if (filtereLedgers.length > 0) {
+      filtereLedgers.forEach(ledger => resultTwo.push(ledger.branchID));
+    }
+
+    const difference = resultOne.filter(x => !resultTwo.includes(x));
+    setDifferenceIdArray(difference);
+  }, [filtereLedgers]);
 
   const handleSort = e => {
     const { name, checked } = e.target;
@@ -58,6 +95,18 @@ const CopySingle = () => {
     });
     return resultBranch;
   };
+
+  useEffect(() => {
+    const finalArray = [];
+    differenceIdArray.forEach(val => {
+      branchList.forEach(element => {
+        if (val === element.branchID) {
+          finalArray.push(element);
+        }
+      });
+    });
+    setRightBranchArray(finalArray);
+  }, [differenceIdArray]);
 
   return (
     <div className="main-copy-single-section">
@@ -144,11 +193,11 @@ const CopySingle = () => {
           </div>
           <div className="main-gl-exists-details-section">
             {
-            data.map(value => (
-              <div key={value.BrID} className="gl-exists-details-section">
-                <div className="gl-exists-details-section-id">{value.BrID}</div>
+            filtereLedgers.map(value => (
+              <div key={value.accountID} className="gl-exists-details-section">
+                <div className="gl-exists-details-section-id">{value.branchID}</div>
                 <div className="gl-exists-details-section-accountId">{value.accountID}</div>
-                <div className="gl-exists-details-section-account-name">{value.AccountName}</div>
+                <div className="gl-exists-details-section-account-name">{value.accountName}</div>
               </div>
             ))
           }
@@ -171,26 +220,26 @@ const CopySingle = () => {
           </div>
           <div className="gl-does-not-exist-section-outter top-outer-gl-header-section">
             <div className="gl-does-not-exist-section-first">BrID</div>
-            <div className="gl-does-not-exist-section-second">AccountName</div>
+            <div className="gl-does-not-exist-section-second">BranchName</div>
           </div>
           <div className="main-gl-does-not-exist-section">
             {
-                data.map(element => (
-                  <div key={element.BrID} className="gl-does-not-exist-section-outter">
+                rightBranchArray.map(element => (
+                  <div key={element.branchID} className="gl-does-not-exist-section-outter">
                     <div className="gl-does-not-exist-section-first gl-does-not-exist-section-first-loop">
                       <div className="gl-does-not-exist-section-first-chechbox">
                         <input
                           type="checkbox"
-                          name={element.accountID}
+                          name={element.branchID}
                           checked={element?.isChecked || false}
                           onChange={handleSort}
                         />
                       </div>
                       <div className="gl-does-not-exist-section-first-brID">
-                        {element.BrID}
+                        {element.branchID}
                       </div>
                     </div>
-                    <div className="gl-does-not-exist-section-second">{element.AccountName}</div>
+                    <div className="gl-does-not-exist-section-second">{element.branchName}</div>
                   </div>
                 ))
               }
