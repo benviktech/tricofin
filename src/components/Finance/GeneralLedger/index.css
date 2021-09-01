@@ -627,14 +627,16 @@
   padding: 5px 0;
 }
 
-.main-gl-exists-details-section {
+.main-gl-exists-details-section,
+.main-gl-does-not-exist-section {
   max-height: 300px;
   min-height: 200px;
   overflow-y: auto;
   cursor: pointer;
 }
 
-.main-gl-exists-details-section::-webkit-scrollbar {
+.main-gl-exists-details-section::-webkit-scrollbar,
+.main-gl-does-not-exist-section::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
