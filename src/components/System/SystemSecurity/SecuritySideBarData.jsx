@@ -34,6 +34,13 @@ const SecuritySidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     path:'/system/systemsecurity/adduser',
   },
+  {
+    title: 'Branch Management',
+    icon: <RiIcons.RiGovernmentLine style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    path:'/system/systemsecurity/branches',
+  },
 
 
 ];

@@ -36,6 +36,7 @@ import SingleGeneralLedgerId from '../Finance/GeneralLedger/SingleGeneralLedgerI
 import GeneralLedgerView from '../Finance/GeneralLedger/GeneralLedgerView';
 import BulkAuthorize from '../Finance/GeneralLedger/BulkAuthorize';
 import ReplicateGL from '../Finance/GeneralLedger/ReplicateGL';
+import SystemSecurityBranches from '../System/SystemSecurity/SystemBranches';
 
 const Router = () => (
   <div className="router-section">
@@ -67,6 +68,7 @@ const Router = () => (
         <Route path="/system/systemsecurity/roles" component={SystemSecurityRoles} />
         <Route path="/system/systemsecurity/rights" component={SystemSecurityRights} />
         <Route path="/system/systemsecurity/adduser" component={SystemSecurityMaintenance} />
+        <Route path="/system/systemsecurity/branches" component={SystemSecurityBranches} />
         <Route path="/system/holiday/holidays" component={SystemHolidays} />
         <Route exact path="/generaledgermaintenance" component={GeneralLedgerMaintenance} />
         <Route path="/transactions" component={Transaction} />
