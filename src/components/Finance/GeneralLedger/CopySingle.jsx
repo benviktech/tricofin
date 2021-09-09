@@ -166,7 +166,10 @@ const CopySingle = () => {
           <div className="gl-account-name">
             <span>
               { Object.keys(branchDetail).length > 0
-                ? branchDetail.accountName
+                ? (
+                  branchDetail.accountName.length < 22 ? branchDetail.accountName
+                    : (`${branchDetail.accountName.substring(0, 22)} ...`)
+                )
                 : null }
             </span>
           </div>
@@ -210,7 +213,12 @@ const CopySingle = () => {
               <div key={value.accountID} className="gl-exists-details-section">
                 <div className="gl-exists-details-section-id">{value.branchID}</div>
                 <div className="gl-exists-details-section-accountId">{value.accountID}</div>
-                <div className="gl-exists-details-section-account-name">{value.accountName}</div>
+                <div className="gl-exists-details-section-account-name">
+                  {
+                      value.accountName.length < 25 ? value.accountName
+                        : (`${value.accountName.substring(0, 25)} ...`)
+                      }
+                </div>
               </div>
             ))
           }
