@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -37,6 +40,8 @@ const Signature = () => {
     dispatch(SignaturePhotoAddition(formPhoto, history, id, formSignature));
   };
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -45,6 +50,13 @@ const Signature = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <Sidebar />
           </div>
           <div className="submit-form-top-section">

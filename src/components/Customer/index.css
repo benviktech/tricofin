@@ -24,6 +24,16 @@
   flex: 1;
   z-index: 5;
   height: 90vh;
+  position: relative;
+}
+
+.back-button-section {
+  position: absolute;
+  right: -35px;
+  color: #0178D4;
+  width: 30px;
+  height: 20px;
+  top: 5px;
 }
 
 .submit-form-top-section {

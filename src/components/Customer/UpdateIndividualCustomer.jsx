@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -59,6 +61,8 @@ const UpdateIndividualCustomer = () => {
     }
   };
 
+  const routeBack = () => history.goBack();
+
   return Object.keys(dataState).length > 0 ? (
     <div className="view-individual-customer-form">
       <Modal
@@ -77,6 +81,13 @@ const UpdateIndividualCustomer = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <Sidebar />
           </div>
           <div className="submit-form-top-section">

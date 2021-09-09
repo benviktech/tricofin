@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Sidebar } from '../Sidebar/Sidebar';
 import Profile from '../../images/avatar.png';
@@ -21,6 +21,7 @@ import Loader from '../Loader/Loader';
 
 const ViewIndividualCustomer = () => {
   const { id } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const {
     modalCloser, modalOpener, openModel, modalText,
@@ -33,6 +34,8 @@ const ViewIndividualCustomer = () => {
     dispatch(fetchSingleIndividualCustomer(id));
     dispatch(signaturePhotoFetch(id));
   }, []);
+
+  const routeBack = () => history.goBack();
 
   return personalData.loading ? (
     <div className="spinner section">
@@ -47,10 +50,19 @@ const ViewIndividualCustomer = () => {
       />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>View Customer Personal Information</span>
+          <span>
+            View Customer Personal Information
+          </span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <Sidebar />
           </div>
           <div className="submit-form-top-section">

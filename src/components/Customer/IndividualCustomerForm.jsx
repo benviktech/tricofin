@@ -4,7 +4,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Sidebar } from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
@@ -20,6 +20,7 @@ import { fetchUiStaticData } from '../../actions';
 
 const IndividualCustomerForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const {
     handleChange, values, handleSubmit, errors, setErrors,
   } = UseForm(validate);
@@ -48,6 +49,8 @@ const IndividualCustomerForm = () => {
     dispatch(fetchIndividualCustomers());
   }, []);
 
+  const routeBack = () => history.goBack();
+
   return individualCustomers.individualCustomers.length > 0 ? (
     <div className="individual-customer-form">
       <Modal
@@ -57,10 +60,19 @@ const IndividualCustomerForm = () => {
       />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Customer Maintenance Personal Information</span>
+          <span>
+            Customer Maintenance Personal Information
+          </span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <Sidebar />
           </div>
           <div className="submit-form-top-section">
