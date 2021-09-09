@@ -93,7 +93,7 @@ export const GroupMaintenanceData = [
 
 export const GeneralLedgerData = [
   {
-    title: 'General Ledger',
+    title: 'Data Entry',
     icon: <MdIcons.MdDashboard style={iconStyles} />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -117,6 +117,19 @@ export const GeneralLedgerData = [
         title: 'Replicate GL',
         path: '/glreplicate',
         icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+    ],
+  },
+  {
+    title: 'Views',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'Transactions Views',
+        path: '/transactionviews',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
       },
     ],
   },
