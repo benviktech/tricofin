@@ -11,6 +11,8 @@ const CopyMultiple = () => {
   const [currentBranchListFirst, setCurrentBranchListFirst] = useState([]);
   const [globalState, setGlobalState] = useState(false);
   const [finalSortedList, setFinalSortedList] = useState([]);
+  const [sortedList, setSortedList] = useState([]);
+  const [checkSorted, setCheckedSorted] = useState([]);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -68,6 +70,31 @@ const CopyMultiple = () => {
       setFinalSortedList(result);
     }
   }, [currentBranchListFirst, currentBranchList]);
+
+  useEffect(() => {
+    setSortedList(finalSortedList);
+  }, [finalSortedList]);
+
+  const handleSort = e => {
+    const { name, checked } = e.target;
+    if (name === 'allSelect') {
+      const tempGL = sortedList.map(ledger => ({ ...ledger, isChecked: checked }));
+      setSortedList(tempGL);
+    } else {
+      const tempGL = sortedList.map(
+        ledger => (ledger.accountID === name ? { ...ledger, isChecked: checked } : ledger),
+      );
+      setSortedList(tempGL);
+    }
+  };
+
+  const CopySingleGL = () => {
+    setCheckedSorted(sortedList.filter(element => element.isChecked === true));
+  };
+
+  useEffect(() => {
+    console.log(checkSorted, 'checkSorted to be submitted');
+  }, [checkSorted]);
 
   return (
     <div className="main-copy-single-section">
@@ -136,7 +163,7 @@ const CopyMultiple = () => {
             }
           </div>
         </div>
-        <button type="button" className="btn btn-success">
+        <button onClick={CopySingleGL} type="button" className="btn btn-success">
           <i className="far fa-check-circle mr-2" />
           Submit
         </button>
@@ -178,7 +205,12 @@ const CopyMultiple = () => {
           </div>
           <div className="lower-gl-does-not-exist-section-header">
             <div className="first-lower-gl-does-not-exist-section-header">
-              <input type="checkbox" name="allSelect" />
+              <input
+                type="checkbox"
+                name="allSelect"
+                checked={!sortedList.some(ledger => ledger?.isChecked !== true)}
+                onChange={handleSort}
+              />
             </div>
             <div className="checkbox-label">Select All</div>
           </div>
@@ -189,11 +221,16 @@ const CopyMultiple = () => {
           </div>
           <div className="main-gl-does-not-exist-section">
             {
-              finalSortedList.map(value => (
+              sortedList.map(value => (
                 <div key={value.accountID} className="gl-does-not-exist-section-outter gl-does-not-exist-section-outter-many">
                   <div className="gl-does-not-exist-section-first d-flex justify-content-center gl-does-not-exist-section-first-loop">
                     <div className="gl-does-not-exist-section-first-chechbox">
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        name={value.accountID}
+                        checked={value?.isChecked || false}
+                        onChange={handleSort}
+                      />
                     </div>
                     <div className="gl-does-not-exist-section-first-brID">
                       {value.branchID}
