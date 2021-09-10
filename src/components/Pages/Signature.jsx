@@ -80,7 +80,7 @@ const Signature = () => {
                     </div>
                   </div>
                   <div className="input-section">
-                    <div className="over-section-div">
+                    <div className="over-section-div w-100">
                       Upload Image
                     </div>
                     <div className="upload-input">
@@ -109,7 +109,7 @@ const Signature = () => {
                     </div>
                   </div>
                   <div className="input-section">
-                    <div className="over-section-div">
+                    <div className="over-section-div w-100">
                       Upload Signature
                     </div>
                     <div className="upload-input">

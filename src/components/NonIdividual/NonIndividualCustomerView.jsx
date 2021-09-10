@@ -1,9 +1,11 @@
 /* eslint-disable  jsx-a11y/label-has-associated-control */
 /* eslint-disable  no-nested-ternary */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalFunction from '../Modal/ModalFunction';
@@ -20,6 +22,7 @@ const NonIndividualCustomerView = () => {
   const [industries, setIndustry] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [staticData, setStaticData] = useState({});
+  const history = useHistory();
   const {
     modalCloser, modalOpener, openModel, modalText,
   } = ModalFunction();
@@ -115,6 +118,8 @@ const NonIndividualCustomerView = () => {
     return result;
   };
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <Modal
@@ -128,6 +133,13 @@ const NonIndividualCustomerView = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">

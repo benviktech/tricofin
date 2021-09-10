@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import {
   SidebarLink,
   SidebarLabel,
@@ -14,9 +14,14 @@ import {
 
 const NonIndividualSidebarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
+  const [homeRoute, setHomeRoute] = useState(false);
   const { id } = useParams();
+  const history = useHistory();
 
-  const showSubnav = () => setSubnav(!subnav);
+  const showSubnav = () => {
+    setSubnav(!subnav);
+    setHomeRoute(true);
+  };
   const { url } = useRouteMatch();
 
   const currentCustomer = useSelector(state => state.nonIndividualCustomersReducer);
@@ -29,6 +34,12 @@ const NonIndividualSidebarMenu = ({ item }) => {
       setSubnav(true);
     }
   }, []);
+
+  React.useEffect(() => {
+    if (subnav === false && homeRoute) {
+      history.push('/nonindidualcustomerform');
+    }
+  }, [homeRoute]);
 
   return (
     <>

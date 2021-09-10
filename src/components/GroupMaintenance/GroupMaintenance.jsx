@@ -5,7 +5,7 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import './index.css';
@@ -22,6 +22,7 @@ import systemsLoan from './SytemLoansProduct';
 const GroupMaintenance = () => {
   const [systemFrequencies, setSystemFrequencies] = useState([]);
   const [systemBranches, setSystemBranches] = useState([]);
+  const history = useHistory();
   const [numErrors, setNumErrors] = useState({});
   const {
     handleChange, values, handleSubmit, errors, setErrors,
@@ -108,6 +109,8 @@ const GroupMaintenance = () => {
     }
   };
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -116,6 +119,13 @@ const GroupMaintenance = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GroupMaintenanceSidebar />
           </div>
           <div className="submit-form-top-section">

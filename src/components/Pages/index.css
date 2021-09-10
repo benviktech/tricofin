@@ -82,6 +82,7 @@
   font-weight: bold;
   font-size: 12px;
   text-align: center;
+  height: 30px;
 }
 
 .photo-header {
@@ -90,7 +91,11 @@
 }
 
 .upper-inputs-section {
-  width: 70%;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 20px;
+  grid-gap: 10px;
 }
 
 .top-inputs-section,
@@ -387,11 +392,8 @@
 }
 
 .top-inputs-section {
-  padding: 10px;
-}
-
-.top-inputs-section {
   width: 100%;
+  padding: 10px;
 }
 
 .label-input-section {
@@ -447,7 +449,7 @@
 
 .lower-content-display {
   overflow-y: auto;
-  height: 180px;
+  height: 150px;
   cursor: pointer;
   margin-bottom: 10px;
 }
@@ -687,4 +689,10 @@
 
 .confirm-delete-button-section .cancel-delete-btn {
   background-color: #666;
+}
+
+.identification-form-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

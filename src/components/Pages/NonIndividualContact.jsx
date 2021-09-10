@@ -7,6 +7,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { NonIdividualSidebar } from '../Sidebar/Sidebar';
 import '../Customer/index.css';
 import Spinner from '../Spinner/Spinner';
@@ -35,6 +36,7 @@ const ContactInfo = ({
     { id: 'S', name: 'SOUTHERN' }];
   const [countries, setCountries] = useState([]);
   const [numErrors, setNumErrors] = useState({});
+  const history = useHistory();
   const dispatch = useDispatch();
   const countriesData = useSelector(state => state.individualCustomerIdentification.countries);
 
@@ -61,6 +63,8 @@ const ContactInfo = ({
   useEffect(() => {
     setNumErrors(numbersValidator(values));
   }, [values]);
+
+  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -99,6 +103,13 @@ const ContactInfo = ({
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">

@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { NonIdividualSidebar } from '../Sidebar/Sidebar';
 import './index.css';
@@ -20,6 +22,7 @@ const NonIndidualCustomerForm = () => {
   const [businesses, setBusinesses] = useState([]);
   const [staticData, setStaticData] = useState({});
   const [dateError, setDateError] = useState({});
+  const history = useHistory();
   const {
     handleChange, values, handleSubmit, errors, setErrors,
   } = UseForm(validate);
@@ -69,6 +72,8 @@ const NonIndidualCustomerForm = () => {
     fetchData();
   }, []);
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <Modal
@@ -82,6 +87,13 @@ const NonIndidualCustomerForm = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section">
