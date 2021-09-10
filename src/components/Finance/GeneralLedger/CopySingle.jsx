@@ -132,6 +132,7 @@ const CopySingle = () => {
             <input
               autoComplete="off"
               name="description"
+              className="h-100"
               type="text"
               value={searchedCustomerSet}
               onChange={searchIndividualCustomerSet}

@@ -109,6 +109,7 @@ const CopyMultiple = () => {
                 <select
                   name="branch"
                   value={values.branch}
+                  className="h-100"
                   onChange={handleChange}
                 >
                   <option value="" disabled selected hidden>Select</option>

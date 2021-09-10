@@ -116,7 +116,12 @@ const BulkAuthorize = () => {
           <div className="submit-form-top-section">
             <div className="top-bulk-selection-section">
               <div className="bulk-selection">
-                <div className="bulk-title">Bulk</div>
+                <div className="bulk-title" style={{ fontSize: '12px', fontWeight: '600' }}>
+                  Bulk
+                  {' '}
+                  {' '}
+                  :
+                </div>
                 <div className="bulk-title w-50 ml-2">
                   {
 
