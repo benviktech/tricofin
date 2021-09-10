@@ -91,50 +91,52 @@ const UpdateIndividualCustomer = () => {
             <Sidebar />
           </div>
           <div className="submit-form-top-section">
-
             <form className="main-form-color" onSubmit={updateCustomer}>
               <div className="middle-inner-form-section">
-                <div className="form-group d-flex ">
-                  <div className="left-form-group col-md-8">
-                    <label htmlFor="customerId w-50">Customer ID:</label>
-                    <div
-                      disabled
-                      className="form-control-input col-md-8"
-                      type="text"
-                      name="customerid"
-                    >
-                      {dataState.custID}
+                <div className="form-group">
+                  <div className="left-form-group col-md-12">
+                    <label htmlFor="customerId">Customer ID:</label>
+                    <div className="form-control-input-div col-md-9 p-0">
+                      <div className="form-control-input-update w-75">
+                        {dataState.custID}
+
+                      </div>
+                      <div className="right-form-group-div col-md-5">
+                        <label htmlFor="title">Title:</label>
+                        <div
+                          className="form-control-input-update w-75"
+                        >
+                          {
+                            Object.keys(staticData).includes('titles') ? (
+                              <select
+                                className="form-control-input col-md-9 ml-2"
+                                onChange={handleChange}
+                                name="title"
+                                value={dataState.title}
+                              >
+                                <option value="" disabled selected hidden>Select Title</option>
+                                {
+                                  staticData.titles.map((title, index) => (
+                                    <option key={index} value={title.titleID}>
+                                      {title.titleID}
+                                    </option>
+                                  ))
+                                }
+                              </select>
+                            ) : (
+                              <select
+                                className="form-control-input col-md-9 ml-2"
+                              >
+                                <option value="" disabled selected hidden>Select Title</option>
+                              </select>
+                            )
+                          }
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="right-form-group ml-auto col-md-4">
-                    <label htmlFor="title">Title:</label>
-                    {
-                    Object.keys(staticData).includes('titles') ? (
-                      <select
-                        className="form-control-input col-md-9 ml-2"
-                        onChange={handleChange}
-                        name="title"
-                        value={dataState.title}
-                      >
-                        <option value="" disabled selected hidden>Select Title</option>
-                        {
-                          staticData.titles.map((title, index) => (
-                            <option key={index} value={title.titleID}>
-                              {title.titleID}
-                            </option>
-                          ))
-                        }
-                      </select>
-                    ) : (
-                      <select
-                        className="form-control-input col-md-9 ml-2"
-                      >
-                        <option value="" disabled selected hidden>Select Title</option>
-                      </select>
-                    )
-                  }
-                  </div>
                 </div>
+
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId">
@@ -148,7 +150,7 @@ const UpdateIndividualCustomer = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="surName"
                       value={dataState.surName}
@@ -170,7 +172,7 @@ const UpdateIndividualCustomer = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="foreName1"
                       value={dataState.foreName1}
@@ -183,7 +185,7 @@ const UpdateIndividualCustomer = () => {
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">ForeName2:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="foreName2"
                       value={dataState.foreName2}
@@ -195,7 +197,7 @@ const UpdateIndividualCustomer = () => {
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">ForeName3:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="foreName3"
                       value={dataState.foreName3}
@@ -216,7 +218,7 @@ const UpdateIndividualCustomer = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="rAddress"
                       value={dataState.rAddress}
@@ -229,7 +231,7 @@ const UpdateIndividualCustomer = () => {
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">EmailID1:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="email"
                       name="emailID1"
                       value={dataState.emailID1}
@@ -241,7 +243,7 @@ const UpdateIndividualCustomer = () => {
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">EmailID2:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="email"
                       name="emailID2"
                       value={dataState.emailID2}
@@ -262,7 +264,7 @@ const UpdateIndividualCustomer = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="date"
                       name="dateofbirth"
                       value={dataState.dateofbirth

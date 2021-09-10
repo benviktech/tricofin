@@ -30,7 +30,7 @@
 .back-button-section {
   position: absolute;
   right: -35px;
-  color: #0178D4;
+  color: #0178d4;
   width: 30px;
   height: 20px;
   top: 5px;
@@ -43,30 +43,60 @@
 
 .main-form-color {
   background-color: #fff;
-  border: 1px solid #f3f2f1;
   display: flex;
 }
+
+/* new update */
+.main-form-section {
+  display: flex;
+}
+
+/* new update */
 
 .middle-inner-form-section {
   flex: 4;
   padding: 10px 10px 0;
 }
 
+/* new update */
+.middle-inner-form-section-update {
+  flex: 4;
+  padding: 0;
+}
+
+/* new update */
+
 .form-group {
   position: relative;
 }
+
+/* new update */
+
+.right-form-group-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end !important;
+  padding-right: 0 !important;
+}
+/* new update */
+
 
 .left-form-group {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1px 0;
-  border: 1px solid #f3f2f1;
 }
 
 .left-form-group label {
   width: 24%;
   color: #555;
+}
+
+.form-control-input-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .form-control-input {
@@ -80,6 +110,8 @@
   cursor: pointer;
   margin-left: auto;
   background-color: #f3f2f1;
+  display: flex;
+  align-items: center;
 }
 
 .span-warning {
@@ -89,22 +121,36 @@
   color: red;
 }
 
+.span-warning-details {
+  position: absolute;
+  right: 10%;
+  font-size: 12px;
+  color: red;
+  top: 32px;
+  font-size: 10px;
+}
+
+.span-warning-details-top {
+  top: 10px;
+}
+
 .right-inner-form-section {
   flex: 3;
   padding: 10px;
   background-color: #fff;
-  border-left: 1px solid #f3f2f1;
+  border-left: 1px solid #fff !important;
 }
 
 .right-inner-form-section .image-section {
-  height: 195px;
-  width: 250px;
+  height: 168px;
+  width: 240px;
   background-color: #f3f2f1;
+  margin-right: 18px;
 }
 
 .right-inner-form-section .image-section img {
-  height: 195px;
-  width: 250px;
+  height: 168px;
+  width: 240px;
 }
 
 .other-input-section {
@@ -276,6 +322,19 @@
 }
 
 /* Tab screen sizes */
+
+.form-control-input-update {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #f3f2f1;
+}
 
 @media only screen and (max-width: 1000px) {
   .main-form-color {

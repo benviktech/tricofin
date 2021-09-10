@@ -76,22 +76,22 @@ const IndividualCustomerForm = () => {
             <Sidebar />
           </div>
           <div className="submit-form-top-section">
+            <form className="main-form-section" onSubmit={handleSubmit}>
+              <div className="middle-inner-form-section-update">
 
-            <form className="main-form-color" onSubmit={handleSubmit}>
-              <div className="middle-inner-form-section">
-                <div className="form-group d-flex ">
-
-                  <div className="left-form-group manage-drop-down col-md-8">
-                    <label htmlFor="customerId w-50">Search By Name:</label>
-                    <input
-                      autoComplete="off"
-                      className="form-control-input col-md-8"
-                      type="text"
-                      name="searchcustomer"
-                      value={searchedCustomer}
-                      onChange={searchIndividualCustomer}
-                    />
-                    {
+                <div className="form-group">
+                  <div className="left-form-group manage-drop-down col-md-12">
+                    <label htmlFor="customerId">SurName:</label>
+                    <div className="form-control-input-div col-md-9 p-0">
+                      <input
+                        autoComplete="off"
+                        className="form-control-input-update"
+                        type="text"
+                        name="searchcustomer"
+                        value={searchedCustomer}
+                        onChange={searchIndividualCustomer}
+                      />
+                      {
                          searchedCustomer === '' ? (
                            <div className="modal-hide-section" />
                          ) : (
@@ -124,41 +124,42 @@ const IndividualCustomerForm = () => {
                            </div>
                          )
                       }
-                  </div>
-
-                  <div className="right-form-group ml-auto col-md-4">
-                    <label htmlFor="title">Title:</label>
-                    {
-                    Object.keys(staticData.staticData).includes('titles') ? (
-                      <select
-                        className="form-control-input col-md-9 ml-2"
-                        onChange={handleChange}
-                        name="title"
-                        value={values.title}
-                      >
-                        <option value="" disabled selected hidden>Select</option>
+                      <div className="right-form-group-div col-md-5">
+                        <label htmlFor="title">Title:</label>
                         {
-                          staticData.staticData.titles.map((title, index) => (
-                            <option
-                              key={index}
-                              value={title.titleID}
-                            >
-                              {title.titleID}
-                            </option>
-                          ))
-                        }
-                      </select>
-                    ) : (
-                      <select
-                        className="form-control-input col-md-9 ml-2"
-                      >
-                        <option value="" disabled selected hidden>Select</option>
-                      </select>
-                    )
-                  }
+                            Object.keys(staticData.staticData).includes('titles') ? (
+                              <select
+                                className="form-control-input-update w-75"
+                                onChange={handleChange}
+                                name="title"
+                                value={values.title}
+                              >
+                                <option value="" disabled selected hidden>Select</option>
+                                {
+                                  staticData.staticData.titles.map((title, index) => (
+                                    <option
+                                      key={index}
+                                      value={title.titleID}
+                                    >
+                                      {title.titleID}
+                                    </option>
+                                  ))
+                                }
+                              </select>
+                            ) : (
+                              <select
+                                className="form-control-input-update col-md-9 ml-auto"
+                              >
+                                <option value="" disabled selected hidden>Select</option>
+                              </select>
+                            )
+                          }
+                      </div>
+                      { errors.title && <small className="span-warning-details span-warning-details-top mt-4">{errors.title}</small>}
+                    </div>
                   </div>
-                  { errors.title && <small className="span-warning mt-4">{errors.title}</small>}
                 </div>
+
                 <div className="form-group">
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId">
@@ -172,14 +173,14 @@ const IndividualCustomerForm = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="surName"
                       value={values.surName}
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.surName && <small className="span-warning">{errors.surName}</small>}
+                  { errors.surName && <small className="span-warning-details">{errors.surName}</small>}
                 </div>
 
                 <div className="form-group">
@@ -195,20 +196,20 @@ const IndividualCustomerForm = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="foreName1"
                       value={values.foreName1}
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.foreName1 && <small className="span-warning">{errors.foreName1}</small>}
+                  { errors.foreName1 && <small className="span-warning-details">{errors.foreName1}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">ForeName2:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="foreName2"
                       value={values.foreName2}
@@ -220,7 +221,7 @@ const IndividualCustomerForm = () => {
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">ForeName3:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="foreName3"
                       value={values.foreName3}
@@ -241,20 +242,20 @@ const IndividualCustomerForm = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="text"
                       name="rAddress"
                       value={values.rAddress}
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.rAddress && <small className="span-warning">{errors.rAddress}</small>}
+                  { errors.rAddress && <small className="span-warning-details">{errors.rAddress}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">EmailID1:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="email"
                       name="emailID1"
                       value={values.emailID1}
@@ -266,7 +267,7 @@ const IndividualCustomerForm = () => {
                   <div className="left-form-group col-md-12">
                     <label htmlFor="customerId w-50">EmailID2:</label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="email"
                       name="emailID2"
                       value={values.emailID2}
@@ -276,7 +277,7 @@ const IndividualCustomerForm = () => {
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group col-md-12">
-                    <label className="w-25" htmlFor="customerId">
+                    <label htmlFor="customerId">
                       Date of Birth
                       <span className="text-danger">
                         {' '}
@@ -287,14 +288,14 @@ const IndividualCustomerForm = () => {
                       :
                     </label>
                     <input
-                      className="form-control-input col-md-8"
+                      className="form-control-input-update col-md-9"
                       type="date"
                       name="dateofbirth"
                       value={values.dateofbirth}
                       onChange={handleChange}
                     />
                   </div>
-                  { errors.dateofbirth && <small className="span-warning">{errors.dateofbirth}</small>}
+                  { errors.dateofbirth && <small className="span-warning-details">{errors.dateofbirth}</small>}
                 </div>
               </div>
               <div className="right-inner-form-section">
@@ -304,20 +305,20 @@ const IndividualCustomerForm = () => {
                       <div className="left-form-group other-input-section col-md-12">
                         <label htmlFor="customerId w-50">Phone1:</label>
                         <input
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           type="text"
                           name="phone1"
                           value={values.phone1}
                           onChange={handleChange}
                         />
                       </div>
-                      { errors.phone1 && <small className="span-warning">{errors.phone1}</small>}
+                      { errors.phone1 && <small className="span-warning-details">{errors.phone1}</small>}
                     </div>
                     <div className="form-group mr-2">
                       <div className="left-form-group other-input-section col-md-12">
                         <label htmlFor="customerId w-50">Phone2:</label>
                         <input
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           type="text"
                           name="phone2"
                           value={values.phone2}
@@ -329,7 +330,7 @@ const IndividualCustomerForm = () => {
                       <div className="left-form-group other-input-section col-md-12">
                         <label htmlFor="customerId w-50">Phone3:</label>
                         <input
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           type="text"
                           name="phone3"
                           value={values.phone3}
@@ -350,7 +351,7 @@ const IndividualCustomerForm = () => {
                         {
                         Object.keys(staticData.staticData).includes('gender') ? (
                           <select
-                            className="form-control-input col-md-8"
+                            className="form-control-input-update col-md-9"
                             onChange={handleChange}
                             name="genderID"
                             value={values.genderID}
@@ -369,14 +370,14 @@ const IndividualCustomerForm = () => {
                           </select>
                         ) : (
                           <select
-                            className="form-control-input col-md-8"
+                            className="form-control-input-update col-md-9"
                           >
                             <option value="" disabled selected hidden>Select </option>
                           </select>
                         )
                       }
                       </div>
-                      { errors.genderID && <small className="span-warning">{errors.genderID}</small>}
+                      { errors.genderID && <small className="span-warning-details">{errors.genderID}</small>}
                     </div>
                   </div>
                   <div className="image-section mb-2" />
@@ -396,7 +397,7 @@ const IndividualCustomerForm = () => {
                     {
                     Object.keys(staticData.staticData).includes('nationality') ? (
                       <select
-                        className="form-control-input col-md-8"
+                        className="form-control-input-update col-md-9"
                         onChange={handleChange}
                         name="nationalityID"
                         value={values.nationalityID}
@@ -415,14 +416,14 @@ const IndividualCustomerForm = () => {
                       </select>
                     ) : (
                       <select
-                        className="form-control-input col-md-8"
+                        className="form-control-input-update col-md-9"
                       >
                         <option value="" disabled selected hidden>Select</option>
                       </select>
                     )
                   }
                   </div>
-                  { errors.nationalityID && <small className="span-warning">{errors.nationalityID}</small>}
+                  { errors.nationalityID && <small className="span-warning-details">{errors.nationalityID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
@@ -439,7 +440,7 @@ const IndividualCustomerForm = () => {
                     {
                       Object.keys(staticData.staticData).includes('maritalStatus') ? (
                         <select
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           onChange={handleChange}
                           name="maritalStatusID"
                           value={values.maritalStatusID}
@@ -458,14 +459,14 @@ const IndividualCustomerForm = () => {
                         </select>
                       ) : (
                         <select
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           <option value="" disabled selected hidden>Select </option>
                         </select>
                       )
                     }
                   </div>
-                  { errors.maritalStatusID && <small className="span-warning">{errors.maritalStatusID}</small>}
+                  { errors.maritalStatusID && <small className="span-warning-details">{errors.maritalStatusID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
@@ -482,7 +483,7 @@ const IndividualCustomerForm = () => {
                     {
                       Object.keys(staticData.staticData).includes('riskProfiles') ? (
                         <select
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           onChange={handleChange}
                           name="riskProfileID"
                           value={values.riskProfileID}
@@ -501,14 +502,14 @@ const IndividualCustomerForm = () => {
                         </select>
                       ) : (
                         <select
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           <option value="" disabled selected hidden>Select </option>
                         </select>
                       )
                     }
                   </div>
-                  { errors.riskProfileID && <small className="span-warning">{errors.riskProfileID}</small>}
+                  { errors.riskProfileID && <small className="span-warning-details">{errors.riskProfileID}</small>}
                 </div>
                 <div className="form-group ">
                   <div className="left-form-group other-input-section col-md-12">
@@ -525,7 +526,7 @@ const IndividualCustomerForm = () => {
                     {
                       Object.keys(staticData.staticData).includes('customerTypes') ? (
                         <select
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           onChange={handleChange}
                           name="custTypeID"
                           value={values.custTypeID}
@@ -544,14 +545,14 @@ const IndividualCustomerForm = () => {
                         </select>
                       ) : (
                         <select
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           <option value="" disabled selected hidden>Select </option>
                         </select>
                       )
                     }
                   </div>
-                  { errors.custTypeID && <small className="span-warning">{errors.custTypeID}</small>}
+                  { errors.custTypeID && <small className="span-warning-details">{errors.custTypeID}</small>}
                 </div>
                 <div className="submit-button-section">
                   <button

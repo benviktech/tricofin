@@ -72,38 +72,33 @@ const ViewIndividualCustomer = () => {
                   <Spinner />
                 </div>
               ) : (
-                <div className="main-form-color">
-                  <div className="middle-inner-form-section">
-                    <div className="form-group d-flex ">
-                      <div className="left-form-group col-md-8">
-                        <label htmlFor="customerId w-50">Customer ID:</label>
-                        <div
-                          className="form-control-input col-md-8"
-                          placeholder="Enter Keyword"
-                          type="text"
-                          name="searchcustomer"
-                        >
-                          {personalData.individualCustomer.custID}
-                        </div>
-                      </div>
-                      <div className="right-form-group-view ml-auto col-md-4">
-                        <div
-                          className="header-title-div"
-                        >
-                          Title:
-                        </div>
-                        <div
-                          className="form-control-input view-header col-md-7 ml-2"
-                        >
-                          {personalData.individualCustomer.title}
+                <div className="main-form-section">
+                  <div className="middle-inner-form-section-update">
+                    <div className="form-group">
+                      <div className="left-form-group col-md-12">
+                        <label htmlFor="customerId">Customer ID:</label>
+                        <div className="form-control-input-div col-md-9 p-0">
+                          <div className="form-control-input-update w-75">
+                            {personalData.individualCustomer.custID}
+                          </div>
+                          <div className="right-form-group-div col-md-5">
+                            <label htmlFor="title">Title:</label>
+                            <div
+                              className="form-control-input-update w-75"
+                            >
+                              {personalData.individualCustomer.title}
+
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+
                     <div className="form-group">
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">SurName:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           placeholder="Enter Surename"
                           type="text"
                         >
@@ -116,7 +111,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">ForeName1:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           placeholder="Enter Forename"
                         >
                           {personalData.individualCustomer.foreName1}
@@ -127,7 +122,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">ForeName2:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.foreName2}
                         </div>
@@ -137,7 +132,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">ForeName3:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.foreName3}
                         </div>
@@ -147,7 +142,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group d-flex align-items-center col-md-12">
                         <label htmlFor="customerId w-50">Residential Address:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.rAddress}
                         </div>
@@ -157,7 +152,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">EmailID1:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.emailID1}
                         </div>
@@ -167,7 +162,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">EmailID2:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.emailID2}
                         </div>
@@ -177,7 +172,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label className="w-25" htmlFor="customerId">Date of Birth:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {new Date(personalData.individualCustomer.dateofbirth).toUTCString().split(' ').slice(0, 4)
                             .join(' ')}

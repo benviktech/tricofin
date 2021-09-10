@@ -54,9 +54,9 @@
   /* flex-direction: column; */
   justify-content: space-between;
 }
+
 .main-form-color {
   background-color: #fff;
-  border: 1px solid #f3f2f1;
   display: flex;
 }
 
@@ -74,7 +74,6 @@
   align-items: center;
   justify-content: center;
   padding: 1px 0;
-  border: 1px solid #f3f2f1;
 }
 
 .left-form-group label {
@@ -110,14 +109,15 @@
 }
 
 .right-inner-form-section .image-section {
-  height: 195px;
-  width: 250px;
+  height: 168px;
+  width: 240px;
   background-color: #f3f2f1;
+  margin-right: 18px;
 }
 
 .right-inner-form-section .image-section img {
-  height: 195px;
-  width: 250px;
+  height: 168px;
+  width: 240px;
 }
 
 .other-input-section {
