@@ -10,6 +10,7 @@ import { GetGeneralLedger, UpdateGeneralLedger } from '../../../actions/generalL
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import Modal from './Modal';
 import fetchData from './fetchData';
+import DeleteModal from '../../Pages/DeleteModal';
 
 const GeneralLedgerView = () => {
   const [systemBranches, setSystemBranches] = useState([]);
@@ -19,6 +20,7 @@ const GeneralLedgerView = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
+  const [displayModal, setDisplayModal] = useState(false);
 
   const generalLedger = useSelector(state => state.generalLedgerReducer.generalLedger);
 
@@ -125,8 +127,21 @@ const GeneralLedgerView = () => {
   const returnPage = () => history.push('/generaledgermaintenance');
   const routeBack = () => history.goBack();
 
+  const deleteAccount = () => setDisplayModal(true);
+  const continueDeleteFunction = () => console.log(id);
+  const cancelDeleteFunction = () => setDisplayModal(false);
+
   return (
     <div className="individual-customer-form">
+      {
+        displayModal && (
+        <DeleteModal
+          continueDelete={continueDeleteFunction}
+          cancelDelete={cancelDeleteFunction}
+          text="GL Account"
+        />
+        )
+      }
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>GL Information</span>
@@ -322,6 +337,19 @@ const GeneralLedgerView = () => {
                       Cancel
                     </button>
                   </div>
+                  {
+                    !updateState ? (
+                      <div className="cancel-button">
+                        <button
+                          type="button"
+                          className="delete-account btn btn-danger"
+                          onClick={deleteAccount}
+                        >
+                          Close Account
+                        </button>
+                      </div>
+                    ) : null
+                  }
                 </div>
               </div>
             </div>
