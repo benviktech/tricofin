@@ -9,6 +9,7 @@ import {
   GetGeneralLedgerRequest,
   UpdateGeneralLedgerRequest,
   VerifyGeneralLedgers,
+  CopySingleGltoAccounts,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -18,6 +19,7 @@ export const FETCH_SINGLE_GENERAL_LEDGER = 'FETCH_SINGLE_GENERAL_LEDGER';
 export const FETCH_SINGLE_GENERAL_LEDGER_UPDATE = 'FETCH_SINGLE_GENERAL_LEDGER_UPDATE';
 export const POST_GENERAL_LEDGER_ID = 'POST_GENERAL_LEDGER_ID';
 export const FETCH_SINGLE_GENERAL_LEDGER_DETAILS = 'FETCH_SINGLE_GENERAL_LEDGER_DETAILS';
+export const COPY_SINGLE_ACCOUNT_TO_BRANCHES = 'COPY_SINGLE_ACCOUNT_TO_BRANCHES';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -41,6 +43,11 @@ export const postGeneralLedgerID = data => ({
 
 export const singleGeneralLedger = data => ({
   type: FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
+  payload: data,
+});
+
+export const newSingleGLList = data => ({
+  type: COPY_SINGLE_ACCOUNT_TO_BRANCHES,
   payload: data,
 });
 
@@ -201,6 +208,17 @@ export const verifyGLs = data => async dispatch => {
   const path = '/api/Finance/VerifyGeneralLegders/ILUMU';
   try {
     await VerifyGeneralLedgers(method, path, data);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const copySingleGl = (idsArray, currentGL) => async dispatch => {
+  const method = 'post';
+  const path = `/api/Finance/ReplicateGlToBranches/${currentGL}/ILUMU`;
+  try {
+    const response = await CopySingleGltoAccounts(method, path, idsArray);
+    dispatch(newSingleGLList(response.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
