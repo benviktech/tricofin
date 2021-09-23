@@ -10,6 +10,7 @@ import {
   UpdateGeneralLedgerRequest,
   VerifyGeneralLedgers,
   CopySingleGltoAccounts,
+  CopyMultipleGlsToBranch,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -220,6 +221,18 @@ export const copySingleGl = (idsArray, currentGL, history) => async dispatch => 
     const response = await CopySingleGltoAccounts(method, path, idsArray);
     dispatch(newSingleGLList(response.data));
     history.push('/glreplicate');
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const copyMultipleGLs = (glList, branchId, history) => async dispatch => {
+  const method = 'post';
+  const path = `/api/Finance/ReplicateGlsToBranch/${branchId.branch}/ILUMU`;
+  try {
+    const response = await CopyMultipleGlsToBranch(method, path, glList);
+    console.log(response?.data);
+    history.push('/glreplicate/copymultiple');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }

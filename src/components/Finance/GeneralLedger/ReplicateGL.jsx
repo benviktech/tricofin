@@ -59,7 +59,11 @@ const ReplicateGL = () => {
                   path={`${path}`}
                   render={props => <CopySingle key={props.location.key} {...props} />}
                 />
-                <Route exact path={`${path}/copymultiple`} component={CopyMultiple} />
+                <Route
+                  exact
+                  path={`${path}/copymultiple`}
+                  render={props => <CopyMultiple key={props.location.key} {...props} />}
+                />
               </div>
             </div>
           </Router>

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { copyMultipleGLs } from '../../../actions/generalLedger';
 
 const CopyMultiple = () => {
   const [branchList, setBranchList] = useState([]);
@@ -13,6 +16,8 @@ const CopyMultiple = () => {
   const [finalSortedList, setFinalSortedList] = useState([]);
   const [sortedList, setSortedList] = useState([]);
   const [checkSorted, setCheckedSorted] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -65,7 +70,7 @@ const CopyMultiple = () => {
   useEffect(() => {
     if (currentBranchListFirst.length > 0 && currentBranchList.length > 0) {
       const result = currentBranchList.filter(
-        a => !currentBranchListFirst.map(b => b.accountID).includes(a.accountID),
+        a => !currentBranchListFirst.map(b => b.glid).includes(a.glid),
       );
       setFinalSortedList(result);
     }
@@ -93,7 +98,13 @@ const CopyMultiple = () => {
   };
 
   useEffect(() => {
-    console.log(checkSorted, 'checkSorted to be submitted');
+    if (checkSorted.length > 0) {
+      const checkSortedIds = [];
+      checkSorted.forEach(value => {
+        checkSortedIds.push(value.accountID);
+      });
+      dispatch(copyMultipleGLs(checkSortedIds, secondValues, history));
+    }
   }, [checkSorted]);
 
   return (
