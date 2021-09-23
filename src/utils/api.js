@@ -229,3 +229,8 @@ export const VerifyGeneralLedgers = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const CopySingleGltoAccounts = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
