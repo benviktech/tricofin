@@ -3,8 +3,10 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import SearchCustomerSet from './SearchGL';
+import { copySingleGl } from '../../../actions/generalLedger';
 
 const CopySingle = () => {
   const [sortedList, setSortedList] = useState([]);
@@ -17,6 +19,7 @@ const CopySingle = () => {
   const [differenceIdArray, setDifferenceIdArray] = useState([]);
   const [rightBranchArray, setRightBranchArray] = useState([]);
   const [checkSorted, setCheckedSorted] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -38,6 +41,9 @@ const CopySingle = () => {
     setCurrentGlid(branchDetail.glid);
     setFinalSortedListSet([]);
   }, [branchDetail]);
+
+  const generalLedgerState = useSelector(state => state.generalLedgerReducer);
+  console.log(generalLedgerState.newCopiedList, 'generalLedgerState');
 
   useEffect(() => {
     const result = ledgerList.filter(
@@ -117,8 +123,15 @@ const CopySingle = () => {
     setCheckedSorted(sortedList.filter(element => element.isChecked === true));
   };
 
-  useEffect(() => {
-    console.log(checkSorted, 'checkSorted to be submitted');
+  useEffect(async () => {
+    if (checkSorted.length > 0) {
+      const newIdArray = [];
+      checkSorted.forEach(value => {
+        newIdArray.push(value.branchID);
+      });
+
+      await dispatch(copySingleGl(newIdArray, branchDetail.accountID));
+    }
   }, [checkSorted]);
 
   return (
