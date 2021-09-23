@@ -7,6 +7,7 @@ import {
   FETCH_SINGLE_GENERAL_LEDGER_UPDATE,
   POST_GENERAL_LEDGER_ID,
   FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
+  COPY_SINGLE_ACCOUNT_TO_BRANCHES,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   subTypeList: [],
   generalLedgerID: {},
   generalLedger: {},
+  newCopiedList: [],
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -54,9 +56,15 @@ const generalLedgerReducer = (state = initialState, action) => {
         loading: false,
         subTypeList: state.subTypeList.map(
           content => (content.glSubTypeID === action.payload.glSubTypeID
-            // ? { ...content, glSubType: action.payload.glSubType } : content),
             ? action.payload : content),
         ),
+      };
+    case COPY_SINGLE_ACCOUNT_TO_BRANCHES:
+      return {
+        ...state,
+        error: '',
+        loading: false,
+        newCopiedList: action.payload,
       };
     case LOADING_CONTENT:
       return {
