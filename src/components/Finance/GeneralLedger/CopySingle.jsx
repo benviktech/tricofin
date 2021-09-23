@@ -3,7 +3,8 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import axios from 'axios';
 import SearchCustomerSet from './SearchGL';
 import { copySingleGl } from '../../../actions/generalLedger';
@@ -20,6 +21,7 @@ const CopySingle = () => {
   const [rightBranchArray, setRightBranchArray] = useState([]);
   const [checkSorted, setCheckedSorted] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -41,9 +43,6 @@ const CopySingle = () => {
     setCurrentGlid(branchDetail.glid);
     setFinalSortedListSet([]);
   }, [branchDetail]);
-
-  const generalLedgerState = useSelector(state => state.generalLedgerReducer);
-  console.log(generalLedgerState.newCopiedList, 'generalLedgerState');
 
   useEffect(() => {
     const result = ledgerList.filter(
@@ -130,7 +129,7 @@ const CopySingle = () => {
         newIdArray.push(value.branchID);
       });
 
-      await dispatch(copySingleGl(newIdArray, branchDetail.accountID));
+      await dispatch(copySingleGl(newIdArray, branchDetail.accountID, history));
     }
   }, [checkSorted]);
 

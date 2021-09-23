@@ -213,12 +213,13 @@ export const verifyGLs = data => async dispatch => {
   }
 };
 
-export const copySingleGl = (idsArray, currentGL) => async dispatch => {
+export const copySingleGl = (idsArray, currentGL, history) => async dispatch => {
   const method = 'post';
   const path = `/api/Finance/ReplicateGlToBranches/${currentGL}/ILUMU`;
   try {
     const response = await CopySingleGltoAccounts(method, path, idsArray);
     dispatch(newSingleGLList(response.data));
+    history.push('/glreplicate');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
