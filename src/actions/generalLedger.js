@@ -11,6 +11,7 @@ import {
   VerifyGeneralLedgers,
   CopySingleGltoAccounts,
   CopyMultipleGlsToBranch,
+  CloseGLAccountRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -233,6 +234,18 @@ export const copyMultipleGLs = (glList, branchId, history) => async dispatch => 
     const response = await CopyMultipleGlsToBranch(method, path, glList);
     console.log(response?.data);
     history.push('/glreplicate/copymultiple');
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const closeGeneralLedgerAccount = (id, history) => async dispatch => {
+  console.log(id);
+  const method = 'delete';
+  const path = `/api/Finance/CloseGeneralLedger/${id}/ILUMU`;
+  try {
+    await CloseGLAccountRequest(method, path);
+    history.push('/generaledgermaintenance');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
