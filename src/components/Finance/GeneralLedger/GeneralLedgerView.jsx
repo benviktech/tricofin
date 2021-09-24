@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
 import axios from 'axios';
-import { GetGeneralLedger, UpdateGeneralLedger } from '../../../actions/generalLedger';
+import { closeGeneralLedgerAccount, GetGeneralLedger, UpdateGeneralLedger } from '../../../actions/generalLedger';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import Modal from './Modal';
 import fetchData from './fetchData';
@@ -128,7 +128,9 @@ const GeneralLedgerView = () => {
   const routeBack = () => history.goBack();
 
   const deleteAccount = () => setDisplayModal(true);
-  const continueDeleteFunction = () => console.log(id);
+  const continueDeleteFunction = () => {
+    dispatch(closeGeneralLedgerAccount(id, history));
+  };
   const cancelDeleteFunction = () => setDisplayModal(false);
 
   return (
