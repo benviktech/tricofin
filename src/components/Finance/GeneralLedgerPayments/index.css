@@ -10,7 +10,7 @@
 }
 
 .lower-downer-section-gen-led {
-    background-color: cyan;
+    background-color: #fff;
     display: grid;
     width: 70%;
     margin: auto;
@@ -19,12 +19,74 @@
     grid-column-gap: 2px;
 }
 
+.lower-downer-section-gen-led-lower {
+    margin-top: 2px;
+}
+
 .lower-downer-section-gen-led div {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px 20px;
+    padding: 8px 20px;
     font-size: 12px;
     font-weight: 600;
     background-color: #AEAEAE;
+}
+
+.lower-downer-section-gen-led-lower div {
+    background-color: #D7D7D7;
+}
+
+.gl-parameters-submission-form {
+    margin: auto;
+    width: 70%;
+    margin-top: 30px;
+    border: 1px solid #D7D7D7;
+    padding: 10px;
+}
+
+.gl-parameter-details-bottom {
+    display: grid;
+    width: 70%;
+    grid-template-columns: 2fr 3fr 1fr 4fr;
+    grid-column-gap: 10px;
+    margin-top: 10px;
+}
+
+.gl-parameter-details-bottom input,
+.gl-parameter-details-bottom div,
+.gl-parameters-submission-form-header{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #666;
+    padding: 5px 10px ;
+    border-radius: 3px;
+    border: 1px solid #D7D7D7;
+}
+
+.gl-parameters-submission-form-header {
+    border: none;
+    font-size: 13px;
+    color: #000;
+    padding: unset;
+}
+
+.gl-parameters-button-section {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.gl-parameters-button-section button {
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    padding: 5px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 3px;
 }
