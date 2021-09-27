@@ -22,6 +22,7 @@ export const FETCH_SINGLE_GENERAL_LEDGER_UPDATE = 'FETCH_SINGLE_GENERAL_LEDGER_U
 export const POST_GENERAL_LEDGER_ID = 'POST_GENERAL_LEDGER_ID';
 export const FETCH_SINGLE_GENERAL_LEDGER_DETAILS = 'FETCH_SINGLE_GENERAL_LEDGER_DETAILS';
 export const COPY_SINGLE_ACCOUNT_TO_BRANCHES = 'COPY_SINGLE_ACCOUNT_TO_BRANCHES';
+export const COPY_MULTIPLE_ACCOUNTS_TO_BRANCH = 'COPY_MULTIPLE_ACCOUNTS_TO_BRANCH';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -50,6 +51,11 @@ export const singleGeneralLedger = data => ({
 
 export const newSingleGLList = data => ({
   type: COPY_SINGLE_ACCOUNT_TO_BRANCHES,
+  payload: data,
+});
+
+export const newMultipleGLList = data => ({
+  type: COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
   payload: data,
 });
 
@@ -226,13 +232,12 @@ export const copySingleGl = (idsArray, currentGL) => async dispatch => {
   }
 };
 
-export const copyMultipleGLs = (glList, branchId, history) => async dispatch => {
+export const copyMultipleGLs = (glList, branchId) => async dispatch => {
   const method = 'post';
   const path = `/api/Finance/ReplicateGlsToBranch/${branchId.branch}/ILUMU`;
   try {
     const response = await CopyMultipleGlsToBranch(method, path, glList);
-    console.log(response?.data);
-    history.push('/glreplicate/copymultiple');
+    dispatch(newMultipleGLList(response?.data));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
