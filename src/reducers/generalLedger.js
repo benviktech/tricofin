@@ -8,6 +8,7 @@ import {
   POST_GENERAL_LEDGER_ID,
   FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
   COPY_SINGLE_ACCOUNT_TO_BRANCHES,
+  COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   generalLedgerID: {},
   generalLedger: {},
   newCopiedList: [],
+  newCopiedMultipleList: [],
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -65,6 +67,13 @@ const generalLedgerReducer = (state = initialState, action) => {
         error: '',
         loading: false,
         newCopiedList: action.payload,
+      };
+    case COPY_MULTIPLE_ACCOUNTS_TO_BRANCH:
+      return {
+        ...state,
+        error: '',
+        loading: false,
+        newCopiedMultipleList: action.payload,
       };
     case LOADING_CONTENT:
       return {
