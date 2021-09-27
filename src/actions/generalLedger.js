@@ -101,7 +101,7 @@ export const saveGeneralLedgerID = (values, history) => async dispatch => {
   const path = '/api/Finance/SaveGeneralLedgerID';
   const method = 'post';
   const data = {
-    glName: values.name,
+    glName: (values.name).toUpperCase(),
     glType: values.glMainType,
     glSubType: values.glSubType,
     createdOn: (new Date()).toISOString(),
@@ -148,7 +148,7 @@ export const saveGeneralLedger = (data, history) => async dispatch => {
   const values = {
     accountID: `${data.branch}${data.glid}`,
     branchID: data.branch,
-    accountName: data.glName,
+    accountName: (data.glName).toUpperCase(),
     accountSeq: '',
     glid: data.glid,
     prevBalance: 0,
@@ -215,13 +215,12 @@ export const verifyGLs = data => async dispatch => {
   }
 };
 
-export const copySingleGl = (idsArray, currentGL, history) => async dispatch => {
+export const copySingleGl = (idsArray, currentGL) => async dispatch => {
   const method = 'post';
   const path = `/api/Finance/ReplicateGlToBranches/${currentGL}/ILUMU`;
   try {
     const response = await CopySingleGltoAccounts(method, path, idsArray);
     dispatch(newSingleGLList(response.data));
-    history.push('/glreplicate');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
@@ -240,8 +239,7 @@ export const copyMultipleGLs = (glList, branchId, history) => async dispatch => 
 };
 
 export const closeGeneralLedgerAccount = (id, history) => async dispatch => {
-  console.log(id);
-  const method = 'delete';
+  const method = 'put';
   const path = `/api/Finance/CloseGeneralLedger/${id}/ILUMU`;
   try {
     await CloseGLAccountRequest(method, path);
