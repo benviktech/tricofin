@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { copyMultipleGLs } from '../../../actions/generalLedger';
 
 const CopyMultiple = () => {
@@ -17,7 +16,9 @@ const CopyMultiple = () => {
   const [sortedList, setSortedList] = useState([]);
   const [checkSorted, setCheckedSorted] = useState([]);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const newCopiedMultipleList = useSelector(
+    state => state.generalLedgerReducer.newCopiedMultipleList,
+  );
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -34,6 +35,12 @@ const CopyMultiple = () => {
       .then(response => setLedgerAccounts(response?.data))
       .catch(error => console.log(error.message));
   }, []);
+
+  useEffect(async () => {
+    await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+      .then(response => setLedgerAccounts(response?.data))
+      .catch(error => console.log(error.message));
+  }, [newCopiedMultipleList]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -63,9 +70,13 @@ const CopyMultiple = () => {
   }, [values]);
 
   useEffect(() => {
-    const result = ledgerAccounts.filter(element => element.branchID === secondValues.branch);
-    setCurrentBranchListFirst(result);
-  }, [secondValues]);
+    if (Object.keys(secondValues).length > 0) {
+      const result = ledgerAccounts.filter(
+        element => element.branchID === secondValues.branch,
+      );
+      setCurrentBranchListFirst(result);
+    }
+  }, [secondValues, ledgerAccounts]);
 
   useEffect(() => {
     if (currentBranchListFirst.length > 0 && currentBranchList.length > 0) {
@@ -97,13 +108,13 @@ const CopyMultiple = () => {
     setCheckedSorted(sortedList.filter(element => element.isChecked === true));
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (checkSorted.length > 0) {
       const checkSortedIds = [];
       checkSorted.forEach(value => {
         checkSortedIds.push(value.accountID);
       });
-      dispatch(copyMultipleGLs(checkSortedIds, secondValues, history));
+      await dispatch(copyMultipleGLs(checkSortedIds, secondValues));
     }
   }, [checkSorted]);
 
