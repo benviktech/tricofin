@@ -3,8 +3,7 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import SearchCustomerSet from './SearchGL';
 import { copySingleGl } from '../../../actions/generalLedger';
@@ -20,8 +19,10 @@ const CopySingle = () => {
   const [differenceIdArray, setDifferenceIdArray] = useState([]);
   const [rightBranchArray, setRightBranchArray] = useState([]);
   const [checkSorted, setCheckedSorted] = useState([]);
+  const [updateDisplayList, setUpdateDisplayList] = useState([]);
+  const [updateDisplayState, setUpdateDisplayState] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const newCopiedList = useSelector(state => state.generalLedgerReducer.newCopiedList);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -45,12 +46,13 @@ const CopySingle = () => {
   }, [branchDetail]);
 
   useEffect(() => {
-    const result = ledgerList.filter(
-      element => element.glid === currentGlid,
-    );
-
-    setFilteredLedgers(result);
-  }, [currentGlid]);
+    if (currentGlid !== '') {
+      const result = ledgerList.filter(
+        element => element.glid === currentGlid,
+      );
+      setFilteredLedgers(result);
+    }
+  }, [currentGlid, ledgerList]);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -63,6 +65,27 @@ const CopySingle = () => {
       .then(response => setLedgerList(response?.data))
       .catch(error => console.log(error.message));
   }, []);
+
+  useEffect(() => {
+    if (newCopiedList.length > 0) {
+      setUpdateDisplayList(newCopiedList);
+    }
+  }, [newCopiedList]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+      .then(response => {
+        setLedgerList(response?.data);
+      })
+      .catch(error => console.log(error.message));
+  }, [updateDisplayList]);
+
+  useEffect(() => {
+    if (updateDisplayState && newCopiedList.length > 0) {
+      setCurrentGlid('');
+      currentBranchDetails(newCopiedList[0]);
+    }
+  }, [updateDisplayState]);
 
   useEffect(() => {
     const resultOne = [];
@@ -129,7 +152,8 @@ const CopySingle = () => {
         newIdArray.push(value.branchID);
       });
 
-      await dispatch(copySingleGl(newIdArray, branchDetail.accountID, history));
+      await dispatch(copySingleGl(newIdArray, branchDetail.accountID));
+      setUpdateDisplayState(true);
     }
   }, [checkSorted]);
 
