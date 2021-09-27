@@ -26,16 +26,6 @@ const TransactionView = () => {
     { id: 1, name: 'First Element' },
     { id: 1, name: 'First Element' },
     { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
-    { id: 1, name: 'First Element' },
     { id: 1, name: 'First Element' }];
 
   const accounId = '0011000010002';
