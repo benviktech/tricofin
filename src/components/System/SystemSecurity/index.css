@@ -730,3 +730,79 @@ a {
   margin-top: 50px;
 }
 
+/* User Branches Styles */
+
+.system-branches-topbar {
+  color: #666;
+  font-weight: bold;
+  border-bottom: 3px solid #fff;
+  display: flex;
+  font-size: 14px;
+  padding: 5px;
+  justify-content: center;
+  background-color: #f3f2f1;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+.system-branches-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.display-users-section {
+  width: 60%;
+}
+
+.user-table-header {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.user-search-box {
+  width: 40%;
+}
+
+.user-branches-table {
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.users-table-row {
+  display: flex;
+}
+
+.users-table-column1,
+.users-table-column2,
+.users-table-column3  {
+  flex: 1;
+  background-color: #aaa;
+  border-left: 1px solid #aeaeae;
+  border-bottom: 1px solid #aeaeae;
+  color: #000;
+  padding: 5px 10px;
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+}
+
+.users-table-column3 {
+  flex: 2;
+  border-right: 1px solid #aeaeae;
+}
+
+.users-listings {
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  background-color: #aeaeae;
+}
+
+

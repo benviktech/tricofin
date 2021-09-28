@@ -8,17 +8,26 @@
 
 import React, { useEffect, useState } from 'react';
 import {
-  Link, useRouteMatch, Switch, Route,
+  Link, useRouteMatch, Switch, Route, useLocation,
 } from 'react-router-dom';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import SecuritySidebar from './SecuritySideBar';
 import './index.css';
 import Loader from './Loader/Loader';
 import { Button, Input } from '../../_generics/Generics';
+import SimpleLoader from './Loader/SimpleLoader';
+import SystemSecurityUsers from './SystemUsers';
+import UserBranches from './UserBranches';
+
+const baseUrl = 'https://tricofin.azurewebsites.net';
 
 const SystemSecurityBranches = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  // const path = location.pathname;
+  const { path, url } = useRouteMatch();
 
   return false ? (
     <div>
@@ -28,14 +37,20 @@ const SystemSecurityBranches = () => {
   ) : true ? (
     <div className="system-individual-customer-form">
       <div className="system-lower-form-section">
-        <div className="system-maintenance-customer-info">
+        <div className="system-branches-topbar">
           <span>System Security: User Branches Management</span>
         </div>
         <div className="security-lower-downer-section">
           <div className="security-left-inner-form-section">
             <SecuritySidebar />
           </div>
-          <div className="submit-form-top-section-role" />
+          <div className="submit-form-top-section-role">
+            <Switch>
+              <Route path={`${path}`} exact component={() => <SystemSecurityUsers path={path} url={url} />} />
+              <Route path={`${path}/:username`} component={() => <UserBranches url={url} />} />
+            </Switch>
+          </div>
+
         </div>
       </div>
     </div>
