@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import axios from 'axios';
 import './index.css';
 
 const GeneralLedgerPayments = () => {
-  const description = [
-    { id: 1, description: 'Cash at Hand' },
-    { id: 2, description: 'Cash at Bank' },
-    { id: 3, description: 'InterBranch Account' },
-    { id: 4, description: 'Profit/Loss Reserve Account' },
-  ];
+  const [glParameters, setGlParameters] = useState([]);
+  const [glIds, setGlids] = useState([]);
+
+  useEffect(async () => {
+    await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerParameters')
+      .then(response => setGlParameters(response?.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgerIDs')
+      .then(response => setGlids(response?.data))
+      .catch(error => error.message);
+  }, []);
+
+  const fetchAccount = accountId => {
+    let result = '';
+    if (glIds.length > 0) {
+      result = (glIds.filter(element => element.glid === accountId))[0].glName;
+    }
+    return result;
+  };
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -21,14 +39,16 @@ const GeneralLedgerPayments = () => {
           <div className="forth-ledger-parameters text-white">GL Account Name</div>
         </div>
         {
-          description.map(element => (
-            <div key={element.id} className="lower-downer-section-gen-led lower-downer-section-gen-led-lower">
-              <div className="first-ledger-parameters">{ element.id }</div>
-              <div className="second-ledger-parameters">Description</div>
-              <div className="third-ledger-parameters">GL Account ID</div>
-              <div className="forth-ledger-parameters">GL Account Name</div>
+          glParameters.length > 0 ? glParameters.map(element => (
+            <div key={element.serialID} className="lower-downer-section-gen-led lower-downer-section-gen-led-lower">
+              <div className="first-ledger-parameters">{ element.serialID }</div>
+              <div className="second-ledger-parameters">{ element.description }</div>
+              <div className="third-ledger-parameters">{ element.accountID }</div>
+              <div className="forth-ledger-parameters">
+                { element.accountID && fetchAccount(element.accountID) }
+              </div>
             </div>
-          ))
+          )) : null
         }
         <div className="gl-parameters-submission-form">
           <div className="mb-2 gl-parameters-submission-form-header">GL Parameters Details</div>
