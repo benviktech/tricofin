@@ -21,6 +21,7 @@
 
 .lower-downer-section-gen-led-lower {
   margin-top: 2px;
+  cursor: pointer;
 }
 
 .lower-downer-section-gen-led div {
@@ -43,6 +44,7 @@
   margin-top: 30px;
   border: 1px solid #d7d7d7;
   padding: 10px;
+  position: relative;
 }
 
 .gl-parameter-details-bottom {
@@ -206,4 +208,25 @@
     margin-left: 10px;
     background-color: #0178D4;
     color: #fff;
+}
+
+.gl-parameter-details-bottom .inner-section-modal-section {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  width: 285px;
+  min-height: 100px;
+}
+
+.gl-parameter-details-bottom .modal-popup-section div{
+  border: none;
+  color: #fff;
+}
+
+.gl-parameter-details-bottom .modal-popup-section {
+  width: 60%;
+  top: 0;
+  margin-left: auto;
+  border: none;
+  padding: unset;
 }

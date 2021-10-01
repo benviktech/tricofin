@@ -9,6 +9,8 @@ import {
   FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
   COPY_SINGLE_ACCOUNT_TO_BRANCHES,
   COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
+  FETCH_GL_PARAMETERS,
+  UPDATE_GL_PARAMETERS,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -19,6 +21,8 @@ const initialState = {
   generalLedger: {},
   newCopiedList: [],
   newCopiedMultipleList: [],
+  glParametersList: [],
+  updatedGlParameter: {},
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -86,6 +90,22 @@ const generalLedgerReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case FETCH_GL_PARAMETERS:
+      return {
+        ...state,
+        loading: false,
+        glParametersList: action.payload,
+      };
+    case UPDATE_GL_PARAMETERS:
+      return {
+        ...state,
+        loading: false,
+        updatedGlParameter: action.payload,
+        glParametersList: state.glParametersList.map(
+          content => (content.serialID === action.payload.serialID
+            ? action.payload : content),
+        ),
       };
     default:
       return state;
