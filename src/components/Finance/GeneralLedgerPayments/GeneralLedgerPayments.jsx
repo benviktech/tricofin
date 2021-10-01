@@ -17,6 +17,7 @@ const GeneralLedgerPayments = () => {
   const [selectedAccount, setSelectedAccount] = useState({});
   const [accountBelow, setAccountBelow] = useState('');
   const [errors, setErrors] = useState({});
+  const [errorState, setErrorState] = useState(false);
   const dispatch = useDispatch();
   const generalLedgerReducer = useSelector(state => state.generalLedgerReducer);
 
@@ -93,27 +94,49 @@ const GeneralLedgerPayments = () => {
       };
       dispatch(updateGLParameters(data));
       setEditState(false);
+      setErrorState(false);
     }
     if (Object.keys(selectedAccount).length === 0) {
-      errorObject.glParamsError = 'Select a GL parameter';
+      errorObject.glParamsError = 'Select a Accoun';
     }
     if (Object.keys(currentAccount).length === 0) {
-      errorObject.acParamsError = 'Select an Account';
+      errorObject.acParamsError = 'Select a GL Parameter';
     }
-    setErrors({ errorObject });
+    setErrors(errorObject);
   };
 
   const cancelEditState = () => setEditState(false);
 
   useEffect(() => {
-    console.log(errors, 'errors');
+    if (Object.keys(errors).length > 0) {
+      setErrorState(true);
+    }
   }, [errors]);
+
+  const closeErrorModal = () => {
+    setErrorState(false);
+    setErrors({});
+  };
 
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info-lg">
           <span>Main General Ledger Parameters</span>
+          {
+            errorState ? (
+              <div className="dispaly-submit-error-section shadow">
+                <i
+                  onClick={closeErrorModal}
+                  className="far fa-times-circle dispaly-submit-error-section-fa-times-circle"
+                />
+                { errors.glParamsError && errors.glParamsError}
+                {' '}
+                <br />
+                { errors.acParamsError && errors.acParamsError}
+              </div>
+            ) : null
+          }
         </div>
         <div className="lower-downer-section-gen-led">
           <div className="first-ledger-parameters text-white">SerialID</div>

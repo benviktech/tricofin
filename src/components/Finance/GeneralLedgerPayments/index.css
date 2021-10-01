@@ -240,3 +240,22 @@
   padding: 10px;
   text-align: center;
 }
+
+.dispaly-submit-error-section {
+  position: absolute;
+  font-size: 11px;
+  font-weight: bold;
+  color: red;
+  top: 100px;
+  right: 10px;
+  background-color: #fff;
+  padding: 5px 20px;
+}
+
+.dispaly-submit-error-section-fa-times-circle {
+  position: absolute;
+  font-size: 16px;
+  color: red;
+  top: 30px;
+  right: 10px;
+}
