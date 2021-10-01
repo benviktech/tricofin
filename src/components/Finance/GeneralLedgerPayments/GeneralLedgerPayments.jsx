@@ -16,6 +16,7 @@ const GeneralLedgerPayments = () => {
   const [currentAccount, setCurrentAccount] = useState({});
   const [selectedAccount, setSelectedAccount] = useState({});
   const [accountBelow, setAccountBelow] = useState('');
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const generalLedgerReducer = useSelector(state => state.generalLedgerReducer);
 
@@ -77,6 +78,7 @@ const GeneralLedgerPayments = () => {
   }, [currentAccount]);
 
   const submitUpdate = () => {
+    const errorObject = {};
     if (Object.keys(selectedAccount).length > 0
     && Object.keys(currentAccount).length > 0) {
       const data = {
@@ -92,9 +94,20 @@ const GeneralLedgerPayments = () => {
       dispatch(updateGLParameters(data));
       setEditState(false);
     }
+    if (Object.keys(selectedAccount).length === 0) {
+      errorObject.glParamsError = 'Select a GL parameter';
+    }
+    if (Object.keys(currentAccount).length === 0) {
+      errorObject.acParamsError = 'Select an Account';
+    }
+    setErrors({ errorObject });
   };
 
   const cancelEditState = () => setEditState(false);
+
+  useEffect(() => {
+    console.log(errors, 'errors');
+  }, [errors]);
 
   return (
     <div className="individual-customer-form">
@@ -201,8 +214,11 @@ const GeneralLedgerPayments = () => {
         </div>
         <div className="gl-parameters-button-section">
           <button onClick={editAccount} type="button">Edit</button>
-          <button onClick={submitUpdate} type="button">Save</button>
-          <button onClick={cancelEditState} type="button">Cancel</button>
+          <button onClick={editState ? submitUpdate : undefined} type="button">Save</button>
+          <button onClick={editState ? cancelEditState : undefined} type="button">Cancel</button>
+        </div>
+        <div className="loading-edit-gl-state">
+          { editState ? 'Updating ...' : null }
         </div>
       </div>
     </div>
