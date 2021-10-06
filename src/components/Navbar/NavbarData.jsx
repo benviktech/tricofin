@@ -73,7 +73,7 @@ const NavbarData = [
         ],
       },
       {
-        to: '#',
+        to: '/transactions',
         linkText: 'Transactions',
       },
       {
