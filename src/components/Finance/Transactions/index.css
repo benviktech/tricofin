@@ -1,0 +1,205 @@
+.cash-traction-top-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  margin-right: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f3f2f1;
+}
+
+.cash-traction-top-section div {
+  display: flex;
+  align-items: center;
+}
+
+.cash-traction-top-section div span {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.cash-transaction-middle-section {
+  margin-right: 20px;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-column-gap: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f3f2f1;
+}
+
+.left-cash-transaction-middle-section,
+.right-cash-transaction-middle-section {
+  flex: 1;
+}
+
+.left-cash-transaction-middle-section-inner,
+.right-cash-transaction-middle-section-inner,
+.left-cash-transaction-middle-receipt-date {
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+  grid-column-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.right-cash-transaction-middle-section-inner {
+  grid-template-columns: 1fr 2fr 2fr;
+}
+
+.right-cash-transaction-middle-section-inner-remarks {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-column-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.left-cash-transaction-middle-section-title,
+.right-cash-transaction-middle-section-title-remarks,
+.left-cash-transaction-middle-reciept-title,
+.right-cash-transaction-middle-section-title,
+.left-cash-transaction-middle-receipt-date input,
+.left-cash-transaction-middle-section-inner input,
+.right-cash-transaction-middle-section-inner input,
+.left-cash-transaction-middle-section-text,
+.right-cash-transaction-middle-section-text,
+.left-cash-transaction-middle-section-id-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #666;
+}
+
+.left-cash-transaction-middle-section-text,
+.right-cash-transaction-middle-section-text,
+.left-cash-transaction-middle-section-id-name {
+  justify-content: center;
+  background-color: #f3f2f1;
+  padding: 5px 20px;
+}
+
+.left-cash-transaction-middle-value-date {
+  display: flex;
+}
+
+.left-cash-transaction-middle-value-date div {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+}
+
+.cash-transaction-buttons-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cash-transaction-buttons-section button {
+  background-color: #0178d4;
+  padding: 5px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.cashier-details-section {
+  margin-right: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f2f1;
+}
+
+.cashier-details-header {
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.cashier-details-section-account-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  margin-bottom: 5px;
+}
+
+.cashier-details-section-account-title {
+  display: flex;
+}
+
+.cashier-details-inner-title,
+.cashier-details-inner-text,
+.cashier-details-inner-title-lower {
+  flex: 1;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.cashier-details-inner-text,
+.cashier-details-inner-text-lower {
+  justify-content: center;
+  flex: 2;
+  display: flex;
+}
+
+.cashier-details-inner-text-cross-first {
+  flex: 1;
+  background-color: #f3f2f1;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 3px 10px;
+  justify-content: flex-end;
+}
+
+.cashier-details-inner-text-cross {
+  padding: 0 10px;
+  margin-left: 5px;
+  background-color: #f3f2f1;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cashier-details-inner-text div {
+  background-color: #f3f2f1;
+  width: 100%;
+  padding: 3px;
+  font-size: 12px;
+  padding-left: 10px;
+}
+
+.cashier-details-section-account-number-top {
+  background-color: #f3f2f1;
+  padding: 0 10px !important;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.cashier-details-button-section {
+  display: flex;
+  padding: 10px 0 0;
+  justify-content: flex-end;
+}
+
+.cashier-details-button-section button {
+  border: 2px solid #f3f2f1;
+  border-radius: 3px;
+  color: #999;
+  padding: 3px 20px;
+  margin-left: 10px;
+  background-color: #fff;
+}
