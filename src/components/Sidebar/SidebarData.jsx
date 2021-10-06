@@ -134,3 +134,46 @@ export const GeneralLedgerData = [
     ],
   },
 ];
+
+export const TransactionsData = [
+  {
+    title: 'Cash Transactions',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'Cash Register',
+        path: '/cashregister',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+    ],
+  },
+  {
+    title: 'Transfer Transactions',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'Transfer Transactions',
+        path: '/transfertransactions',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
+      },
+    ],
+  },
+  {
+    title: 'View Transactions',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'View Transactions',
+        path: '/viewtransactions',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
+      },
+    ],
+  },
+
+];
