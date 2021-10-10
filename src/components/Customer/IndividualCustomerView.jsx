@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Sidebar } from '../Sidebar/Sidebar';
 import Profile from '../../images/avatar.png';
@@ -21,6 +21,7 @@ import Loader from '../Loader/Loader';
 
 const ViewIndividualCustomer = () => {
   const { id } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const {
     modalCloser, modalOpener, openModel, modalText,
@@ -33,6 +34,8 @@ const ViewIndividualCustomer = () => {
     dispatch(fetchSingleIndividualCustomer(id));
     dispatch(signaturePhotoFetch(id));
   }, []);
+
+  const routeBack = () => history.goBack();
 
   return personalData.loading ? (
     <div className="spinner section">
@@ -47,10 +50,19 @@ const ViewIndividualCustomer = () => {
       />
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>View Customer Personal Information</span>
+          <span>
+            View Customer Personal Information
+          </span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <Sidebar />
           </div>
           <div className="submit-form-top-section">
@@ -60,38 +72,33 @@ const ViewIndividualCustomer = () => {
                   <Spinner />
                 </div>
               ) : (
-                <div className="main-form-color">
-                  <div className="middle-inner-form-section">
-                    <div className="form-group d-flex ">
-                      <div className="left-form-group col-md-8">
-                        <label htmlFor="customerId w-50">Customer ID:</label>
-                        <div
-                          className="form-control-input col-md-8"
-                          placeholder="Enter Keyword"
-                          type="text"
-                          name="searchcustomer"
-                        >
-                          {personalData.individualCustomer.custID}
-                        </div>
-                      </div>
-                      <div className="right-form-group-view ml-auto col-md-4">
-                        <div
-                          className="header-title-div"
-                        >
-                          Title:
-                        </div>
-                        <div
-                          className="form-control-input view-header col-md-7 ml-2"
-                        >
-                          {personalData.individualCustomer.title}
+                <div className="main-form-section">
+                  <div className="middle-inner-form-section-update">
+                    <div className="form-group">
+                      <div className="left-form-group col-md-12">
+                        <label htmlFor="customerId">Customer ID:</label>
+                        <div className="form-control-input-div col-md-9 p-0">
+                          <div className="form-control-input-update w-75">
+                            {personalData.individualCustomer.custID}
+                          </div>
+                          <div className="right-form-group-div col-md-5">
+                            <label htmlFor="title">Title:</label>
+                            <div
+                              className="form-control-input-update w-75"
+                            >
+                              {personalData.individualCustomer.title}
+
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+
                     <div className="form-group">
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">SurName:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           placeholder="Enter Surename"
                           type="text"
                         >
@@ -104,7 +111,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">ForeName1:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                           placeholder="Enter Forename"
                         >
                           {personalData.individualCustomer.foreName1}
@@ -115,7 +122,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">ForeName2:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.foreName2}
                         </div>
@@ -125,7 +132,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">ForeName3:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.foreName3}
                         </div>
@@ -135,7 +142,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group d-flex align-items-center col-md-12">
                         <label htmlFor="customerId w-50">Residential Address:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.rAddress}
                         </div>
@@ -145,7 +152,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">EmailID1:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.emailID1}
                         </div>
@@ -155,7 +162,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label htmlFor="customerId w-50">EmailID2:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {personalData.individualCustomer.emailID2}
                         </div>
@@ -165,7 +172,7 @@ const ViewIndividualCustomer = () => {
                       <div className="left-form-group col-md-12">
                         <label className="w-25" htmlFor="customerId">Date of Birth:</label>
                         <div
-                          className="form-control-input col-md-8"
+                          className="form-control-input-update col-md-9"
                         >
                           {new Date(personalData.individualCustomer.dateofbirth).toUTCString().split(' ').slice(0, 4)
                             .join(' ')}

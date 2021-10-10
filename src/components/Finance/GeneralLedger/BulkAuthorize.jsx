@@ -1,6 +1,10 @@
+/* eslint-disable  jsx-a11y/click-events-have-key-events */
+/* eslint-disable  jsx-a11y/no-static-element-interactions */
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import { verifyGLs } from '../../../actions/generalLedger';
 
@@ -15,6 +19,7 @@ const BulkAuthorize = () => {
   const [verificationState, setVerificationState] = useState(false);
   const [alterDisplay, setAlterDisplay] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const fetchData = async () => {
     await axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
@@ -89,6 +94,8 @@ const BulkAuthorize = () => {
     }
   }, [checkSorted]);
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -97,12 +104,24 @@ const BulkAuthorize = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GeneralLedgerSidebar />
           </div>
           <div className="submit-form-top-section">
             <div className="top-bulk-selection-section">
               <div className="bulk-selection">
-                <div className="bulk-title">Bulk</div>
+                <div className="bulk-title" style={{ fontSize: '12px', fontWeight: '600' }}>
+                  Bulk
+                  {' '}
+                  {' '}
+                  :
+                </div>
                 <div className="bulk-title w-50 ml-2">
                   {
 

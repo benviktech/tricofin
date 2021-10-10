@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useParams, useRouteMatch, useHistory } from 'react-router-dom';
 import {
   SidebarLink,
   SidebarLabel,
@@ -14,9 +14,14 @@ import {
 
 const GroupMaintenanceMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
+  const [homeRoute, setHomeRoute] = useState(false);
   const { id } = useParams();
+  const history = useHistory();
 
-  const showSubnav = () => setSubnav(!subnav);
+  const showSubnav = () => {
+    setSubnav(!subnav);
+    setHomeRoute(true);
+  };
   const { url } = useRouteMatch();
 
   const currentCustomer = useSelector(state => state.nonIndividualCustomersReducer);
@@ -27,6 +32,12 @@ const GroupMaintenanceMenu = ({ item }) => {
       setSubnav(true);
     }
   }, []);
+
+  React.useEffect(() => {
+    if (subnav === false && homeRoute) {
+      history.push('/groupmaintenanceform');
+    }
+  }, [homeRoute]);
 
   return (
     <>

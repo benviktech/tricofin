@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import ModalFunction from '../Modal/ModalFunction';
 import Modal from '../Modal/Modal';
 import { NonIdividualSidebar } from '../Sidebar/Sidebar';
@@ -20,6 +20,7 @@ const DirectorInfo = () => {
   const [hideErrorDiv, setHideErrorDiv] = useState('d-none');
   const [errors, setErrors] = useState('');
   const [customerList, setCutomerList] = useState([]);
+  const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
   const [directorArrayList, setDirectorArrayList] = useState([]);
@@ -99,6 +100,8 @@ const DirectorInfo = () => {
     dispatch(removeCustomerDirector(id, dirId));
   };
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <Modal
@@ -134,6 +137,13 @@ const DirectorInfo = () => {
         }
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section top-identification-section">
@@ -319,7 +329,7 @@ const DirectorInfo = () => {
                     </div>
                   </div>
                 </div>
-                <div className="image-section">
+                <div className="image-section" style={{ background: '#F3F2F1' }}>
                   Image here
                 </div>
               </div>

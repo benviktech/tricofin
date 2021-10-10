@@ -1,6 +1,11 @@
+/* eslint-disable  jsx-a11y/click-events-have-key-events */
+/* eslint-disable  jsx-a11y/no-static-element-interactions */
+/* eslint-disable  react/prop-types */
+/* eslint-disable  react/jsx-props-no-spreading */
+
 import React from 'react';
 import {
-  BrowserRouter as Router, Route, NavLink, useRouteMatch,
+  BrowserRouter as Router, Route, NavLink, useRouteMatch, useHistory,
 } from 'react-router-dom';
 
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
@@ -8,7 +13,10 @@ import CopySingle from './CopySingle';
 import CopyMultiple from './CopyMultiple';
 
 const ReplicateGL = () => {
+  const history = useHistory();
   const { path, url } = useRouteMatch();
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -17,6 +25,13 @@ const ReplicateGL = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GeneralLedgerSidebar />
           </div>
           <Router>
@@ -39,8 +54,16 @@ const ReplicateGL = () => {
                 </NavLink>
               </div>
               <div className="router-content-section">
-                <Route exact path={`${path}`} component={CopySingle} />
-                <Route exact path={`${path}/copymultiple`} component={CopyMultiple} />
+                <Route
+                  exact
+                  path={`${path}`}
+                  render={props => <CopySingle key={props.location.key} {...props} />}
+                />
+                <Route
+                  exact
+                  path={`${path}/copymultiple`}
+                  render={props => <CopyMultiple key={props.location.key} {...props} />}
+                />
               </div>
             </div>
           </Router>

@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getGroupMaintenance } from '../../actions/groupMaintenance';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import './index.css';
@@ -16,6 +19,7 @@ const GroupMaintenanceView = () => {
   const [systemBranches, setSystemBranches] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const groupDetails = useSelector(state => state.groupMaintenanceReducer);
 
@@ -111,6 +115,8 @@ const GroupMaintenanceView = () => {
     return result;
   };
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -119,6 +125,13 @@ const GroupMaintenanceView = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GroupMaintenanceSidebar />
           </div>
           <div className="submit-form-top-section">

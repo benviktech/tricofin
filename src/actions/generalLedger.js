@@ -1,14 +1,12 @@
 import {
-  GetGeneralLedgerSubTypes,
-  PostGeneralLedgerSubTypes,
-  UpdateGeneralLedgerSubType,
-  SaveGeneralLedgerID,
-  GetGeneralLedgerID,
-  UpdateGeneralLedgerID,
-  SaveGeneralLedger,
-  GetGeneralLedgerRequest,
-  UpdateGeneralLedgerRequest,
-  VerifyGeneralLedgers,
+  GetGeneralLedgerSubTypes, PostGeneralLedgerSubTypes,
+  UpdateGeneralLedgerSubType, SaveGeneralLedgerID,
+  GetGeneralLedgerID, UpdateGeneralLedgerID,
+  SaveGeneralLedger, GetGeneralLedgerRequest,
+  UpdateGeneralLedgerRequest, VerifyGeneralLedgers,
+  CopySingleGltoAccounts, CopyMultipleGlsToBranch,
+  CloseGLAccountRequest, UpdateGLParametersRequest,
+  FetchGLParametersRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -18,6 +16,10 @@ export const FETCH_SINGLE_GENERAL_LEDGER = 'FETCH_SINGLE_GENERAL_LEDGER';
 export const FETCH_SINGLE_GENERAL_LEDGER_UPDATE = 'FETCH_SINGLE_GENERAL_LEDGER_UPDATE';
 export const POST_GENERAL_LEDGER_ID = 'POST_GENERAL_LEDGER_ID';
 export const FETCH_SINGLE_GENERAL_LEDGER_DETAILS = 'FETCH_SINGLE_GENERAL_LEDGER_DETAILS';
+export const COPY_SINGLE_ACCOUNT_TO_BRANCHES = 'COPY_SINGLE_ACCOUNT_TO_BRANCHES';
+export const COPY_MULTIPLE_ACCOUNTS_TO_BRANCH = 'COPY_MULTIPLE_ACCOUNTS_TO_BRANCH';
+export const UPDATE_GL_PARAMETERS = 'UPDATE_GL_PARAMETERS';
+export const FETCH_GL_PARAMETERS = 'FETCH_GL_PARAMETERS';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -41,6 +43,16 @@ export const postGeneralLedgerID = data => ({
 
 export const singleGeneralLedger = data => ({
   type: FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
+  payload: data,
+});
+
+export const newSingleGLList = data => ({
+  type: COPY_SINGLE_ACCOUNT_TO_BRANCHES,
+  payload: data,
+});
+
+export const newMultipleGLList = data => ({
+  type: COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
   payload: data,
 });
 
@@ -92,7 +104,7 @@ export const saveGeneralLedgerID = (values, history) => async dispatch => {
   const path = '/api/Finance/SaveGeneralLedgerID';
   const method = 'post';
   const data = {
-    glName: values.name,
+    glName: (values.name).toUpperCase(),
     glType: values.glMainType,
     glSubType: values.glSubType,
     createdOn: (new Date()).toISOString(),
@@ -139,7 +151,7 @@ export const saveGeneralLedger = (data, history) => async dispatch => {
   const values = {
     accountID: `${data.branch}${data.glid}`,
     branchID: data.branch,
-    accountName: data.glName,
+    accountName: (data.glName).toUpperCase(),
     accountSeq: '',
     glid: data.glid,
     prevBalance: 0,
@@ -201,6 +213,61 @@ export const verifyGLs = data => async dispatch => {
   const path = '/api/Finance/VerifyGeneralLegders/ILUMU';
   try {
     await VerifyGeneralLedgers(method, path, data);
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const copySingleGl = (idsArray, currentGL) => async dispatch => {
+  const method = 'post';
+  const path = `/api/Finance/ReplicateGlToBranches/${currentGL}/ILUMU`;
+  try {
+    const response = await CopySingleGltoAccounts(method, path, idsArray);
+    dispatch(newSingleGLList(response.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const copyMultipleGLs = (glList, branchId) => async dispatch => {
+  const method = 'post';
+  const path = `/api/Finance/ReplicateGlsToBranch/${branchId.branch}/ILUMU`;
+  try {
+    const response = await CopyMultipleGlsToBranch(method, path, glList);
+    dispatch(newMultipleGLList(response?.data));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const closeGeneralLedgerAccount = (id, history) => async dispatch => {
+  const method = 'put';
+  const path = `/api/Finance/CloseGeneralLedger/${id}/ILUMU`;
+  try {
+    await CloseGLAccountRequest(method, path);
+    history.push('/generaledgermaintenance');
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const updateGLParameters = data => async dispatch => {
+  const method = 'put';
+  const path = '/api/Finance/UpdateGeneralLedgerParameters';
+  try {
+    const response = await UpdateGLParametersRequest(method, path, data);
+    dispatch({ type: UPDATE_GL_PARAMETERS, payload: response?.data });
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const fetchGLParameters = () => async dispatch => {
+  const method = 'get';
+  const path = '/api/Finance/GetGeneralLedgerParameters';
+  try {
+    const response = await FetchGLParametersRequest(method, path);
+    dispatch({ type: FETCH_GL_PARAMETERS, payload: response?.data });
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }

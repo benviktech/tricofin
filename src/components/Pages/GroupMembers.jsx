@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { GroupMaintenanceSidebar } from '../Sidebar/Sidebar';
 import SearchCustomer from '../Customer/SearchCustomer';
@@ -23,6 +23,7 @@ const GroupMembers = () => {
   const [errors, setErrors] = useState({});
   const { id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [values, setValues] = useState({
     joinDate: '',
@@ -210,6 +211,8 @@ const GroupMembers = () => {
 
   const displayError = () => setHideErrorDiv('d-none');
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       {' '}
@@ -228,6 +231,13 @@ const GroupMembers = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GroupMaintenanceSidebar />
           </div>
           <form className="submit-form-top-section identification-form" onSubmit={createMember}>

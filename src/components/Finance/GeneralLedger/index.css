@@ -82,6 +82,10 @@
   font-weight: bold;
 }
 
+.button-section .delete-account {
+  background-color: #c83934;
+}
+
 .behind-the-scenes {
   background-color: #f3f2f1;
   margin: 20px 40px 0 20px;
@@ -627,14 +631,16 @@
   padding: 5px 0;
 }
 
-.main-gl-exists-details-section {
+.main-gl-exists-details-section,
+.main-gl-does-not-exist-section {
   max-height: 300px;
   min-height: 200px;
   overflow-y: auto;
   cursor: pointer;
 }
 
-.main-gl-exists-details-section::-webkit-scrollbar {
+.main-gl-exists-details-section::-webkit-scrollbar,
+.main-gl-does-not-exist-section::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
@@ -704,4 +710,105 @@
   font-size: 12px;
   font-weight: 600;
   margin-right: 10px;
+}
+
+.from-date-section,
+.to-date-section,
+.view-print-export-section {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.from-date-section input,
+.to-date-section input {
+  width: 80%;
+  margin-left: 10px;
+}
+
+.view-print-export-section {
+  margin-right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-print-export-section button {
+  width: 30%;
+}
+
+.account-state-table-header {
+  background-color: #F3F2F1;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 5px;
+  margin-right: 20px;
+}
+
+.account-state-table-header span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.account-state-table,
+.account-state-table-entry {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 2px;
+  padding: 1px 2px;
+}
+
+.main-account-state-table {
+  background-color: #F3F2F1;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.tran-date-section,
+.value-date-section,
+.tran-id-section,
+.serial-number-section,
+.tan-type-section,
+.debit-section,
+.credit-section,
+.closing-section,
+.operator-id-section,
+.supervisor-id-section,
+.particulars {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+  background-color: #AEAEAE;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.particulars {
+  flex: 2;
+}
+
+.account-state-table-entry .tran-date-section,
+.account-state-table-entry .tran-date-section-large {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.outer-account-state-table-entry {
+  overflow-y: auto;
+  height: 350px;
+  cursor: pointer;
+}
+
+.outer-account-state-table-entry::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }

@@ -1,7 +1,10 @@
+/* eslint-disable  jsx-a11y/click-events-have-key-events */
+/* eslint-disable  jsx-a11y/no-static-element-interactions */
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getGeneralLedgerID, updateGeneralLedgerID } from '../../../actions/generalLedger';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import IdModal from './IdModal';
@@ -15,6 +18,7 @@ const SingleGeneralLedgerId = () => {
   const generalLedgerID = useSelector(state => state.generalLedgerReducer.generalLedgerID);
   const [updateData, setUpdateData] = useState({});
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
   const { glTypes, glSubTypes } = fetchData();
 
@@ -95,6 +99,8 @@ const SingleGeneralLedgerId = () => {
     }
   }, [updateData.glType]);
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -103,6 +109,13 @@ const SingleGeneralLedgerId = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GeneralLedgerSidebar />
           </div>
           <div className="submit-form-top-section">

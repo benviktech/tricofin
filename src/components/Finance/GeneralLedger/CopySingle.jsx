@@ -3,18 +3,26 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import SearchCustomerSet from './SearchGL';
+import { copySingleGl } from '../../../actions/generalLedger';
 
 const CopySingle = () => {
   const [sortedList, setSortedList] = useState([]);
   const [branchDetail, setBranchDetail] = useState('');
   const [branches, setBranches] = useState([]);
-
-  const data = [{ BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' },
-    { BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' },
-    { BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' },
-    { BrID: '001', accountID: '0011000010005', AccountName: 'TELLER NAME' }];
+  const [ledgerList, setLedgerList] = useState([]);
+  const [currentGlid, setCurrentGlid] = useState('');
+  const [filtereLedgers, setFilteredLedgers] = useState([]);
+  const [branchList, setBranchList] = useState([]);
+  const [differenceIdArray, setDifferenceIdArray] = useState([]);
+  const [rightBranchArray, setRightBranchArray] = useState([]);
+  const [checkSorted, setCheckedSorted] = useState([]);
+  const [updateDisplayList, setUpdateDisplayList] = useState([]);
+  const [updateDisplayState, setUpdateDisplayState] = useState(false);
+  const dispatch = useDispatch();
+  const newCopiedList = useSelector(state => state.generalLedgerReducer.newCopiedList);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
@@ -33,21 +41,66 @@ const CopySingle = () => {
   const currentBranchDetails = data => setBranchDetail(data);
   useEffect(() => {
     setSearchedCustomerSet(branchDetail.accountID);
+    setCurrentGlid(branchDetail.glid);
     setFinalSortedListSet([]);
   }, [branchDetail]);
 
-  const handleSort = e => {
-    const { name, checked } = e.target;
-    if (name === 'allSelect') {
-      const tempGL = sortedList.map(ledger => ({ ...ledger, isChecked: checked }));
-      setSortedList(tempGL);
-    } else {
-      const tempGL = sortedList.map(
-        ledger => (ledger.accountID === name ? { ...ledger, isChecked: checked } : ledger),
+  useEffect(() => {
+    if (currentGlid !== '') {
+      const result = ledgerList.filter(
+        element => element.glid === currentGlid,
       );
-      setSortedList(tempGL);
+      setFilteredLedgers(result);
     }
-  };
+  }, [currentGlid, ledgerList]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/System/GetBranches')
+      .then(response => setBranchList(response?.data))
+      .catch(error => console.log(error.message));
+  }, [filtereLedgers]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+      .then(response => setLedgerList(response?.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
+    if (newCopiedList.length > 0) {
+      setUpdateDisplayList(newCopiedList);
+    }
+  }, [newCopiedList]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+      .then(response => {
+        setLedgerList(response?.data);
+      })
+      .catch(error => console.log(error.message));
+  }, [updateDisplayList]);
+
+  useEffect(() => {
+    if (updateDisplayState && newCopiedList.length > 0) {
+      setCurrentGlid('');
+      currentBranchDetails(newCopiedList[0]);
+    }
+  }, [updateDisplayState]);
+
+  useEffect(() => {
+    const resultOne = [];
+    const resultTwo = [];
+    if (branchList.length > 0) {
+      branchList.forEach(branch => resultOne.push(branch.branchID));
+    }
+
+    if (filtereLedgers.length > 0) {
+      filtereLedgers.forEach(ledger => resultTwo.push(ledger.branchID));
+    }
+
+    const difference = resultOne.filter(x => !resultTwo.includes(x));
+    setDifferenceIdArray(difference);
+  }, [filtereLedgers]);
 
   const filterBranch = id => {
     let resultBranch = '';
@@ -58,6 +111,51 @@ const CopySingle = () => {
     });
     return resultBranch;
   };
+
+  useEffect(() => {
+    const finalArray = [];
+    differenceIdArray.forEach(val => {
+      branchList.forEach(element => {
+        if (val === element.branchID) {
+          finalArray.push(element);
+        }
+      });
+    });
+    setRightBranchArray(finalArray);
+  }, [differenceIdArray]);
+
+  useEffect(() => {
+    setSortedList(rightBranchArray);
+  }, [rightBranchArray]);
+
+  const handleSort = e => {
+    const { name, checked } = e.target;
+    if (name === 'allSelect') {
+      const tempGL = sortedList.map(ledger => ({ ...ledger, isChecked: checked }));
+      setSortedList(tempGL);
+    } else {
+      const tempGL = sortedList.map(
+        ledger => (ledger.branchID === name ? { ...ledger, isChecked: checked } : ledger),
+      );
+      setSortedList(tempGL);
+    }
+  };
+
+  const CopySingleGL = () => {
+    setCheckedSorted(sortedList.filter(element => element.isChecked === true));
+  };
+
+  useEffect(async () => {
+    if (checkSorted.length > 0) {
+      const newIdArray = [];
+      checkSorted.forEach(value => {
+        newIdArray.push(value.branchID);
+      });
+
+      await dispatch(copySingleGl(newIdArray, branchDetail.accountID));
+      setUpdateDisplayState(true);
+    }
+  }, [checkSorted]);
 
   return (
     <div className="main-copy-single-section">
@@ -70,6 +168,7 @@ const CopySingle = () => {
             <input
               autoComplete="off"
               name="description"
+              className="h-100"
               type="text"
               value={searchedCustomerSet}
               onChange={searchIndividualCustomerSet}
@@ -104,7 +203,10 @@ const CopySingle = () => {
           <div className="gl-account-name">
             <span>
               { Object.keys(branchDetail).length > 0
-                ? branchDetail.accountName
+                ? (
+                  branchDetail.accountName.length < 22 ? branchDetail.accountName
+                    : (`${branchDetail.accountName.substring(0, 22)} ...`)
+                )
                 : null }
             </span>
           </div>
@@ -129,7 +231,7 @@ const CopySingle = () => {
             </span>
           </div>
         </div>
-        <button type="button" className="btn btn-success">
+        <button onClick={CopySingleGL} type="button" className="btn btn-success">
           <i className="far fa-check-circle mr-2" />
           Submit
         </button>
@@ -144,11 +246,16 @@ const CopySingle = () => {
           </div>
           <div className="main-gl-exists-details-section">
             {
-            data.map(value => (
-              <div key={value.BrID} className="gl-exists-details-section">
-                <div className="gl-exists-details-section-id">{value.BrID}</div>
+            filtereLedgers.map(value => (
+              <div key={value.accountID} className="gl-exists-details-section">
+                <div className="gl-exists-details-section-id">{value.branchID}</div>
                 <div className="gl-exists-details-section-accountId">{value.accountID}</div>
-                <div className="gl-exists-details-section-account-name">{value.AccountName}</div>
+                <div className="gl-exists-details-section-account-name">
+                  {
+                      value.accountName.length < 25 ? value.accountName
+                        : (`${value.accountName.substring(0, 25)} ...`)
+                      }
+                </div>
               </div>
             ))
           }
@@ -171,26 +278,26 @@ const CopySingle = () => {
           </div>
           <div className="gl-does-not-exist-section-outter top-outer-gl-header-section">
             <div className="gl-does-not-exist-section-first">BrID</div>
-            <div className="gl-does-not-exist-section-second">AccountName</div>
+            <div className="gl-does-not-exist-section-second">BranchName</div>
           </div>
           <div className="main-gl-does-not-exist-section">
             {
-                data.map(element => (
-                  <div key={element.BrID} className="gl-does-not-exist-section-outter">
+                sortedList.map(element => (
+                  <div key={element.branchID} className="gl-does-not-exist-section-outter">
                     <div className="gl-does-not-exist-section-first gl-does-not-exist-section-first-loop">
                       <div className="gl-does-not-exist-section-first-chechbox">
                         <input
                           type="checkbox"
-                          name={element.accountID}
+                          name={element.branchID}
                           checked={element?.isChecked || false}
                           onChange={handleSort}
                         />
                       </div>
                       <div className="gl-does-not-exist-section-first-brID">
-                        {element.BrID}
+                        {element.branchID}
                       </div>
                     </div>
-                    <div className="gl-does-not-exist-section-second">{element.AccountName}</div>
+                    <div className="gl-does-not-exist-section-second">{element.branchName}</div>
                   </div>
                 ))
               }

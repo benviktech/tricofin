@@ -6,10 +6,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
 import axios from 'axios';
-import { GetGeneralLedger, UpdateGeneralLedger } from '../../../actions/generalLedger';
+import { closeGeneralLedgerAccount, GetGeneralLedger, UpdateGeneralLedger } from '../../../actions/generalLedger';
 import { GeneralLedgerSidebar } from '../../Sidebar/Sidebar';
 import Modal from './Modal';
 import fetchData from './fetchData';
+import DeleteModal from '../../Pages/DeleteModal';
 
 const GeneralLedgerView = () => {
   const [systemBranches, setSystemBranches] = useState([]);
@@ -19,6 +20,7 @@ const GeneralLedgerView = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
+  const [displayModal, setDisplayModal] = useState(false);
 
   const generalLedger = useSelector(state => state.generalLedgerReducer.generalLedger);
 
@@ -123,15 +125,38 @@ const GeneralLedgerView = () => {
 
   const cancelGLUpdate = () => setUpdateState(false);
   const returnPage = () => history.push('/generaledgermaintenance');
+  const routeBack = () => history.goBack();
+
+  const deleteAccount = () => setDisplayModal(true);
+  const continueDeleteFunction = () => {
+    dispatch(closeGeneralLedgerAccount(id, history));
+  };
+  const cancelDeleteFunction = () => setDisplayModal(false);
 
   return (
     <div className="individual-customer-form">
+      {
+        displayModal && (
+        <DeleteModal
+          continueDelete={continueDeleteFunction}
+          cancelDelete={cancelDeleteFunction}
+          text="GL Account"
+        />
+        )
+      }
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
           <span>GL Information</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <GeneralLedgerSidebar />
           </div>
           <div className="submit-form-top-section">
@@ -314,6 +339,19 @@ const GeneralLedgerView = () => {
                       Cancel
                     </button>
                   </div>
+                  {
+                    !updateState ? (
+                      <div className="cancel-button">
+                        <button
+                          type="button"
+                          className="delete-account btn btn-danger"
+                          onClick={deleteAccount}
+                        >
+                          Close Account
+                        </button>
+                      </div>
+                    ) : null
+                  }
                 </div>
               </div>
             </div>

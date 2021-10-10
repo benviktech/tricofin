@@ -136,6 +136,8 @@ const NonIndividualIdentification = () => {
     dispatch(deletCustomerIdentification(identityType, id));
   };
 
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -144,6 +146,13 @@ const NonIndividualIdentification = () => {
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
+            <div className="back-button-section">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
+              />
+            </div>
             <NonIdividualSidebar />
           </div>
           <div className="submit-form-top-section top-identification-section">
@@ -152,102 +161,100 @@ const NonIndividualIdentification = () => {
               <form onSubmit={submitData} className="submit-form-top-section identification-form">
                 <div className="identification-section">
                   <div className="upper-inputs-section">
-                    <div className="top-inputs-section">
-                      <div className="id-type-section">
-                        <div className="input-label">
-                          ID Types
-                          <span className="text-danger mx-1">
-                            *
-                          </span>
-                          :
-                        </div>
-                        <select
-                          onChange={e => setIdType(e.target.value)}
-                          value={idType}
-                          className="select-option"
-                        >
-                          <option value="" disabled selected hidden>Select</option>
-                          {
+                    <div className="id-type-section">
+                      <div className="input-label w-25">
+                        ID Types
+                        <span className="text-danger mx-1">
+                          *
+                        </span>
+                        :
+                      </div>
+                      <select
+                        onChange={e => setIdType(e.target.value)}
+                        value={idType}
+                        className="select-option w-75"
+                      >
+                        <option value="" disabled selected hidden>Select</option>
+                        {
                             IDTypes.map((type, index) => (
                               <option key={index} value={type.idCode}>
                                 {type.identificationType}
                               </option>
                             ))
                           }
-                        </select>
-                        <div className="error-section">
-                          {
+                      </select>
+                      <div className="error-section">
+                        {
                             Object.keys(errors).includes('idType')
                               ? errors.idType : null
                           }
-                        </div>
                       </div>
-                      <div className="id-number-section">
-                        <div className="id-input-label">
-                          ID No
-                          <span className="text-danger mx-1">
-                            *
-                          </span>
-                          :
-                        </div>
-                        <input
-                          value={idNumber}
-                          onChange={e => setIdNumber(e.target.value)}
-                          type="text"
-                        />
-                        <div className="error-section">
-                          {
+                    </div>
+                    <div className="id-number-section">
+                      <div className="id-input-label w-25">
+                        ID No
+                        <span className="text-danger mx-1">
+                          *
+                        </span>
+                        :
+                      </div>
+                      <input
+                        value={idNumber}
+                        onChange={e => setIdNumber(e.target.value)}
+                        className="w-75"
+                        type="text"
+                      />
+                      <div className="error-section">
+                        {
                             Object.keys(errors).includes('idNumber')
                               ? errors.idNumber : null
                           }
-                        </div>
                       </div>
                     </div>
-                    <div className="bottom-input-section">
-                      <div className="id-type-section">
-                        <div className="input-label">
-                          Country of Issue
-                          <span className="text-danger">
-                            *
-                          </span>
-                          :
-                        </div>
-                        <select
-                          onChange={e => setIsCountry(e.target.value)}
-                          value={isCountry}
-                          className="select-option"
-                        >
-                          <option value="" disabled selected hidden>Select</option>
-                          {
+                    <div className="id-type-section">
+                      <div className="input-label w-25">
+                        Country of Issue
+                        <span className="text-danger">
+                          *
+                        </span>
+                        :
+                      </div>
+                      <select
+                        onChange={e => setIsCountry(e.target.value)}
+                        value={isCountry}
+                        className="w-75"
+                      >
+                        <option value="" disabled selected hidden>Select</option>
+                        {
                             staticData.map((country, index) => (
                               <option key={index} value={country.countryID}>
                                 {country.country}
                               </option>
                             ))
                           }
-                        </select>
-                        <div className="error-section">
-                          {
+                      </select>
+                      <div className="error-section">
+                        {
                             Object.keys(errors).includes('isCountry')
                               ? errors.isCountry : null
                           }
-                        </div>
                       </div>
-                      <div className="id-number-section">
-                        <div className="input-label">
-                          Expiry Date:
-                        </div>
-                        <input
-                          value={expiryDate}
-                          onChange={e => setExpirDate(e.target.value)}
-                          type="date"
-                        />
-                        <div className="error-section">
-                          {
+                    </div>
+                    <div className="id-number-section">
+                      <div className="input-label w-25">
+                        Expiry Date:
+                      </div>
+                      <input
+                        value={expiryDate}
+                        onChange={e => setExpirDate(e.target.value)}
+                        className="w-75"
+                        type="date"
+                      />
+                      <div className="error-section">
+                        {
                             Object.keys(errors).includes('issueDate')
                               ? errors.issueDate : null
                           }
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -378,7 +385,7 @@ const NonIndividualIdentification = () => {
                 </div>
               </form>
             ) : (
-              <div className="submit-form-top-section">
+              <div className="submit-form-top-section identification-form-spinner">
                 <Spinner />
               </div>
             )
