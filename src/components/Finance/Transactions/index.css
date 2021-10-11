@@ -5,6 +5,37 @@
   margin-right: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid #f3f2f1;
+  position: relative;
+}
+
+.search-criteria-section {
+  position: absolute;
+  top: 0;
+  left: 35%;
+  background-color: #fff;
+  width: 50%;
+  flex-direction: column;
+  padding-bottom: 15px;
+}
+
+.search-criteria-section-first {
+  width: 100%;
+  display: grid !important;
+  grid-template-columns: 1fr 5fr;
+  margin-top: 10px;
+  padding: 0 10px 0;
+}
+
+.search-criteria-section-left {
+  flex: 1;
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-column-gap: 10px;
+}
+
+.search-criteria-section-title {
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .cash-traction-top-section div {
@@ -77,6 +108,12 @@
   justify-content: center;
   background-color: #f3f2f1;
   padding: 5px 20px;
+}
+
+.cash-transaction-middle-section input,
+.cash-traction-top-section input {
+  background-color: #fff;
+  border: 1px solid #F3F2F1;
 }
 
 .left-cash-transaction-middle-value-date {
@@ -202,4 +239,92 @@
   padding: 3px 20px;
   margin-left: 10px;
   background-color: #fff;
+}
+
+.cash-traction-top-section-grid select {
+  font-size: 12px;
+}
+
+.search-creteria-account-details {
+  padding: 10px 0;
+  border-top: 1px solid #f3f2f1;
+  margin-top: 10px;
+  width: 100%;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px 10px 0;
+}
+
+.search-creteria-account-details-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+}
+
+.search-creteria-account-details-content-header,
+.search-creteria-account-details-content,
+.search-creteria-account-details-content-header-two,
+.search-creteria-account-details-content-two,
+.search-creteria-account-details-content-header {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 2px;
+  width: 100%;
+}
+
+.search-creteria-account-details-content-header-two,
+.search-creteria-account-details-content-two {
+  grid-template-columns: 2fr 3fr 1fr 2fr;
+}
+
+.search-creteria-account-details-content-header-grid,
+.search-creteria-account-details-content-grid {
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #999;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+}
+
+.search-creteria-account-details-content-grid {
+  background-color: #F3F2F1;
+  color: #444;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.search-criteria-section-header {
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  background-color: #0178d4;
+  justify-content: center;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.search-criteria-section-header i {
+  position: absolute;
+  right: 0;
+  font-size: 23px;
+  cursor: pointer;
+  bottom: 2px;
+}
+
+.search-creteria-account-details-content-outer {
+  flex-direction: column;
+  width: 100%;
+  min-height: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.search-creteria-account-details-content-outer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
