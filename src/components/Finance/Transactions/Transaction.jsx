@@ -1,12 +1,92 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-nested-ternary */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
+import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 
+const initialState = {
+  tranTypeID: '',
+  accTypeID: '',
+  accountId: '',
+};
+
 const Transaction = () => {
-  console.log('transactions pages');
+  const [values, setValues] = useState(initialState);
+  const [glList, setGlList] = useState([]);
+  const [modalBranch, setModalBranch] = useState('');
+  const [savingsAcType, setSavingsAcType] = useState(false);
+  const [innerModalList, setInnerModalList] = useState([]);
+  const [gLAcType, setGLAcType] = useState(false);
+  const [sharesAcType, setSharesAcType] = useState(false);
+  const [modalList, setModalList] = useState([]);
+  const [modal, setModal] = useState(false);
+  const tranTypes = [{ id: 1, name: 'CREDIT' }, { id: 2, name: 'DEBIT' }];
+  const accTypes = [{ id: 1, name: 'SAVINGS' },
+    { id: 2, name: 'GENERAL LEDGER' },
+    { id: 3, name: 'SHARES ACCT' }];
+  const modalBranchList = [
+    { id: '000', name: 'Head Office' },
+    { id: '001', name: 'Nansana' },
+    { id: '002', name: 'Rugika' },
+    { id: '004', name: 'All Branches' },
+  ];
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
+      .then(response => setGlList(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
+
+  useEffect(() => {
+    if (values.accountId.length > 0) {
+      setModal(true);
+    } else {
+      setModal(false);
+    }
+  }, [values.accountId]);
+
+  useEffect(() => {
+    if (values.accTypeID.length > 0) {
+      if (values.accTypeID === '2') {
+        setModalList(glList);
+        setSavingsAcType(false);
+        setSharesAcType(false);
+        setGLAcType(true);
+      } else {
+        setModalList([]);
+        setGLAcType(false);
+        setSavingsAcType(true);
+        setSharesAcType(true);
+      }
+    }
+  }, [values.accTypeID]);
+
+  const hideModal = () => {
+    setModal(false);
+  };
+
+  useEffect(() => {
+    if (modalBranch.length > 0 && modalBranch !== '004') {
+      const newModalList = modalList.filter(
+        account => account.branchID === modalBranch,
+      );
+      setInnerModalList(newModalList);
+    } else {
+      setInnerModalList(modalList);
+    }
+  }, [modalBranch]);
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -25,20 +105,191 @@ const Transaction = () => {
           </div>
           <div className="submit-form-top-section">
             <div className="cash-traction-top-section">
+              {
+                modal ? (
+                  <div className="search-criteria-section shadow">
+                    <div className="search-criteria-section-header">
+                      Search Criteria Section
+                      <i
+                        className="far fa-times-circle"
+                        onClick={hideModal}
+                      />
+                    </div>
+                    {
+                      savingsAcType || sharesAcType ? (
+
+                        <div className="search-criteria-section-first">
+                          <div className="search-criteria-section-title">Account ID:</div>
+                          <div className="search-criteria-section-left">
+                            <input type="text" />
+                            <div className="search-criteria-section-title">Client ID:</div>
+                            <input type="text" />
+                          </div>
+                        </div>
+                      ) : null
+                    }
+
+                    {
+                      savingsAcType || sharesAcType ? (
+                        <div className="search-criteria-section-first">
+                          <div className="search-criteria-section-title">Product ID:</div>
+                          <div className="search-criteria-section-left">
+                            <input type="text" />
+                            <div className="search-criteria-section-title">Branch:</div>
+                            <select>
+                              <option value="val">val</option>
+                            </select>
+                          </div>
+                        </div>
+                      ) : null
+                    }
+
+                    {
+                      gLAcType ? (
+                        <div className="search-criteria-section-first">
+                          <div className="search-criteria-section-title">Account ID:</div>
+                          <div className="search-criteria-section-left">
+                            <input type="text" />
+                            <div className="search-criteria-section-title">Branch:</div>
+                            <select
+                              name="modalBranch"
+                              value={modalBranch}
+                              onChange={e => setModalBranch(e.target.value)}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
+                                modalBranchList.map(branch => (
+                                  <option
+                                    key={branch.id}
+                                    value={branch.id}
+                                  >
+                                    {branch.name}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          </div>
+                        </div>
+                      ) : null
+                    }
+
+                    <div className="search-criteria-section-first">
+                      <div className="search-criteria-section-title">Account Name:</div>
+                      <div className="search-criteria-section-left d-flex">
+                        <input type="text" className="w-100" />
+                      </div>
+                    </div>
+                    <div className="search-creteria-account-details">
+                      <div className="search-creteria-account-details-header mb-2">Account Details:</div>
+                      {
+                      savingsAcType || sharesAcType ? (
+                        <div className="search-creteria-account-details-content-header">
+                          <div className="search-creteria-account-details-content-header-grid">AccountID</div>
+                          <div className="search-creteria-account-details-content-header-grid">ProductID</div>
+                          <div className="search-creteria-account-details-content-header-grid">AccountName</div>
+                        </div>
+                      ) : gLAcType ? (
+                        <div className="search-creteria-account-details-content-header-two">
+                          <div className="search-creteria-account-details-content-header-grid">AccountID</div>
+                          <div className="search-creteria-account-details-content-header-grid">AccountName</div>
+                          <div className="search-creteria-account-details-content-header-grid">BranchID</div>
+                          <div className="search-creteria-account-details-content-header-grid">BranchName</div>
+                        </div>
+                      ) : null
+
+                      }
+                      {
+                        savingsAcType || sharesAcType ? (
+                          <div className="search-creteria-account-details-content-outer">
+                            <div className="search-creteria-account-details-content">
+                              <div className="search-creteria-account-details-content-grid">201900009400</div>
+                              <div className="search-creteria-account-details-content-grid">SH400</div>
+                              <div className="search-creteria-account-details-content-grid">NABIFO JOSHUA</div>
+                            </div>
+                            <div className="search-creteria-account-details-content">
+                              <div className="search-creteria-account-details-content-grid">201900009400</div>
+                              <div className="search-creteria-account-details-content-grid">SH400</div>
+                              <div className="search-creteria-account-details-content-grid">NABIFO JOSHUA</div>
+                            </div>
+                            <div className="search-creteria-account-details-content">
+                              <div className="search-creteria-account-details-content-grid">201900009400</div>
+                              <div className="search-creteria-account-details-content-grid">SH400</div>
+                              <div className="search-creteria-account-details-content-grid">NABIFO JOSHUA</div>
+                            </div>
+                          </div>
+                        ) : gLAcType ? (
+                          <div className="search-creteria-account-details-content-outer">
+                            {
+                              innerModalList.map(account => (
+                                <div key={account.accountID} className="search-creteria-account-details-content-two">
+                                  <div className="search-creteria-account-details-content-grid">
+                                    {account.accountID}
+                                  </div>
+                                  <div className="search-creteria-account-details-content-grid">
+                                    {
+                                    account.accountName.length < 22
+                                      ? (account.accountName)
+                                      : (`${account.accountName.substring(0, 22)} ...`)
+                                    }
+                                  </div>
+                                  <div className="search-creteria-account-details-content-grid">
+                                    {account.branchID}
+                                  </div>
+                                  <div className="search-creteria-account-details-content-grid">
+                                    {account.branchID === '000' ? 'Head Office'
+                                      : account.branchID === '001' ? 'Nansana'
+                                        : account.branchID === '002' ? 'Rugika' : null}
+                                  </div>
+                                </div>
+                              ))
+                            }
+                          </div>
+                        ) : null
+                      }
+                    </div>
+                  </div>
+                ) : null
+              }
               <div className="cash-traction-top-section-grid">
                 <span> PartTranType: </span>
                 {' '}
-                <select>
-                  <option value="val">val</option>
-                  <option value="val">val</option>
+                <select
+                  name="tranTypeID"
+                  value={values.tranTypeID}
+                  onChange={handleChange}
+                >
+                  <option value="" disabled selected hidden>Select</option>
+                  {
+                    tranTypes.map(tranType => (
+                      <option
+                        key={tranType.id}
+                        value={tranType.id}
+                      >
+                        {tranType.name}
+                      </option>
+                    ))
+                  }
                 </select>
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> AcctType: </span>
                 {' '}
-                <select>
-                  <option value="val">val</option>
-                  <option value="val">val</option>
+                <select
+                  name="accTypeID"
+                  value={values.accTypeID}
+                  onChange={handleChange}
+                >
+                  <option value="" disabled selected hidden>Select</option>
+                  {
+                    accTypes.map(accType => (
+                      <option
+                        key={accType.id}
+                        value={accType.id}
+                      >
+                        {accType.name}
+                      </option>
+                    ))
+                  }
                 </select>
               </div>
               <div className="cash-traction-top-section-grid">
@@ -54,7 +305,13 @@ const Transaction = () => {
               <div className="left-cash-transaction-middle-section">
                 <div className="left-cash-transaction-middle-section-inner">
                   <div className="left-cash-transaction-middle-section-title">Account Id:</div>
-                  <input type="text" />
+                  <input
+                    autoComplete="false"
+                    name="accountId"
+                    value={values.accountId}
+                    type="text"
+                    onChange={handleChange}
+                  />
                   <div className="left-cash-transaction-middle-section-text">BAGENDA REUBEN</div>
                 </div>
                 <div className="left-cash-transaction-middle-section-inner">
