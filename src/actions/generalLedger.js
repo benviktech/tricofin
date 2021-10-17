@@ -6,7 +6,7 @@ import {
   UpdateGeneralLedgerRequest, VerifyGeneralLedgers,
   CopySingleGltoAccounts, CopyMultipleGlsToBranch,
   CloseGLAccountRequest, UpdateGLParametersRequest,
-  FetchGLParametersRequest,
+  FetchGLParametersRequest, SaveTransactionRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -269,6 +269,20 @@ export const fetchGLParameters = () => async dispatch => {
     const response = await FetchGLParametersRequest(method, path);
     dispatch({ type: FETCH_GL_PARAMETERS, payload: response?.data });
   } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const saveTransactions = userAccount => async dispatch => {
+  const method = 'post';
+  const path = '/api/Finance/SaveCashTransaction/ILUMU/000';
+  const result = [];
+  result.push(userAccount);
+  try {
+    const response = await SaveTransactionRequest(method, path, result);
+    console.log(response?.data, 'response data');
+  } catch (error) {
+    console.log(error?.message);
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
