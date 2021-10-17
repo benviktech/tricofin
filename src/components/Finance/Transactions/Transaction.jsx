@@ -4,18 +4,26 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
+import { saveTransactions } from '../../../actions/generalLedger';
 
 const initialState = {
   tranTypeID: '',
   accTypeID: '',
   accountId: '',
+  valueDate: '',
+  receiptNo: '',
+  tranAmount: '',
+  tranRemarks: '',
 };
 
 const Transaction = () => {
   const [values, setValues] = useState(initialState);
+  const [currentAccount, setCurrentAccount] = useState({});
+  const [diplayModalState, setDiplayModalState] = useState(false);
   const [glList, setGlList] = useState([]);
   const [modalBranch, setModalBranch] = useState('');
   const [savingsAcType, setSavingsAcType] = useState(false);
@@ -24,10 +32,22 @@ const Transaction = () => {
   const [sharesAcType, setSharesAcType] = useState(false);
   const [modalList, setModalList] = useState([]);
   const [modal, setModal] = useState(false);
-  const tranTypes = [{ id: 1, name: 'CREDIT' }, { id: 2, name: 'DEBIT' }];
-  const accTypes = [{ id: 1, name: 'SAVINGS' },
-    { id: 2, name: 'GENERAL LEDGER' },
-    { id: 3, name: 'SHARES ACCT' }];
+  const [tranTypes, setTranTypes] = useState([]);
+  const [accTypes, setAccTypes] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionTypes')
+      .then(response => setTranTypes(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetAccountTypes')
+      .then(response => setAccTypes(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
+
   const modalBranchList = [
     { id: '000', name: 'Head Office' },
     { id: '001', name: 'Nansana' },
@@ -51,6 +71,7 @@ const Transaction = () => {
   useEffect(() => {
     if (values.accountId.length > 0) {
       setModal(true);
+      setDiplayModalState(false);
     } else {
       setModal(false);
     }
@@ -58,7 +79,7 @@ const Transaction = () => {
 
   useEffect(() => {
     if (values.accTypeID.length > 0) {
-      if (values.accTypeID === '2') {
+      if (values.accTypeID === 'G') {
         setModalList(glList);
         setSavingsAcType(false);
         setSharesAcType(false);
@@ -87,11 +108,51 @@ const Transaction = () => {
     }
   }, [modalBranch]);
 
+  const setSelectedAccount = account => {
+    setCurrentAccount(account);
+    setValues({
+      ...values,
+      accountId: account.accountID,
+    });
+    setDiplayModalState(true);
+  };
+
+  useEffect(() => {
+    if (diplayModalState) {
+      setModal(false);
+    }
+  }, [diplayModalState]);
+
+  const submitCashTransaction = () => {
+    const result = {
+      ...values,
+      partTranType: values.tranTypeID === '001' ? 'C'
+        : values.tranTypeID === '002' ? 'D'
+          : null,
+    };
+
+    const userAccount = {
+      columnID: 1,
+      valueDate: result.valueDate,
+      branchID: currentAccount.branchID,
+      accountID: result.accountId,
+      accountType: result.accTypeID,
+      productID: 'GL',
+      partTranType: result.partTranType,
+      receiptNo: (result.receiptNo).toUpperCase(),
+      tranAmount: parseInt(result.tranAmount, 10),
+      tranCode: result.tranTypeID,
+      tranParticulars: 'CASH DEPOSIT',
+      tranRemarks: (result.tranRemarks).toUpperCase(),
+    };
+    dispatch(saveTransactions(userAccount));
+  };
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Bulk Verify GL Accounts</span>
+          <span>Cash Transactions</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
@@ -159,10 +220,7 @@ const Transaction = () => {
                               <option value="" disabled selected hidden>Select</option>
                               {
                                 modalBranchList.map(branch => (
-                                  <option
-                                    key={branch.id}
-                                    value={branch.id}
-                                  >
+                                  <option key={branch.id} value={branch.id}>
                                     {branch.name}
                                   </option>
                                 ))
@@ -221,7 +279,11 @@ const Transaction = () => {
                           <div className="search-creteria-account-details-content-outer">
                             {
                               innerModalList.map(account => (
-                                <div key={account.accountID} className="search-creteria-account-details-content-two">
+                                <div
+                                  onClick={() => setSelectedAccount(account)}
+                                  key={account.accountID}
+                                  className="search-creteria-account-details-content-two"
+                                >
                                   <div className="search-creteria-account-details-content-grid">
                                     {account.accountID}
                                   </div>
@@ -262,10 +324,11 @@ const Transaction = () => {
                   {
                     tranTypes.map(tranType => (
                       <option
-                        key={tranType.id}
-                        value={tranType.id}
+                        key={tranType.tranType}
+                        value={tranType.tranType === 'C' ? '001'
+                          : tranType.tranType === 'D' ? '002' : null}
                       >
-                        {tranType.name}
+                        {tranType.transactionType}
                       </option>
                     ))
                   }
@@ -283,10 +346,10 @@ const Transaction = () => {
                   {
                     accTypes.map(accType => (
                       <option
-                        key={accType.id}
-                        value={accType.id}
+                        key={accType.accountTypeID}
+                        value={accType.accountTypeID}
                       >
-                        {accType.name}
+                        {accType.accountType}
                       </option>
                     ))
                   }
@@ -316,8 +379,17 @@ const Transaction = () => {
                 </div>
                 <div className="left-cash-transaction-middle-section-inner">
                   <div className="left-cash-transaction-middle-section-title">Branch:</div>
-                  <div className="left-cash-transaction-middle-section-id-name">Nasana</div>
-                  <div className="left-cash-transaction-middle-section-text">BAGENDA REUBEN</div>
+                  <div className="left-cash-transaction-middle-section-id-name">
+                    {currentAccount.branchID && currentAccount.branchID}
+                  </div>
+                  <div className="left-cash-transaction-middle-section-text">
+                    {
+                      currentAccount.branchID === '000' ? 'Head Office'
+                        : currentAccount.branchID === '001' ? 'Nansana'
+                          : currentAccount.branchID === '002' ? 'Rugika'
+                            : null
+                    }
+                  </div>
                 </div>
                 <div className="left-cash-transaction-middle-section-inner">
                   <div className="left-cash-transaction-middle-section-title">Product:</div>
@@ -326,29 +398,35 @@ const Transaction = () => {
                 </div>
                 <div className="left-cash-transaction-middle-receipt-date">
                   <div className="left-cash-transaction-middle-reciept-title">Receipt#.</div>
-                  <input type="text" />
+                  <input name="receiptNo" onChange={handleChange} value={values.receiptNo} type="text" />
                   <div className="left-cash-transaction-middle-value-date">
                     <div className="inner-value-date">Value Date:</div>
-                    <input type="date" />
+                    <input onChange={handleChange} name="valueDate" type="date" />
                   </div>
                 </div>
               </div>
               <div className="right-cash-transaction-middle-section">
                 <div className="right-cash-transaction-middle-section-inner">
                   <div className="right-cash-transaction-middle-section-title">TranCode:</div>
-                  <input type="text" />
-                  <div className="right-cash-transaction-middle-section-text">BAGENDA REUBEN</div>
+                  <input type="text" value={values.tranTypeID} />
+                  <div className="right-cash-transaction-middle-section-text">
+                    {
+                      values.tranTypeID === '001' ? 'CASH CREDIT'
+                        : values.tranTypeID === '002' ? 'CASH DEBIT'
+                          : null
+                    }
+                  </div>
                 </div>
                 <div className="right-cash-transaction-middle-section-inner-remarks">
                   <div className="right-cash-transaction-middle-section-title-remarks">Tran Remarks:</div>
-                  <input type="text" />
+                  <input name="tranRemarks" onChange={handleChange} value={values.tranRemarks} type="text" />
                 </div>
                 <div className="right-cash-transaction-middle-section-inner-remarks">
                   <div className="right-cash-transaction-middle-section-title-remarks">Amount:</div>
-                  <input type="text" />
+                  <input name="tranAmount" onChange={handleChange} value={values.tranAmount} type="text" />
                 </div>
                 <div className="cash-transaction-buttons-section">
-                  <button type="button">Add</button>
+                  <button onClick={submitCashTransaction} type="button">Add</button>
                   <button type="button">Edit</button>
                   <button type="button">Save</button>
                   <button type="button">Cancel</button>
