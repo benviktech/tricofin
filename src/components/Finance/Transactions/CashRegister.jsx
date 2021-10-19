@@ -12,7 +12,10 @@ const initialState = {
 
 const CashRegister = () => {
   const [values, setValues] = useState(initialState);
+  const [viewState, setViewState] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [displayTotalDebit, setDisplayTotalDebit] = useState([]);
+  const [displayTotalCredit, setDisplayTotalCredit] = useState([]);
   const [updatedTransactions, setUpdatedTransactions] = useState([]);
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/Finance/GetDailyTransactions')
@@ -64,6 +67,25 @@ const CashRegister = () => {
     }
   }, [values.idType]);
 
+  const changeViewState = () => setViewState(true);
+
+  useEffect(() => {
+    if (viewState && updatedTransactions.length > 0) {
+      const totalCredit = updatedTransactions
+        .filter(transaction => transaction.partTranType === 'C'
+        && transaction.tranSerialNo === 1)
+        .reduce((sum, x) => sum + x.tranAmount, 0);
+
+      const totalDebit = updatedTransactions
+        .filter(transaction => transaction.partTranType === 'D'
+        && transaction.tranSerialNo === 1)
+        .reduce((sum, x) => sum + x.tranAmount, 0);
+
+      setDisplayTotalDebit(totalDebit);
+      setDisplayTotalCredit(totalCredit);
+    }
+  }, [viewState]);
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -103,7 +125,11 @@ const CashRegister = () => {
                 />
               </div>
               <div className="view-print-export-section ">
-                <button className="btn btn-secondary" type="button">
+                <button
+                  onClick={changeViewState}
+                  className="btn btn-secondary"
+                  type="button"
+                >
                   <i className="fas fa-binoculars mr-1" />
                   {' '}
                   View
@@ -167,68 +193,92 @@ const CashRegister = () => {
                 {' '}
                 {values.endDate}
               </div>
-              <div className="view-print-export-section-tran-select-header">
-                <div className="view-print-export-section-tran-select-header-grid">TranDate</div>
-                <div className="view-print-export-section-tran-select-header-grid">Tran/SrNo</div>
-                <div className="view-print-export-section-tran-select-header-grid">ProductID</div>
-                <div className="view-print-export-section-tran-select-header-grid">BranchID</div>
-                <div className="view-print-export-section-tran-select-header-grid">AcctID</div>
-                <div className="view-print-export-section-tran-select-header-grid">AcctName</div>
-                <div className="view-print-export-section-tran-select-header-grid">Amount</div>
-                <div className="view-print-export-section-tran-select-header-grid">Trx</div>
-                <div className="view-print-export-section-tran-select-header-grid">OperatorID</div>
-                <div className="view-print-export-section-tran-select-header-grid">SupervisorID</div>
-                <div className="view-print-export-section-tran-select-header-grid">CashierGL</div>
-                <div className="view-print-export-section-tran-select-header-grid">Narration</div>
-              </div>
-              <div className="view-print-export-section-tran-content">
-                {
-                  updatedTransactions.map(
-                    (transaction, index) => (transaction.tranSerialNo === 1 ? (
-                      <div key={index} className="view-print-export-section-tran-inner-content">
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {new Date(transaction.valueDate)
-                            .toUTCString().split(' ').slice(1, 4)
-                            .join(' ')}
+              {
+                viewState ? (
+                  <div className="view-state-header">
+                    <div className="view-state-header-grid">TranDate</div>
+                    <div className="view-state-header-grid">OperatorID</div>
+                    <div className="view-state-header-grid">CashierGL</div>
+                    <div className="view-state-header-grid">TotalCredit</div>
+                    <div className="view-state-header-grid">TotalDebit</div>
+                  </div>
+                ) : (
+                  <div className="view-print-export-section-tran-select-header">
+                    <div className="view-print-export-section-tran-select-header-grid">TranDate</div>
+                    <div className="view-print-export-section-tran-select-header-grid">Tran/SrNo</div>
+                    <div className="view-print-export-section-tran-select-header-grid">ProductID</div>
+                    <div className="view-print-export-section-tran-select-header-grid">BranchID</div>
+                    <div className="view-print-export-section-tran-select-header-grid">AcctID</div>
+                    <div className="view-print-export-section-tran-select-header-grid">AcctName</div>
+                    <div className="view-print-export-section-tran-select-header-grid">Amount</div>
+                    <div className="view-print-export-section-tran-select-header-grid">Trx</div>
+                    <div className="view-print-export-section-tran-select-header-grid">OperatorID</div>
+                    <div className="view-print-export-section-tran-select-header-grid">SupervisorID</div>
+                    <div className="view-print-export-section-tran-select-header-grid">CashierGL</div>
+                    <div className="view-print-export-section-tran-select-header-grid">Narration</div>
+                  </div>
+                )
+              }
+              {
+                viewState ? (
+                  <div className="view-state-content-section">
+                    <div className="view-state-content-grid">TranDate</div>
+                    <div className="view-state-content-grid">OperatorID</div>
+                    <div className="view-state-content-grid">CashierGL</div>
+                    <div className="view-state-content-grid">{displayTotalCredit}</div>
+                    <div className="view-state-content-grid">{displayTotalDebit}</div>
+                  </div>
+                ) : (
+                  <div className="view-print-export-section-tran-content">
+                    {
+                    updatedTransactions.map(
+                      (transaction, index) => (transaction.tranSerialNo === 1 ? (
+                        <div key={index} className="view-print-export-section-tran-inner-content">
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {new Date(transaction.valueDate)
+                              .toUTCString().split(' ').slice(1, 4)
+                              .join(' ')}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.tranID}
+                            /
+                            {transaction.tranSerialNo}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.productID}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.loginBranch}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.accountID}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">AcctName</div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.tranAmount}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.partTranType}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.createdBy}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.createdBy}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.glSubHead}
+                          </div>
+                          <div className="view-print-export-section-tran-inner-content-grid">
+                            {transaction.tranRemarks}
+                          </div>
                         </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.tranID}
-                          /
-                          {transaction.tranSerialNo}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.productID}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.loginBranch}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.accountID}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">AcctName</div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.tranAmount}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.partTranType}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.createdBy}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.createdBy}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.glSubHead}
-                        </div>
-                        <div className="view-print-export-section-tran-inner-content-grid">
-                          {transaction.tranRemarks}
-                        </div>
-                      </div>
-                    ) : null),
-                  )
-                }
-              </div>
+                      ) : null),
+                    )
+                  }
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
