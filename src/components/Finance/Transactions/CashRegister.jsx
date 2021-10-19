@@ -7,40 +7,62 @@ import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 const initialState = {
   startDate: '',
   endDate: '',
+  idType: '',
 };
 
 const CashRegister = () => {
   const [values, setValues] = useState(initialState);
   const [transactions, setTransactions] = useState([]);
+  const [updatedTransactions, setUpdatedTransactions] = useState([]);
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/Finance/GetDailyTransactions')
       .then(response => setTransactions(response?.data))
       .catch(error => console.log(error?.message));
   }, []);
 
+  const tranTypes = [{ id: 1, type: 'C', name: 'CREDIT' },
+    { id: 2, type: 'D', name: 'DEBIT' },
+    { id: 3, type: 'B', name: 'BOTH' }];
+
   const handleChange = e => {
     const { value, name } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
+    setValues({ ...values, [name]: value });
+  };
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      setUpdatedTransactions(transactions);
+    }
+  }, [transactions]);
+
+  const filterFunction = () => {
+    const result = [];
+    transactions.forEach(transaction => {
+      if (transaction.valueDate >= values.startDate
+        && transaction.valueDate <= values.endDate) {
+        result.push(transaction);
+      }
     });
+    return result;
   };
 
   useEffect(() => {
     if ((values.startDate && values.endDate)
     && values.endDate > values.startDate) {
-      const result = [];
-      transactions.forEach(transaction => {
-        if (transaction.tranDate >= values.startDate && transaction.tranDate <= values.endDate) {
-          result.push(transaction);
-        }
-        console.log(result);
-        return result;
-      });
+      setUpdatedTransactions(filterFunction());
     }
   }, [values]);
 
-  console.log(transactions, 'transactions');
+  useEffect(() => {
+    if (values.idType === 'D' || values.idType === 'C') {
+      const result = transactions.filter(
+        transaction => transaction.partTranType === values.idType,
+      );
+      setUpdatedTransactions(result);
+    } else {
+      setUpdatedTransactions(transactions);
+    }
+  }, [values.idType]);
 
   return (
     <div className="individual-customer-form">
@@ -112,9 +134,19 @@ const CashRegister = () => {
               <div className="view-print-export-section-two ">
                 <div className="view-print-export-section-tran-type">
                   <div>Tran Type:</div>
-                  <select>
-                    <option value="val">VAL</option>
-                    <option value="val">VAL</option>
+                  <select
+                    onChange={handleChange}
+                    name="idType"
+                    value={values.idType}
+                  >
+                    <option value="" disabled selected hidden>Select</option>
+                    {
+                      tranTypes.map(type => (
+                        <option key={type.id} value={type.type}>
+                          {type.name}
+                        </option>
+                      ))
+                    }
                   </select>
                 </div>
                 <div className="view-print-export-section-tran-select">
@@ -151,48 +183,50 @@ const CashRegister = () => {
               </div>
               <div className="view-print-export-section-tran-content">
                 {
-                  transactions.map((transaction, index) => (
-                    <div key={index} className="view-print-export-section-tran-inner-content">
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {new Date(transaction.valueDate)
-                          .toUTCString().split(' ').slice(1, 4)
-                          .join(' ')}
+                  updatedTransactions.map(
+                    (transaction, index) => (transaction.tranSerialNo === 1 ? (
+                      <div key={index} className="view-print-export-section-tran-inner-content">
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {new Date(transaction.valueDate)
+                            .toUTCString().split(' ').slice(1, 4)
+                            .join(' ')}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.tranID}
+                          /
+                          {transaction.tranSerialNo}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.productID}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.loginBranch}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.accountID}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">AcctName</div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.tranAmount}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.partTranType}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.createdBy}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.createdBy}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.glSubHead}
+                        </div>
+                        <div className="view-print-export-section-tran-inner-content-grid">
+                          {transaction.tranRemarks}
+                        </div>
                       </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.tranID}
-                        /
-                        {transaction.tranSerialNo}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.productID}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.loginBranch}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.accountID}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">AcctName</div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.tranAmount}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.partTranType}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.createdBy}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.createdBy}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.glSubHead}
-                      </div>
-                      <div className="view-print-export-section-tran-inner-content-grid">
-                        {transaction.tranRemarks}
-                      </div>
-                    </div>
-                  ))
+                    ) : null),
+                  )
                 }
               </div>
             </div>
