@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CSVLink } from 'react-csv';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 
 const initialState = {
@@ -17,6 +18,15 @@ const CashRegister = () => {
   const [displayTotalDebit, setDisplayTotalDebit] = useState([]);
   const [displayTotalCredit, setDisplayTotalCredit] = useState([]);
   const [updatedTransactions, setUpdatedTransactions] = useState([]);
+
+  const headers = [
+    { label: 'Transaction Date', key: 'tranDate' },
+    { label: 'Account ID', key: 'accountID' },
+    { label: 'transaction Amount', key: 'tranAmount' },
+    { label: 'Transaction Particulars', key: 'tranParticulars' },
+    { label: 'Transaction Part', key: 'partTranType' },
+  ];
+
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/Finance/GetDailyTransactions')
       .then(response => setTransactions(response?.data))
@@ -86,6 +96,8 @@ const CashRegister = () => {
     }
   }, [viewState]);
 
+  console.log(updatedTransactions, 'updatedTransactions');
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -139,11 +151,11 @@ const CashRegister = () => {
                   {' '}
                   Print
                 </button>
-                <button className="btn btn-secondary" type="button">
+                <CSVLink className="btn btn-secondary" data={updatedTransactions} headers={headers}>
                   <i className="fas fa-file-export mr-1" />
                   {' '}
                   Export
-                </button>
+                </CSVLink>
               </div>
             </div>
             <div className="top-bulk-selection-section-two">
