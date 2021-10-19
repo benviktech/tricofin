@@ -282,7 +282,6 @@ export const saveTransactions = userAccount => async dispatch => {
     const response = await SaveTransactionRequest(method, path, result);
     console.log(response?.data, 'response data');
   } catch (error) {
-    console.log(error?.message);
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
