@@ -100,6 +100,7 @@
   font-size: 12px;
   font-weight: bold;
   color: #666;
+  padding: 5px;
 }
 
 .left-cash-transaction-middle-section-text,
@@ -379,6 +380,8 @@
   background-color: #F3F2F1;
   margin:20px 20px 0 0;
   padding: 10px 2px;
+  width: 1160px;
+  overflow-x: auto;
 }
 
 .view-print-export-section-tran-select-top {
@@ -395,6 +398,7 @@
   grid-template-columns: 3fr 2fr 2fr 2fr 3fr 3fr 3fr 1fr 3fr 3fr 3fr 4fr;
   grid-column-gap: 2px;
   margin-top: 5px;
+  width: 1160px;
 }
 
 .view-print-export-section-tran-select-header-grid,
@@ -413,4 +417,16 @@
 
 .view-print-export-section-tran-inner-content-grid {
   background-color: #fff;
+}
+
+.view-print-export-section-tran-content {
+  max-height: 300px;
+  cursor: pointer;
+  overflow-y: auto;
+  width: 1160px;
+}
+
+.view-print-export-section-tran-content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
