@@ -18,6 +18,8 @@ const initialState = {
   receiptNo: '',
   tranAmount: '',
   tranRemarks: '',
+  productName: '',
+  productID: '',
 };
 
 const Transaction = () => {
@@ -25,6 +27,7 @@ const Transaction = () => {
   const [currentAccount, setCurrentAccount] = useState({});
   const [diplayModalState, setDiplayModalState] = useState(false);
   const [glList, setGlList] = useState([]);
+  const [savingsList, setSavingsList] = useState([]);
   const [modalBranch, setModalBranch] = useState('');
   const [savingsAcType, setSavingsAcType] = useState(false);
   const [innerModalList, setInnerModalList] = useState([]);
@@ -69,6 +72,12 @@ const Transaction = () => {
   }, []);
 
   useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Savings/GetSavingsAccounts')
+      .then(response => setSavingsList(response?.data))
+      .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
     if (values.accountId.length > 0) {
       setModal(true);
       setDiplayModalState(false);
@@ -108,11 +117,15 @@ const Transaction = () => {
     }
   }, [modalBranch]);
 
-  const setSelectedAccount = account => {
+  const setSelectedAccount = (account, type) => {
     setCurrentAccount(account);
     setValues({
       ...values,
       accountId: account.accountID,
+      productID: type === 'GL' ? 'GL'
+        : type === 'SV' ? 'SV' : null,
+      productName: type === 'GL' ? 'GENERAL LEDGER'
+        : type === 'SV' ? 'SAVINGS' : null,
     });
     setDiplayModalState(true);
   };
@@ -134,10 +147,11 @@ const Transaction = () => {
     const userAccount = {
       columnID: 1,
       valueDate: result.valueDate,
-      branchID: currentAccount.branchID,
+      branchID: result.productID === 'GL' ? currentAccount.branchID
+        : result.productID === 'SV' ? '001' : null,
       accountID: result.accountId,
       accountType: result.accTypeID,
-      productID: 'GL',
+      productID: result.productID,
       partTranType: result.partTranType,
       receiptNo: (result.receiptNo).toUpperCase(),
       tranAmount: parseInt(result.tranAmount, 10),
@@ -257,7 +271,23 @@ const Transaction = () => {
 
                       }
                       {
-                        savingsAcType || sharesAcType ? (
+                        savingsAcType ? (
+                          <div className="search-creteria-account-details-content-outer">
+                            {
+                              savingsList.map(account => (
+                                <div
+                                  onClick={() => setSelectedAccount(account, 'SV')}
+                                  key={account.controlAccountGL}
+                                  className="search-creteria-account-details-content"
+                                >
+                                  <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
+                                  <div className="search-creteria-account-details-content-grid">SH400</div>
+                                  <div className="search-creteria-account-details-content-grid">{ account.rshipOfficer }</div>
+                                </div>
+                              ))
+                            }
+                          </div>
+                        ) : sharesAcType ? (
                           <div className="search-creteria-account-details-content-outer">
                             <div className="search-creteria-account-details-content">
                               <div className="search-creteria-account-details-content-grid">201900009400</div>
@@ -280,7 +310,7 @@ const Transaction = () => {
                             {
                               innerModalList.map(account => (
                                 <div
-                                  onClick={() => setSelectedAccount(account)}
+                                  onClick={() => setSelectedAccount(account, 'GL')}
                                   key={account.accountID}
                                   className="search-creteria-account-details-content-two"
                                 >
@@ -344,7 +374,7 @@ const Transaction = () => {
                 >
                   <option value="" disabled selected hidden>Select</option>
                   {
-                    accTypes.map(accType => (
+                    accTypes.filter(element => element.accountTypeID !== 'L').map(accType => (
                       <option
                         key={accType.accountTypeID}
                         value={accType.accountTypeID}
@@ -393,8 +423,8 @@ const Transaction = () => {
                 </div>
                 <div className="left-cash-transaction-middle-section-inner">
                   <div className="left-cash-transaction-middle-section-title">Product:</div>
-                  <div className="left-cash-transaction-middle-section-id-name">Nasana</div>
-                  <div className="left-cash-transaction-middle-section-text">BAGENDA REUBEN</div>
+                  <div className="left-cash-transaction-middle-section-id-name">{values.productID}</div>
+                  <div className="left-cash-transaction-middle-section-text">{values.productName}</div>
                 </div>
                 <div className="left-cash-transaction-middle-receipt-date">
                   <div className="left-cash-transaction-middle-reciept-title">Receipt#.</div>
