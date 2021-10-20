@@ -274,6 +274,7 @@ export const fetchGLParameters = () => async dispatch => {
 };
 
 export const saveTransactions = userAccount => async dispatch => {
+  console.log(userAccount, 'user account');
   const method = 'post';
   const path = '/api/Finance/SaveCashTransaction/ILUMU/000';
   const result = [];

@@ -28,6 +28,7 @@ const Transaction = () => {
   const [diplayModalState, setDiplayModalState] = useState(false);
   const [glList, setGlList] = useState([]);
   const [savingsList, setSavingsList] = useState([]);
+  const [sharesList, setSharesList] = useState([]);
   const [modalBranch, setModalBranch] = useState('');
   const [savingsAcType, setSavingsAcType] = useState(false);
   const [innerModalList, setInnerModalList] = useState([]);
@@ -51,12 +52,8 @@ const Transaction = () => {
       .catch(error => console.log(error?.message));
   }, []);
 
-  const modalBranchList = [
-    { id: '000', name: 'Head Office' },
-    { id: '001', name: 'Nansana' },
-    { id: '002', name: 'Rugika' },
-    { id: '004', name: 'All Branches' },
-  ];
+  const modalBranchList = [{ id: '000', name: 'Head Office' }, { id: '001', name: 'Nansana' },
+    { id: '002', name: 'Rugika' }, { id: '004', name: 'All Branches' }];
   const handleChange = e => {
     const { name, value } = e.target;
     setValues({
@@ -72,9 +69,15 @@ const Transaction = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Savings/GetSavingsAccounts')
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetAccounts/S')
       .then(response => setSavingsList(response?.data))
       .catch(error => console.log(error.message));
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetAccounts/C')
+      .then(response => setSharesList(response?.data))
+      .catch(error => console.log(error?.message));
   }, []);
 
   useEffect(() => {
@@ -93,10 +96,15 @@ const Transaction = () => {
         setSavingsAcType(false);
         setSharesAcType(false);
         setGLAcType(true);
-      } else {
+      } else if (values.accTypeID === 'S') {
         setModalList([]);
         setGLAcType(false);
         setSavingsAcType(true);
+        setSharesAcType(false);
+      } else {
+        setModalList([]);
+        setGLAcType(false);
+        setSavingsAcType(false);
         setSharesAcType(true);
       }
     }
@@ -123,9 +131,10 @@ const Transaction = () => {
       ...values,
       accountId: account.accountID,
       productID: type === 'GL' ? 'GL'
-        : type === 'SV' ? 'SV' : null,
+        : account.productID,
       productName: type === 'GL' ? 'GENERAL LEDGER'
-        : type === 'SV' ? 'SAVINGS' : null,
+        : type === 'SV' ? 'SAVINGS'
+          : type === 'SH' ? 'MEMBER SHARES' : null,
     });
     setDiplayModalState(true);
   };
@@ -147,8 +156,7 @@ const Transaction = () => {
     const userAccount = {
       columnID: 1,
       valueDate: result.valueDate,
-      branchID: result.productID === 'GL' ? currentAccount.branchID
-        : result.productID === 'SV' ? '001' : null,
+      branchID: currentAccount.branchID,
       accountID: result.accountId,
       accountType: result.accTypeID,
       productID: result.productID,
@@ -281,29 +289,27 @@ const Transaction = () => {
                                   className="search-creteria-account-details-content"
                                 >
                                   <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
-                                  <div className="search-creteria-account-details-content-grid">SH400</div>
-                                  <div className="search-creteria-account-details-content-grid">{ account.rshipOfficer }</div>
+                                  <div className="search-creteria-account-details-content-grid">{ account.productID }</div>
+                                  <div className="search-creteria-account-details-content-grid">{ account.accountName }</div>
                                 </div>
                               ))
                             }
                           </div>
                         ) : sharesAcType ? (
                           <div className="search-creteria-account-details-content-outer">
-                            <div className="search-creteria-account-details-content">
-                              <div className="search-creteria-account-details-content-grid">201900009400</div>
-                              <div className="search-creteria-account-details-content-grid">SH400</div>
-                              <div className="search-creteria-account-details-content-grid">NABIFO JOSHUA</div>
-                            </div>
-                            <div className="search-creteria-account-details-content">
-                              <div className="search-creteria-account-details-content-grid">201900009400</div>
-                              <div className="search-creteria-account-details-content-grid">SH400</div>
-                              <div className="search-creteria-account-details-content-grid">NABIFO JOSHUA</div>
-                            </div>
-                            <div className="search-creteria-account-details-content">
-                              <div className="search-creteria-account-details-content-grid">201900009400</div>
-                              <div className="search-creteria-account-details-content-grid">SH400</div>
-                              <div className="search-creteria-account-details-content-grid">NABIFO JOSHUA</div>
-                            </div>
+                            {
+                              sharesList.map(account => (
+                                <div
+                                  onClick={() => setSelectedAccount(account, 'SH')}
+                                  key={account.controlAccountGL}
+                                  className="search-creteria-account-details-content"
+                                >
+                                  <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
+                                  <div className="search-creteria-account-details-content-grid">{ account.productID }</div>
+                                  <div className="search-creteria-account-details-content-grid">{ account.accountName }</div>
+                                </div>
+                              ))
+                            }
                           </div>
                         ) : gLAcType ? (
                           <div className="search-creteria-account-details-content-outer">
@@ -390,7 +396,7 @@ const Transaction = () => {
                 <input type="text" />
               </div>
               <div className="cash-traction-top-section-grid">
-                <span> Tran#: </span>
+                <span> Serial#: </span>
                 <input type="text" />
               </div>
             </div>
@@ -399,13 +405,15 @@ const Transaction = () => {
                 <div className="left-cash-transaction-middle-section-inner">
                   <div className="left-cash-transaction-middle-section-title">Account Id:</div>
                   <input
-                    autoComplete="false"
+                    autoComplete="off"
                     name="accountId"
                     value={values.accountId}
                     type="text"
                     onChange={handleChange}
                   />
-                  <div className="left-cash-transaction-middle-section-text">BAGENDA REUBEN</div>
+                  <div className="left-cash-transaction-middle-section-text">
+                    {currentAccount.accountName && currentAccount.accountName}
+                  </div>
                 </div>
                 <div className="left-cash-transaction-middle-section-inner">
                   <div className="left-cash-transaction-middle-section-title">Branch:</div>
