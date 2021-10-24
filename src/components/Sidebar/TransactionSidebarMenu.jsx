@@ -23,7 +23,8 @@ const TransactionSideBarMenu = ({ item }) => {
   const { url } = useRouteMatch();
 
   React.useEffect(() => {
-    if (url.split('/')[1] === 'cashregister') {
+    if (url.split('/')[1] === 'cashregister'
+    || url.split('/')[1] === 'viewtransactions') {
       setSubnav(true);
     }
   }, []);
@@ -49,7 +50,8 @@ const TransactionSideBarMenu = ({ item }) => {
         </div>
       </SidebarLink>
       { (url.split('/')[1] === 'transactions')
-      || url.split('/')[1] === 'cashregister' ? (
+      || url.split('/')[1] === 'cashregister'
+      || url.split('/')[1] === 'viewtransactions' ? (
 
           subnav && item.subNav.map((item, index) => (
             <DropdownLink
