@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable no-restricted-globals */
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -235,6 +236,26 @@ const Transaction = () => {
     }
   }, [errors]);
 
+  const filterGlList = (content, text) => {
+    const newModalList = [];
+    let accId = '';
+    glList.forEach(account => {
+      if (text === 'accountId') {
+        accId = account.accountID;
+      }
+      if (text === 'accountName') {
+        accId = account.accountName;
+      }
+      if (accId.length > 0) {
+        if (accId.indexOf(content.toLocaleUpperCase()) !== -1) {
+          newModalList.push(account);
+        }
+      }
+    });
+    const sortedNewModalList = Array.from(new Set(newModalList));
+    setInnerModalList(sortedNewModalList);
+  };
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -299,7 +320,7 @@ const Transaction = () => {
                         <div className="search-criteria-section-first">
                           <div className="search-criteria-section-title">Account ID:</div>
                           <div className="search-criteria-section-left">
-                            <input type="text" />
+                            <input onChange={e => filterGlList(e.target.value, 'accountId')} type="text" />
                             <div className="search-criteria-section-title">Branch:</div>
                             <select
                               name="modalBranch"
@@ -323,7 +344,11 @@ const Transaction = () => {
                     <div className="search-criteria-section-first">
                       <div className="search-criteria-section-title">Account Name:</div>
                       <div className="search-criteria-section-left d-flex">
-                        <input type="text" className="w-100" />
+                        <input
+                          onChange={e => filterGlList(e.target.value, 'accountName')}
+                          type="text"
+                          className="w-100"
+                        />
                       </div>
                     </div>
                     <div className="search-creteria-account-details">
