@@ -9,6 +9,7 @@ import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 import { saveTransactions } from '../../../actions/generalLedger';
+import transactionValidator from '../../Validators/Transaction';
 
 const initialState = {
   tranTypeID: '',
@@ -20,6 +21,7 @@ const initialState = {
   tranRemarks: '',
   productName: '',
   productID: '',
+  tranSerialNo: '',
 };
 
 const Transaction = () => {
@@ -42,6 +44,8 @@ const Transaction = () => {
   const [currentTranId, setCurrentTranId] = useState('');
   const [currentTranObject, setCurrentTranObject] = useState({});
   const [editState, setEditState] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [userAccount, setUserAccount] = useState({});
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionTypes')
@@ -95,13 +99,14 @@ const Transaction = () => {
         accountId: currentTranObject[0].accountID,
         branchID: currentTranObject[0].branchID,
         valueDate: currentTranObject[0].valueDate,
-        accountType: currentTranObject[0].accountType,
+        accTypeID: currentTranObject[0].accountType,
         productID: currentTranObject[0].productID,
         partTranType: currentTranObject[0].partTranType,
         receiptNo: currentTranObject[0].receiptNo,
         tranAmount: currentTranObject[0].tranAmount,
         tranCode: currentTranObject[0].tranCode,
         tranRemarks: currentTranObject[0].tranRemarks,
+        tranSerialNo: currentTranObject[0].tranSerialNo,
       });
     }
   }, [currentTranObject]);
@@ -191,12 +196,14 @@ const Transaction = () => {
   const submitCashTransaction = () => {
     const result = {
       ...values,
-      partTranType: values.tranTypeID === '001' ? 'C'
-        : values.tranTypeID === '002' ? 'D'
-          : null,
+      partTranType: editState ? values.partTranType
+        : (values.tranTypeID === '001' ? 'C'
+          : values.tranTypeID === '002' ? 'D'
+            : null),
     };
 
-    const userAccount = {
+    setUserAccount({
+      ...userAccount,
       columnID: 1,
       valueDate: result.valueDate,
       branchID: currentAccount.branchID,
@@ -209,13 +216,26 @@ const Transaction = () => {
       tranCode: result.tranTypeID,
       tranParticulars: 'CASH DEPOSIT',
       tranRemarks: (result.tranRemarks).toUpperCase(),
-    };
-    if (editState) {
-      console.log(userAccount, 'userAccount update');
-    } else {
-      dispatch(saveTransactions(userAccount));
-    }
+    });
   };
+
+  useEffect(() => {
+    if (Object.keys(userAccount).length > 0) {
+      setErrors(transactionValidator(userAccount));
+    }
+  }, [userAccount]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0) {
+      if (editState) {
+        console.log(userAccount, 'userAccount update');
+      } else {
+        dispatch(saveTransactions(userAccount));
+      }
+    } else {
+      console.log(errors);
+    }
+  }, [errors]);
 
   return (
     <div className="individual-customer-form">
@@ -446,7 +466,11 @@ const Transaction = () => {
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Serial#: </span>
-                <input type="text" />
+                <input
+                  disabled="true"
+                  value={values.tranSerialNo}
+                  type="text"
+                />
               </div>
             </div>
             <div className="cash-transaction-middle-section">
@@ -503,12 +527,19 @@ const Transaction = () => {
               <div className="right-cash-transaction-middle-section">
                 <div className="right-cash-transaction-middle-section-inner">
                   <div className="right-cash-transaction-middle-section-title">TranCode:</div>
-                  <input type="text" value={values.tranTypeID} />
+                  <input
+                    type="text"
+                    value={editState && currentTranObject.length > 1
+                      ? currentTranObject[0].tranCode : values.tranTypeID}
+                  />
                   <div className="right-cash-transaction-middle-section-text">
                     {
-                      values.tranTypeID === '001' ? 'CASH CREDIT'
-                        : values.tranTypeID === '002' ? 'CASH DEBIT'
-                          : null
+                      editState && currentTranObject.length > 1
+                        ? (currentTranObject[0].tranCode === '001' ? 'CASH CREDIT'
+                          : currentTranObject[0].tranCode === '002' ? 'CASH DEBIT' : null)
+                        : (values.tranTypeID === '001' ? 'CASH CREDIT'
+                          : values.tranTypeID === '002' ? 'CASH DEBIT'
+                            : null)
                     }
                   </div>
                 </div>
