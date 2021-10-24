@@ -39,6 +39,9 @@ const Transaction = () => {
   const [tranTypes, setTranTypes] = useState([]);
   const [accTypes, setAccTypes] = useState([]);
   const dispatch = useDispatch();
+  const [currentTranId, setCurrentTranId] = useState('');
+  const [currentTranObject, setCurrentTranObject] = useState({});
+  const [editState, setEditState] = useState(false);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionTypes')
@@ -61,6 +64,47 @@ const Transaction = () => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    if (currentTranId.length > 0) {
+      axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/2021-05-07T00%3A00%3A00/${currentTranId}`)
+        .then(response => {
+          setCurrentTranObject(response?.data);
+        })
+        .catch(error => console.log(error?.message));
+      setEditState(true);
+    } else {
+      setCurrentTranObject({});
+      setValues(initialState);
+      setEditState(false);
+      setCurrentAccount({});
+    }
+  }, [currentTranId]);
+
+  useEffect(() => {
+    if (currentTranObject.length > 0) {
+      console.log(currentTranObject, 'currentTranObject');
+      console.log(currentAccount, 'currentAccount');
+      setCurrentAccount({
+        ...currentAccount,
+        accountID: currentTranObject[0].accountID,
+        branchID: currentTranObject[0].branchID,
+      });
+      setValues({
+        ...values,
+        accountId: currentTranObject[0].accountID,
+        branchID: currentTranObject[0].branchID,
+        valueDate: currentTranObject[0].valueDate,
+        accountType: currentTranObject[0].accountType,
+        productID: currentTranObject[0].productID,
+        partTranType: currentTranObject[0].partTranType,
+        receiptNo: currentTranObject[0].receiptNo,
+        tranAmount: currentTranObject[0].tranAmount,
+        tranCode: currentTranObject[0].tranCode,
+        tranRemarks: currentTranObject[0].tranRemarks,
+      });
+    }
+  }, [currentTranObject]);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
@@ -130,8 +174,7 @@ const Transaction = () => {
     setValues({
       ...values,
       accountId: account.accountID,
-      productID: type === 'GL' ? 'GL'
-        : account.productID,
+      productID: type === 'GL' ? 'GL' : account.productID,
       productName: type === 'GL' ? 'GENERAL LEDGER'
         : type === 'SV' ? 'SAVINGS'
           : type === 'SH' ? 'MEMBER SHARES' : null,
@@ -167,7 +210,11 @@ const Transaction = () => {
       tranParticulars: 'CASH DEPOSIT',
       tranRemarks: (result.tranRemarks).toUpperCase(),
     };
-    dispatch(saveTransactions(userAccount));
+    if (editState) {
+      console.log(userAccount, 'userAccount update');
+    } else {
+      dispatch(saveTransactions(userAccount));
+    }
   };
 
   return (
@@ -189,7 +236,9 @@ const Transaction = () => {
           <div className="submit-form-top-section">
             <div className="cash-traction-top-section">
               {
-                modal ? (
+                modal
+                && editState === false
+                && values.accTypeID.length > 0 ? (
                   <div className="search-criteria-section shadow">
                     <div className="search-criteria-section-header">
                       Search Criteria Section
@@ -346,7 +395,7 @@ const Transaction = () => {
                       }
                     </div>
                   </div>
-                ) : null
+                  ) : null
               }
               <div className="cash-traction-top-section-grid">
                 <span> PartTranType: </span>
@@ -393,7 +442,7 @@ const Transaction = () => {
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Tran#: </span>
-                <input type="text" />
+                <input onChange={e => setCurrentTranId(e.target.value)} type="text" />
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Serial#: </span>
@@ -439,7 +488,15 @@ const Transaction = () => {
                   <input name="receiptNo" onChange={handleChange} value={values.receiptNo} type="text" />
                   <div className="left-cash-transaction-middle-value-date">
                     <div className="inner-value-date">Value Date:</div>
-                    <input onChange={handleChange} name="valueDate" type="date" />
+                    <input
+                      onChange={handleChange}
+                      value={editState && currentTranObject.length > 1
+                        ? new Date(currentTranObject[0].valueDate)
+                          .toISOString()
+                          .substring(0, 10) : values.valueDate}
+                      name="valueDate"
+                      type="date"
+                    />
                   </div>
                 </div>
               </div>
@@ -464,9 +521,9 @@ const Transaction = () => {
                   <input name="tranAmount" onChange={handleChange} value={values.tranAmount} type="text" />
                 </div>
                 <div className="cash-transaction-buttons-section">
-                  <button onClick={submitCashTransaction} type="button">Add</button>
+                  <button type="button">Add</button>
                   <button type="button">Edit</button>
-                  <button type="button">Save</button>
+                  <button onClick={submitCashTransaction} type="button">Save</button>
                   <button type="button">Cancel</button>
                   <button type="button">Delete</button>
                 </div>
