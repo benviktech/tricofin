@@ -24,17 +24,3 @@ export default function transactionValidator(values) {
   }
   return errors;
 }
-
-/*
-      valueDate: result.valueDate,
-      branchID: currentAccount.branchID,
-      accountID: result.accountId,
-      accountType: result.accTypeID,
-      productID: result.productID,
-      partTranType: result.partTranType,
-      receiptNo: (result.receiptNo).toUpperCase(),
-      tranAmount: parseInt(result.tranAmount, 10),
-      tranCode: result.tranTypeID,
-      tranParticulars: 'CASH DEPOSIT',
-      tranRemarks: (result.tranRemarks).toUpperCase(),
-  */

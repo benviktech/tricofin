@@ -440,3 +440,30 @@
   width: 0;
   height: 0;
 }
+
+.transactions-errors {
+  position: absolute;
+  top: 10;
+  right: 0;
+  padding: 20px 29px 0;
+  background-color: #fff;
+}
+
+.transactions-errors ul {
+  width: 100%;
+}
+
+.transactions-errors li {
+  font-size: 11px;
+  color: red;
+  font-weight: bold;
+}
+
+.transactions-errors i {
+  position: absolute;
+  top: 35px;
+  z-index: 6;
+  right: 0;
+  font-size: 20px;
+  color: red;
+}

@@ -232,8 +232,6 @@ const Transaction = () => {
       } else {
         dispatch(saveTransactions(userAccount));
       }
-    } else {
-      console.log(errors);
     }
   }, [errors]);
 
@@ -472,6 +470,18 @@ const Transaction = () => {
                   type="text"
                 />
               </div>
+              {
+                Object.keys(errors).length > 0 ? (
+                  <div className="transactions-errors shadow">
+                    <i onClick={() => setErrors({})} className="far fa-times-circle" />
+                    <ul>
+                      {
+                        Object.values(errors).map(error => <li key={error}>{error}</li>)
+                      }
+                    </ul>
+                  </div>
+                ) : null
+              }
             </div>
             <div className="cash-transaction-middle-section">
               <div className="left-cash-transaction-middle-section">
@@ -552,10 +562,10 @@ const Transaction = () => {
                   <input name="tranAmount" onChange={handleChange} value={values.tranAmount} type="text" />
                 </div>
                 <div className="cash-transaction-buttons-section">
-                  <button type="button">Add</button>
-                  <button type="button">Edit</button>
-                  <button onClick={submitCashTransaction} type="button">Save</button>
-                  <button type="button">Cancel</button>
+                  <button onClick={submitCashTransaction} type="button">
+                    { editState ? 'Edit' : 'Add'}
+                  </button>
+                  <button onClick={() => setErrors({})} type="button">Cancel</button>
                   <button type="button">Delete</button>
                 </div>
               </div>
