@@ -33,11 +33,16 @@ const Transaction = () => {
   const [savingsList, setSavingsList] = useState([]);
   const [sharesList, setSharesList] = useState([]);
   const [modalBranch, setModalBranch] = useState('');
+  const [savingModalBranch, setSavingModalBranch] = useState('');
   const [savingsAcType, setSavingsAcType] = useState(false);
   const [innerModalList, setInnerModalList] = useState([]);
+  const [sVInnerModalList, setSVInnerModalList] = useState([]);
+  const [sHInnerModalList, setSHInnerModalList] = useState([]);
   const [gLAcType, setGLAcType] = useState(false);
   const [sharesAcType, setSharesAcType] = useState(false);
   const [modalList, setModalList] = useState([]);
+  const [savingModalList, setSavingModalList] = useState([]);
+  const [sharesModalList, setSharesModalList] = useState([]);
   const [modal, setModal] = useState(false);
   const [tranTypes, setTranTypes] = useState([]);
   const [accTypes, setAccTypes] = useState([]);
@@ -142,16 +147,22 @@ const Transaction = () => {
   useEffect(() => {
     if (values.accTypeID.length > 0) {
       if (values.accTypeID === 'G') {
+        setSavingModalList([]);
+        setSharesModalList([]);
         setModalList(glList);
         setSavingsAcType(false);
         setSharesAcType(false);
         setGLAcType(true);
       } else if (values.accTypeID === 'S') {
+        setSharesModalList([]);
         setModalList([]);
+        setSavingModalList(savingsList);
         setGLAcType(false);
         setSavingsAcType(true);
         setSharesAcType(false);
       } else {
+        setSavingModalList([]);
+        setSharesModalList(sharesList);
         setModalList([]);
         setGLAcType(false);
         setSavingsAcType(false);
@@ -174,6 +185,28 @@ const Transaction = () => {
       setInnerModalList(modalList);
     }
   }, [modalBranch]);
+
+  useEffect(() => {
+    if (savingModalBranch.length > 0 && savingModalBranch !== '004') {
+      const newModalList = (savingsAcType ? savingModalList
+        : sharesAcType ? sharesModalList : null).filter(
+        account => account.branchID === savingModalBranch,
+      );
+      if (savingsAcType) {
+        setSVInnerModalList(newModalList);
+      }
+      if (sharesAcType) {
+        setSHInnerModalList(newModalList);
+      }
+    } else {
+      if (savingsAcType) {
+        setSVInnerModalList(savingModalList);
+      }
+      if (sharesAcType) {
+        setSHInnerModalList(sharesModalList);
+      }
+    }
+  }, [savingModalBranch]);
 
   const setSelectedAccount = (account, type) => {
     setCurrentAccount(account);
@@ -256,6 +289,28 @@ const Transaction = () => {
     setInnerModalList(sortedNewModalList);
   };
 
+  const filterListTwo = (content, type, text) => {
+    const newModalList = [];
+    let accId = '';
+    (type === 'savings' ? savingsList
+      : type === 'shares' ? sharesList : null).forEach(account => {
+      if (text === 'accountId') { accId = account.accountID; }
+      if (text === 'accountName') { accId = account.accountName; }
+      if (accId.length > 0) {
+        if (accId.indexOf(content.toLocaleUpperCase()) !== -1) {
+          newModalList.push(account);
+        }
+      }
+    });
+    const sortedNewModalList = Array.from(new Set(newModalList));
+    if (type === 'savings') {
+      setSVInnerModalList(sortedNewModalList);
+    }
+    if (type === 'shares') {
+      setSHInnerModalList(sortedNewModalList);
+    }
+  };
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -292,7 +347,14 @@ const Transaction = () => {
                         <div className="search-criteria-section-first">
                           <div className="search-criteria-section-title">Account ID:</div>
                           <div className="search-criteria-section-left">
-                            <input type="text" />
+                            <input
+                              onChange={
+                              savingsAcType
+                                ? e => filterListTwo(e.target.value, 'savings', 'accountId')
+                                : e => filterListTwo(e.target.value, 'shares', 'accountId')
+                            }
+                              type="text"
+                            />
                             <div className="search-criteria-section-title">Client ID:</div>
                             <input type="text" />
                           </div>
@@ -307,8 +369,19 @@ const Transaction = () => {
                           <div className="search-criteria-section-left">
                             <input type="text" />
                             <div className="search-criteria-section-title">Branch:</div>
-                            <select>
-                              <option value="val">val</option>
+                            <select
+                              name="savingModalBranch"
+                              value={savingModalBranch}
+                              onChange={e => setSavingModalBranch(e.target.value)}
+                            >
+                              <option value="" disabled selected hidden>Select</option>
+                              {
+                                modalBranchList.map(branch => (
+                                  <option key={branch.id} value={branch.id}>
+                                    {branch.name}
+                                  </option>
+                                ))
+                              }
                             </select>
                           </div>
                         </div>
@@ -345,7 +418,13 @@ const Transaction = () => {
                       <div className="search-criteria-section-title">Account Name:</div>
                       <div className="search-criteria-section-left d-flex">
                         <input
-                          onChange={e => filterGlList(e.target.value, 'accountName')}
+                          onChange={
+                            gLAcType ? e => filterGlList(e.target.value, 'accountName')
+                              : (
+                                savingsAcType ? e => filterListTwo(e.target.value, 'savings', 'accountName')
+                                  : e => filterListTwo(e.target.value, 'shares', 'accountName')
+                              )
+                          }
                           type="text"
                           className="w-100"
                         />
@@ -374,7 +453,7 @@ const Transaction = () => {
                         savingsAcType ? (
                           <div className="search-creteria-account-details-content-outer">
                             {
-                              savingsList.map(account => (
+                              sVInnerModalList.map(account => (
                                 <div
                                   onClick={() => setSelectedAccount(account, 'SV')}
                                   key={account.controlAccountGL}
@@ -390,7 +469,7 @@ const Transaction = () => {
                         ) : sharesAcType ? (
                           <div className="search-creteria-account-details-content-outer">
                             {
-                              sharesList.map(account => (
+                              sHInnerModalList.map(account => (
                                 <div
                                   onClick={() => setSelectedAccount(account, 'SH')}
                                   key={account.controlAccountGL}
