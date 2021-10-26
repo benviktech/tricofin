@@ -12,6 +12,7 @@ import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 import { fectchDailyTransactions, saveTransactions } from '../../../actions/generalLedger';
 import transactionValidator from '../../Validators/Transaction';
 import { CashierDetails, AccountDetails } from './Details';
+import Modal from './Modal';
 
 const initialState = {
   tranTypeID: '',
@@ -358,190 +359,23 @@ const Transaction = () => {
                 modal
                 && editState === false
                 && values.accTypeID.length > 0 ? (
-                  <div className="search-criteria-section shadow">
-                    <div className="search-criteria-section-header">
-                      Search Criteria Section
-                      <i
-                        className="far fa-times-circle"
-                        onClick={hideModal}
-                      />
-                    </div>
-                    {
-                      savingsAcType || sharesAcType ? (
-
-                        <div className="search-criteria-section-first">
-                          <div className="search-criteria-section-title">Account ID:</div>
-                          <div className="search-criteria-section-left">
-                            <input
-                              onChange={
-                              savingsAcType
-                                ? e => filterListTwo(e.target.value, 'savings', 'accountId')
-                                : e => filterListTwo(e.target.value, 'shares', 'accountId')
-                            }
-                              type="text"
-                            />
-                            <div className="search-criteria-section-title">Client ID:</div>
-                            <input type="text" />
-                          </div>
-                        </div>
-                      ) : null
-                    }
-
-                    {
-                      savingsAcType || sharesAcType ? (
-                        <div className="search-criteria-section-first">
-                          <div className="search-criteria-section-title">Product ID:</div>
-                          <div className="search-criteria-section-left">
-                            <input type="text" />
-                            <div className="search-criteria-section-title">Branch:</div>
-                            <select
-                              name="savingModalBranch"
-                              value={savingModalBranch}
-                              onChange={e => setSavingModalBranch(e.target.value)}
-                            >
-                              <option value="" disabled selected hidden>Select</option>
-                              {
-                                modalBranchList.map(branch => (
-                                  <option key={branch.id} value={branch.id}>
-                                    {branch.name}
-                                  </option>
-                                ))
-                              }
-                            </select>
-                          </div>
-                        </div>
-                      ) : null
-                    }
-
-                    {
-                      gLAcType ? (
-                        <div className="search-criteria-section-first">
-                          <div className="search-criteria-section-title">Account ID:</div>
-                          <div className="search-criteria-section-left">
-                            <input onChange={e => filterGlList(e.target.value, 'accountId')} type="text" />
-                            <div className="search-criteria-section-title">Branch:</div>
-                            <select
-                              name="modalBranch"
-                              value={modalBranch}
-                              onChange={e => setModalBranch(e.target.value)}
-                            >
-                              <option value="" disabled selected hidden>Select</option>
-                              {
-                                modalBranchList.map(branch => (
-                                  <option key={branch.id} value={branch.id}>
-                                    {branch.name}
-                                  </option>
-                                ))
-                              }
-                            </select>
-                          </div>
-                        </div>
-                      ) : null
-                    }
-
-                    <div className="search-criteria-section-first">
-                      <div className="search-criteria-section-title">Account Name:</div>
-                      <div className="search-criteria-section-left d-flex">
-                        <input
-                          onChange={
-                            gLAcType ? e => filterGlList(e.target.value, 'accountName')
-                              : (
-                                savingsAcType ? e => filterListTwo(e.target.value, 'savings', 'accountName')
-                                  : e => filterListTwo(e.target.value, 'shares', 'accountName')
-                              )
-                          }
-                          type="text"
-                          className="w-100"
-                        />
-                      </div>
-                    </div>
-                    <div className="search-creteria-account-details">
-                      <div className="search-creteria-account-details-header mb-2">Account Details:</div>
-                      {
-                      savingsAcType || sharesAcType ? (
-                        <div className="search-creteria-account-details-content-header">
-                          <div className="search-creteria-account-details-content-header-grid">AccountID</div>
-                          <div className="search-creteria-account-details-content-header-grid">ProductID</div>
-                          <div className="search-creteria-account-details-content-header-grid">AccountName</div>
-                        </div>
-                      ) : gLAcType ? (
-                        <div className="search-creteria-account-details-content-header-two">
-                          <div className="search-creteria-account-details-content-header-grid">AccountID</div>
-                          <div className="search-creteria-account-details-content-header-grid">AccountName</div>
-                          <div className="search-creteria-account-details-content-header-grid">BranchID</div>
-                          <div className="search-creteria-account-details-content-header-grid">BranchName</div>
-                        </div>
-                      ) : null
-
-                      }
-                      {
-                        savingsAcType ? (
-                          <div className="search-creteria-account-details-content-outer">
-                            {
-                              sVInnerModalList.map(account => (
-                                <div
-                                  onClick={() => setSelectedAccount(account, 'SV')}
-                                  key={account.controlAccountGL}
-                                  className="search-creteria-account-details-content"
-                                >
-                                  <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
-                                  <div className="search-creteria-account-details-content-grid">{ account.productID }</div>
-                                  <div className="search-creteria-account-details-content-grid">{ account.accountName }</div>
-                                </div>
-                              ))
-                            }
-                          </div>
-                        ) : sharesAcType ? (
-                          <div className="search-creteria-account-details-content-outer">
-                            {
-                              sHInnerModalList.map(account => (
-                                <div
-                                  onClick={() => setSelectedAccount(account, 'SH')}
-                                  key={account.controlAccountGL}
-                                  className="search-creteria-account-details-content"
-                                >
-                                  <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
-                                  <div className="search-creteria-account-details-content-grid">{ account.productID }</div>
-                                  <div className="search-creteria-account-details-content-grid">{ account.accountName }</div>
-                                </div>
-                              ))
-                            }
-                          </div>
-                        ) : gLAcType ? (
-                          <div className="search-creteria-account-details-content-outer">
-                            {
-                              innerModalList.map(account => (
-                                <div
-                                  onClick={() => setSelectedAccount(account, 'GL')}
-                                  key={account.accountID}
-                                  className="search-creteria-account-details-content-two"
-                                >
-                                  <div className="search-creteria-account-details-content-grid">
-                                    {account.accountID}
-                                  </div>
-                                  <div className="search-creteria-account-details-content-grid">
-                                    {
-                                    account.accountName.length < 22
-                                      ? (account.accountName)
-                                      : (`${account.accountName.substring(0, 22)} ...`)
-                                    }
-                                  </div>
-                                  <div className="search-creteria-account-details-content-grid">
-                                    {account.branchID}
-                                  </div>
-                                  <div className="search-creteria-account-details-content-grid">
-                                    {account.branchID === '000' ? 'Head Office'
-                                      : account.branchID === '001' ? 'Nansana'
-                                        : account.branchID === '002' ? 'Rugika' : null}
-                                  </div>
-                                </div>
-                              ))
-                            }
-                          </div>
-                        ) : null
-                      }
-                    </div>
-                  </div>
+                  <Modal
+                    hideModal={hideModal}
+                    savingsAcType={savingsAcType}
+                    sharesAcType={sharesAcType}
+                    filterListTwo={filterListTwo}
+                    savingModalBranch={savingModalBranch}
+                    setSavingModalBranch={setSavingModalBranch}
+                    modalBranchList={modalBranchList}
+                    gLAcType={gLAcType}
+                    filterGlList={filterGlList}
+                    modalBranch={modalBranch}
+                    setModalBranch={setModalBranch}
+                    sVInnerModalList={sVInnerModalList}
+                    setSelectedAccount={setSelectedAccount}
+                    sHInnerModalList={sHInnerModalList}
+                    innerModalList={innerModalList}
+                  />
                   ) : null
               }
               <div className="cash-traction-top-section-grid">
