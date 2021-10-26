@@ -64,58 +64,66 @@ export const CashierDetails = ({ creditSum, debitSum }) => {
   );
 };
 
-export const AccountDetails = () => {
-  console.log('Account details');
-
-  return (
-    <div className="cashier-details-section">
-      <div className="cashier-details-header">Account Details</div>
-      <div className="cashier-details-section-account-details">
-        <div className="cashier-details-section-account-title">
-          <div className="cashier-details-inner-title-lower">Clear Balance:</div>
-          <div className="cashier-details-inner-text-lower">
-            <div className="cashier-details-inner-text-cross-first">0.00</div>
-          </div>
-        </div>
-        <div className="cashier-details-section-account-title">
-          <div className="cashier-details-inner-title-lower">Lien Amount:</div>
-          <div className="cashier-details-inner-text-lower">
-            <div className="cashier-details-inner-text-cross-first">0.00</div>
-          </div>
-        </div>
-        <div className="cashier-details-section-account-title">
-          <div className="cashier-details-inner-title-lower">Frozen Amount:</div>
-          <div className="cashier-details-inner-text-lower">
-            <div className="cashier-details-inner-text-cross-first">0.00</div>
+export const AccountDetails = ({ currentAccount }) => (
+  <div className="cashier-details-section">
+    <div className="cashier-details-header">Account Details</div>
+    <div className="cashier-details-section-account-details">
+      <div className="cashier-details-section-account-title">
+        <div className="cashier-details-inner-title-lower">Clear Balance:</div>
+        <div className="cashier-details-inner-text-lower">
+          <div className="cashier-details-inner-text-cross-first">
+            { currentAccount.clearBalance ? currentAccount.clearBalance : 0}
           </div>
         </div>
       </div>
-      <div className="cashier-details-section-account-details">
-        <div className="cashier-details-section-account-title">
-          <div className="cashier-details-inner-title-lower">Available Bal:</div>
-          <div className="cashier-details-inner-text-lower">
-            <div className="cashier-details-inner-text-cross-first">0.00</div>
-          </div>
-        </div>
-        <div className="cashier-details-section-account-title">
-          <div className="cashier-details-inner-title-lower">UnSupervisedCR:</div>
-          <div className="cashier-details-inner-text-lower">
-            <div className="cashier-details-inner-text-cross-first">0.00</div>
-          </div>
-        </div>
-        <div className="cashier-details-section-account-title">
-          <div className="cashier-details-inner-title-lower">UnSupervisedDR:</div>
-          <div className="cashier-details-inner-text-lower">
-            <div className="cashier-details-inner-text-cross-first">0.00</div>
+      <div className="cashier-details-section-account-title">
+        <div className="cashier-details-inner-title-lower">Lien Amount:</div>
+        <div className="cashier-details-inner-text-lower">
+          <div className="cashier-details-inner-text-cross-first">
+            { currentAccount.lienAmount ? currentAccount.lienAmount : 0}
           </div>
         </div>
       </div>
-      <div className="cashier-details-button-section">
-        <button type="button">Photo and Signature</button>
-        <button type="button">Mandate</button>
-        <button type="button">Transactions</button>
-        <button type="button">Customer Portfolio</button>
+      <div className="cashier-details-section-account-title">
+        <div className="cashier-details-inner-title-lower">Frozen Amount:</div>
+        <div className="cashier-details-inner-text-lower">
+          <div className="cashier-details-inner-text-cross-first">
+            { currentAccount.frozenAmount ? currentAccount.frozenAmount : 0}
+          </div>
+        </div>
       </div>
     </div>
-  );
-};
+    <div className="cashier-details-section-account-details">
+      <div className="cashier-details-section-account-title">
+        <div className="cashier-details-inner-title-lower">Available Bal:</div>
+        <div className="cashier-details-inner-text-lower">
+          <div className="cashier-details-inner-text-cross-first">
+            { currentAccount.balance ? currentAccount.balance : 0}
+          </div>
+        </div>
+      </div>
+      <div className="cashier-details-section-account-title">
+        <div className="cashier-details-inner-title-lower">UnSupervisedCR:</div>
+        <div className="cashier-details-inner-text-lower">
+          <div className="cashier-details-inner-text-cross-first">
+            { currentAccount.unSupervisedCredit ? currentAccount.unSupervisedCredit : 0}
+          </div>
+        </div>
+      </div>
+      <div className="cashier-details-section-account-title">
+        <div className="cashier-details-inner-title-lower">UnSupervisedDR:</div>
+        <div className="cashier-details-inner-text-lower">
+          <div className="cashier-details-inner-text-cross-first">
+            { currentAccount.unSupervisedDebit ? currentAccount.unSupervisedDebit : 0}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="cashier-details-button-section">
+      <button type="button">Photo and Signature</button>
+      <button type="button">Mandate</button>
+      <button type="button">Transactions</button>
+      <button type="button">Customer Portfolio</button>
+    </div>
+  </div>
+);

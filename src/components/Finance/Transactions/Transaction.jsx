@@ -117,8 +117,6 @@ const Transaction = () => {
     }
   }, [cashTransactionList]);
 
-  console.log(creditSum, debitSum);
-
   useEffect(() => {
     if (currentTranObject.length > 0) {
       setCurrentAccount({
@@ -702,7 +700,7 @@ const Transaction = () => {
               </div>
             </div>
             <CashierDetails creditSum={creditSum} debitSum={debitSum} />
-            <AccountDetails />
+            <AccountDetails currentAccount={currentAccount} />
           </div>
         </div>
       </div>
