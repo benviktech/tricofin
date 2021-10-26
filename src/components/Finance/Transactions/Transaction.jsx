@@ -5,12 +5,13 @@
 /* eslint-disable no-restricted-globals */
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
-import { saveTransactions } from '../../../actions/generalLedger';
+import { fectchDailyTransactions, saveTransactions } from '../../../actions/generalLedger';
 import transactionValidator from '../../Validators/Transaction';
+import { CashierDetails, AccountDetails } from './Details';
 
 const initialState = {
   tranTypeID: '',
@@ -52,6 +53,10 @@ const Transaction = () => {
   const [editState, setEditState] = useState(false);
   const [errors, setErrors] = useState({});
   const [userAccount, setUserAccount] = useState({});
+  const [creditSum, setCreditSum] = useState(0);
+  const [debitSum, setDebitSum] = useState(0);
+
+  const cashTransactionList = useSelector(state => state.generalLedgerReducer.cashTransactionList);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionTypes')
@@ -63,6 +68,10 @@ const Transaction = () => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetAccountTypes')
       .then(response => setAccTypes(response?.data))
       .catch(error => console.log(error?.message));
+  }, []);
+
+  useEffect(() => {
+    dispatch(fectchDailyTransactions());
   }, []);
 
   const modalBranchList = [{ id: '000', name: 'Head Office' }, { id: '001', name: 'Nansana' },
@@ -92,9 +101,26 @@ const Transaction = () => {
   }, [currentTranId]);
 
   useEffect(() => {
+    if (cashTransactionList.length > 0) {
+      const totalCredit = cashTransactionList
+        .filter(transaction => transaction.partTranType === 'C'
+        && transaction.tranSerialNo === 1)
+        .reduce((sum, x) => sum + x.tranAmount, 0);
+
+      const totalDebit = cashTransactionList
+        .filter(transaction => transaction.partTranType === 'D'
+        && transaction.tranSerialNo === 1)
+        .reduce((sum, x) => sum + x.tranAmount, 0);
+
+      setCreditSum(totalCredit);
+      setDebitSum(totalDebit);
+    }
+  }, [cashTransactionList]);
+
+  console.log(creditSum, debitSum);
+
+  useEffect(() => {
     if (currentTranObject.length > 0) {
-      console.log(currentTranObject, 'currentTranObject');
-      console.log(currentAccount, 'currentAccount');
       setCurrentAccount({
         ...currentAccount,
         accountID: currentTranObject[0].accountID,
@@ -259,12 +285,13 @@ const Transaction = () => {
     }
   }, [userAccount]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (Object.keys(errors).length === 0) {
       if (editState) {
         console.log(userAccount, 'userAccount update');
       } else {
-        dispatch(saveTransactions(userAccount));
+        await dispatch(saveTransactions(userAccount));
+        setValues(initialState);
       }
     }
   }, [errors]);
@@ -674,110 +701,8 @@ const Transaction = () => {
                 </div>
               </div>
             </div>
-            <div className="cashier-details-section">
-              <div className="cashier-details-header">Cashier Details</div>
-              <div className="cashier-details-section-account-details">
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title">Cash GL A/C:</div>
-                  <div className="cashier-details-inner-text">
-                    <div>0002314530098</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-number-top">TELLER REUBEN</div>
-                <div className="cashier-details-section-account-name" />
-              </div>
-              <div className="cashier-details-section-account-details">
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Total Debit:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                    <div className="cashier-details-inner-text-cross"> + </div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Total Credit:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                    <div className="cashier-details-inner-text-cross"> + </div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Shadow Bal:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-              </div>
-              <div className="cashier-details-section-account-details">
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Opening Balance:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Closing Balance:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Clear Balance:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="cashier-details-section">
-              <div className="cashier-details-header">Account Details</div>
-              <div className="cashier-details-section-account-details">
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Clear Balance:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Lien Amount:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Frozen Amount:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-              </div>
-              <div className="cashier-details-section-account-details">
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">Available Bal:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">UnSupervisedCR:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-                <div className="cashier-details-section-account-title">
-                  <div className="cashier-details-inner-title-lower">UnSupervisedDR:</div>
-                  <div className="cashier-details-inner-text-lower">
-                    <div className="cashier-details-inner-text-cross-first">0.00</div>
-                  </div>
-                </div>
-              </div>
-              <div className="cashier-details-button-section">
-                <button type="button">Photo and Signature</button>
-                <button type="button">Mandate</button>
-                <button type="button">Transactions</button>
-                <button type="button">Customer Portfolio</button>
-              </div>
-            </div>
+            <CashierDetails creditSum={creditSum} debitSum={debitSum} />
+            <AccountDetails />
           </div>
         </div>
       </div>
