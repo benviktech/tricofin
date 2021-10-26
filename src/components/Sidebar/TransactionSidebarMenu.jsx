@@ -3,7 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import {
   SidebarLink,
   SidebarLabel,
@@ -13,27 +13,19 @@ import {
 
 const TransactionSideBarMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
-  const [homeRoute, setHomeRoute] = useState(false);
-  const history = useHistory();
 
   const showSubnav = () => {
     setSubnav(!subnav);
-    setHomeRoute(true);
   };
   const { url } = useRouteMatch();
 
   React.useEffect(() => {
     if (url.split('/')[1] === 'cashregister'
-    || url.split('/')[1] === 'viewtransactions') {
+    || url.split('/')[1] === 'viewtransactions'
+    || url.split('/')[1] === 'transfertransactions') {
       setSubnav(true);
     }
   }, []);
-
-  React.useEffect(() => {
-    if (subnav === false && homeRoute) {
-      history.push('/transactions');
-    }
-  }, [homeRoute]);
 
   return (
     <>
@@ -51,7 +43,8 @@ const TransactionSideBarMenu = ({ item }) => {
       </SidebarLink>
       { (url.split('/')[1] === 'transactions')
       || url.split('/')[1] === 'cashregister'
-      || url.split('/')[1] === 'viewtransactions' ? (
+      || url.split('/')[1] === 'viewtransactions'
+      || url.split('/')[1] === 'transfertransactions' ? (
 
           subnav && item.subNav.map((item, index) => (
             <DropdownLink
