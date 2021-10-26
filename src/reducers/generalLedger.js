@@ -11,6 +11,8 @@ import {
   COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
   FETCH_GL_PARAMETERS,
   UPDATE_GL_PARAMETERS,
+  CASH_TRANSACTION,
+  CASH_TRANSACTION_LIST,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -23,6 +25,7 @@ const initialState = {
   newCopiedMultipleList: [],
   glParametersList: [],
   updatedGlParameter: {},
+  cashTransactionList: [],
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -31,6 +34,20 @@ const generalLedgerReducer = (state = initialState, action) => {
       return {
         ...state,
         subTypeList: action.payload,
+        error: '',
+        loading: false,
+      };
+    case CASH_TRANSACTION:
+      return {
+        ...state,
+        cashTransactionList: [...state.cashTransactionList, action.payload[0]],
+        error: '',
+        loading: false,
+      };
+    case CASH_TRANSACTION_LIST:
+      return {
+        ...state,
+        cashTransactionList: action.payload,
         error: '',
         loading: false,
       };
