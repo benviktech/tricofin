@@ -259,3 +259,8 @@ export const SaveTransactionRequest = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const FetchTransactionRequest = async (method, path) => {
+  const response = await axios[method](`${baseUrl}/${path}`);
+  return response;
+};
