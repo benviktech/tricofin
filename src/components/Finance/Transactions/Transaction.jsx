@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
-import { fectchDailyTransactions, saveTransactions } from '../../../actions/generalLedger';
+import { saveTransactions } from '../../../actions/generalLedger';
 import transactionValidator from '../../Validators/Transaction';
 import { CashierDetails, AccountDetails } from './Details';
 import Modal from './Modal';
 import TransactionForm from './TransactionForm';
+import TransactionRequests from './TransactionRequests';
+import { GLListFilter, SCListFilter, calculateTotal } from './TransactionHelpers';
 
 const initialState = {
   tranTypeID: '',
@@ -32,9 +34,6 @@ const Transaction = () => {
   const [values, setValues] = useState(initialState);
   const [currentAccount, setCurrentAccount] = useState({});
   const [diplayModalState, setDiplayModalState] = useState(false);
-  const [glList, setGlList] = useState([]);
-  const [savingsList, setSavingsList] = useState([]);
-  const [sharesList, setSharesList] = useState([]);
   const [modalBranch, setModalBranch] = useState('');
   const [savingModalBranch, setSavingModalBranch] = useState('');
   const [savingsAcType, setSavingsAcType] = useState(false);
@@ -47,8 +46,6 @@ const Transaction = () => {
   const [savingModalList, setSavingModalList] = useState([]);
   const [sharesModalList, setSharesModalList] = useState([]);
   const [modal, setModal] = useState(false);
-  const [tranTypes, setTranTypes] = useState([]);
-  const [accTypes, setAccTypes] = useState([]);
   const dispatch = useDispatch();
   const [currentTranId, setCurrentTranId] = useState('');
   const [currentTranObject, setCurrentTranObject] = useState({});
@@ -60,24 +57,11 @@ const Transaction = () => {
 
   const cashTransactionList = useSelector(state => state.generalLedgerReducer.cashTransactionList);
 
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionTypes')
-      .then(response => setTranTypes(response?.data))
-      .catch(error => console.log(error?.message));
-  }, []);
+  const {
+    tranTypes, accTypes, modalBranchList,
+    glList, savingsList, sharesList,
+  } = TransactionRequests();
 
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetAccountTypes')
-      .then(response => setAccTypes(response?.data))
-      .catch(error => console.log(error?.message));
-  }, []);
-
-  useEffect(() => {
-    dispatch(fectchDailyTransactions());
-  }, []);
-
-  const modalBranchList = [{ id: '000', name: 'Head Office' }, { id: '001', name: 'Nansana' },
-    { id: '002', name: 'Rugika' }, { id: '004', name: 'All Branches' }];
   const handleChange = e => {
     const { name, value } = e.target;
     setValues({
@@ -104,18 +88,8 @@ const Transaction = () => {
 
   useEffect(() => {
     if (cashTransactionList.length > 0) {
-      const totalCredit = cashTransactionList
-        .filter(transaction => transaction.partTranType === 'C'
-        && transaction.tranSerialNo === 1)
-        .reduce((sum, x) => sum + x.tranAmount, 0);
-
-      const totalDebit = cashTransactionList
-        .filter(transaction => transaction.partTranType === 'D'
-        && transaction.tranSerialNo === 1)
-        .reduce((sum, x) => sum + x.tranAmount, 0);
-
-      setCreditSum(totalCredit);
-      setDebitSum(totalDebit);
+      setCreditSum(calculateTotal(cashTransactionList, 'C'));
+      setDebitSum(calculateTotal(cashTransactionList, 'D'));
     }
   }, [cashTransactionList]);
 
@@ -142,24 +116,6 @@ const Transaction = () => {
       });
     }
   }, [currentTranObject]);
-
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetGeneralLedgers')
-      .then(response => setGlList(response?.data))
-      .catch(error => console.log(error?.message));
-  }, []);
-
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetAccounts/S')
-      .then(response => setSavingsList(response?.data))
-      .catch(error => console.log(error.message));
-  }, []);
-
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetAccounts/C')
-      .then(response => setSharesList(response?.data))
-      .catch(error => console.log(error?.message));
-  }, []);
 
   useEffect(() => {
     if (values.accountId.length > 0) {
@@ -297,45 +253,14 @@ const Transaction = () => {
   }, [errors]);
 
   const filterGlList = (content, text) => {
-    const newModalList = [];
-    let accId = '';
-    glList.forEach(account => {
-      if (text === 'accountId') {
-        accId = account.accountID;
-      }
-      if (text === 'accountName') {
-        accId = account.accountName;
-      }
-      if (accId.length > 0) {
-        if (accId.indexOf(content.toLocaleUpperCase()) !== -1) {
-          newModalList.push(account);
-        }
-      }
-    });
-    const sortedNewModalList = Array.from(new Set(newModalList));
-    setInnerModalList(sortedNewModalList);
+    setInnerModalList(Array.from(new Set(GLListFilter(glList, content, text))));
   };
 
   const filterListTwo = (content, type, text) => {
-    const newModalList = [];
-    let accId = '';
-    (type === 'savings' ? savingsList
-      : type === 'shares' ? sharesList : null).forEach(account => {
-      if (text === 'accountId') { accId = account.accountID; }
-      if (text === 'accountName') { accId = account.accountName; }
-      if (accId.length > 0) {
-        if (accId.indexOf(content.toLocaleUpperCase()) !== -1) {
-          newModalList.push(account);
-        }
-      }
-    });
-    const sortedNewModalList = Array.from(new Set(newModalList));
-    if (type === 'savings') {
-      setSVInnerModalList(sortedNewModalList);
-    }
-    if (type === 'shares') {
-      setSHInnerModalList(sortedNewModalList);
-    }
+    const sortedNewModalList = Array
+      .from(new Set(SCListFilter(savingsList, sharesList, content, type, text)));
+    if (type === 'savings') { setSVInnerModalList(sortedNewModalList); }
+    if (type === 'shares') { setSHInnerModalList(sortedNewModalList); }
   };
 
   return (
