@@ -64,9 +64,13 @@ export const CashierDetails = ({ creditSum, debitSum }) => {
   );
 };
 
-export const AccountDetails = ({ currentAccount }) => (
+export const AccountDetails = ({ compName, currentAccount }) => (
   <div className="cashier-details-section">
-    <div className="cashier-details-header">Account Details</div>
+    {
+      compName === 'Transaction' ? (
+        <div className="cashier-details-header">Account Details</div>
+      ) : null
+    }
     <div className="cashier-details-section-account-details">
       <div className="cashier-details-section-account-title">
         <div className="cashier-details-inner-title-lower">Clear Balance:</div>
@@ -119,11 +123,15 @@ export const AccountDetails = ({ currentAccount }) => (
         </div>
       </div>
     </div>
-    <div className="cashier-details-button-section">
-      <button type="button">Photo and Signature</button>
-      <button type="button">Mandate</button>
-      <button type="button">Transactions</button>
-      <button type="button">Customer Portfolio</button>
-    </div>
+    {
+      compName === 'Transaction' ? (
+        <div className="cashier-details-button-section">
+          <button type="button">Photo and Signature</button>
+          <button type="button">Mandate</button>
+          <button type="button">Transactions</button>
+          <button type="button">Customer Portfolio</button>
+        </div>
+      ) : null
+    }
   </div>
 );

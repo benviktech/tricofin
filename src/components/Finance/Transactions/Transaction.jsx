@@ -15,20 +15,9 @@ import { CashierDetails, AccountDetails } from './Details';
 import Modal from './Modal';
 import TransactionForm from './TransactionForm';
 import TransactionRequests from './TransactionRequests';
-import { GLListFilter, SCListFilter, calculateTotal } from './TransactionHelpers';
-
-const initialState = {
-  tranTypeID: '',
-  accTypeID: '',
-  accountId: '',
-  valueDate: '',
-  receiptNo: '',
-  tranAmount: '',
-  tranRemarks: '',
-  productName: '',
-  productID: '',
-  tranSerialNo: '',
-};
+import {
+  GLListFilter, SCListFilter, calculateTotal, initialState,
+} from './TransactionHelpers';
 
 const Transaction = () => {
   const [values, setValues] = useState(initialState);
@@ -54,6 +43,7 @@ const Transaction = () => {
   const [userAccount, setUserAccount] = useState({});
   const [creditSum, setCreditSum] = useState(0);
   const [debitSum, setDebitSum] = useState(0);
+  const compName = 'Transaction';
 
   const cashTransactionList = useSelector(state => state.generalLedgerReducer.cashTransactionList);
 
@@ -380,9 +370,10 @@ const Transaction = () => {
               currentTranObject={currentTranObject}
               setErrors={setErrors}
               submitCashTransaction={submitCashTransaction}
+              compName={compName}
             />
             <CashierDetails creditSum={creditSum} debitSum={debitSum} />
-            <AccountDetails currentAccount={currentAccount} />
+            <AccountDetails compName={compName} currentAccount={currentAccount} />
           </div>
         </div>
       </div>

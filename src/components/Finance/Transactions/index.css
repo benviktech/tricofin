@@ -467,3 +467,113 @@
   font-size: 20px;
   color: red;
 }
+
+.part-tran-details-section {
+  margin: auto;
+  font-weight: bold;
+}
+
+.part-tran-details-header {
+  font-size: 12px;
+  color: #666;
+  padding: 5px 0 0;
+}
+
+.part-tran-details-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 10px 20px 0;
+  grid-column-gap: 20px;
+}
+
+.total-DR-section label {
+  display: flex;
+  align-items: center;
+}
+
+.total-DR-section-inner {
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.total-button-section {
+  display: flex;
+}
+
+.total-button-section button {
+  border: none;
+  border-radius: 3px;
+  padding: 0 20px;
+  font-size: 12px;
+  font-weight: bold;
+  height: 28px;
+}
+
+.transaction-details-form-section,
+.transaction-details-form-section-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr 1fr 1fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr;
+  grid-column-gap: 2px;
+  font-weight: bold;
+  background-color: #f3f2f1;
+  padding: 2px 2px 0 2px;
+}
+
+.transaction-details-form-section .serial-number-grid,
+.transaction-details-form-section-content .serial-content-grid {
+  background-color: #aeaeae;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  padding: 2px;
+}
+
+.transaction-details-form-section-content .serial-content-grid {
+  background-color: #fff;
+}
+
+.transaction-details-form-section-container {
+  margin-right: 20px;
+}
+
+.transaction-details-form-section-container-header {
+  background-color: #f3f2f1;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 2px;
+  padding: 4px;
+}
+
+.controlled-hight-transaction-details-form-section-content {
+  background-color: #f3f2f1;
+  padding-bottom: 2px;
+  min-height: 60px;
+  overflow-y: auto;
+  height: 65px;
+  cursor: pointer;
+}
+
+.controlled-hight-transaction-details-form-section-content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.lower-transaction-submit-section {
+  display: flex;
+  margin-top: 10px;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.lower-transaction-submit-section button {
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 5px 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #0178D4;
+  color: #fff;
+}

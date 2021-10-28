@@ -33,7 +33,20 @@ export const SCListFilter = (savingsList, sharesList, content, type, text) => {
 export const calculateTotal = (cashTransactionList, type) => {
   const total = cashTransactionList
     .filter(transaction => transaction.partTranType === type
-    && transaction.tranSerialNo === 1)
+    && (transaction.tranSerialNo === 1 || !transaction.tranSerialNo))
     .reduce((sum, x) => sum + x.tranAmount, 0);
   return total;
+};
+
+export const initialState = {
+  tranTypeID: '',
+  accTypeID: '',
+  accountId: '',
+  valueDate: '',
+  receiptNo: '',
+  tranAmount: '',
+  tranRemarks: '',
+  productName: '',
+  productID: '',
+  tranSerialNo: '',
 };

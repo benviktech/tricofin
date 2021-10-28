@@ -6,7 +6,7 @@ import React from 'react';
 const TransactionForm = ({
   values, handleChange, currentAccount,
   editState, currentTranObject, setErrors,
-  submitCashTransaction,
+  submitCashTransaction, compName,
 }) => (
   <div className="cash-transaction-middle-section">
     <div className="left-cash-transaction-middle-section">
@@ -86,13 +86,17 @@ const TransactionForm = ({
         <div className="right-cash-transaction-middle-section-title-remarks">Amount:</div>
         <input name="tranAmount" onChange={handleChange} value={values.tranAmount} type="text" />
       </div>
-      <div className="cash-transaction-buttons-section">
-        <button onClick={submitCashTransaction} type="button">
-          { editState ? 'Edit' : 'Add'}
-        </button>
-        <button onClick={() => setErrors({})} type="button">Cancel</button>
-        <button type="button">Delete</button>
-      </div>
+      {
+        compName === 'Transaction' ? (
+          <div className="cash-transaction-buttons-section">
+            <button onClick={submitCashTransaction} type="button">
+              { editState ? 'Edit' : 'Add'}
+            </button>
+            <button onClick={() => setErrors({})} type="button">Cancel</button>
+            <button type="button">Delete</button>
+          </div>
+        ) : null
+      }
     </div>
   </div>
 );

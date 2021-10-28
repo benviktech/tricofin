@@ -7,7 +7,7 @@ import {
   CopySingleGltoAccounts, CopyMultipleGlsToBranch,
   CloseGLAccountRequest, UpdateGLParametersRequest,
   FetchGLParametersRequest, SaveTransactionRequest,
-  FetchTransactionRequest,
+  FetchTransactionRequest, TransferTransactionRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -23,6 +23,7 @@ export const UPDATE_GL_PARAMETERS = 'UPDATE_GL_PARAMETERS';
 export const FETCH_GL_PARAMETERS = 'FETCH_GL_PARAMETERS';
 export const CASH_TRANSACTION = 'CASH_TRANSACTION';
 export const CASH_TRANSACTION_LIST = 'CASH_TRANSACTION_LIST';
+export const TRANSFER_TRANSACTION = 'TRANSFER_TRANSACTION';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -295,6 +296,17 @@ export const fectchDailyTransactions = () => async dispatch => {
   try {
     const response = await FetchTransactionRequest(method, path);
     dispatch({ type: CASH_TRANSACTION_LIST, payload: response?.data });
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const transferTransaction = data => async dispatch => {
+  const method = 'post';
+  const path = '/api/Finance/SaveTransferTransaction/ILUMU/000';
+  try {
+    const response = await TransferTransactionRequest(method, path, data);
+    dispatch({ type: TRANSFER_TRANSACTION, payload: response?.data });
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
