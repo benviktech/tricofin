@@ -42,6 +42,7 @@ import GeneralLedgerReport from '../Finance/GeneralLedgerReports/GeneralLedgerRe
 import CashRegister from '../Finance/Transactions/CashRegister';
 import ViewTransactions from '../Finance/Transactions/ViewTransaction';
 import TransferTransactions from '../Finance/Transactions/TransferTransaction';
+import TransactionCodes from '../Finance/Transactions/TransactionCodes';
 
 const Router = () => (
   <div className="router-section">
@@ -88,6 +89,7 @@ const Router = () => (
         <Route path="/cashregister" component={CashRegister} />
         <Route path="/viewtransactions" component={ViewTransactions} />
         <Route path="/transfertransactions" component={TransferTransactions} />
+        <Route path="/transactionscodes" component={TransactionCodes} />
       </Switch>
       <Footer />
     </BrowserRouter>
