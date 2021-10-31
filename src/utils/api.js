@@ -269,3 +269,8 @@ export const TransferTransactionRequest = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const SaveTransactionCodeRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
