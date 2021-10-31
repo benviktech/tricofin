@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 import TransactionRequests from './TransactionRequests';
 
 const ViewTransactions = () => {
+  const [transactionCategories, setTransactionCategories] = useState([]);
+  const [transactionSubTypes, setTransactionSubTypes] = useState([]);
   const { modalBranchList } = TransactionRequests();
   const updateModalBranchList = [...modalBranchList, { id: '005', name: 'Operational Branches' }];
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionCategories')
+      .then(response => setTransactionCategories(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionSubTypes')
+      .then(response => setTransactionSubTypes(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
+
+  console.log(transactionCategories, 'transactionCategories');
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -43,18 +59,38 @@ const ViewTransactions = () => {
               </div>
               <div className="login-branch">
                 <div className="login-branch-label">Tran Type:</div>
-                <select>
-                  <option value="VAL">ONE</option>
-                  <option value="VAL">ONE</option>
-                  <option value="VAL">ONE</option>
+                <select
+                  name="post"
+                >
+                  <option value="" disabled selected hidden>Select</option>
+                  {
+                      transactionCategories.map(category => (
+                        <option
+                          key={category.catID}
+                          value={category.catID}
+                        >
+                          {category.category}
+                        </option>
+                      ))
+                    }
                 </select>
               </div>
               <div className="login-branch">
                 <div className="login-branch-label">Sub Type:</div>
-                <select>
-                  <option value="VAL">ONE</option>
-                  <option value="VAL">ONE</option>
-                  <option value="VAL">ONE</option>
+                <select
+                  name="post"
+                >
+                  <option value="" disabled selected hidden>Select</option>
+                  {
+                      transactionSubTypes.map(type => (
+                        <option
+                          key={type.subTypeId}
+                          value={type.subTypeId}
+                        >
+                          {type.subType}
+                        </option>
+                      ))
+                    }
                 </select>
               </div>
             </div>
@@ -77,7 +113,6 @@ const ViewTransactions = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
