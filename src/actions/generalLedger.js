@@ -8,6 +8,7 @@ import {
   CloseGLAccountRequest, UpdateGLParametersRequest,
   FetchGLParametersRequest, SaveTransactionRequest,
   FetchTransactionRequest, TransferTransactionRequest,
+  SaveTransactionCodeRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -307,6 +308,24 @@ export const transferTransaction = data => async dispatch => {
   try {
     const response = await TransferTransactionRequest(method, path, data);
     dispatch({ type: TRANSFER_TRANSACTION, payload: response?.data });
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const postTransactionCode = result => async dispatch => {
+  const method = 'post';
+  const path = '/api/Finance/SaveTransactionCode';
+  const data = {
+    ...result,
+    createdOn: '2021-10-31T13:28:23.634Z',
+    createdBy: 'BENVIK',
+    modifiedOn: '2021-10-31T13:28:23.634Z',
+    modifiedBy: 'BENVIK',
+  };
+  try {
+    const response = await SaveTransactionCodeRequest(method, path, data);
+    console.log(response?.data, 'response');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
