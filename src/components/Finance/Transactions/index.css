@@ -648,6 +648,7 @@
   border: 1px solid #F3F2F1;
   padding: 10px;
   border-radius: 3px;
+  position: relative;
 }
 
 .transaction-codes-main-section,
@@ -844,4 +845,102 @@
   padding: 0 2px 2px;
   margin-top: 10px;
   min-height: 200px;
+}
+
+.transaction-codes-modal {
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+}
+
+.transaction-codes-modal-header-section {
+  background-color: #0178d4;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  color: #fff;
+  position: relative;
+}
+
+.transaction-codes-modal-header-section i {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  font-size: 20px;
+}
+
+.transaction-codes-modal-inputs-inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-column-gap: 10px;
+}
+
+.transaction-codes-modal-inputs-inner {
+  padding: 10px;
+}
+
+.transaction-codes-modal-inputs-label {
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.transaction-codes-modal-grid-outer-top {
+  background-color: #f3f2f1;
+  color: #666;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  justify-content: center;
+  padding: 5px;
+}
+
+.transaction-codes-modal-grid-outer {
+  background-color: #f3f2f1;
+  padding: 2px;
+}
+
+.transaction-codes-modal-grid-header-container,
+.transaction-codes-modal-grid-content-container-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2px;
+}
+
+.transaction-codes-modal-grid-header-container .transaction-codes-modal-grid-header-grid,
+.transaction-codes-modal-grid-content-container-inner .transaction-codes-modal-grid-header-grid {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #AEAEAE;
+  color: #fff;
+}
+
+.transaction-codes-modal-grid-content-container-inner .transaction-codes-modal-grid-header-grid {
+  background-color: #fff;
+  color: #666;
+  margin-top: 2px;
+}
+
+.transaction-codes-modal-grid-content-container {
+  height: 200px;
+  overflow-y: auto;
+}
+
+.transaction-codes-modal-grid-content-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.transaction-codes-modal-grid-content-container-inner {
+  cursor: pointer;
 }
