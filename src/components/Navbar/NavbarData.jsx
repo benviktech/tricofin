@@ -77,7 +77,7 @@ const NavbarData = [
         linkText: 'Transactions',
       },
       {
-        to: '#',
+        to: '/batchtransactions',
         linkText: 'Batch Transactions',
       },
       {
