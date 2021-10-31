@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { postTransactionCode } from '../../../actions/generalLedger';
+import TrCodesModal from './TrCodesModal';
 
 const initialState = {
   tranCode: '',
@@ -21,6 +22,7 @@ const TransactionCodes = () => {
   const [values, setValues] = useState(initialState);
   const [chargeTypes, setChargeTypes] = useState([]);
   const [transactionCodes, setTransactionCodes] = useState([]);
+  const [modal, setModal] = useState(false);
   const [attachTo, setAttachTo] = useState([]);
   const dispatch = useDispatch();
 
@@ -66,6 +68,17 @@ const TransactionCodes = () => {
     dispatch(postTransactionCode(values));
   };
 
+  useEffect(() => {
+    document.addEventListener('keydown', e => {
+      if (e.code === 'F4') { setModal(true); }
+    });
+  });
+
+  const setCurrentCode = data => {
+    setValues({ ...data });
+    setModal(false);
+  };
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -73,6 +86,7 @@ const TransactionCodes = () => {
           <span>Transaction Code Maintenance</span>
         </div>
         <div className="transaction-codes-main-section">
+          { modal && <TrCodesModal setModal={setModal} setCurrentCode={setCurrentCode} />}
           <div className="transaction-codes-main-section-top">
             <div className="transaction-codes-main-section-left">
               <div className="transaction-codes-main-section-top-label">TranCode:</div>
