@@ -8,7 +8,8 @@ import {
   CloseGLAccountRequest, UpdateGLParametersRequest,
   FetchGLParametersRequest, SaveTransactionRequest,
   FetchTransactionRequest, TransferTransactionRequest,
-  SaveTransactionCodeRequest,
+  SaveTransactionCodeRequest, SaveFixedAssetsRequest,
+  UpdateTransactionCodeRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -326,6 +327,45 @@ export const postTransactionCode = result => async dispatch => {
   try {
     const response = await SaveTransactionCodeRequest(method, path, data);
     console.log(response?.data, 'response');
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const editTransactionCode = result => async dispatch => {
+  const method = 'put';
+  const path = '/api/Finance/UpdateTransactionCode';
+  const data = {
+    ...result,
+    createdOn: '2021-10-31T13:28:23.634Z',
+    createdBy: 'BENVIK',
+    modifiedOn: '2021-10-31T13:28:23.634Z',
+    modifiedBy: 'BENVIK',
+  };
+  try {
+    const response = await UpdateTransactionCodeRequest(method, path, data);
+    console.log(response?.data, 'response');
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const saveFixedAssetsPrdt = result => async dispatch => {
+  const method = 'post';
+  const path = '/api/Finance/SaveFixedAssetProduct';
+  const data = {
+    ...result,
+    productID: (result.productID).toUpperCase(),
+    productName: (result.productName).toUpperCase(),
+    createdOn: '2021-03-01T20:58:48.005Z',
+    createdBy: 'ILUMU',
+    modifiedOn: '2021-03-01T20:58:48.005Z',
+    modifiedBy: 'ILUMU',
+  };
+  console.log(data, 'data');
+  try {
+    const response = SaveFixedAssetsRequest(method, path, data);
+    console.log(response?.data, 'response data');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
