@@ -20,7 +20,7 @@ const ViewTransactions = () => {
       .catch(error => console.log(error?.message));
   }, []);
 
-  console.log(transactionCategories, 'transactionCategories');
+  console.log(transactionCategories, 'transactionCategories', transactionSubTypes, 'transactionSubTypes');
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -107,6 +107,17 @@ const ViewTransactions = () => {
                   <div className="transaction-section-content-label">Posted By:</div>
                   <input type="text" />
                 </div>
+              </div>
+            </div>
+            <div className="cash-transaction-list-lower-section">
+              <div className="cash-transaction-list-lower-section-header">
+                <div className="cash-transaction-list-lower-section-grid">TranID</div>
+                <div className="cash-transaction-list-lower-section-grid">LoginBR</div>
+                <div className="cash-transaction-list-lower-section-grid">PostedBy</div>
+                <div className="cash-transaction-list-lower-section-grid">Total Debit</div>
+                <div className="cash-transaction-list-lower-section-grid">Total Credit</div>
+                <div className="cash-transaction-list-lower-section-grid">Flag</div>
+                <div className="cash-transaction-list-lower-section-grid">TranType</div>
               </div>
             </div>
           </div>
