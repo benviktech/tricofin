@@ -23,7 +23,19 @@ const TrCodesModal = ({
       .catch(error => console.log(error?.message));
   }, []);
 
-  return (
+  const systemBranches = [{ setID: '000', setName: 'Head Office' },
+    { setID: '001', setName: 'Nansana' },
+    { setID: '002', setName: 'Rugika' },
+    { setID: 'ALL', setName: 'All Branches' },
+    { setID: 'OPN', setName: 'Operational Branch' }];
+
+  const multiCondition = (cursorPosition === 'control gl' || cursorPosition === 'Accum Drep'
+    || cursorPosition === 'Dep Expense' || cursorPosition === 'Saleoff Loss'
+    || cursorPosition === 'Saleoff Profit');
+
+  return currenTComp === 'Transaction Codes'
+  || (currenTComp === 'Fixed Assets Products' && multiCondition)
+  || (currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID') ? (
     <div className="transaction-codes-modal shadow">
       <div className="transaction-codes-modal-header-section">
         Enter the Search Criteria
@@ -33,14 +45,20 @@ const TrCodesModal = ({
         <div className="transaction-codes-modal-inputs-inner">
           <div className="transaction-codes-modal-inputs-label">
             { currenTComp === 'Transaction Codes' ? 'Tran Code:'
-              : currenTComp === 'Fixed Assets Products' ? 'Product Id:' : null}
+              : currenTComp === 'Fixed Assets Products'
+              && multiCondition ? 'Product Id:'
+                : currenTComp === 'Fixed Assets Products'
+              && cursorPosition === 'Set ID' ? 'Set ID' : null}
           </div>
           <input type="text" />
         </div>
         <div className="transaction-codes-modal-inputs-inner">
           <div className="transaction-codes-modal-inputs-label">
             { currenTComp === 'Transaction Codes' ? 'Tran Naration:'
-              : currenTComp === 'Fixed Assets Products' ? 'Product Name:' : null}
+              : currenTComp === 'Fixed Assets Products'
+              && multiCondition ? 'Product Name:'
+                : currenTComp === 'Fixed Assets Products'
+              && cursorPosition === 'Set ID' ? 'Set Name' : null}
           </div>
           <input type="text" />
         </div>
@@ -48,28 +66,38 @@ const TrCodesModal = ({
       <div className="transaction-codes-modal-grid-outer">
         <div className="transaction-codes-modal-grid-outer-top">
           { currenTComp === 'Transaction Codes' ? 'Transaction Codes:'
-            : currenTComp === 'Fixed Assets Products' ? 'Product Details:' : null}
+            : currenTComp === 'Fixed Assets Products'
+            && multiCondition ? 'Product Details:'
+              : currenTComp === 'Fixed Assets Products'
+            && cursorPosition === 'Set ID' ? 'Branch Set Information' : null}
         </div>
         {
-          cursorPosition === 'control gl'
-          || cursorPosition === 'Accum Drep'
-          || cursorPosition === 'Dep Expense'
-          || cursorPosition === 'Saleoff Loss'
-          || cursorPosition === 'Saleoff Profit' ? (
-            <div className="transaction-codes-modal-grid-header-container-production">
-              <div className="transaction-codes-modal-grid-header-grid">
-                { currenTComp === 'Transaction Codes' ? 'TranCode:'
-                  : currenTComp === 'Fixed Assets Products' ? 'GLID:' : null}
+            multiCondition ? (
+              <div className="transaction-codes-modal-grid-header-container-production">
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Transaction Codes' ? 'TranCode:'
+                    : currenTComp === 'Fixed Assets Products' ? 'GLID:' : null}
+                </div>
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Transaction Codes' ? 'Narration:'
+                    : currenTComp === 'Fixed Assets Products' ? 'GLName:' : null}
+                </div>
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Transaction Codes' ? 'Narration:'
+                    : currenTComp === 'Fixed Assets Products' ? 'GLType:' : null}
+                </div>
               </div>
-              <div className="transaction-codes-modal-grid-header-grid">
-                { currenTComp === 'Transaction Codes' ? 'Narration:'
-                  : currenTComp === 'Fixed Assets Products' ? 'GLName:' : null}
+            ) : cursorPosition === 'Set ID' ? (
+              <div className="transaction-codes-modal-grid-header-container">
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Transaction Codes' ? 'TranCode:'
+                    : currenTComp === 'Fixed Assets Products' ? 'SetID:' : null}
+                </div>
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Transaction Codes' ? 'Narration:'
+                    : currenTComp === 'Fixed Assets Products' ? 'SetName:' : null}
+                </div>
               </div>
-              <div className="transaction-codes-modal-grid-header-grid">
-                { currenTComp === 'Transaction Codes' ? 'Narration:'
-                  : currenTComp === 'Fixed Assets Products' ? 'GLType:' : null}
-              </div>
-            </div>
             ) : (
               <div className="transaction-codes-modal-grid-header-container">
                 <div className="transaction-codes-modal-grid-header-grid">
@@ -85,57 +113,63 @@ const TrCodesModal = ({
         }
         <div className="transaction-codes-modal-grid-content-container">
           {
-                (currenTComp === 'Transaction Codes'
-                  ? transactionCodes
-                  : currenTComp === 'Fixed Assets Products'
-                    ? generalLedgerIds : null).map(code => (
-                  cursorPosition === 'control gl'
-                      || cursorPosition === 'Accum Drep'
-                      || cursorPosition === 'Dep Expense'
-                      || cursorPosition === 'Saleoff Loss'
-                      || cursorPosition === 'Saleoff Profit' ? (
-                        <div
-                          onClick={() => setCurrentCode(code, cursorPosition)}
-                          key={code.tranCode}
-                          className="transaction-codes-modal-grid-content-container-inner-product"
-                        >
-                          <div className="transaction-codes-modal-grid-header-grid">
-                            {currenTComp === 'Transaction Codes' ? code.tranCode
-                              : currenTComp === 'Fixed Assets Products' ? code.glid : null}
-                          </div>
-                          <div className="transaction-codes-modal-grid-header-grid">
-                            {currenTComp === 'Transaction Codes' ? code.narration
-                              : currenTComp === 'Fixed Assets Products'
-                                ? (code.glName.length < 15 ? (code.glName)
-                                  : (`${code.glName.substring(0, 15)} ...`)) : null}
-                          </div>
-                          <div className="transaction-codes-modal-grid-header-grid">
-                            {currenTComp === 'Transaction Codes' ? code.narration
-                              : currenTComp === 'Fixed Assets Products' ? code.glType : null}
-                          </div>
-                        </div>
-                    ) : (
-                      <div
-                        onClick={() => setCurrentCode(code)}
-                        key={code.tranCode}
-                        className="transaction-codes-modal-grid-content-container-inner"
-                      >
-                        <div className="transaction-codes-modal-grid-header-grid">
-                          {currenTComp === 'Transaction Codes' ? code.tranCode
-                            : currenTComp === 'Fixed Assets Products' ? code.glid : null}
-                        </div>
-                        <div className="transaction-codes-modal-grid-header-grid">
-                          {currenTComp === 'Transaction Codes' ? code.narration
-                            : currenTComp === 'Fixed Assets Products' ? code.glName : null}
-                        </div>
+                (currenTComp === 'Transaction Codes' ? transactionCodes
+                  : currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID'
+                    ? systemBranches : currenTComp === 'Fixed Assets Products'
+                  && multiCondition ? generalLedgerIds : []).map(code => (
+                  multiCondition ? (
+                    <div
+                      onClick={() => setCurrentCode(code, cursorPosition)}
+                      key={code.tranCode}
+                      className="transaction-codes-modal-grid-content-container-inner-product"
+                    >
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products' ? code.glid : null}
                       </div>
-                    )
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products'
+                          ? (code.glName.length < 15 ? (code.glName)
+                            : (`${code.glName.substring(0, 15)} ...`)) : null}
+                      </div>
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products' ? code.glType : null}
+                      </div>
+                    </div>
+                  ) : cursorPosition === 'Set ID' ? (
+                    <div
+                      onClick={() => setCurrentCode(code, cursorPosition)}
+                      key={code.setID}
+                      className="transaction-codes-modal-grid-content-container-inner"
+                    >
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products' ? code.setID : null}
+                      </div>
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products' ? code.setName : null}
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => setCurrentCode(code)}
+                      key={code.tranCode}
+                      className="transaction-codes-modal-grid-content-container-inner"
+                    >
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        {currenTComp === 'Transaction Codes' ? code.tranCode
+                          : currenTComp === 'Fixed Assets Products' ? code.glid : null}
+                      </div>
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        {currenTComp === 'Transaction Codes' ? code.narration
+                          : currenTComp === 'Fixed Assets Products' ? code.glName : null}
+                      </div>
+                    </div>
+                  )
                 ))
             }
         </div>
       </div>
     </div>
-  );
+    ) : null;
 };
 
 export default TrCodesModal;
