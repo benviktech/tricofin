@@ -853,6 +853,7 @@
   top: 0;
   right: 0;
   width: 400px;
+  z-index: 4;
 }
 
 .transaction-codes-modal-header-section {
@@ -942,5 +943,44 @@
 }
 
 .transaction-codes-modal-grid-content-container-inner {
+  cursor: pointer;
+}
+
+.cash-transaction-list-lower-section-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 2px;
+  margin-right: 20px;
+}
+
+.cash-transaction-list-lower-section-grid {
+  background-color: #f3f2f1;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.transaction-codes-modal-grid-header-container-production,
+.transaction-codes-modal-grid-content-container-inner-product {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 2px;
+}
+
+.transaction-codes-modal-grid-header-container-production .transaction-codes-modal-grid-header-grid,
+.transaction-codes-modal-grid-content-container-inner-product .transaction-codes-modal-grid-header-grid {
+  background-color: #AEAEAE;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px;
+}
+
+.transaction-codes-modal-grid-content-container-inner-product .transaction-codes-modal-grid-header-grid {
+  background-color: #fff;
+  margin-top: 1px;
   cursor: pointer;
 }
