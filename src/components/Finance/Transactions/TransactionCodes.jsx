@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { postTransactionCode } from '../../../actions/generalLedger';
+import { editTransactionCode, postTransactionCode } from '../../../actions/generalLedger';
 import TrCodesModal from './TrCodesModal';
+import transactionCodesValidator from '../../Validators/TransactionCodes';
 
 const initialState = {
   tranCode: '',
@@ -24,6 +25,9 @@ const TransactionCodes = () => {
   const [transactionCodes, setTransactionCodes] = useState([]);
   const [modal, setModal] = useState(false);
   const [attachTo, setAttachTo] = useState([]);
+  const [addState, setAddState] = useState(false);
+  const [editState, setEditState] = useState(false);
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -64,9 +68,19 @@ const TransactionCodes = () => {
       .catch(error => console.log(error?.message));
   }, []);
 
-  const saveTransactionCode = () => {
-    dispatch(postTransactionCode(values));
-  };
+  const saveTransactionCode = () => setErrors(transactionCodesValidator(values));
+
+  useEffect(async () => {
+    if (Object.keys(errors).length === 0) {
+      if (addState) {
+        await dispatch(postTransactionCode(values));
+      }
+      if (editState) {
+        await dispatch(editTransactionCode(values));
+      }
+      setValues(initialState);
+    }
+  }, [errors]);
 
   useEffect(() => {
     document.addEventListener('keydown', e => {
@@ -74,10 +88,14 @@ const TransactionCodes = () => {
     });
   });
 
-  const setCurrentCode = data => {
-    setValues({ ...data });
-    setModal(false);
+  const setCurrentCode = data => { setValues({ ...data }); setModal(false); };
+
+  const submitState = text => {
+    if (text === 'Add') { setAddState(true); setEditState(false); }
+    if (text === 'Edit') { setAddState(false); setEditState(true); }
   };
+
+  console.log(errors, 'errors');
 
   return (
     <div className="individual-customer-form">
@@ -244,9 +262,16 @@ const TransactionCodes = () => {
             </div>
           </div>
           <div className="transaction-codes-main-section-buttons">
-            <button onClick={saveTransactionCode} type="button">Add</button>
-            <button type="button">Edit</button>
-            <button type="button">Save</button>
+            <button onClick={() => submitState('Add')} type="button">Add</button>
+            <button onClick={() => submitState('Edit')} type="button">Edit</button>
+            <button
+              disabled={!addState && !editState}
+              onClick={saveTransactionCode}
+              className={(!addState && !editState) ? 'bg-info' : ''}
+              type="button"
+            >
+              Save
+            </button>
             <button type="button">Cancel</button>
             <button type="button">Delete</button>
           </div>
