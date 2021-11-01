@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import TrCodesModal from '../Transactions/TrCodesModal';
+import { saveFixedAssetsPrdt } from '../../../actions/generalLedger';
 
 const initialState = {
   productID: '',
@@ -25,6 +27,7 @@ const displayGLs = {
   depExpenseGL: { glName: '', glType: '' },
   saleoffLossGL: { glName: '', glType: '' },
   saleoffProfitGL: { glName: '', glType: '' },
+  setID: { setID: '', setName: '' },
 };
 
 const FixedAssetsPrdt = () => {
@@ -32,6 +35,8 @@ const FixedAssetsPrdt = () => {
   const [displyvalues, setDisplyValues] = useState(displayGLs);
   const [modal, setModal] = useState(false);
   const [cursorPosition, setCursorPosition] = useState('');
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.addEventListener('keydown', e => {
       if (e.code === 'F4') { setModal(true); }
@@ -46,6 +51,7 @@ const FixedAssetsPrdt = () => {
       depExpenseGL: cursorPosition === 'Dep Expense' ? product.glid : values.depExpenseGL,
       saleoffLossGL: cursorPosition === 'Saleoff Loss' ? product.glid : values.saleoffLossGL,
       saleoffProfitGL: cursorPosition === 'Saleoff Profit' ? product.glid : values.saleoffProfitGL,
+      // setID: cursorPosition === 'Set ID' ? product.setID : values.setID,
     });
 
     setDisplyValues({
@@ -55,8 +61,9 @@ const FixedAssetsPrdt = () => {
       depExpenseGL: cursorPosition === 'Dep Expense' ? product : displyvalues.depExpenseGL,
       saleoffLossGL: cursorPosition === 'Saleoff Loss' ? product : displyvalues.saleoffLossGL,
       saleoffProfitGL: cursorPosition === 'Saleoff Profit' ? product : displyvalues.saleoffProfitGL,
-
+      setID: cursorPosition === 'Set ID' ? product : displyvalues.setID,
     });
+    console.log(cursorPosition, 'cursorPosition');
     setModal(false);
   };
 
@@ -76,7 +83,8 @@ const FixedAssetsPrdt = () => {
     });
   };
 
-  const submitData = () => console.log(values, 'vales');
+  const submitData = () => dispatch(saveFixedAssetsPrdt(values));
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -281,9 +289,17 @@ const FixedAssetsPrdt = () => {
               <div className="fixed-assets-product-info-section-lower-grid">
                 <div className="fixed-assets-product-info-section-lower-grid-inner">
                   <div className="fixed-assets-product-info-section-lower-grid-label">Set ID:</div>
-                  <input type="text" />
-                  <div className="fixed-assets-product-info-section-lower-grid-first">First</div>
-                  <div className="fixed-assets-product-info-section-lower-grid-second">12</div>
+                  <input
+                    name="setID"
+                    value={values.setID}
+                    onChange={handleChange}
+                    onFocus={() => setCursorPosition('Set ID')}
+                    type="text"
+                  />
+                  <div className="fixed-assets-product-info-section-lower-grid-first">
+                    {displyvalues.setID.setName}
+                  </div>
+                  <div className="fixed-assets-product-info-section-lower-grid-second">...</div>
                 </div>
               </div>
             </div>
@@ -301,7 +317,6 @@ const FixedAssetsPrdt = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
