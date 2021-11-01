@@ -102,13 +102,10 @@ const TransferTransactions = () => {
   }, [currentTranObject]);
 
   useEffect(() => {
-    if (values.accountId.length > 0) {
-      setModal(true);
-      setDiplayModalState(false);
-    } else {
-      setModal(false);
-    }
-  }, [values.accountId]);
+    document.addEventListener('keydown', e => {
+      if (e.code === 'F4') { setModal(true); setDiplayModalState(false); }
+    });
+  });
 
   useEffect(() => {
     if (values.accTypeID.length > 0) {
