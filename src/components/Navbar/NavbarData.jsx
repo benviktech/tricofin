@@ -85,8 +85,8 @@ const NavbarData = [
         linkText: 'Transaction Codes',
       },
       {
-        to: '#',
-        linkText: 'Fixed Accounts',
+        to: '/fixedassets',
+        linkText: 'Fixed Assets',
       },
     ],
   },
