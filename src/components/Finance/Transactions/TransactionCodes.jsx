@@ -86,7 +86,7 @@ const TransactionCodes = () => {
           <span>Transaction Code Maintenance</span>
         </div>
         <div className="transaction-codes-main-section">
-          { modal && <TrCodesModal setModal={setModal} setCurrentCode={setCurrentCode} />}
+          { modal && <TrCodesModal currenTComp="Transaction Codes" setModal={setModal} setCurrentCode={setCurrentCode} />}
           <div className="transaction-codes-main-section-top">
             <div className="transaction-codes-main-section-left">
               <div className="transaction-codes-main-section-top-label">TranCode:</div>
@@ -96,7 +96,7 @@ const TransactionCodes = () => {
                 onChange={handleChange}
                 type="text"
               />
-              <div className="transaction-codes-main-section-div-section">value</div>
+              <div className="transaction-codes-main-section-div-section">{values.narration}</div>
             </div>
             <div className="transaction-codes-main-section-right">
               <div className="transaction-codes-main-section-right-label">IsSys:</div>
