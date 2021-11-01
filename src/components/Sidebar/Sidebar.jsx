@@ -6,12 +6,14 @@ import {
   GroupMaintenanceData,
   GeneralLedgerData,
   TransactionsData,
+  FixedAssetsData,
 } from './SidebarData';
 import SidebarMenu from './SidebarMenu';
 import NonIndividualSidebarMenu from './NonIdividualSidebarMenu';
 import GroupMaintenanceMenu from './GroupMaintenanceMenu';
 import GeneralLedger from './GeneralLedger';
 import TransactionSideBarMenu from './TransactionSidebarMenu';
+import FixedAssetsMenu from './FixedAssetsMenu';
 
 const SideBar = styled.nav`
     width: 100%
@@ -85,6 +87,20 @@ export const TransactionsSidebar = () => (
         {
           TransactionsData.map(item => (
             <TransactionSideBarMenu item={item} key={item.title} />
+          ))
+        }
+      </SidebarWrap>
+    </SideBar>
+  </div>
+);
+
+export const FixedAssetsSidebar = () => (
+  <div className="sidebar-section">
+    <SideBar>
+      <SidebarWrap>
+        {
+          FixedAssetsData.map(item => (
+            <FixedAssetsMenu item={item} key={item.title} />
           ))
         }
       </SidebarWrap>
