@@ -177,3 +177,29 @@ export const TransactionsData = [
   },
 
 ];
+
+export const FixedAssetsData = [
+  {
+    title: 'Maintaned Fixed Assets',
+    icon: <MdIcons.MdDashboard style={iconStyles} />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: 'Fixed Assets Product',
+        path: '/fixedassetsproduct',
+        icon: <FaIcons.FaFileSignature style={innerIconStyles} />,
+      },
+      {
+        title: 'Disposal/Saleoff',
+        path: '/disposalsaleoff',
+        icon: <HiIcons.HiIdentification style={innerIconStyles} />,
+      },
+      {
+        title: 'Book Asset',
+        path: '/bookasset',
+        icon: <GrIcons.GrContact style={innerIconStyles} />,
+      },
+    ],
+  },
+];
