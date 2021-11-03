@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import TrCodesModal from '../Transactions/TrCodesModal';
-import { saveFixedAssetsPrdt } from '../../../actions/generalLedger';
+import { saveFixedAssetsPrdt, updateFixedAssetsPrdt } from '../../../actions/generalLedger';
 import fixedAssetsPrdtValidator from '../../Validators/FixedAssetsPrdtValidator';
 
 const initialState = {
   productID: '',
   productName: '',
-  accountPrefix: 'string',
+  accountPrefix: '',
   allowCredits: false,
   canGoInCredit: false,
   allowDebits: false,
@@ -38,6 +38,8 @@ const FixedAssetsPrdt = () => {
   const [modal, setModal] = useState(false);
   const [cursorPosition, setCursorPosition] = useState('');
   const [errors, setErrors] = useState({});
+  const [addState, setAddState] = useState(false);
+  const [editState, setEditState] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,6 +68,7 @@ const FixedAssetsPrdt = () => {
       saleoffProfitGL: cursorPosition === 'Saleoff Profit' ? product : displyvalues.saleoffProfitGL,
       setID: cursorPosition === 'Set ID' ? product : displyvalues.setID,
     });
+    if (cursorPosition === 'product id') { setValues({ ...product }); }
     setModal(false);
   };
 
@@ -91,8 +94,11 @@ const FixedAssetsPrdt = () => {
   useEffect(async () => {
     if (Object.keys(errors).length === 1) {
       if (Object.keys(errors).includes('state')) {
-        await dispatch(saveFixedAssetsPrdt(values));
+        if (addState) { await dispatch(saveFixedAssetsPrdt(values)); }
+        if (editState) { await dispatch(updateFixedAssetsPrdt(values)); }
+
         setValues(initialState);
+        setDisplyValues(displayGLs);
       }
     }
   }, [errors]);
@@ -142,7 +148,7 @@ const FixedAssetsPrdt = () => {
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Account Prefix:</div>
-                  <input disabled="true" type="text" />
+                  <input value={values.accountPrefix} disabled="true" type="text" />
                 </div>
               </div>
               { modal
@@ -165,7 +171,7 @@ const FixedAssetsPrdt = () => {
                   <input
                     name="allowCredits"
                     onChange={handleChecked}
-                    value={values.allowCredits}
+                    checked={values.allowCredits}
                     style={{ height: '15px', width: '15px', marginLeft: '10px' }}
                     type="checkbox"
                   />
@@ -175,7 +181,7 @@ const FixedAssetsPrdt = () => {
                   <input
                     name="canGoInCredit"
                     onChange={handleChecked}
-                    value={values.canGoInCredit}
+                    checked={values.canGoInCredit}
                     style={{ height: '15px', width: '15px', marginLeft: '10px' }}
                     type="checkbox"
                   />
@@ -185,7 +191,7 @@ const FixedAssetsPrdt = () => {
                   <input
                     name="allowDebits"
                     onChange={handleChecked}
-                    value={values.allowDebits}
+                    checked={values.allowDebits}
                     style={{ height: '15px', width: '15px', marginLeft: '10px' }}
                     type="checkbox"
                   />
@@ -195,7 +201,7 @@ const FixedAssetsPrdt = () => {
                   <input
                     name="canGoInDebit"
                     onChange={handleChecked}
-                    value={values.canGoInDebit}
+                    checked={values.canGoInDebit}
                     style={{ height: '15px', width: '15px', marginLeft: '10px' }}
                     type="checkbox"
                   />
@@ -326,9 +332,16 @@ const FixedAssetsPrdt = () => {
             <div className="fixed-assets-product-info-section">
               <div className="fixed-assets-product-info-section-button">
                 <button type="button">Supervise</button>
-                <button type="button">Add</button>
-                <button type="button">Edit</button>
-                <button onClick={submitData} type="button">Save</button>
+                <button onClick={() => setAddState(true)} type="button">Add</button>
+                <button onClick={() => setEditState(true)} type="button">Edit</button>
+                <button
+                  disabled={!addState && !editState}
+                  className={!addState && !editState ? 'btn btn-info' : ''}
+                  onClick={submitData}
+                  type="button"
+                >
+                  Save
+                </button>
                 <button onClick={cancelSubmit} type="button">Cancel</button>
                 <button type="button">Delete</button>
               </div>
