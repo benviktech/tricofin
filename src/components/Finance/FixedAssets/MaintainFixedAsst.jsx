@@ -121,11 +121,7 @@ const MaintainFixedAsset = () => {
                 </div>
                 <div className="fixed-assets-details-info-section-first-two">
                   <div className="fixed-assets-details-info-section-label">Purchased On:</div>
-                  <select>
-                    <option value="VAL">VAL</option>
-                    <option value="VAL">VAL</option>
-                    <option value="VAL">VAL</option>
-                  </select>
+                  <input type="date" />
                 </div>
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Amount to Depreciate:</div>
@@ -133,7 +129,7 @@ const MaintainFixedAsset = () => {
                     <input type="text" />
                     <div className="fixed-assets-details-info-section-input-inner-two">
                       <div className="fixed-assets-details-info-section-input-inner-div">Depreciation Form:</div>
-                      <input type="text" />
+                      <input type="date" />
                     </div>
                   </div>
                 </div>
