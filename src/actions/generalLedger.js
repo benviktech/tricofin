@@ -365,7 +365,9 @@ export const saveFixedAssetsPrdt = result => async dispatch => {
   console.log(data, 'data');
   try {
     const response = SaveFixedAssetsRequest(method, path, data);
-    console.log(response?.data, 'response data');
+    Promise.resolve(response).then(
+      result => console.log(result?.data, 'response data'),
+    );
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
