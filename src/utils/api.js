@@ -284,3 +284,8 @@ export const UpdateTransactionCodeRequest = async (method, path, data) => {
   const response = await axios[method](`${baseUrl}/${path}`, data);
   return response;
 };
+
+export const UpdateFixedAssetsRequest = async (method, path, data) => {
+  const response = await axios[method](`${baseUrl}/${path}`, data);
+  return response;
+};
