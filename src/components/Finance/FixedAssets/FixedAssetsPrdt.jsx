@@ -4,6 +4,7 @@ import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import TrCodesModal from '../Transactions/TrCodesModal';
 import { saveFixedAssetsPrdt } from '../../../actions/generalLedger';
+import fixedAssetsPrdtValidator from '../../Validators/FixedAssetsPrdtValidator';
 
 const initialState = {
   productID: '',
@@ -19,6 +20,7 @@ const initialState = {
   saleoffLossGL: '',
   saleoffProfitGL: '',
   isDeleted: false,
+  setID: '',
 };
 
 const displayGLs = {
@@ -35,6 +37,7 @@ const FixedAssetsPrdt = () => {
   const [displyvalues, setDisplyValues] = useState(displayGLs);
   const [modal, setModal] = useState(false);
   const [cursorPosition, setCursorPosition] = useState('');
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,7 +54,7 @@ const FixedAssetsPrdt = () => {
       depExpenseGL: cursorPosition === 'Dep Expense' ? product.glid : values.depExpenseGL,
       saleoffLossGL: cursorPosition === 'Saleoff Loss' ? product.glid : values.saleoffLossGL,
       saleoffProfitGL: cursorPosition === 'Saleoff Profit' ? product.glid : values.saleoffProfitGL,
-      // setID: cursorPosition === 'Set ID' ? product.setID : values.setID,
+      setID: cursorPosition === 'Set ID' ? product.setID : values.setID,
     });
 
     setDisplyValues({
@@ -63,7 +66,6 @@ const FixedAssetsPrdt = () => {
       saleoffProfitGL: cursorPosition === 'Saleoff Profit' ? product : displyvalues.saleoffProfitGL,
       setID: cursorPosition === 'Set ID' ? product : displyvalues.setID,
     });
-    console.log(cursorPosition, 'cursorPosition');
     setModal(false);
   };
 
@@ -83,7 +85,17 @@ const FixedAssetsPrdt = () => {
     });
   };
 
-  const submitData = () => dispatch(saveFixedAssetsPrdt(values));
+  const submitData = () => setErrors(fixedAssetsPrdtValidator(values, 'save'));
+  const cancelSubmit = () => setErrors({});
+
+  useEffect(async () => {
+    if (Object.keys(errors).length === 1) {
+      if (Object.keys(errors).includes('state')) {
+        await dispatch(saveFixedAssetsPrdt(values));
+        setValues(initialState);
+      }
+    }
+  }, [errors]);
 
   return (
     <div className="individual-customer-form">
@@ -106,7 +118,7 @@ const FixedAssetsPrdt = () => {
               <div className="fixed-assets-product-info-section-header">
                 Product Info
               </div>
-              <div className="fixed-assets-product-info-section-content">
+              <div className="fixed-assets-product-info-section-content mb-2">
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Product ID:</div>
                   <input
@@ -116,6 +128,7 @@ const FixedAssetsPrdt = () => {
                     onFocus={() => setCursorPosition('product id')}
                     type="text"
                   />
+                  {errors.productID && <span className="error-span">{ errors.productID }</span>}
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Product Name:</div>
@@ -125,10 +138,11 @@ const FixedAssetsPrdt = () => {
                     onChange={handleChange}
                     type="text"
                   />
+                  { errors.productName && <span className="error-span">{ errors.productName }</span>}
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Account Prefix:</div>
-                  <input type="text" />
+                  <input disabled="true" type="text" />
                 </div>
               </div>
               { modal
@@ -208,6 +222,7 @@ const FixedAssetsPrdt = () => {
                   <div className="fixed-assets-product-info-section-lower-grid-second">
                     {displyvalues.controlAccountGL.glType}
                   </div>
+                  { errors.controlAccountGL && <span className="error-span">{ errors.controlAccountGL}</span>}
                 </div>
                 <div className="fixed-assets-product-info-section-lower-grid-inner">
                   <div className="fixed-assets-product-info-section-lower-grid-label">Accum Drep GL:</div>
@@ -224,6 +239,7 @@ const FixedAssetsPrdt = () => {
                   <div className="fixed-assets-product-info-section-lower-grid-second">
                     {displyvalues.accumDepGL.glType}
                   </div>
+                  { errors.accumDepGL && <span className="error-span">{errors.accumDepGL}</span>}
                 </div>
                 <div className="fixed-assets-product-info-section-lower-grid-inner">
                   <div className="fixed-assets-product-info-section-lower-grid-label">Dep Expense GL:</div>
@@ -240,6 +256,7 @@ const FixedAssetsPrdt = () => {
                   <div className="fixed-assets-product-info-section-lower-grid-second">
                     {displyvalues.depExpenseGL.glType}
                   </div>
+                  {errors.depExpenseGL && <span className="error-span">{ errors.depExpenseGL }</span>}
                 </div>
               </div>
             </div>
@@ -263,6 +280,7 @@ const FixedAssetsPrdt = () => {
                   <div className="fixed-assets-product-info-section-lower-grid-second">
                     {displyvalues.saleoffLossGL.glType}
                   </div>
+                  { errors.saleoffLossGL && <span className="error-span">{ errors.saleoffLossGL }</span>}
                 </div>
                 <div className="fixed-assets-product-info-section-lower-grid-inner">
                   <div className="fixed-assets-product-info-section-lower-grid-label">Saleoff Profit GL:</div>
@@ -279,6 +297,7 @@ const FixedAssetsPrdt = () => {
                   <div className="fixed-assets-product-info-section-lower-grid-second">
                     {displyvalues.saleoffProfitGL.glType}
                   </div>
+                  {errors.saleoffProfitGL && <span className="error-span">{ errors.saleoffProfitGL }</span>}
                 </div>
               </div>
             </div>
@@ -300,6 +319,7 @@ const FixedAssetsPrdt = () => {
                     {displyvalues.setID.setName}
                   </div>
                   <div className="fixed-assets-product-info-section-lower-grid-second">...</div>
+                  { errors.setID && <span className="error-span">{ errors.setID }</span>}
                 </div>
               </div>
             </div>
@@ -309,7 +329,7 @@ const FixedAssetsPrdt = () => {
                 <button type="button">Add</button>
                 <button type="button">Edit</button>
                 <button onClick={submitData} type="button">Save</button>
-                <button type="button">Cancel</button>
+                <button onClick={cancelSubmit} type="button">Cancel</button>
                 <button type="button">Delete</button>
               </div>
             </div>
