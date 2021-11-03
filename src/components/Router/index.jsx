@@ -46,6 +46,7 @@ import TransactionCodes from '../Finance/Transactions/TransactionCodes';
 import BatchTransactions from '../Finance/Transactions/BatchTransactions';
 import MaintainFixedAsset from '../Finance/FixedAssets/MaintainFixedAsst';
 import FixedAssetsPrdt from '../Finance/FixedAssets/FixedAssetsPrdt';
+import BookAssets from '../Finance/FixedAssets/BookAssets';
 
 const Router = () => (
   <div className="router-section">
@@ -96,6 +97,7 @@ const Router = () => (
         <Route path="/batchtransactions" component={BatchTransactions} />
         <Route path="/fixedassets" component={MaintainFixedAsset} />
         <Route path="/fixedassetsproduct" component={FixedAssetsPrdt} />
+        <Route path="/bookasset" component={BookAssets} />
       </Switch>
       <Footer />
     </BrowserRouter>
