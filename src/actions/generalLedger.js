@@ -9,7 +9,7 @@ import {
   FetchGLParametersRequest, SaveTransactionRequest,
   FetchTransactionRequest, TransferTransactionRequest,
   SaveTransactionCodeRequest, SaveFixedAssetsRequest,
-  UpdateTransactionCodeRequest,
+  UpdateTransactionCodeRequest, UpdateFixedAssetsRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -365,6 +365,28 @@ export const saveFixedAssetsPrdt = result => async dispatch => {
   console.log(data, 'data');
   try {
     const response = SaveFixedAssetsRequest(method, path, data);
+    Promise.resolve(response).then(
+      result => console.log(result?.data, 'response data'),
+    );
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const updateFixedAssetsPrdt = result => async dispatch => {
+  const method = 'put';
+  const path = '/api/Finance/UpdateFixedAssetProduct';
+  const data = {
+    ...result,
+    productID: (result.productID).toUpperCase(),
+    productName: (result.productName).toUpperCase(),
+    createdOn: '2021-03-01T20:58:48.005Z',
+    createdBy: 'ILUMU',
+    modifiedOn: '2021-03-01T20:58:48.005Z',
+    modifiedBy: 'ILUMU',
+  };
+  try {
+    const response = UpdateFixedAssetsRequest(method, path, data);
     Promise.resolve(response).then(
       result => console.log(result?.data, 'response data'),
     );
