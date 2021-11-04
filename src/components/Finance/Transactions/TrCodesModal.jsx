@@ -44,6 +44,7 @@ const TrCodesModal = ({
   return currenTComp === 'Transaction Codes'
   || (currenTComp === 'Fixed Assets Products' && multiCondition)
   || (currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID')
+  || (currenTComp === 'Fixed Assets Products' && cursorPosition === 'branch id')
   || (currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id') ? (
     <div className="transaction-codes-modal shadow">
       <div className="transaction-codes-modal-header-section">
@@ -59,7 +60,9 @@ const TrCodesModal = ({
                 : currenTComp === 'Fixed Assets Products'
               && cursorPosition === 'Set ID' ? 'Set ID'
                   : currenTComp === 'Fixed Assets Products'
-              && cursorPosition === 'product id' ? 'Product ID' : null }
+              && cursorPosition === 'product id' ? 'Product ID'
+                    : currenTComp === 'Fixed Assets Products'
+              && cursorPosition === 'branch id' ? 'Branch ID' : null }
           </div>
           <input type="text" />
         </div>
@@ -71,7 +74,9 @@ const TrCodesModal = ({
                 : currenTComp === 'Fixed Assets Products'
               && cursorPosition === 'Set ID' ? 'Set Name'
                   : currenTComp === 'Fixed Assets Products'
-              && cursorPosition === 'product id' ? 'Product Name' : null }
+              && cursorPosition === 'product id' ? 'Product Name'
+                    : currenTComp === 'Fixed Assets Products'
+              && cursorPosition === 'branch id' ? 'Branch Name' : null }
           </div>
           <input type="text" />
         </div>
@@ -84,7 +89,9 @@ const TrCodesModal = ({
               : currenTComp === 'Fixed Assets Products'
             && cursorPosition === 'Set ID' ? 'Branch Set Information'
                 : currenTComp === 'Fixed Assets Products'
-            && cursorPosition === 'product id' ? 'Product Details' : null}
+            && cursorPosition === 'product id' ? 'Product Details'
+                  : currenTComp === 'Fixed Assets Products'
+            && cursorPosition === 'branch id' ? 'Branch Information' : null}
         </div>
         {
             multiCondition ? (
@@ -113,6 +120,15 @@ const TrCodesModal = ({
                     : currenTComp === 'Fixed Assets Products' ? 'SetName:' : null}
                 </div>
               </div>
+            ) : cursorPosition === 'branch id' ? (
+              <div className="transaction-codes-modal-grid-header-container">
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Fixed Assets Products' ? 'BranchID:' : null}
+                </div>
+                <div className="transaction-codes-modal-grid-header-grid">
+                  { currenTComp === 'Fixed Assets Products' ? 'BranchName:' : null}
+                </div>
+              </div>
             ) : (
               <div className="transaction-codes-modal-grid-header-container">
                 <div className="transaction-codes-modal-grid-header-grid">
@@ -130,9 +146,11 @@ const TrCodesModal = ({
           {
                 (currenTComp === 'Transaction Codes' ? transactionCodes
                   : currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID' ? systemBranches
-                    : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id' ? fixedAssetsPrdt
-                      : currenTComp === 'Fixed Assets Products' && multiCondition ? generalLedgerIds
-                        : []).map(code => (
+                    : currenTComp === 'Fixed Assets Products' && cursorPosition === 'branch id'
+                      ? systemBranches.splice(0, 3)
+                      : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id' ? fixedAssetsPrdt
+                        : currenTComp === 'Fixed Assets Products' && multiCondition ? generalLedgerIds
+                          : []).map(code => (
                   multiCondition ? (
                     <div
                       onClick={() => setCurrentCode(code, cursorPosition)}
@@ -155,6 +173,19 @@ const TrCodesModal = ({
                     <div
                       onClick={() => setCurrentCode(code, cursorPosition)}
                       key={code.setID}
+                      className="transaction-codes-modal-grid-content-container-inner"
+                    >
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products' ? code.setID : null}
+                      </div>
+                      <div className="transaction-codes-modal-grid-header-grid">
+                        { currenTComp === 'Fixed Assets Products' ? code.setName : null}
+                      </div>
+                    </div>
+                  ) : cursorPosition === 'branch id' ? (
+                    <div
+                      onClick={() => setCurrentCode(code, cursorPosition)}
+                      key={code.tranCode}
                       className="transaction-codes-modal-grid-content-container-inner"
                     >
                       <div className="transaction-codes-modal-grid-header-grid">

@@ -36,9 +36,9 @@ const MaintainFixedAsset = () => {
   const [depMethods, setDepMethods] = useState([]);
   const [modal, setModal] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
-  const [calculationMthds, setCalculationMthds] = useState([]);
   const [cursorPosition, setCursorPosition] = useState('');
   const [product, setProduct] = useState({});
+  const [branch, setBranch] = useState({});
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemDepreciationMethods')
@@ -50,12 +50,6 @@ const MaintainFixedAsset = () => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSuppliers')
       .then(response => setSuppliers(response?.data))
       .catch(error => error.message);
-  }, []);
-
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemCalculationMethods')
-      .then(response => setCalculationMthds(response?.data))
-      .catch(error => console.log(error.message));
   }, []);
 
   const handleChange = e => {
@@ -83,12 +77,12 @@ const MaintainFixedAsset = () => {
     });
   });
 
-  const setCurrentCode = product => {
-    setProduct(product);
+  const setCurrentCode = (product, cursorPosition) => {
+    if (cursorPosition === 'product id') { setProduct(product); }
+    if (cursorPosition === 'branch id') { setBranch(product); }
     setModal(false);
   };
 
-  console.log(calculationMthds, 'calculationMthds');
   const saveFixedAsset = () => console.log(values, 'values');
 
   return (
@@ -123,19 +117,11 @@ const MaintainFixedAsset = () => {
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Account Prefix:</div>
-                  <input
-                    disabled="true"
-                    value={product.accountPrefix}
-                    type="text"
-                  />
+                  <input disabled="true" value={product.accountPrefix} type="text" />
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Product Name:</div>
-                  <input
-                    value={product.productName}
-                    disabled="true"
-                    type="text"
-                  />
+                  <input value={product.productName} disabled="true" type="text" />
                 </div>
               </div>
               { modal
@@ -156,8 +142,14 @@ const MaintainFixedAsset = () => {
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Branch:</div>
                   <div className="fixed-assets-details-info-section-input">
-                    <input type="text" />
-                    <div className="fixed-assets-details-info-section-input-inner">BENVIK</div>
+                    <input
+                      onFocus={() => setCursorPosition('branch id')}
+                      value={branch.setID && branch.setID}
+                      type="text"
+                    />
+                    <div className="fixed-assets-details-info-section-input-inner">
+                      { branch.setName && branch.setName }
+                    </div>
                   </div>
                 </div>
                 <div className="fixed-assets-details-info-section-first-two">
