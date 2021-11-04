@@ -52,10 +52,7 @@ const ViewTransactions = () => {
 
   useEffect(() => {
     axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/${detailedAccount}`)
-      .then(response => {
-        setCurrentTranObject(response?.data);
-        console.log(response?.data, 'response data');
-      })
+      .then(response => setCurrentTranObject(response?.data))
       .catch(error => console.log(error?.message));
   }, [detailedAccount]);
 
@@ -171,7 +168,10 @@ const ViewTransactions = () => {
                       key={item.tranID}
                       className="cash-transaction-list-lower-section-header"
                     >
-                      <div className="cash-transaction-list-lower-section-grid">{item.tranID}</div>
+                      <div className="cash-transaction-list-lower-section-grid">
+                        <input className="mr-2" type="checkbox" style={{ width: '15px', height: '15px' }} />
+                        {item.tranID}
+                      </div>
                       <div className="cash-transaction-list-lower-section-grid">{item.loginBranch}</div>
                       <div className="cash-transaction-list-lower-section-grid">{item.postedBy}</div>
                       <div className="cash-transaction-list-lower-section-grid">{item.totalDebit}</div>
