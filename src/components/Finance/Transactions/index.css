@@ -646,7 +646,7 @@
 }
 
 .transaction-codes-main-section {
-  border: 1px solid #F3F2F1;
+  border: 1px solid #f3f2f1;
   padding: 10px;
   border-radius: 3px;
   position: relative;
@@ -822,7 +822,7 @@
 }
 
 .part-tran-details-content-bulk-transaction-bottom {
-  background-color: #F3F2F1;
+  background-color: #f3f2f1;
   cursor: pointer;
 }
 
@@ -838,7 +838,7 @@
   justify-content: center;
   font-size: 12px;
   font-weight: bold;
-  background-color: #AEAEAE;
+  background-color: #aeaeae;
   margin-top: 2px;
 }
 
@@ -923,7 +923,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #AEAEAE;
+  background-color: #aeaeae;
   color: #fff;
 }
 
@@ -947,20 +947,42 @@
   cursor: pointer;
 }
 
+.cash-transaction-list-lower-section {
+  margin-right: 20px;
+  padding: 2px;
+  background-color: #f3f2f1;
+}
+
 .cash-transaction-list-lower-section-header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 2px;
-  margin-right: 20px;
 }
 
 .cash-transaction-list-lower-section-grid {
-  background-color: #f3f2f1;
+  background-color: #aeaeae;
   font-size: 12px;
   font-weight: bold;
   display: flex;
   justify-content: center;
   padding: 5px;
+}
+
+.cash-transaction-list-lower-section-content-container {
+  height: 90px;
+  cursor: pointer;
+  background-color: #f3f2f1;
+  overflow-y: auto;
+}
+
+.cash-transaction-list-lower-section-content-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.cash-transaction-list-lower-section-content-container .cash-transaction-list-lower-section-grid {
+  background-color: #fff;
+  margin-top: 2px;
 }
 
 .transaction-codes-modal-grid-header-container-production,
@@ -972,7 +994,7 @@
 
 .transaction-codes-modal-grid-header-container-production .transaction-codes-modal-grid-header-grid,
 .transaction-codes-modal-grid-content-container-inner-product .transaction-codes-modal-grid-header-grid {
-  background-color: #AEAEAE;
+  background-color: #aeaeae;
   display: flex;
   justify-content: center;
   font-size: 12px;
@@ -984,4 +1006,50 @@
   background-color: #fff;
   margin-top: 1px;
   cursor: pointer;
+}
+
+.bottom-transaction-details-table {
+  margin-right: 20px;
+  background-color: #f3f2f1;
+}
+
+.bottom-transaction-details-table-header {
+  color: #666;
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.bottom-transaction-details-table-header-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 2px;
+  background-color: #fff;
+  padding: 0 2px 2px;
+}
+
+.bottom-transaction-details-table-header-grid-content {
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #aeaeae;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.credit-or-debit-header-section {
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.debit-credit-inner {
+  background-color: #f3f2f1;
 }
