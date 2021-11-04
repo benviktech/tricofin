@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import BehindScene from './BehindScene';
+import TrCodesModal from '../Transactions/TrCodesModal';
 
 const initialState = {
   accountID: '',
@@ -33,8 +34,11 @@ const initialState = {
 const MaintainFixedAsset = () => {
   const [values, setValues] = useState(initialState);
   const [depMethods, setDepMethods] = useState([]);
+  const [modal, setModal] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
   const [calculationMthds, setCalculationMthds] = useState([]);
+  const [cursorPosition, setCursorPosition] = useState('');
+  const [product, setProduct] = useState({});
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemDepreciationMethods')
@@ -73,6 +77,17 @@ const MaintainFixedAsset = () => {
     }
   }, [values.costPrice, values.residualValue]);
 
+  useEffect(() => {
+    document.addEventListener('keydown', e => {
+      if (e.code === 'F4') { setModal(true); }
+    });
+  });
+
+  const setCurrentCode = product => {
+    setProduct(product);
+    setModal(false);
+  };
+
   console.log(calculationMthds, 'calculationMthds');
   const saveFixedAsset = () => console.log(values, 'values');
 
@@ -100,17 +115,38 @@ const MaintainFixedAsset = () => {
               <div className="fixed-assets-product-info-section-content">
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Product ID:</div>
-                  <input type="text" />
+                  <input
+                    value={product.productID}
+                    onFocus={() => setCursorPosition('product id')}
+                    type="text"
+                  />
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Account Prefix:</div>
-                  <input type="text" />
+                  <input
+                    disabled="true"
+                    value={product.accountPrefix}
+                    type="text"
+                  />
                 </div>
                 <div className="fixed-assets-product-info-section-first">
                   <div className="fixed-assets-product-info-section-label">Product Name:</div>
-                  <input type="text" />
+                  <input
+                    value={product.productName}
+                    disabled="true"
+                    type="text"
+                  />
                 </div>
               </div>
+              { modal
+              && (
+              <TrCodesModal
+                currenTComp="Fixed Assets Products"
+                setModal={setModal}
+                setCurrentCode={setCurrentCode}
+                cursorPosition={cursorPosition}
+              />
+              )}
             </div>
             <div className="fixed-assets-product-info-section">
               <div className="fixed-assets-product-info-section-header">
