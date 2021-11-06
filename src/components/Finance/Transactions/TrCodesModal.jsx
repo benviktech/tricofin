@@ -5,6 +5,13 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { AssestsPrdFilter } from './TransactionHelpers';
+
+const branchListing = [{ setID: '000', setName: 'Head Office' },
+  { setID: '001', setName: 'Nansana' },
+  { setID: '002', setName: 'Rugika' },
+  { setID: 'ALL', setName: 'All Branches' },
+  { setID: 'OPN', setName: 'Operational Branch' }];
 
 const TrCodesModal = ({
   setModal, setCurrentCode, currenTComp, cursorPosition,
@@ -12,6 +19,10 @@ const TrCodesModal = ({
   const [transactionCodes, setTransactionCodes] = useState([]);
   const [generalLedgerIds, setGeneralLedgerIds] = useState([]);
   const [fixedAssetsPrdt, setFixedAssetsPrdt] = useState([]);
+  const [systemBranches, setSystemBranches] = useState(branchListing);
+  const [transactionCodesUpdate, setTransactionCodesUpdate] = useState([]);
+  const [generalLedgerIdsUpdate, setGeneralLedgerIdsUpdate] = useState([]);
+  const [fixedAssetsPrdtUpdate, setFixedAssetsPrdtUpdate] = useState([]);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/Finance/GetFixedAssetProducts')
@@ -31,15 +42,45 @@ const TrCodesModal = ({
       .catch(error => console.log(error?.message));
   }, []);
 
-  const systemBranches = [{ setID: '000', setName: 'Head Office' },
-    { setID: '001', setName: 'Nansana' },
-    { setID: '002', setName: 'Rugika' },
-    { setID: 'ALL', setName: 'All Branches' },
-    { setID: 'OPN', setName: 'Operational Branch' }];
-
   const multiCondition = (cursorPosition === 'control gl' || cursorPosition === 'Accum Drep'
     || cursorPosition === 'Dep Expense' || cursorPosition === 'Saleoff Loss'
     || cursorPosition === 'Saleoff Profit');
+
+  const FilterData = (list, value, cursorPosition, text) => {
+    const sortedNewModalList = Array
+      .from(new Set(AssestsPrdFilter(list, value, cursorPosition, text)));
+    if (currenTComp === 'Transaction Codes') {
+      setTransactionCodesUpdate(sortedNewModalList);
+    }
+    if (currenTComp === 'Fixed Assets Products'
+    && (cursorPosition === 'Set ID' || cursorPosition === 'branch id')) {
+      setSystemBranches(sortedNewModalList);
+    }
+    if (currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id') {
+      setFixedAssetsPrdtUpdate(sortedNewModalList);
+    }
+    if (currenTComp === 'Fixed Assets Products' && multiCondition) {
+      setGeneralLedgerIdsUpdate(sortedNewModalList);
+    }
+  };
+
+  useEffect(() => {
+    if (transactionCodes.length > 0) {
+      setTransactionCodesUpdate(transactionCodes);
+    }
+  }, [transactionCodes]);
+
+  useEffect(() => {
+    if (generalLedgerIds.length > 0) {
+      setGeneralLedgerIdsUpdate(generalLedgerIds);
+    }
+  }, [generalLedgerIds]);
+
+  useEffect(() => {
+    if (fixedAssetsPrdt.length > 0) {
+      setFixedAssetsPrdtUpdate(fixedAssetsPrdt);
+    }
+  }, [fixedAssetsPrdt]);
 
   return currenTComp === 'Transaction Codes'
   || (currenTComp === 'Fixed Assets Products' && multiCondition)
@@ -64,7 +105,22 @@ const TrCodesModal = ({
                     : currenTComp === 'Fixed Assets Products'
               && cursorPosition === 'branch id' ? 'Branch ID' : null }
           </div>
-          <input type="text" />
+          <input
+            onChange={
+            currenTComp === 'Transaction Codes'
+              ? e => FilterData(transactionCodes, e.target.value, cursorPosition, 'currentID')
+              : currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID'
+                ? e => FilterData(systemBranches, e.target.value, cursorPosition, 'currentID')
+                : currenTComp === 'Fixed Assets Products' && cursorPosition === 'branch id'
+                  ? e => FilterData(systemBranches.splice(0, 3), e.target.value, cursorPosition, 'currentID')
+                  : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id'
+                    ? e => FilterData(fixedAssetsPrdt, e.target.value, cursorPosition, 'currentID')
+                    : currenTComp === 'Fixed Assets Products' && multiCondition
+                      ? e => FilterData(generalLedgerIds, e.target.value, cursorPosition, 'currentID')
+                      : null
+            }
+            type="text"
+          />
         </div>
         <div className="transaction-codes-modal-inputs-inner">
           <div className="transaction-codes-modal-inputs-label">
@@ -78,7 +134,22 @@ const TrCodesModal = ({
                     : currenTComp === 'Fixed Assets Products'
               && cursorPosition === 'branch id' ? 'Branch Name' : null }
           </div>
-          <input type="text" />
+          <input
+            onChange={
+            currenTComp === 'Transaction Codes'
+              ? e => FilterData(transactionCodes, e.target.value, cursorPosition, 'currentName')
+              : currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID'
+                ? e => FilterData(systemBranches, e.target.value, cursorPosition, 'currentName')
+                : currenTComp === 'Fixed Assets Products' && cursorPosition === 'branch id'
+                  ? e => FilterData(systemBranches.splice(0, 3), e.target.value, cursorPosition, 'currentName')
+                  : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id'
+                    ? e => FilterData(fixedAssetsPrdt, e.target.value, cursorPosition, 'currentName')
+                    : currenTComp === 'Fixed Assets Products' && multiCondition
+                      ? e => FilterData(generalLedgerIds, e.target.value, cursorPosition, 'currentName')
+                      : null
+            }
+            type="text"
+          />
         </div>
       </div>
       <div className="transaction-codes-modal-grid-outer">
@@ -144,12 +215,12 @@ const TrCodesModal = ({
         }
         <div className="transaction-codes-modal-grid-content-container">
           {
-                (currenTComp === 'Transaction Codes' ? transactionCodes
+                (currenTComp === 'Transaction Codes' ? transactionCodesUpdate
                   : currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID' ? systemBranches
                     : currenTComp === 'Fixed Assets Products' && cursorPosition === 'branch id'
                       ? systemBranches.splice(0, 3)
-                      : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id' ? fixedAssetsPrdt
-                        : currenTComp === 'Fixed Assets Products' && multiCondition ? generalLedgerIds
+                      : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id' ? fixedAssetsPrdtUpdate
+                        : currenTComp === 'Fixed Assets Products' && multiCondition ? generalLedgerIdsUpdate
                           : []).map(code => (
                   multiCondition ? (
                     <div

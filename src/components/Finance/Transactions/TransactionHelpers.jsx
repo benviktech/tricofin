@@ -38,6 +38,34 @@ export const calculateTotal = (cashTransactionList, type) => {
   return total;
 };
 
+const conditionCheck = (account, cursorPosition, text) => {
+  const value = (
+    (cursorPosition === 'Set ID' || cursorPosition === 'branch id')
+      ? (text === 'currentID' ? account.setID : text === 'currentName' ? account.setName : null)
+      : cursorPosition === 'product id'
+        ? (text === 'currentID' ? account.productID : text === 'currentName' ? account.productName : null)
+        : (cursorPosition === 'control gl' || cursorPosition === 'Accum Drep'
+            || cursorPosition === 'Dep Expense' || cursorPosition === 'Saleoff Loss'
+            || cursorPosition === 'Saleoff Profit')
+          ? (text === 'currentID' ? account.glid : text === 'currentName' ? account.glName : null)
+          : (text === 'currentID' ? account.tranCode : text === 'currentName' ? account.narration : null)
+  );
+  return value;
+};
+
+export const AssestsPrdFilter = (list, value, cursorPosition, text) => {
+  const newModalList = []; let accId = '';
+  list.forEach(account => {
+    accId = conditionCheck(account, cursorPosition, text);
+    if (accId.length > 0) {
+      if (accId.indexOf(value.toLocaleUpperCase()) !== -1) {
+        newModalList.push(account);
+      }
+    }
+  });
+  return newModalList;
+};
+
 export const initialState = {
   tranTypeID: '',
   accTypeID: '',
