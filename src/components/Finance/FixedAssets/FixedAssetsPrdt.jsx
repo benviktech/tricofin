@@ -74,18 +74,12 @@ const FixedAssetsPrdt = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
+    setValues({ ...values, [name]: value });
   };
 
   const handleChecked = e => {
     const { name, checked } = e.target;
-    setValues({
-      ...values,
-      [name]: checked,
-    });
+    setValues({ ...values, [name]: checked });
   };
 
   const submitData = () => setErrors(fixedAssetsPrdtValidator(values, 'save'));
