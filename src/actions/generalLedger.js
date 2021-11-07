@@ -10,6 +10,7 @@ import {
   FetchTransactionRequest, TransferTransactionRequest,
   SaveTransactionCodeRequest, SaveFixedAssetsRequest,
   UpdateTransactionCodeRequest, UpdateFixedAssetsRequest,
+  PostMaintainFixedAsstRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -387,9 +388,38 @@ export const updateFixedAssetsPrdt = result => async dispatch => {
   };
   try {
     const response = UpdateFixedAssetsRequest(method, path, data);
-    Promise.resolve(response).then(
-      result => console.log(result?.data, 'response data'),
-    );
+    Promise.resolve(response).then(result => console.log(result?.data, 'response data'));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const postMaintainFixedAsst = (result, id) => async dispatch => {
+  const method = 'post';
+  const path = `/api/Finance/SaveFixedAsset/${id}`;
+  const data = {
+    ...result,
+    costPrice: parseInt(result.costPrice, 10),
+    depAmount: parseInt(result.depAmount, 10),
+    residualValue: parseInt(result.residualValue, 10),
+    terms: parseInt(result.terms, 10),
+    depRate: parseInt(result.depRate, 10),
+    brandName: (result.brandName).toUpperCase(),
+    serialNo: (result.serialNo).toUpperCase(),
+    tagNo: (result.tagNo).toUpperCase(),
+    location: (result.location).toUpperCase(),
+    depEnd: '2021-11-05T08:51:47.218Z',
+    bookDate: '2021-11-05T08:51:47.218Z',
+    createdOn: '2021-03-01T20:58:48.005Z',
+    createdBy: 'ILUMU',
+    modifiedOn: '2021-03-01T20:58:48.005Z',
+    modifiedBy: 'ILUMU',
+    disposalDate: '2021-03-01T20:58:48.005Z',
+  };
+  console.log(data, 'data');
+  try {
+    const response = PostMaintainFixedAsstRequest(method, path, data);
+    Promise.resolve(response).then(result => console.log(result?.data, 'response data'));
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
