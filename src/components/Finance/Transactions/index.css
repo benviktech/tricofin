@@ -663,6 +663,22 @@
 
 .transaction-codes-main-section-bulk-transaction {
   width: 70%;
+  position: relative;
+}
+
+.transaction-codes-main-section-bulk-transaction-error-section {
+  position: absolute;
+  background-color: #fff;
+  padding: 10px 10px;
+  top: 0;
+  right: 0;
+  font-size: 11px;
+  color: red;
+}
+
+.transaction-codes-main-section-bulk-transaction-error-section i {
+  font-size: 20px;
+  color: red;
 }
 
 .transaction-codes-main-section input {

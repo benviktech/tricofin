@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,7 +12,10 @@ const BatchTransactions = () => {
   const [csvFile, setCsvFile] = useState([]);
   const [viewState, setViewState] = useState(false);
   const [addState, setAddState] = useState(false);
+  const [errors, setErrors] = useState(false);
   const [submitArray, setSubmitArray] = useState([]);
+  const [debitTot, setDebitTot] = useState(0);
+  const [creditTot, setCreditTot] = useState(0);
   const listsOfContent = [{ id: 1 }, { id: 2 }];
   const dispatch = useDispatch();
 
@@ -23,7 +28,11 @@ const BatchTransactions = () => {
   };
 
   const submitData = () => {
-    if (submitArray.length > 0) { dispatch(saveBatchTransactions(submitArray)); }
+    if (submitArray.length > 0) {
+      dispatch(saveBatchTransactions(submitArray));
+      setCsvFile([]);
+      setAddState(false);
+    } else { setErrors(true); }
   };
 
   useEffect(() => {
@@ -33,6 +42,18 @@ const BatchTransactions = () => {
     }
   }, [csvFile]);
 
+  useEffect(() => {
+    if (submitArray.length > 0) {
+      const totalCredit = submitArray.filter(item => item.debitOrCredit === 'C')
+        .reduce((sum, val) => sum + val.amount, 0);
+
+      const totalDebit = submitArray.filter(item => item.debitOrCredit === 'D')
+        .reduce((sum, val) => sum + val.amount, 0);
+      setCreditTot(totalCredit);
+      setDebitTot(totalDebit);
+    }
+  }, [submitArray]);
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -40,6 +61,12 @@ const BatchTransactions = () => {
           <span>Transaction Code Maintenance</span>
         </div>
         <div className="transaction-codes-main-section transaction-codes-main-section-bulk-transaction">
+          { errors ? (
+            <div className="transaction-codes-main-section-bulk-transaction-error-section shadow">
+              Please upload File
+              <i onClick={() => setErrors(false)} className="far fa-times-circle ml-2" />
+            </div>
+          ) : null}
           <div className="transaction-codes-main-section-top batch-transaction-top">
             <div className="transaction-codes-main-section-left">
               <div className="transaction-codes-main-section-top-label">Serial#:</div>
@@ -108,7 +135,7 @@ const BatchTransactions = () => {
                 :
                 {' '}
                 {' '}
-                <div className="total-DR-section-inner border ml-2 py-1">0.00</div>
+                <div className="total-DR-section-inner border ml-2 py-1">{debitTot}</div>
               </label>
             </div>
             <div className="total-DR-section">
@@ -119,7 +146,7 @@ const BatchTransactions = () => {
                 :
                 {' '}
                 {' '}
-                <div className="total-DR-section-inner border ml-2 py-1">0.00</div>
+                <div className="total-DR-section-inner border ml-2 py-1">{creditTot}</div>
               </label>
             </div>
             {' '}
