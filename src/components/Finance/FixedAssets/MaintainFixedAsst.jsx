@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import BehindScene from './BehindScene';
 import TrCodesModal from '../Transactions/TrCodesModal';
+import { postMaintainFixedAsst } from '../../../actions/generalLedger';
 
 const initialState = {
   accountID: '',
@@ -23,12 +25,12 @@ const initialState = {
   disposalValue: 0,
   profitLoss: 0,
   netBookValue: 0,
-  isBooked: true,
+  isBooked: false,
   tranID: 0,
   isDeleted: false,
-  purchasedOn: '',
   depFrom: '',
-  disposalDate: '',
+  purchasedOn: '',
+  branchID: '',
 };
 
 const MaintainFixedAsset = () => {
@@ -39,6 +41,7 @@ const MaintainFixedAsset = () => {
   const [cursorPosition, setCursorPosition] = useState('');
   const [product, setProduct] = useState({});
   const [branch, setBranch] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemDepreciationMethods')
@@ -79,11 +82,14 @@ const MaintainFixedAsset = () => {
 
   const setCurrentCode = (product, cursorPosition) => {
     if (cursorPosition === 'product id') { setProduct(product); }
-    if (cursorPosition === 'branch id') { setBranch(product); }
+    if (cursorPosition === 'branch id') {
+      setBranch(product);
+      setValues({ ...values, branchID: product.setID });
+    }
     setModal(false);
   };
 
-  const saveFixedAsset = () => console.log(values, 'values');
+  const saveFixedAsset = () => dispatch(postMaintainFixedAsst(values, product.productID));
 
   return (
     <div className="individual-customer-form">
@@ -144,7 +150,7 @@ const MaintainFixedAsset = () => {
                   <div className="fixed-assets-details-info-section-input">
                     <input
                       onFocus={() => setCursorPosition('branch id')}
-                      value={branch.setID && branch.setID}
+                      value={values.branchID && values.branchID}
                       type="text"
                     />
                     <div className="fixed-assets-details-info-section-input-inner">
