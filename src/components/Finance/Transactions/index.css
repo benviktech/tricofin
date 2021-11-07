@@ -509,6 +509,8 @@
   font-size: 12px;
   font-weight: bold;
   height: 28px;
+  background-color: #0178d4;
+  color: #fff;
 }
 
 .transaction-details-form-section,
@@ -830,6 +832,16 @@
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr;
   grid-column-gap: 2px;
+}
+
+.part-tran-details-content-bulk-transaction-bottom-header-two {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+  grid-column-gap: 2px;
+}
+
+.transaction-bottom-header-outer .part-tran-details-content-bulk-transaction-bottom-header-two div {
+  background-color: #fff;
 }
 
 .part-tran-details-content-bulk-transaction-bottom-header-grid {

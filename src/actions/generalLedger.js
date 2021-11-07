@@ -418,8 +418,20 @@ export const postMaintainFixedAsst = (result, id) => async dispatch => {
   };
   console.log(data, 'data');
   try {
-    const response = PostMaintainFixedAsstRequest(method, path, data);
+    const response = await PostMaintainFixedAsstRequest(method, path, data);
     Promise.resolve(response).then(result => console.log(result?.data, 'response data'));
+  } catch (error) {
+    dispatch({ type: LOADING_ERROR, payload: error.message });
+  }
+};
+
+export const saveBatchTransactions = data => async dispatch => {
+  console.log(data, 'data');
+  const method = 'post';
+  const path = '/api/Finance/GenerateBatchTransactions/001';
+  try {
+    const response = await PostMaintainFixedAsstRequest(method, path, data);
+    console.log(response?.data);
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
