@@ -28,6 +28,7 @@ export const CASH_TRANSACTION = 'CASH_TRANSACTION';
 export const CASH_TRANSACTION_LIST = 'CASH_TRANSACTION_LIST';
 export const TRANSFER_TRANSACTION = 'TRANSFER_TRANSACTION';
 export const DELETE_FIXED_ASSETS_PRODUCT = 'DELETE_FIXED_ASSETS_PRODUCT';
+export const FETCHED_FIXED_ASSETS_PRODUCT = 'FETCHED_FIXED_ASSETS_PRODUCT';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -435,5 +436,14 @@ export const saveBatchTransactions = data => async dispatch => {
   try {
     const response = await PostMaintainFixedAsstRequest(method, path, data);
     console.log(response?.data);
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
+};
+
+export const fetchFixedAssetProducts = () => async dispatch => {
+  const method = 'get';
+  const path = '/api/Finance/GetFixedAssetProducts';
+  try {
+    const response = await GetGeneralLedgerRequest(method, path);
+    dispatch({ type: FETCHED_FIXED_ASSETS_PRODUCT, payload: response?.data });
   } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };

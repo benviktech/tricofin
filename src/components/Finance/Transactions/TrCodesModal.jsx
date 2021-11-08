@@ -4,8 +4,10 @@
 /* eslint-disable no-nested-ternary */
 
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { AssestsPrdFilter } from './TransactionHelpers';
+import { fetchFixedAssetProducts } from '../../../actions/generalLedger';
 
 const branchListing = [{ setID: '000', setName: 'HEAD OFFICE' },
   { setID: '001', setName: 'NANSANA' },
@@ -18,18 +20,16 @@ const TrCodesModal = ({
 }) => {
   const [transactionCodes, setTransactionCodes] = useState([]);
   const [generalLedgerIds, setGeneralLedgerIds] = useState([]);
-  const [fixedAssetsPrdt, setFixedAssetsPrdt] = useState([]);
   const [systemBranches, setSystemBranches] = useState([]);
   const [systemBranchesUpdate, setSystemBranchesUpdate] = useState([]);
   const [transactionCodesUpdate, setTransactionCodesUpdate] = useState([]);
   const [generalLedgerIdsUpdate, setGeneralLedgerIdsUpdate] = useState([]);
   const [fixedAssetsPrdtUpdate, setFixedAssetsPrdtUpdate] = useState([]);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetFixedAssetProducts')
-      .then(response => setFixedAssetsPrdt(response?.data))
-      .catch(error => console.log(error?.message));
-  }, []);
+  useEffect(() => { dispatch(fetchFixedAssetProducts()); }, []);
+
+  const fixedAssetsPrdt = useSelector(state => state.generalLedgerReducer.fixedAssestPrdtsList);
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/Finance/GetTransactionCodes')

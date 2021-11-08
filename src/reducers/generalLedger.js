@@ -1,19 +1,10 @@
 /* eslint-disable no-param-reassign */
 import {
-  FETCH_GENERAL_LEDGER,
-  LOADING_CONTENT,
-  LOADING_ERROR,
-  FETCH_SINGLE_GENERAL_LEDGER,
-  FETCH_SINGLE_GENERAL_LEDGER_UPDATE,
-  POST_GENERAL_LEDGER_ID,
-  FETCH_SINGLE_GENERAL_LEDGER_DETAILS,
-  COPY_SINGLE_ACCOUNT_TO_BRANCHES,
-  COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
-  FETCH_GL_PARAMETERS,
-  UPDATE_GL_PARAMETERS,
-  CASH_TRANSACTION,
-  CASH_TRANSACTION_LIST,
-  DELETE_FIXED_ASSETS_PRODUCT,
+  FETCH_GENERAL_LEDGER, LOADING_CONTENT, LOADING_ERROR,
+  FETCH_SINGLE_GENERAL_LEDGER, FETCH_SINGLE_GENERAL_LEDGER_UPDATE, POST_GENERAL_LEDGER_ID,
+  FETCH_SINGLE_GENERAL_LEDGER_DETAILS, COPY_SINGLE_ACCOUNT_TO_BRANCHES,
+  FETCH_GL_PARAMETERS, UPDATE_GL_PARAMETERS, CASH_TRANSACTION, CASH_TRANSACTION_LIST,
+  DELETE_FIXED_ASSETS_PRODUCT, FETCHED_FIXED_ASSETS_PRODUCT, COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -27,7 +18,7 @@ const initialState = {
   glParametersList: [],
   updatedGlParameter: {},
   cashTransactionList: [],
-  deletedFixedAsstProduct: '',
+  fixedAssestPrdtsList: [],
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -39,10 +30,19 @@ const generalLedgerReducer = (state = initialState, action) => {
         error: '',
         loading: false,
       };
+    case FETCHED_FIXED_ASSETS_PRODUCT:
+      return {
+        ...state,
+        fixedAssestPrdtsList: action.payload,
+        error: '',
+        loading: false,
+      };
     case DELETE_FIXED_ASSETS_PRODUCT:
       return {
         ...state,
-        deletedFixedAsstProduct: action.payload,
+        fixedAssestPrdtsList: state.fixedAssestPrdtsList.filter(
+          element => element.productID !== action.payload,
+        ),
         error: '',
         loading: false,
       };

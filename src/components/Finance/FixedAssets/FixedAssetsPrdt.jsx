@@ -90,7 +90,9 @@ const FixedAssetsPrdt = () => {
   const submitData = () => setErrors(fixedAssetsPrdtValidator(values, 'save'));
   const setAddStateFnc = () => { setAddState(true); setEditState(false); };
   const setEditStateFnc = () => { setAddState(false); setEditState(true); };
-  const deleteProduct = () => dispatch(deleteFixedAssetsPrdt(values.productID));
+  const deleteProduct = () => {
+    dispatch(deleteFixedAssetsPrdt(values.productID)); setValues(initialState);
+  };
   const cancelSubmit = () => {
     setErrors({}); setAddState(true); setEditState(false); setValues(initialState);
   };
