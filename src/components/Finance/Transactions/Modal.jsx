@@ -10,7 +10,8 @@ const Modal = ({
   savingModalBranch, setSavingModalBranch, modalBranchList,
   gLAcType, filterGlList, modalBranch, setModalBranch,
   sVInnerModalList, setSelectedAccount, sHInnerModalList,
-  innerModalList,
+  innerModalList, fixedAssetType, asstInnerModalList,
+  displayCurrent,
 }) => (
   <div className="search-criteria-section shadow">
     <div className="search-criteria-section-header">
@@ -21,7 +22,7 @@ const Modal = ({
       />
     </div>
     {
-          savingsAcType || sharesAcType ? (
+          savingsAcType || sharesAcType || fixedAssetType ? (
 
             <div className="search-criteria-section-first">
               <div className="search-criteria-section-title">Account ID:</div>
@@ -30,7 +31,8 @@ const Modal = ({
                   onChange={
                   savingsAcType
                     ? e => filterListTwo(e.target.value, 'savings', 'accountId')
-                    : e => filterListTwo(e.target.value, 'shares', 'accountId')
+                    : fixedAssetType ? null
+                      : e => filterListTwo(e.target.value, 'shares', 'accountId')
                 }
                   type="text"
                 />
@@ -42,7 +44,7 @@ const Modal = ({
         }
 
     {
-          savingsAcType || sharesAcType ? (
+          savingsAcType || sharesAcType || fixedAssetType ? (
             <div className="search-criteria-section-first">
               <div className="search-criteria-section-title">Product ID:</div>
               <div className="search-criteria-section-left">
@@ -112,11 +114,15 @@ const Modal = ({
     <div className="search-creteria-account-details">
       <div className="search-creteria-account-details-header mb-2">Account Details:</div>
       {
-          savingsAcType || sharesAcType ? (
+          savingsAcType || sharesAcType || fixedAssetType ? (
             <div className="search-creteria-account-details-content-header">
               <div className="search-creteria-account-details-content-header-grid">AccountID</div>
-              <div className="search-creteria-account-details-content-header-grid">ProductID</div>
-              <div className="search-creteria-account-details-content-header-grid">AccountName</div>
+              <div className="search-creteria-account-details-content-header-grid">
+                { fixedAssetType ? 'SerialNO' : 'ProductID'}
+              </div>
+              <div className="search-creteria-account-details-content-header-grid">
+                { fixedAssetType ? 'Location' : 'AccountName' }
+              </div>
             </div>
           ) : gLAcType ? (
             <div className="search-creteria-account-details-content-header-two">
@@ -145,18 +151,25 @@ const Modal = ({
                   ))
                 }
               </div>
-            ) : sharesAcType ? (
+            ) : sharesAcType || fixedAssetType ? (
               <div className="search-creteria-account-details-content-outer">
                 {
-                  sHInnerModalList.map(account => (
+                  (fixedAssetType ? asstInnerModalList : sHInnerModalList).map(account => (
                     <div
-                      onClick={() => setSelectedAccount(account, 'SH')}
+                      onClick={fixedAssetType ? () => displayCurrent(account)
+                        : () => setSelectedAccount(account, 'SH')}
                       key={account.controlAccountGL}
                       className="search-creteria-account-details-content"
                     >
                       <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
-                      <div className="search-creteria-account-details-content-grid">{ account.productID }</div>
-                      <div className="search-creteria-account-details-content-grid">{ account.accountName }</div>
+                      <div className="search-creteria-account-details-content-grid">
+                        {
+                      fixedAssetType ? account.serialNo : account.productID
+}
+                      </div>
+                      <div className="search-creteria-account-details-content-grid">
+                        { fixedAssetType ? account.location : account.accountName }
+                      </div>
                     </div>
                   ))
                 }

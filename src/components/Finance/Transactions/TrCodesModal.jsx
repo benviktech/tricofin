@@ -205,7 +205,8 @@ const TrCodesModal = ({
                   : currenTComp === 'Fixed Assets Products' && cursorPosition === 'Set ID' ? systemBranchesUpdate
                     : currenTComp === 'Fixed Assets Products' && cursorPosition === 'branch id'
                       ? systemBranchesUpdate.slice(0, 3)
-                      : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id' ? fixedAssetsPrdtUpdate
+                      : currenTComp === 'Fixed Assets Products' && cursorPosition === 'product id'
+                        ? fixedAssetsPrdtUpdate.filter(val => val.isDeleted === false)
                         : currenTComp === 'Fixed Assets Products' && multiCondition ? generalLedgerIdsUpdate
                           : []).map(code => (
                   multiCondition ? (

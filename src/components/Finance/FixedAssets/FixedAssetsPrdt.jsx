@@ -3,7 +3,10 @@ import { useDispatch } from 'react-redux';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import TrCodesModal from '../Transactions/TrCodesModal';
-import { saveFixedAssetsPrdt, updateFixedAssetsPrdt } from '../../../actions/generalLedger';
+import {
+  deleteFixedAssetsPrdt,
+  saveFixedAssetsPrdt, updateFixedAssetsPrdt,
+} from '../../../actions/generalLedger';
 import fixedAssetsPrdtValidator from '../../Validators/FixedAssetsPrdtValidator';
 
 const initialState = {
@@ -68,7 +71,9 @@ const FixedAssetsPrdt = () => {
       saleoffProfitGL: cursorPosition === 'Saleoff Profit' ? product : displyvalues.saleoffProfitGL,
       setID: cursorPosition === 'Set ID' ? product : displyvalues.setID,
     });
-    if (cursorPosition === 'product id') { setValues({ ...product }); }
+    if (cursorPosition === 'product id') {
+      setValues({ ...product }); setAddState(false); setEditState(true);
+    }
     setModal(false);
   };
 
@@ -83,16 +88,19 @@ const FixedAssetsPrdt = () => {
   };
 
   const submitData = () => setErrors(fixedAssetsPrdtValidator(values, 'save'));
-  const cancelSubmit = () => setErrors({});
+  const setAddStateFnc = () => { setAddState(true); setEditState(false); };
+  const setEditStateFnc = () => { setAddState(false); setEditState(true); };
+  const deleteProduct = () => dispatch(deleteFixedAssetsPrdt(values.productID));
+  const cancelSubmit = () => {
+    setErrors({}); setAddState(true); setEditState(false); setValues(initialState);
+  };
 
   useEffect(async () => {
     if (Object.keys(errors).length === 1) {
       if (Object.keys(errors).includes('state')) {
         if (addState) { await dispatch(saveFixedAssetsPrdt(values)); }
         if (editState) { await dispatch(updateFixedAssetsPrdt(values)); }
-
-        setValues(initialState);
-        setDisplyValues(displayGLs);
+        setValues(initialState); setDisplyValues(displayGLs);
       }
     }
   }, [errors]);
@@ -326,18 +334,39 @@ const FixedAssetsPrdt = () => {
             <div className="fixed-assets-product-info-section">
               <div className="fixed-assets-product-info-section-button">
                 <button type="button">Supervise</button>
-                <button onClick={() => setAddState(true)} type="button">Add</button>
-                <button onClick={() => setEditState(true)} type="button">Edit</button>
                 <button
-                  disabled={!addState && !editState}
-                  className={!addState && !editState ? 'btn btn-info' : ''}
+                  className={editState === true ? 'btn btn-info' : ''}
+                  disabled={editState === true}
+                  onClick={setAddStateFnc}
+                  type="button"
+                >
+                  Add
+                </button>
+                <button
+                  className={editState === false ? 'btn btn-info' : ''}
+                  disabled={editState === false}
+                  onClick={setEditStateFnc}
+                  type="button"
+                >
+                  Edit
+                </button>
+                <button
+                  disabled={addState === false && editState === false}
+                  className={addState === false && editState === false ? 'btn btn-info' : ''}
                   onClick={submitData}
                   type="button"
                 >
                   Save
                 </button>
                 <button onClick={cancelSubmit} type="button">Cancel</button>
-                <button type="button">Delete</button>
+                <button
+                  className={editState === false ? 'btn btn-info' : ''}
+                  onClick={deleteProduct}
+                  disabled={editState === false}
+                  type="button"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>

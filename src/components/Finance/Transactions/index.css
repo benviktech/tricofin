@@ -797,18 +797,6 @@
   border-bottom: 1px solid #f3f2f1;
 }
 
-.slit-character-outter select {
-  height: 30px;
-  border: none;
-  padding: 5px 20px;
-  background-color: #f3f2f1;
-  border-radius: 3px;
-  font-weight: bold;
-  outline: none;
-  cursor: pointer;
-  font-size: 12px;
-}
-
 .slit-character-outter .slit-character {
   font-size: 12px;
 }

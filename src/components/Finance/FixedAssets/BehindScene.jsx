@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const BehindScene = ({ saveFixedAsset }) => (
+const BehindScene = ({
+  addState, editState, saveFixedAsset, setEditState, setAddState,
+}) => (
   <div className="fixed-assets-details-behind-scene">
     <div className="fixed-assets-details-behind-scene-header">
       Behind the Scene
@@ -54,9 +56,19 @@ const BehindScene = ({ saveFixedAsset }) => (
     </div>
     <div className="fixed-assets-details-behind-scene-button">
       <button type="button">Supervise</button>
-      <button type="button">Add</button>
-      <button type="button">Edit</button>
-      <button onClick={saveFixedAsset} type="button">Save</button>
+      <button onClick={setAddState} type="button">Add</button>
+      <button onClick={setEditState} type="button">Edit</button>
+      <button
+        disabled={editState === false && addState === false}
+        className={
+          (editState === false && addState === false) ? 'btn btn-info'
+            : ''
+        }
+        onClick={saveFixedAsset}
+        type="button"
+      >
+        Save
+      </button>
       <button type="button">Cancel</button>
       <button type="button">Delete</button>
     </div>

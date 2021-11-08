@@ -13,6 +13,7 @@ import {
   UPDATE_GL_PARAMETERS,
   CASH_TRANSACTION,
   CASH_TRANSACTION_LIST,
+  DELETE_FIXED_ASSETS_PRODUCT,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
   glParametersList: [],
   updatedGlParameter: {},
   cashTransactionList: [],
+  deletedFixedAsstProduct: '',
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -34,6 +36,13 @@ const generalLedgerReducer = (state = initialState, action) => {
       return {
         ...state,
         subTypeList: action.payload,
+        error: '',
+        loading: false,
+      };
+    case DELETE_FIXED_ASSETS_PRODUCT:
+      return {
+        ...state,
+        deletedFixedAsstProduct: action.payload,
         error: '',
         loading: false,
       };

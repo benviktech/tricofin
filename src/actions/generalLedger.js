@@ -10,7 +10,7 @@ import {
   FetchTransactionRequest, TransferTransactionRequest,
   SaveTransactionCodeRequest, SaveFixedAssetsRequest,
   UpdateTransactionCodeRequest, UpdateFixedAssetsRequest,
-  PostMaintainFixedAsstRequest,
+  PostMaintainFixedAsstRequest, DeleteFixedAssetsPrdtRequest,
 } from '../utils/api';
 
 export const FETCH_GENERAL_LEDGER = 'FETCH_GENERAL_LEDGER';
@@ -27,6 +27,7 @@ export const FETCH_GL_PARAMETERS = 'FETCH_GL_PARAMETERS';
 export const CASH_TRANSACTION = 'CASH_TRANSACTION';
 export const CASH_TRANSACTION_LIST = 'CASH_TRANSACTION_LIST';
 export const TRANSFER_TRANSACTION = 'TRANSFER_TRANSACTION';
+export const DELETE_FIXED_ASSETS_PRODUCT = 'DELETE_FIXED_ASSETS_PRODUCT';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -363,12 +364,9 @@ export const saveFixedAssetsPrdt = result => async dispatch => {
     modifiedOn: '2021-03-01T20:58:48.005Z',
     modifiedBy: 'ILUMU',
   };
-  console.log(data, 'data');
   try {
-    const response = SaveFixedAssetsRequest(method, path, data);
-    Promise.resolve(response).then(
-      result => console.log(result?.data, 'response data'),
-    );
+    const response = await SaveFixedAssetsRequest(method, path, data);
+    console.log(response?.data, 'response data posted');
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
   }
@@ -387,16 +385,25 @@ export const updateFixedAssetsPrdt = result => async dispatch => {
     modifiedBy: 'ILUMU',
   };
   try {
-    const response = UpdateFixedAssetsRequest(method, path, data);
-    Promise.resolve(response).then(result => console.log(result?.data, 'response data'));
-  } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
-  }
+    const response = await UpdateFixedAssetsRequest(method, path, data);
+    console.log(response?.data, 'response data updated');
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };
 
-export const postMaintainFixedAsst = (result, id) => async dispatch => {
-  const method = 'post';
-  const path = `/api/Finance/SaveFixedAsset/${id}`;
+export const deleteFixedAssetsPrdt = id => async dispatch => {
+  const method = 'delete';
+  const path = `/api/Finance/DeleteFixedAssetProduct/${id}/ILUMU`;
+  try {
+    await DeleteFixedAssetsPrdtRequest(method, path);
+    dispatch({ type: DELETE_FIXED_ASSETS_PRODUCT, payload: id });
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
+};
+
+export const postMaintainFixedAsst = (result, id, addState, editState) => async dispatch => {
+  let method = ''; let path = '';
+  if (addState) { path = `/api/Finance/SaveFixedAsset/${id}`; method = 'post'; }
+  if (editState) { path = '/api/Finance/UpdateFixedAsset'; method = 'put'; }
+
   const data = {
     ...result,
     costPrice: parseInt(result.costPrice, 10),
@@ -416,23 +423,17 @@ export const postMaintainFixedAsst = (result, id) => async dispatch => {
     modifiedBy: 'ILUMU',
     disposalDate: '2021-03-01T20:58:48.005Z',
   };
-  console.log(data, 'data');
   try {
     const response = await PostMaintainFixedAsstRequest(method, path, data);
     Promise.resolve(response).then(result => console.log(result?.data, 'response data'));
-  } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
-  }
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };
 
 export const saveBatchTransactions = data => async dispatch => {
-  console.log(data, 'data');
   const method = 'post';
   const path = '/api/Finance/GenerateBatchTransactions/001';
   try {
     const response = await PostMaintainFixedAsstRequest(method, path, data);
     console.log(response?.data);
-  } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
-  }
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };

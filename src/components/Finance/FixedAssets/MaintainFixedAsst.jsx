@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+/* eslint-disable no-nested-ternary */
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,6 +9,8 @@ import './index.css';
 import BehindScene from './BehindScene';
 import TrCodesModal from '../Transactions/TrCodesModal';
 import { postMaintainFixedAsst } from '../../../actions/generalLedger';
+import Modal from '../Transactions/Modal';
+import TransactionRequests from '../Transactions/TransactionRequests';
 
 const initialState = {
   accountID: '',
@@ -37,11 +40,33 @@ const MaintainFixedAsset = () => {
   const [values, setValues] = useState(initialState);
   const [depMethods, setDepMethods] = useState([]);
   const [modal, setModal] = useState(false);
+  const [fixedAssetsList, setFixedAssetsList] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [cursorPosition, setCursorPosition] = useState('');
   const [product, setProduct] = useState({});
+  const [fixedAssetType, setFixedAssetType] = useState(false);
+  const [asstInnerModalList, setAsstInnerModalList] = useState([]);
   const [branch, setBranch] = useState({});
   const dispatch = useDispatch();
+  const [savingModalBranch, setSavingModalBranch] = useState('');
+  const [addState, setAddState] = useState(false);
+  const [editState, setEditState] = useState(false);
+
+  useEffect(() => {
+    if (savingModalBranch.length > 0 && savingModalBranch !== '004') {
+      const newModalList = (fixedAssetType ? fixedAssetsList : null).filter(
+        account => account.branchID === savingModalBranch,
+      );
+      if (fixedAssetType) {
+        setAsstInnerModalList(newModalList);
+      }
+    }
+  }, [savingModalBranch]);
+
+  const { modalBranchList } = TransactionRequests();
+
+  const setAddStateFnc = () => { setAddState(true); setEditState(false); };
+  const setEditStateFnc = () => { setAddState(false); setEditState(true); };
 
   useEffect(() => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSystemDepreciationMethods')
@@ -53,6 +78,12 @@ const MaintainFixedAsset = () => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSuppliers')
       .then(response => setSuppliers(response?.data))
       .catch(error => error.message);
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetFixedAssets')
+      .then(response => setFixedAssetsList(response?.data))
+      .catch(error => console.log(error.message));
   }, []);
 
   const handleChange = e => {
@@ -83,13 +114,21 @@ const MaintainFixedAsset = () => {
   const setCurrentCode = (product, cursorPosition) => {
     if (cursorPosition === 'product id') { setProduct(product); }
     if (cursorPosition === 'branch id') {
-      setBranch(product);
-      setValues({ ...values, branchID: product.setID });
+      setBranch(product); setValues({ ...values, branchID: product.setID });
     }
     setModal(false);
   };
 
-  const saveFixedAsset = () => dispatch(postMaintainFixedAsst(values, product.productID));
+  const saveFixedAsset = async () => {
+    await dispatch(postMaintainFixedAsst(values, product.productID, addState, editState));
+    setValues(initialState); setEditState(false); setAddState(false);
+  };
+  const displayCurrent = data => { setValues(data); setModal(false); };
+
+  useEffect(() => {
+    if (cursorPosition === 'Account id') { setFixedAssetType(true); }
+    return () => { setFixedAssetType(false); };
+  }, [cursorPosition]);
 
   return (
     <div className="individual-customer-form">
@@ -130,20 +169,26 @@ const MaintainFixedAsset = () => {
                   <input value={product.productName} disabled="true" type="text" />
                 </div>
               </div>
-              { modal
-              && (
-              <TrCodesModal
-                currenTComp="Fixed Assets Products"
-                setModal={setModal}
-                setCurrentCode={setCurrentCode}
-                cursorPosition={cursorPosition}
-              />
-              )}
+              { modal && cursorPosition === 'Account id' && fixedAssetType ? (
+                <Modal
+                  modalBranchList={modalBranchList}
+                  hideModal={() => setModal(false)}
+                  fixedAssetType={fixedAssetType}
+                  setSavingModalBranch={setSavingModalBranch}
+                  asstInnerModalList={asstInnerModalList}
+                  displayCurrent={displayCurrent}
+                />
+              ) : modal && cursorPosition !== 'Account id' ? (
+                <TrCodesModal
+                  currenTComp="Fixed Assets Products"
+                  setModal={setModal}
+                  setCurrentCode={setCurrentCode}
+                  cursorPosition={cursorPosition}
+                />
+              ) : null}
             </div>
             <div className="fixed-assets-product-info-section">
-              <div className="fixed-assets-product-info-section-header">
-                Fixed Assets Details
-              </div>
+              <div className="fixed-assets-product-info-section-header">Fixed Assets Details</div>
               <div className="fixed-assets-details-info-section-content">
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Branch:</div>
@@ -160,36 +205,27 @@ const MaintainFixedAsset = () => {
                 </div>
                 <div className="fixed-assets-details-info-section-first-two">
                   <div className="fixed-assets-details-info-section-label">Supplier:</div>
-                  {
-                    suppliers.length > 0 ? (
-                      <select
-                        name="supplierID"
-                        value={values.supplierID}
-                        onChange={handleChange}
-                      >
-                        <option value="" disabled selected hidden>Select</option>
-                        {
-                          suppliers.map(data => (
-                            <option
-                              key={data.supplierID}
-                              value={data.supplierID}
-                            >
-                              {data.supplier}
-                            </option>
-                          ))
-                        }
-                      </select>
-                    ) : (
-                      <select>
-                        <option value="" disabled selected hidden>Select</option>
-                      </select>
-                    )
-                  }
+                  { suppliers.length > 0 ? (
+                    <select name="supplierID" value={values.supplierID} onChange={handleChange}>
+                      <option value="" disabled selected hidden>Select</option>
+                      { suppliers.map(data => (
+                        <option key={data.supplierID} value={data.supplierID}>
+                          {data.supplier}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (<select><option value="" disabled selected hidden>Select</option></select>)}
                 </div>
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Account ID:</div>
                   <div className="fixed-assets-details-info-section-input">
-                    <input onChange={handleChange} value={values.accountID} name="accountID" type="text" />
+                    <input
+                      onFocus={() => setCursorPosition('Account id')}
+                      onChange={handleChange}
+                      value={values.accountID}
+                      name="accountID"
+                      type="text"
+                    />
                     <div className="fixed-assets-details-info-section-input-inner">BENVIK</div>
                   </div>
                 </div>
@@ -215,7 +251,6 @@ const MaintainFixedAsset = () => {
                   <div className="fixed-assets-details-info-section-label">Cost Price:</div>
                   <div className="fixed-assets-details-info-section-input">
                     <input value={values.costPrice} name="costPrice" onChange={handleChange} type="text" />
-
                     <div className="fixed-assets-details-info-section-input-inner-two">
                       <div className="fixed-assets-details-info-section-input-inner-div">Dep Rate:</div>
                       <div className="fixed-assets-details-info-section-input-container">
@@ -227,31 +262,16 @@ const MaintainFixedAsset = () => {
                 </div>
                 <div className="fixed-assets-details-info-section-first-two">
                   <div className="fixed-assets-details-info-section-label">Depreciation Mthd:</div>
-                  {
-                    depMethods.length > 0 ? (
-                      <select
-                        name="depMthd"
-                        value={values.depMthd}
-                        onChange={handleChange}
-                      >
-                        <option value="" disabled selected hidden>Select</option>
-                        {
-                          depMethods.map(data => (
-                            <option
-                              key={data.depMthdID}
-                              value={data.depMthdID}
-                            >
-                              {data.depMthd}
-                            </option>
-                          ))
-                        }
-                      </select>
-                    ) : (
-                      <select>
-                        <option value="" disabled selected hidden>Select</option>
-                      </select>
-                    )
-                  }
+                  { depMethods.length > 0 ? (
+                    <select name="depMthd" value={values.depMthd} onChange={handleChange}>
+                      <option value="" disabled selected hidden>Select</option>
+                      { depMethods.map(data => (
+                        <option key={data.depMthdID} value={data.depMthdID}>
+                          {data.depMthd}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (<select><option value="" disabled selected hidden>Select</option></select>)}
                 </div>
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Residual Value:</div>
@@ -268,7 +288,13 @@ const MaintainFixedAsset = () => {
                 </div>
                 <div className="fixed-assets-details-info-section-first-two">
                   <div className="fixed-assets-details-info-section-label">Purchased On:</div>
-                  <input onChange={handleChange} value={values.purchasedOn} name="purchasedOn" type="date" />
+                  <input
+                    onChange={handleChange}
+                    value={values.purchasedOn
+                    && new Date(values.purchasedOn).toISOString().substring(0, 10)}
+                    name="purchasedOn"
+                    type="date"
+                  />
                 </div>
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Amount to Depreciate:</div>
@@ -276,13 +302,25 @@ const MaintainFixedAsset = () => {
                     <input value={values.depAmount} name="depAmount" onChange={handleChange} type="text" />
                     <div className="fixed-assets-details-info-section-input-inner-two">
                       <div className="fixed-assets-details-info-section-input-inner-div">Depreciation From:</div>
-                      <input onChange={handleChange} value={values.depFrom} name="depFrom" type="date" />
+                      <input
+                        onChange={handleChange}
+                        value={values.depFrom
+                          && new Date(values.depFrom).toISOString().substring(0, 10)}
+                        name="depFrom"
+                        type="date"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <BehindScene saveFixedAsset={saveFixedAsset} />
+            <BehindScene
+              addState={addState}
+              editState={editState}
+              saveFixedAsset={saveFixedAsset}
+              setAddState={setAddStateFnc}
+              setEditState={setEditStateFnc}
+            />
           </div>
         </div>
       </div>
