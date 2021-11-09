@@ -58,7 +58,10 @@ const BatchTransactions = () => {
     }
   }, [submitArray]);
 
-  const createBatchTransaction = () => { dispatch(transferTransaction(batchTransactionsList)); };
+  const createBatchTransaction = async () => {
+    await dispatch(transferTransaction(batchTransactionsList));
+    setViewState(false); setCsvFile([]);
+  };
 
   return (
     <div className="individual-customer-form">
