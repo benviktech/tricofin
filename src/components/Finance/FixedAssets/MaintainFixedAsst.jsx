@@ -1,5 +1,7 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -14,6 +16,7 @@ import {
 } from '../../../actions/generalLedger';
 import Modal from '../Transactions/Modal';
 import TransactionRequests from '../Transactions/TransactionRequests';
+import MaintainFixedAssetValidator from '../../Validators/MaintainFixedAssetValidator';
 
 const initialState = {
   accountID: '',
@@ -53,6 +56,7 @@ const MaintainFixedAsset = () => {
   const [savingModalBranch, setSavingModalBranch] = useState('');
   const [addState, setAddState] = useState(false);
   const [editState, setEditState] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => { dispatch(fetchFixedAssetList()); }, []);
 
@@ -118,10 +122,15 @@ const MaintainFixedAsset = () => {
     setModal(false);
   };
 
-  const saveFixedAsset = async () => {
-    await dispatch(postMaintainFixedAsst(values, product.productID, addState, editState));
-    setValues(initialState); setEditState(false); setAddState(false);
-  };
+  const saveFixedAsset = () => setErrors(MaintainFixedAssetValidator(values, 'errors'));
+
+  useEffect(async () => {
+    if (Object.keys(errors).length === 1) {
+      await dispatch(postMaintainFixedAsst(values, product.productID, addState, editState));
+      setValues(initialState); setEditState(false); setAddState(false);
+    }
+  }, [errors]);
+
   const displayCurrent = data => { setValues(data); setModal(false); setEditStateFnc(); };
 
   useEffect(() => {
@@ -157,6 +166,19 @@ const MaintainFixedAsset = () => {
           <div className="submit-form-top-section">
             <div className="fixed-assets-product-info-section">
               <div className="fixed-assets-product-info-section-header">
+                {
+                  Object.keys(errors).length > 1 ? (
+                    <div className="errors-section shadow">
+                      <i onClick={() => setErrors({})} className="far fa-times-circle" />
+                      <ul>
+                        {
+                        Object.values(errors).filter(val => val !== 'errors')
+                          .map(error => <li key={error}>{error}</li>)
+                      }
+                      </ul>
+                    </div>
+                  ) : null
+                }
                 Product Info
               </div>
               <div className="fixed-assets-product-info-section-content">

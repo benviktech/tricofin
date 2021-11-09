@@ -11,12 +11,34 @@
   grid-column-gap: 10px;
 }
 
+.fixed-assets-product-info-section-header .errors-section {
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  z-index: 3;
+  background-color: #fff;
+  padding: 10px 30px;
+}
+
+.fixed-assets-product-info-section-header .errors-section li {
+  font-size: 11px;
+}
+
+.fixed-assets-product-info-section-header .errors-section i {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  font-size: 18px;
+}
+
 .fixed-assets-product-info-section-header {
   font-size: 13px;
   font-weight: bold;
   display: flex;
   padding: 5px 0;
   color: #666;
+  position: relative;
 }
 
 .fixed-assets-product-info-section-first {
