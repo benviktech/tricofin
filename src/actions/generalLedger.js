@@ -28,7 +28,10 @@ export const CASH_TRANSACTION = 'CASH_TRANSACTION';
 export const CASH_TRANSACTION_LIST = 'CASH_TRANSACTION_LIST';
 export const TRANSFER_TRANSACTION = 'TRANSFER_TRANSACTION';
 export const DELETE_FIXED_ASSETS_PRODUCT = 'DELETE_FIXED_ASSETS_PRODUCT';
+export const DELETE_FIXED_ASSET = 'DELETE_FIXED_ASSET';
 export const FETCHED_FIXED_ASSETS_PRODUCT = 'FETCHED_FIXED_ASSETS_PRODUCT';
+export const FETCHED_FIXED_ASSET_LIST = 'FETCHED_FIXED_ASSET_LIST';
+export const BATCH_TRANSACTIONS_LIST = 'BATCH_TRANSACTIONS_LIST';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -311,6 +314,7 @@ export const transferTransaction = data => async dispatch => {
   const path = '/api/Finance/SaveTransferTransaction/ILUMU/000';
   try {
     const response = await TransferTransactionRequest(method, path, data);
+    console.log(response.data, 'response data');
     dispatch({ type: TRANSFER_TRANSACTION, payload: response?.data });
   } catch (error) {
     dispatch({ type: LOADING_ERROR, payload: error.message });
@@ -400,6 +404,15 @@ export const deleteFixedAssetsPrdt = id => async dispatch => {
   } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };
 
+export const deleteFixedAssets = id => async dispatch => {
+  const method = 'delete';
+  const path = `/api/Finance/DeleteFixedAsset/${id}`;
+  try {
+    await DeleteFixedAssetsPrdtRequest(method, path);
+    dispatch({ type: DELETE_FIXED_ASSET, payload: id });
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
+};
+
 export const postMaintainFixedAsst = (result, id, addState, editState) => async dispatch => {
   let method = ''; let path = '';
   if (addState) { path = `/api/Finance/SaveFixedAsset/${id}`; method = 'post'; }
@@ -431,11 +444,13 @@ export const postMaintainFixedAsst = (result, id, addState, editState) => async 
 };
 
 export const saveBatchTransactions = data => async dispatch => {
+  console.log(data, 'data');
   const method = 'post';
   const path = '/api/Finance/GenerateBatchTransactions/001';
   try {
     const response = await PostMaintainFixedAsstRequest(method, path, data);
-    console.log(response?.data);
+    console.log(response?.data, 'data');
+    dispatch({ type: BATCH_TRANSACTIONS_LIST, payload: response?.data });
   } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };
 
@@ -445,5 +460,14 @@ export const fetchFixedAssetProducts = () => async dispatch => {
   try {
     const response = await GetGeneralLedgerRequest(method, path);
     dispatch({ type: FETCHED_FIXED_ASSETS_PRODUCT, payload: response?.data });
+  } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
+};
+
+export const fetchFixedAssetList = () => async dispatch => {
+  const method = 'get';
+  const path = '/api/Finance/GetFixedAssets';
+  try {
+    const response = await GetGeneralLedgerRequest(method, path);
+    dispatch({ type: FETCHED_FIXED_ASSET_LIST, payload: response?.data });
   } catch (error) { dispatch({ type: LOADING_ERROR, payload: error.message }); }
 };

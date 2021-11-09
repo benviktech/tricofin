@@ -136,7 +136,14 @@
   justify-content: flex-end;
 }
 
-.cash-transaction-buttons-section button {
+.transaction-bottom-header-outer-buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.cash-transaction-buttons-section button,
+.transaction-bottom-header-outer-buttons button {
   background-color: #0178d4;
   padding: 5px 20px;
   margin-left: 10px;
@@ -830,11 +837,14 @@
 .part-tran-details-content-bulk-transaction-bottom {
   background-color: #f3f2f1;
   cursor: pointer;
+  padding: 0 2px 2px;
+  margin-top: 10px;
+  min-height: 200px;
 }
 
 .part-tran-details-content-bulk-transaction-bottom-header {
   display: grid;
-  grid-template-columns: 2fr 2fr 2fr 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr;
+  grid-template-columns: 3fr 2fr 1fr 1fr 1fr 2fr 2fr 2fr 3fr 2fr;
   grid-column-gap: 2px;
 }
 
@@ -844,9 +854,21 @@
   grid-column-gap: 2px;
 }
 
-.transaction-bottom-header-outer .part-tran-details-content-bulk-transaction-bottom-header-two div {
+.transaction-bottom-header-outer {
+  height: 100px;
+  overflow-y: auto;
+}
+
+.transaction-bottom-header-outer::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+.transaction-bottom-header-outer .part-tran-details-content-bulk-transaction-bottom-header-two div,
+.transaction-bottom-header-outer .part-tran-details-content-bulk-transaction-bottom-header div {
   background-color: #fff;
 }
+
 
 .part-tran-details-content-bulk-transaction-bottom-header-grid {
   padding: 4px 2px;
@@ -856,12 +878,6 @@
   font-weight: bold;
   background-color: #aeaeae;
   margin-top: 2px;
-}
-
-.part-tran-details-content-bulk-transaction-bottom {
-  padding: 0 2px 2px;
-  margin-top: 10px;
-  min-height: 200px;
 }
 
 .transaction-codes-modal {

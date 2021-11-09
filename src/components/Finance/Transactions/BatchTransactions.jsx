@@ -4,20 +4,22 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Papa from 'papaparse';
-import { saveBatchTransactions } from '../../../actions/generalLedger';
+import { saveBatchTransactions, transferTransaction } from '../../../actions/generalLedger';
 
 const BatchTransactions = () => {
   const [csvFile, setCsvFile] = useState([]);
   const [viewState, setViewState] = useState(false);
-  const [addState, setAddState] = useState(false);
   const [errors, setErrors] = useState(false);
   const [submitArray, setSubmitArray] = useState([]);
   const [debitTot, setDebitTot] = useState(0);
   const [creditTot, setCreditTot] = useState(0);
-  const listsOfContent = [{ id: 1 }, { id: 2 }];
+
   const dispatch = useDispatch();
+  const batchTransactionsList = useSelector(
+    state => state.generalLedgerReducer.batchTransactionsList,
+  );
 
   const handleFileUpload = files => {
     if (files) {
@@ -27,11 +29,13 @@ const BatchTransactions = () => {
     }
   };
 
+  useEffect(() => {
+    if (batchTransactionsList.length > 0) { setViewState(true); }
+  }, [batchTransactionsList]);
+
   const submitData = () => {
     if (submitArray.length > 0) {
-      dispatch(saveBatchTransactions(submitArray));
-      setCsvFile([]);
-      setAddState(false);
+      dispatch(saveBatchTransactions(submitArray)); setCsvFile([]);
     } else { setErrors(true); }
   };
 
@@ -53,6 +57,8 @@ const BatchTransactions = () => {
       setDebitTot(totalDebit);
     }
   }, [submitArray]);
+
+  const createBatchTransaction = () => { dispatch(transferTransaction(batchTransactionsList)); };
 
   return (
     <div className="individual-customer-form">
@@ -163,25 +169,11 @@ const BatchTransactions = () => {
             </div>
             <div className="total-button-section">
               <button
-                onClick={() => setAddState(true)}
-                type="button"
-              >
-                Add
-              </button>
-              <button
-                disabled={!addState}
                 onClick={() => submitData()}
                 type="button"
-                className={!addState ? 'ml-2 btn btn-info' : 'ml-2'}
+                className="btn btn-secondary"
               >
-                Save
-              </button>
-              <button
-                onClick={() => setViewState(true)}
-                type="button"
-                className="ml-2"
-              >
-                View
+                Add
               </button>
             </div>
           </div>
@@ -189,12 +181,11 @@ const BatchTransactions = () => {
             viewState ? (
               <div className="part-tran-details-content-bulk-transaction-bottom">
                 <div className="part-tran-details-content-bulk-transaction-bottom-header">
-                  <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">SerialNo</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">ValueDate</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">AcctID</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">AcType</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">ProdID</div>
-                  <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">Trx Type</div>
+                  <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">TrxType</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">ReceiptNo</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">TranAmount</div>
                   <div className="part-tran-details-content-bulk-transaction-bottom-header-grid">TranCode</div>
@@ -203,22 +194,27 @@ const BatchTransactions = () => {
                 </div>
                 <div className="transaction-bottom-header-outer">
                   {
-                  listsOfContent.map(content => (
-                    <div key={content.id} className="part-tran-details-content-bulk-transaction-bottom-header">
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">SerialNo</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">ValueDate</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">AcctID</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">AcType</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">ProdID</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">Trx Type</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">ReceiptNo</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">TranAmount</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">TranCode</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">TranParticulars</div>
-                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">TranRemarks</div>
+                  batchTransactionsList.map(content => (
+                    <div key={content.columnID} className="part-tran-details-content-bulk-transaction-bottom-header">
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">
+                        {new Date(content.valueDate).toUTCString().split(' ').slice(0, 4)
+                          .join(' ')}
+                      </div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.accountID}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.accountType}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.productID}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.partTranType}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.receiptNo}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.tranAmount}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.tranCode}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.tranParticulars}</div>
+                      <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">{content.tranRemarks}</div>
                     </div>
                   ))
-              }
+                }
+                </div>
+                <div className="transaction-bottom-header-outer-buttons">
+                  <button onClick={createBatchTransaction} type="button">Save</button>
                 </div>
               </div>
             )

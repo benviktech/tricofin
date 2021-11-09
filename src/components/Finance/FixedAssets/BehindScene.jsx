@@ -2,7 +2,8 @@
 import React from 'react';
 
 const BehindScene = ({
-  addState, editState, saveFixedAsset, setEditState, setAddState,
+  addState, editState, saveFixedAsset, setEditStateFnc,
+  setAddStateFnc, cancelSubmit, deleteFixedAsset,
 }) => (
   <div className="fixed-assets-details-behind-scene">
     <div className="fixed-assets-details-behind-scene-header">
@@ -56,21 +57,39 @@ const BehindScene = ({
     </div>
     <div className="fixed-assets-details-behind-scene-button">
       <button type="button">Supervise</button>
-      <button onClick={setAddState} type="button">Add</button>
-      <button onClick={setEditState} type="button">Edit</button>
       <button
-        disabled={editState === false && addState === false}
-        className={
-          (editState === false && addState === false) ? 'btn btn-info'
-            : ''
-        }
+        className={editState === true ? 'btn btn-info' : ''}
+        disabled={editState === true}
+        onClick={setAddStateFnc}
+        type="button"
+      >
+        Add
+      </button>
+      <button
+        className={editState === false ? 'btn btn-info' : ''}
+        disabled={editState === false}
+        onClick={setEditStateFnc}
+        type="button"
+      >
+        Edit
+      </button>
+      <button
+        disabled={addState === false && editState === false}
+        className={addState === false && editState === false ? 'btn btn-info' : ''}
         onClick={saveFixedAsset}
         type="button"
       >
         Save
       </button>
-      <button type="button">Cancel</button>
-      <button type="button">Delete</button>
+      <button onClick={cancelSubmit} type="button">Cancel</button>
+      <button
+        className={editState === false ? 'btn btn-info' : ''}
+        disabled={editState === false}
+        onClick={deleteFixedAsset}
+        type="button"
+      >
+        Delete
+      </button>
     </div>
   </div>
 );

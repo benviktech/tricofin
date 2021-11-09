@@ -154,23 +154,25 @@ const Modal = ({
             ) : sharesAcType || fixedAssetType ? (
               <div className="search-creteria-account-details-content-outer">
                 {
-                  (fixedAssetType ? asstInnerModalList : sHInnerModalList).map(account => (
-                    <div
-                      onClick={fixedAssetType ? () => displayCurrent(account)
-                        : () => setSelectedAccount(account, 'SH')}
-                      key={account.controlAccountGL}
-                      className="search-creteria-account-details-content"
-                    >
-                      <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
-                      <div className="search-creteria-account-details-content-grid">
-                        {
+                  (fixedAssetType
+                    ? asstInnerModalList.filter(element => element.isDeleted === false)
+                    : sHInnerModalList).map(account => (
+                      <div
+                        onClick={fixedAssetType ? () => displayCurrent(account)
+                          : () => setSelectedAccount(account, 'SH')}
+                        key={account.controlAccountGL}
+                        className="search-creteria-account-details-content"
+                      >
+                        <div className="search-creteria-account-details-content-grid">{ account.accountID }</div>
+                        <div className="search-creteria-account-details-content-grid">
+                          {
                       fixedAssetType ? account.serialNo : account.productID
 }
+                        </div>
+                        <div className="search-creteria-account-details-content-grid">
+                          { fixedAssetType ? account.location : account.accountName }
+                        </div>
                       </div>
-                      <div className="search-creteria-account-details-content-grid">
-                        { fixedAssetType ? account.location : account.accountName }
-                      </div>
-                    </div>
                   ))
                 }
               </div>

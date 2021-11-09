@@ -3,12 +3,15 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import BehindScene from './BehindScene';
 import TrCodesModal from '../Transactions/TrCodesModal';
-import { postMaintainFixedAsst } from '../../../actions/generalLedger';
+import {
+  deleteFixedAssets,
+  fetchFixedAssetList, postMaintainFixedAsst,
+} from '../../../actions/generalLedger';
 import Modal from '../Transactions/Modal';
 import TransactionRequests from '../Transactions/TransactionRequests';
 
@@ -40,7 +43,6 @@ const MaintainFixedAsset = () => {
   const [values, setValues] = useState(initialState);
   const [depMethods, setDepMethods] = useState([]);
   const [modal, setModal] = useState(false);
-  const [fixedAssetsList, setFixedAssetsList] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [cursorPosition, setCursorPosition] = useState('');
   const [product, setProduct] = useState({});
@@ -52,19 +54,22 @@ const MaintainFixedAsset = () => {
   const [addState, setAddState] = useState(false);
   const [editState, setEditState] = useState(false);
 
+  useEffect(() => { dispatch(fetchFixedAssetList()); }, []);
+
+  const fixedAssetsList = useSelector(
+    state => state.generalLedgerReducer.fixedAssetList,
+  );
+
   useEffect(() => {
     if (savingModalBranch.length > 0 && savingModalBranch !== '004') {
       const newModalList = (fixedAssetType ? fixedAssetsList : null).filter(
         account => account.branchID === savingModalBranch,
       );
-      if (fixedAssetType) {
-        setAsstInnerModalList(newModalList);
-      }
+      if (fixedAssetType) { setAsstInnerModalList(newModalList); }
     }
   }, [savingModalBranch]);
 
   const { modalBranchList } = TransactionRequests();
-
   const setAddStateFnc = () => { setAddState(true); setEditState(false); };
   const setEditStateFnc = () => { setAddState(false); setEditState(true); };
 
@@ -78,12 +83,6 @@ const MaintainFixedAsset = () => {
     axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetSuppliers')
       .then(response => setSuppliers(response?.data))
       .catch(error => error.message);
-  }, []);
-
-  useEffect(() => {
-    axios.get('https://tricofin.azurewebsites.net/api/Finance/GetFixedAssets')
-      .then(response => setFixedAssetsList(response?.data))
-      .catch(error => console.log(error.message));
   }, []);
 
   const handleChange = e => {
@@ -123,12 +122,21 @@ const MaintainFixedAsset = () => {
     await dispatch(postMaintainFixedAsst(values, product.productID, addState, editState));
     setValues(initialState); setEditState(false); setAddState(false);
   };
-  const displayCurrent = data => { setValues(data); setModal(false); };
+  const displayCurrent = data => { setValues(data); setModal(false); setEditStateFnc(); };
 
   useEffect(() => {
     if (cursorPosition === 'Account id') { setFixedAssetType(true); }
     return () => { setFixedAssetType(false); };
   }, [cursorPosition]);
+
+  const cancelSubmit = () => {
+    setAddState(true); setEditState(false); setValues(initialState);
+  };
+
+  const deleteFixedAsset = () => {
+    dispatch(deleteFixedAssets(values.accountID));
+    setValues(initialState);
+  };
 
   return (
     <div className="individual-customer-form">
@@ -276,7 +284,7 @@ const MaintainFixedAsset = () => {
                 <div className="fixed-assets-details-info-section-first">
                   <div className="fixed-assets-details-info-section-label">Residual Value:</div>
                   <div className="fixed-assets-details-info-section-input">
-                    <input name="residualValue" onChange={handleChange} value={values.residualValue} type="text" />
+                    <input autoComplete="off" name="residualValue" onChange={handleChange} value={values.residualValue} type="text" />
                     <div className="fixed-assets-details-info-section-input-inner-two">
                       <div className="fixed-assets-details-info-section-input-inner-div">Useful Life / Terms:</div>
                       <div className="fixed-assets-details-info-section-input-container">
@@ -318,8 +326,10 @@ const MaintainFixedAsset = () => {
               addState={addState}
               editState={editState}
               saveFixedAsset={saveFixedAsset}
-              setAddState={setAddStateFnc}
-              setEditState={setEditStateFnc}
+              setAddStateFnc={setAddStateFnc}
+              setEditStateFnc={setEditStateFnc}
+              cancelSubmit={cancelSubmit}
+              deleteFixedAsset={deleteFixedAsset}
             />
           </div>
         </div>
