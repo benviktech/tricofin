@@ -177,6 +177,7 @@ const BatchTransactions = () => {
                 className="btn btn-secondary"
               >
                 Add
+                <i className="far fa-arrow-alt-circle-down ml-2" />
               </button>
             </div>
           </div>

@@ -47,6 +47,7 @@ const TransferTransactions = () => {
   const [totalCredit, setTotalCredit] = useState(0);
   const [totalDebit, setTotalDebit] = useState(0);
   const dispatch = useDispatch();
+  const [count, setCount] = useState(0);
 
   const {
     tranTypes, accTypes, modalBranchList,
@@ -63,7 +64,7 @@ const TransferTransactions = () => {
 
   useEffect(() => {
     if (currentTranId.length > 0) {
-      axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/2021-05-07T00%3A00%3A00/${currentTranId}`)
+      axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/${currentTranId}`)
         .then(response => {
           setCurrentTranObject(response?.data);
         })
@@ -201,8 +202,7 @@ const TransferTransactions = () => {
 
     setUserAccount({
       ...userAccount,
-      columnID: result.partTranType === 'C' ? 1
-        : result.partTranType === 'D' ? 2 : null,
+      columnID: count + 1,
       valueDate: result.valueDate,
       branchID: currentAccount.branchID,
       accountID: result.accountId,
@@ -214,7 +214,7 @@ const TransferTransactions = () => {
       tranCode: result.tranTypeID,
       tranParticulars: 'CASH DEPOSIT',
       tranRemarks: (result.tranRemarks).toUpperCase(),
-    });
+    }); setCount(count + 1); setCurrentAccount({});
   };
 
   useEffect(() => {
@@ -258,8 +258,7 @@ const TransferTransactions = () => {
     } else if (totalCredit === totalDebit) {
       const result = accountsArray.filter(account => Object.keys(account).length > 0);
       await dispatch(transferTransaction(result));
-      setValues(initialState);
-      setAccountsArray([]);
+      setValues(initialState); setAccountsArray([]); setCount(0);
     } else { console.log('Please ensure that the book is balanced'); }
   };
   return (

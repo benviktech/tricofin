@@ -54,25 +54,17 @@ const Transaction = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
+    setValues({ ...values, [name]: value });
   };
 
   useEffect(() => {
     if (currentTranId.length > 0) {
-      axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/2021-05-07T00%3A00%3A00/${currentTranId}`)
-        .then(response => {
-          setCurrentTranObject(response?.data);
-        })
+      axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/${currentTranId}`)
+        .then(response => setCurrentTranObject(response?.data))
         .catch(error => console.log(error?.message));
       setEditState(true);
     } else {
-      setCurrentTranObject({});
-      setValues(initialState);
-      setEditState(false);
-      setCurrentAccount({});
+      setCurrentTranObject({}); setValues(initialState); setEditState(false); setCurrentAccount({});
     }
   }, [currentTranId]);
 
@@ -140,9 +132,7 @@ const Transaction = () => {
     }
   }, [values.accTypeID]);
 
-  const hideModal = () => {
-    setModal(false);
-  };
+  const hideModal = () => setModal(false);
 
   useEffect(() => {
     if (modalBranch.length > 0 && modalBranch !== '004') {
@@ -150,9 +140,7 @@ const Transaction = () => {
         account => account.branchID === modalBranch,
       );
       setInnerModalList(newModalList);
-    } else {
-      setInnerModalList(modalList);
-    }
+    } else { setInnerModalList(modalList); }
   }, [modalBranch]);
 
   useEffect(() => {
@@ -161,19 +149,11 @@ const Transaction = () => {
         : sharesAcType ? sharesModalList : null).filter(
         account => account.branchID === savingModalBranch,
       );
-      if (savingsAcType) {
-        setSVInnerModalList(newModalList);
-      }
-      if (sharesAcType) {
-        setSHInnerModalList(newModalList);
-      }
+      if (savingsAcType) { setSVInnerModalList(newModalList); }
+      if (sharesAcType) { setSHInnerModalList(newModalList); }
     } else {
-      if (savingsAcType) {
-        setSVInnerModalList(savingModalList);
-      }
-      if (sharesAcType) {
-        setSHInnerModalList(sharesModalList);
-      }
+      if (savingsAcType) { setSVInnerModalList(savingModalList); }
+      if (sharesAcType) { setSHInnerModalList(sharesModalList); }
     }
   }, [savingModalBranch]);
 
@@ -191,9 +171,7 @@ const Transaction = () => {
   };
 
   useEffect(() => {
-    if (diplayModalState) {
-      setModal(false);
-    }
+    if (diplayModalState) { setModal(false); }
   }, [diplayModalState]);
 
   const submitCashTransaction = () => {
