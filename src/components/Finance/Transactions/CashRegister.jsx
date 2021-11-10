@@ -1,7 +1,10 @@
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 
@@ -18,6 +21,7 @@ const CashRegister = () => {
   const [displayTotalDebit, setDisplayTotalDebit] = useState([]);
   const [displayTotalCredit, setDisplayTotalCredit] = useState([]);
   const [updatedTransactions, setUpdatedTransactions] = useState([]);
+  const history = useHistory();
 
   const headers = [
     { label: 'Transaction Date', key: 'tranDate' },
@@ -97,6 +101,7 @@ const CashRegister = () => {
   }, [viewState]);
 
   console.log(updatedTransactions, 'updatedTransactions');
+  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -110,6 +115,7 @@ const CashRegister = () => {
               <i
                 className="fas fa-arrow-circle-left"
                 style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
               />
             </div>
             <TransactionsSidebar />

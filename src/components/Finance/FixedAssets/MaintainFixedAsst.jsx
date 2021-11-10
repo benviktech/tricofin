@@ -5,6 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
@@ -57,6 +58,7 @@ const MaintainFixedAsset = () => {
   const [addState, setAddState] = useState(false);
   const [editState, setEditState] = useState(false);
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
   useEffect(() => { dispatch(fetchFixedAssetList()); }, []);
 
@@ -146,6 +148,7 @@ const MaintainFixedAsset = () => {
     dispatch(deleteFixedAssets(values.accountID));
     setValues(initialState);
   };
+  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -159,6 +162,7 @@ const MaintainFixedAsset = () => {
               <i
                 className="fas fa-arrow-circle-left"
                 style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
               />
             </div>
             <FixedAssetsSidebar />

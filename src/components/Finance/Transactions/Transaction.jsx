@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
@@ -44,6 +45,7 @@ const Transaction = () => {
   const [creditSum, setCreditSum] = useState(0);
   const [debitSum, setDebitSum] = useState(0);
   const compName = 'Transaction';
+  const history = useHistory();
 
   const cashTransactionList = useSelector(state => state.generalLedgerReducer.cashTransactionList);
 
@@ -227,6 +229,7 @@ const Transaction = () => {
     if (type === 'savings') { setSVInnerModalList(sortedNewModalList); }
     if (type === 'shares') { setSHInnerModalList(sortedNewModalList); }
   };
+  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -240,6 +243,7 @@ const Transaction = () => {
               <i
                 className="fas fa-arrow-circle-left"
                 style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
               />
             </div>
             <TransactionsSidebar />

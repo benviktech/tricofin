@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
@@ -48,6 +49,8 @@ const TransferTransactions = () => {
   const [totalDebit, setTotalDebit] = useState(0);
   const dispatch = useDispatch();
   const [count, setCount] = useState(0);
+  const [errorModal, setErrorModal] = useState(false);
+  const history = useHistory();
 
   const {
     tranTypes, accTypes, modalBranchList,
@@ -56,10 +59,7 @@ const TransferTransactions = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
+    setValues({ ...values, [name]: value });
   };
 
   useEffect(() => {
@@ -71,10 +71,7 @@ const TransferTransactions = () => {
         .catch(error => console.log(error?.message));
       setEditState(true);
     } else {
-      setCurrentTranObject({});
-      setValues(initialState);
-      setEditState(false);
-      setCurrentAccount({});
+      setCurrentTranObject({}); setValues(initialState); setEditState(false); setCurrentAccount({});
     }
   }, [currentTranId]);
 
@@ -111,33 +108,19 @@ const TransferTransactions = () => {
   useEffect(() => {
     if (values.accTypeID.length > 0) {
       if (values.accTypeID === 'G') {
-        setSavingModalList([]);
-        setSharesModalList([]);
-        setModalList(glList);
-        setSavingsAcType(false);
-        setSharesAcType(false);
-        setGLAcType(true);
+        setSavingModalList([]); setSharesModalList([]); setModalList(glList);
+        setSavingsAcType(false); setSharesAcType(false); setGLAcType(true);
       } else if (values.accTypeID === 'S') {
-        setSharesModalList([]);
-        setModalList([]);
-        setSavingModalList(savingsList);
-        setGLAcType(false);
-        setSavingsAcType(true);
-        setSharesAcType(false);
+        setSharesModalList([]); setModalList([]); setSavingModalList(savingsList);
+        setGLAcType(false); setSavingsAcType(true); setSharesAcType(false);
       } else {
-        setSavingModalList([]);
-        setSharesModalList(sharesList);
-        setModalList([]);
-        setGLAcType(false);
-        setSavingsAcType(false);
-        setSharesAcType(true);
+        setSavingModalList([]); setSharesModalList(sharesList); setModalList([]);
+        setGLAcType(false); setSavingsAcType(false); setSharesAcType(true);
       }
     }
   }, [values.accTypeID]);
 
-  const hideModal = () => {
-    setModal(false);
-  };
+  const hideModal = () => setModal(false);
 
   useEffect(() => {
     if (modalBranch.length > 0 && modalBranch !== '004') {
@@ -145,9 +128,7 @@ const TransferTransactions = () => {
         account => account.branchID === modalBranch,
       );
       setInnerModalList(newModalList);
-    } else {
-      setInnerModalList(modalList);
-    }
+    } else { setInnerModalList(modalList); }
   }, [modalBranch]);
 
   useEffect(() => {
@@ -156,19 +137,11 @@ const TransferTransactions = () => {
         : sharesAcType ? sharesModalList : null).filter(
         account => account.branchID === savingModalBranch,
       );
-      if (savingsAcType) {
-        setSVInnerModalList(newModalList);
-      }
-      if (sharesAcType) {
-        setSHInnerModalList(newModalList);
-      }
+      if (savingsAcType) { setSVInnerModalList(newModalList); }
+      if (sharesAcType) { setSHInnerModalList(newModalList); }
     } else {
-      if (savingsAcType) {
-        setSVInnerModalList(savingModalList);
-      }
-      if (sharesAcType) {
-        setSHInnerModalList(sharesModalList);
-      }
+      if (savingsAcType) { setSVInnerModalList(savingModalList); }
+      if (sharesAcType) { setSHInnerModalList(sharesModalList); }
     }
   }, [savingModalBranch]);
 
@@ -186,9 +159,7 @@ const TransferTransactions = () => {
   };
 
   useEffect(() => {
-    if (diplayModalState) {
-      setModal(false);
-    }
+    if (diplayModalState) { setModal(false); }
   }, [diplayModalState]);
 
   const submitCashTransaction = () => {
@@ -214,22 +185,27 @@ const TransferTransactions = () => {
       tranCode: result.tranTypeID,
       tranParticulars: 'CASH DEPOSIT',
       tranRemarks: (result.tranRemarks).toUpperCase(),
-    }); setCount(count + 1); setCurrentAccount({});
+    }); setCurrentAccount({});
   };
 
   useEffect(() => {
     if (Object.keys(userAccount).length > 0) {
-      setErrors(transactionValidator(userAccount));
+      setErrors(transactionValidator(userAccount, 'submit'));
     }
   }, [userAccount]);
 
   useEffect(async () => {
-    if (Object.keys(errors).length === 0) {
-      if (editState) {
-        console.log(userAccount, 'userAccount update');
+    if (Object.values(errors).includes('submit')) {
+      if (Object.keys(errors).length === 1) {
+        setCount(count + 1);
+        if (editState) {
+          console.log(userAccount, 'userAccount update');
+        } else {
+          setAccountsArray([...accountsArray, userAccount]);
+          setValues(initialState);
+        }
       } else {
-        setAccountsArray([...accountsArray, userAccount]);
-        setValues(initialState);
+        setErrorModal(true);
       }
     }
   }, [errors]);
@@ -261,6 +237,8 @@ const TransferTransactions = () => {
       setValues(initialState); setAccountsArray([]); setCount(0);
     } else { console.log('Please ensure that the book is balanced'); }
   };
+  const routeBack = () => history.goBack();
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
@@ -273,6 +251,7 @@ const TransferTransactions = () => {
               <i
                 className="fas fa-arrow-circle-left"
                 style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
               />
             </div>
             <TransactionsSidebar />
@@ -305,11 +284,7 @@ const TransferTransactions = () => {
               <div className="cash-traction-top-section-grid">
                 <span> PartTranType: </span>
                 {' '}
-                <select
-                  name="tranTypeID"
-                  value={values.tranTypeID}
-                  onChange={handleChange}
-                >
+                <select name="tranTypeID" value={values.tranTypeID} onChange={handleChange}>
                   <option value="" disabled selected hidden>Select</option>
                   {
                     tranTypes.map(tranType => (
@@ -327,18 +302,11 @@ const TransferTransactions = () => {
               <div className="cash-traction-top-section-grid">
                 <span> AcctType: </span>
                 {' '}
-                <select
-                  name="accTypeID"
-                  value={values.accTypeID}
-                  onChange={handleChange}
-                >
+                <select name="accTypeID" value={values.accTypeID} onChange={handleChange}>
                   <option value="" disabled selected hidden>Select</option>
                   {
                     accTypes.filter(element => element.accountTypeID !== 'L').map(accType => (
-                      <option
-                        key={accType.accountTypeID}
-                        value={accType.accountTypeID}
-                      >
+                      <option key={accType.accountTypeID} value={accType.accountTypeID}>
                         {accType.accountType}
                       </option>
                     ))
@@ -351,20 +319,14 @@ const TransferTransactions = () => {
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Serial#: </span>
-                <input
-                  disabled="true"
-                  value={values.tranSerialNo}
-                  type="text"
-                />
+                <input disabled="true" value={values.tranSerialNo} type="text" />
               </div>
               {
-                Object.keys(errors).length > 0 ? (
+                errorModal ? (
                   <div className="transactions-errors shadow">
-                    <i onClick={() => setErrors({})} className="far fa-times-circle" />
+                    <i onClick={() => setErrorModal(false)} className="far fa-times-circle" />
                     <ul>
-                      {
-                        Object.values(errors).map(error => <li key={error}>{error}</li>)
-                      }
+                      {Object.values(errors).map(error => <li key={error}>{error}</li>)}
                     </ul>
                   </div>
                 ) : null

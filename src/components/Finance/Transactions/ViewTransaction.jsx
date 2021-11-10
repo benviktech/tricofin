@@ -2,15 +2,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
 import TransactionRequests from './TransactionRequests';
 
-const initialState = {
-  currentSetId: '',
-  currentTranType: '',
-  currentSubType: '',
-};
+const initialState = { currentSetId: '', currentTranType: '', currentSubType: '' };
 
 const ViewTransactions = () => {
   const [transactionCategories, setTransactionCategories] = useState([]);
@@ -19,6 +16,7 @@ const ViewTransactions = () => {
   const [detailedAccount, setDetailedAccount] = useState([]);
   const [values, setValues] = useState(initialState);
   const [currentTranObject, setCurrentTranObject] = useState({});
+  const history = useHistory();
 
   const { modalBranchList } = TransactionRequests();
   const updateModalBranchList = [...modalBranchList, { id: 'OPN', name: 'Operational Branches' }];
@@ -55,6 +53,7 @@ const ViewTransactions = () => {
       .then(response => setCurrentTranObject(response?.data))
       .catch(error => console.log(error?.message));
   }, [detailedAccount]);
+  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -68,6 +67,7 @@ const ViewTransactions = () => {
               <i
                 className="fas fa-arrow-circle-left"
                 style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
               />
             </div>
             <TransactionsSidebar />
@@ -76,18 +76,11 @@ const ViewTransactions = () => {
             <div className="cash-transaction-top-section">
               <div className="login-branch">
                 <div className="login-branch-label">Login Branch:</div>
-                <select
-                  name="currentSetId"
-                  onChange={handleChange}
-                  value={values.currentSetId}
-                >
+                <select name="currentSetId" onChange={handleChange} value={values.currentSetId}>
                   <option value="" disabled selected hidden>Select</option>
                   {
                       updateModalBranchList.map(branch => (
-                        <option
-                          key={branch.id}
-                          value={branch.id}
-                        >
+                        <option key={branch.id} value={branch.id}>
                           {branch.name}
                         </option>
                       ))
@@ -96,18 +89,11 @@ const ViewTransactions = () => {
               </div>
               <div className="login-branch">
                 <div className="login-branch-label">Tran Type:</div>
-                <select
-                  name="currentTranType"
-                  onChange={handleChange}
-                  value={values.currentTranType}
-                >
+                <select name="currentTranType" onChange={handleChange} value={values.currentTranType}>
                   <option value="" disabled selected hidden>Select</option>
                   {
                       transactionCategories.map(category => (
-                        <option
-                          key={category.catID}
-                          value={category.catID}
-                        >
+                        <option key={category.catID} value={category.catID}>
                           {category.category}
                         </option>
                       ))
@@ -116,18 +102,11 @@ const ViewTransactions = () => {
               </div>
               <div className="login-branch">
                 <div className="login-branch-label">Sub Type:</div>
-                <select
-                  name="currentSubType"
-                  onChange={handleChange}
-                  value={values.currentSubType}
-                >
+                <select name="currentSubType" onChange={handleChange} value={values.currentSubType}>
                   <option value="" disabled selected hidden>Select</option>
                   {
                       transactionSubTypes.map(type => (
-                        <option
-                          key={type.subTypeId}
-                          value={type.subTypeId}
-                        >
+                        <option key={type.subTypeId} value={type.subTypeId}>
                           {type.subType}
                         </option>
                       ))
@@ -162,14 +141,14 @@ const ViewTransactions = () => {
               </div>
               <div className="cash-transaction-list-lower-section-content-container">
                 {
-                  displayList.map(item => (
+                  (displayList.length > 0) && displayList.map(item => (
                     <div
                       onClick={() => setDetailedAccount(item.tranID)}
                       key={item.tranID}
                       className="cash-transaction-list-lower-section-header"
                     >
                       <div className="cash-transaction-list-lower-section-grid">
-                        <input className="mr-2" type="checkbox" style={{ width: '15px', height: '15px' }} />
+                        <input onChange={handleChange} className="mr-2" type="checkbox" style={{ width: '15px', height: '15px' }} />
                         {item.tranID}
                       </div>
                       <div className="cash-transaction-list-lower-section-grid">{item.loginBranch}</div>

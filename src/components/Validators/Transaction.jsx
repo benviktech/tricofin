@@ -1,6 +1,6 @@
-export default function transactionValidator(values) {
+export default function transactionValidator(values, state) {
   const errors = {};
-
+  errors.state = state;
   if (!values.partTranType) {
     errors.partTranType = 'PartTranType is required';
   }

@@ -1,5 +1,9 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { FixedAssetsSidebar } from '../../Sidebar/Sidebar';
 import './index.css';
 import TrCodesModal from '../Transactions/TrCodesModal';
@@ -44,6 +48,7 @@ const FixedAssetsPrdt = () => {
   const [addState, setAddState] = useState(false);
   const [editState, setEditState] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     document.addEventListener('keydown', e => {
@@ -106,6 +111,7 @@ const FixedAssetsPrdt = () => {
       }
     }
   }, [errors]);
+  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -119,6 +125,7 @@ const FixedAssetsPrdt = () => {
               <i
                 className="fas fa-arrow-circle-left"
                 style={{ fontSize: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={routeBack}
               />
             </div>
             <FixedAssetsSidebar />
