@@ -84,7 +84,7 @@ const TransactionCodes = () => {
 
   useEffect(() => {
     document.addEventListener('keydown', e => {
-      if (e.code === 'F4') { setModal(true); }
+      if (e.code === 'F2') { setModal(true); }
     });
   });
 
