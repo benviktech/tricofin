@@ -4,17 +4,41 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Papa from 'papaparse';
 import { saveBatchTransactions, transferTransaction } from '../../../actions/generalLedger';
 
+const initialState = {
+  accountID: '',
+  accountType: '',
+  partTranType: '',
+  productID: 'SV101',
+  tranCode: '003',
+};
+
 const BatchTransactions = () => {
+  const [values, setValues] = useState(initialState);
   const [csvFile, setCsvFile] = useState([]);
   const [viewState, setViewState] = useState(false);
   const [errors, setErrors] = useState(false);
   const [submitArray, setSubmitArray] = useState([]);
   const [debitTot, setDebitTot] = useState(0);
   const [creditTot, setCreditTot] = useState(0);
+  const [trxTypes, setTrxTypes] = useState([]);
+  const [accTypes, setAccTypes] = useState([]);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetTransactionTypes')
+      .then(response => setTrxTypes(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
+
+  useEffect(() => {
+    axios.get('https://tricofin.azurewebsites.net/api/StaticData/GetAccountTypes')
+      .then(response => setAccTypes(response?.data))
+      .catch(error => console.log(error?.message));
+  }, []);
 
   const dispatch = useDispatch();
   const batchTransactionsList = useSelector(
@@ -63,11 +87,17 @@ const BatchTransactions = () => {
     setViewState(false); setCsvFile([]);
   };
 
+  const displayCurrent = account => {
+    setValues(account);
+    console.log(account, 'account');
+  };
+  console.log(trxTypes, 'trxTypes', accTypes, 'accTypes');
+
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info-lg">
-          <span>Transaction Code Maintenance</span>
+          <span>Batch Transactions</span>
         </div>
         <div className="transaction-codes-main-section transaction-codes-main-section-bulk-transaction">
           { errors ? (
@@ -94,41 +124,63 @@ const BatchTransactions = () => {
           <div className="transaction-codes-main-section-middle">
             <div className="transaction-codes-main-section-middle-inner">
               <div className="transaction-codes-main-section-middle-label">PartTranType:</div>
-              <select>
-                <option value="VAAL">VAL</option>
-                <option value="VAAL">VAL</option>
-                <option value="VAAL">VAL</option>
-                <option value="VAAL">VAL</option>
+              <select
+                name="tranTypeID"
+                value={values.partTranType}
+                disabled="true"
+              >
+                <option value="" disabled selected hidden>Select</option>
+                {
+                    trxTypes.map(tranType => (
+                      <option
+                        key={tranType.tranType}
+                        value={tranType.tranType}
+                      >
+                        {tranType.transactionType}
+                      </option>
+                    ))
+                  }
               </select>
             </div>
             <div className="transaction-codes-main-section-middle-inner">
               <div className="transaction-codes-main-section-middle-label">Acct Type:</div>
-              <select>
-                <option value="VAAL">VAL</option>
-                <option value="VAAL">VAL</option>
-                <option value="VAAL">VAL</option>
-                <option value="VAAL">VAL</option>
+              <select
+                name="accTypeID"
+                value={values.accountType}
+                disabled="true"
+              >
+                <option value="" disabled selected hidden>Select</option>
+                {
+                    accTypes.filter(element => element.accountTypeID !== 'L').map(accType => (
+                      <option
+                        key={accType.accountTypeID}
+                        value={accType.accountTypeID}
+                      >
+                        {accType.accountType}
+                      </option>
+                    ))
+                  }
               </select>
             </div>
             <div className="transaction-codes-main-section-middle-inner">
               <div className="transaction-codes-main-section-middle-label">Account ID:</div>
               <div className="input-acct-name">
-                <input type="text" />
-                <div className="bulk-acct-name">BAGENDA REUBEN</div>
+                <input disabled="true" value={values.accountID ? values.accountID : ''} type="text" />
+                <div className="bulk-acct-name" />
               </div>
             </div>
             <div className="transaction-codes-main-section-middle-inner">
               <div className="transaction-codes-main-section-middle-label">Product:</div>
               <div className="input-acct-name">
-                <input type="text" />
-                <div className="bulk-acct-name">BAGENDA REUBEN</div>
+                <input disabled="true" value={values.productID ? values.productID : ''} type="text" />
+                <div className="bulk-acct-name" />
               </div>
             </div>
             <div className="transaction-codes-main-section-middle-inner">
               <div className="transaction-codes-main-section-middle-label">TranCode:</div>
               <div className="input-acct-name">
-                <input type="text" />
-                <div className="bulk-acct-name">BAGENDA REUBEN</div>
+                <input disabled="true" value={values.tranCode ? values.tranCode : ''} type="text" />
+                <div className="bulk-acct-name" />
               </div>
             </div>
           </div>
@@ -199,7 +251,7 @@ const BatchTransactions = () => {
                 <div className="transaction-bottom-header-outer">
                   {
                   batchTransactionsList.map(content => (
-                    <div key={content.columnID} className="part-tran-details-content-bulk-transaction-bottom-header">
+                    <div onClick={() => displayCurrent(content)} key={content.columnID} className="part-tran-details-content-bulk-transaction-bottom-header">
                       <div className="part-tran-details-content-bulk-transaction-bottom-header-grid content-section">
                         {new Date(content.valueDate).toUTCString().split(' ').slice(0, 4)
                           .join(' ')}

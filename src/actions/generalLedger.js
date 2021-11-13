@@ -446,7 +446,7 @@ export const postMaintainFixedAsst = (result, id, addState, editState) => async 
 export const saveBatchTransactions = data => async dispatch => {
   console.log(data, 'data');
   const method = 'post';
-  const path = '/api/Finance/GenerateBatchTransactions/001';
+  const path = 'api/Finance/GenerateBatchTransactions/001';
   try {
     const response = await PostMaintainFixedAsstRequest(method, path, data);
     console.log(response?.data, 'data');
