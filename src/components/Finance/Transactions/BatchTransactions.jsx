@@ -13,8 +13,8 @@ const initialState = {
   accountID: '',
   accountType: '',
   partTranType: '',
-  productID: 'SV101',
-  tranCode: '003',
+  productID: '',
+  tranCode: '',
 };
 
 const BatchTransactions = () => {
