@@ -1085,3 +1085,63 @@
 .debit-credit-inner {
   background-color: #f3f2f1;
 }
+
+.edit-error-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-error-modal-inner {
+  background-color: #fff;
+  position: relative;
+  min-width: 400px;
+  text-align: center;
+}
+
+.edit-error-modal-inner i {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  font-size: 20px;
+  color: #fff;
+}
+
+.edit-error-modal-inner-span {
+  font-size: 12px;
+  padding: 20px 0;
+}
+
+.edit-error-modal-inner-header {
+  background-color: #0178d4;
+  padding: 5px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.edit-error-modal-inner button {
+  background-color: #0178d4;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.edit-error-modal-inner-button {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
