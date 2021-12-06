@@ -71,16 +71,30 @@ const TransferTransactions = () => {
     setValues({ ...values, [name]: value });
   };
 
+  const sortData = dataList => {
+    const result = dataList.map((element, index) => (
+      {
+        ...element,
+        columnID: index + 1,
+        valueDate: new Date(element.valueDate)
+          .toUTCString().split(' ').slice(1, 4)
+          .join('-'),
+      }
+    ));
+    return result;
+  };
+
   useEffect(() => {
     if (currentTranId.length > 0) {
       axios.get(`https://tricofin.azurewebsites.net/api/Finance/GetDailyTransaction/${currentTranId}`)
         .then(response => {
-          setCurrentTranObject(response?.data);
+          setCurrentTranObject(response?.data); setAccountsArray(sortData(response?.data));
         })
         .catch(error => console.log(error?.message));
       setEditState(true);
     } else {
       setCurrentTranObject({}); setValues(initialState); setEditState(false); setCurrentAccount({});
+      setAccountsArray([]);
     }
   }, [currentTranId]);
 
