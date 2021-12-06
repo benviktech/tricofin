@@ -450,7 +450,8 @@
 }
 
 .transactions-errors,
-.transactions-success {
+.transactions-success,
+.transactions-error {
   position: absolute;
   top: 10;
   right: 0;
@@ -458,15 +459,21 @@
   background-color: #fff;
 }
 
-.transactions-success {
+.transactions-success,
+.transactions-error {
   padding: 20px;
   padding-right: 0;
 }
 
-.transactions-success span {
+.transactions-success span,
+.transactions-error span {
   font-size: 12px;
   color: lightgreen;
   font-size: bold;
+}
+
+.transactions-error span {
+  color: red;
 }
 
 .transactions-errors ul {

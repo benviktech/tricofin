@@ -56,6 +56,7 @@ const TransferTransactions = () => {
   const history = useHistory();
 
   const successRequest = useSelector(state => state.generalLedgerReducer.successRequest);
+  const errorRequest = useSelector(state => state.generalLedgerReducer.error);
   const routeBack = () => history.goBack();
   const clearSuccesMessage = () => dispatch(clearError());
   useEffect(() => dispatch(clearError()), []);
@@ -355,6 +356,11 @@ const TransferTransactions = () => {
                 ) : successRequest ? (
                   <div className="transactions-success shadow">
                     <span>Created Successfully</span>
+                    <i onClick={() => clearSuccesMessage()} className="far text-success fa-lg fa-times-circle" />
+                  </div>
+                ) : errorRequest.length > 0 ? (
+                  <div className="transactions-error shadow">
+                    <span>{errorRequest}</span>
                     <i onClick={() => clearSuccesMessage()} className="far text-danger fa-lg fa-times-circle" />
                   </div>
                 ) : null

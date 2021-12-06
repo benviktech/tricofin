@@ -297,10 +297,10 @@ export const saveTransactions = userAccount => async dispatch => {
   try {
     const response = await SaveTransactionRequest(method, path, result);
     console.log(response.data, 'response data');
-    // dispatch({ type: CASH_TRANSACTION, payload: response?.data });
-    return dispatch({ type: SUCCESS_MESSAGE });
+    return dispatch({ type: CASH_TRANSACTION, payload: response?.data });
+    // return dispatch({ type: SUCCESS_MESSAGE });
   } catch (error) {
-    return dispatch({ type: LOADING_ERROR, payload: error.message });
+    return dispatch({ type: LOADING_ERROR, payload: 'Error Occurred!!' });
   }
 };
 
@@ -323,7 +323,7 @@ export const transferTransaction = data => async dispatch => {
     console.log(response.data, 'response data');
     return dispatch({ type: SUCCESS_MESSAGE });
   } catch (error) {
-    return dispatch({ type: LOADING_ERROR, payload: error.message });
+    return dispatch({ type: LOADING_ERROR, payload: 'Error Occurred!!' });
   }
 };
 

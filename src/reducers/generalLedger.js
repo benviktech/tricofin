@@ -68,6 +68,7 @@ const generalLedgerReducer = (state = initialState, action) => {
         cashTransactionList: [...state.cashTransactionList, action.payload[0]],
         error: '',
         loading: false,
+        successRequest: true,
       };
     case CASH_TRANSACTION_LIST:
       return {
@@ -133,6 +134,7 @@ const generalLedgerReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         successRequest: false,
+        error: '',
       };
     default:
       return state;
