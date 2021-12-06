@@ -30,6 +30,7 @@ const TransferTransactions = () => {
   const [savingModalBranch, setSavingModalBranch] = useState('');
   const [savingsAcType, setSavingsAcType] = useState(false);
   const [innerModalList, setInnerModalList] = useState([]);
+  const [copyinnerModalList, setCopyInnerModalList] = useState([]);
   const [sVInnerModalList, setSVInnerModalList] = useState([]);
   const [sHInnerModalList, setSHInnerModalList] = useState([]);
   const [gLAcType, setGLAcType] = useState(false);
@@ -132,8 +133,8 @@ const TransferTransactions = () => {
       const newModalList = modalList.filter(
         account => account.branchID === modalBranch,
       );
-      setInnerModalList(newModalList);
-    } else { setInnerModalList(modalList); }
+      setInnerModalList(newModalList); setCopyInnerModalList(newModalList);
+    } else { setInnerModalList(modalList); setCopyInnerModalList(modalList); }
   }, [modalBranch]);
 
   useEffect(() => {
@@ -231,7 +232,7 @@ const TransferTransactions = () => {
   }, [accountsArray]);
 
   const filterGlList = (content, text) => {
-    setInnerModalList(Array.from(new Set(GLListFilter(glList, content, text))));
+    setInnerModalList(Array.from(new Set(GLListFilter(copyinnerModalList, content, text))));
   };
 
   const filterListTwo = (content, type, text) => {
