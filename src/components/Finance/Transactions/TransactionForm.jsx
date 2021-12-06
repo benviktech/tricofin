@@ -84,7 +84,7 @@ const TransactionForm = ({
       </div>
       <div className="right-cash-transaction-middle-section-inner-remarks">
         <div className="right-cash-transaction-middle-section-title-remarks">Amount:</div>
-        <input name="tranAmount" onChange={handleChange} value={values.tranAmount} type="text" />
+        <input name="tranAmount" onChange={handleChange} value={values.tranAmount} type="number" />
       </div>
       {
         compName === 'Transaction' ? (

@@ -10,9 +10,6 @@ export default function transactionValidator(values, state) {
   if (!values.accountID) {
     errors.accountID = 'Account is required';
   }
-  if (!values.receiptNo) {
-    errors.receiptNo = 'Receipt is required';
-  }
   if (!values.valueDate) {
     errors.valueDate = 'Date is required';
   }

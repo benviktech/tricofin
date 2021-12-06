@@ -59,7 +59,7 @@ const ViewTransactions = () => {
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Cash Transactions</span>
+          <span>View Transactions</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">

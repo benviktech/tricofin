@@ -26,12 +26,14 @@ export const UPDATE_GL_PARAMETERS = 'UPDATE_GL_PARAMETERS';
 export const FETCH_GL_PARAMETERS = 'FETCH_GL_PARAMETERS';
 export const CASH_TRANSACTION = 'CASH_TRANSACTION';
 export const CASH_TRANSACTION_LIST = 'CASH_TRANSACTION_LIST';
-export const TRANSFER_TRANSACTION = 'TRANSFER_TRANSACTION';
+// export const TRANSFER_TRANSACTION = 'TRANSFER_TRANSACTION';
 export const DELETE_FIXED_ASSETS_PRODUCT = 'DELETE_FIXED_ASSETS_PRODUCT';
 export const DELETE_FIXED_ASSET = 'DELETE_FIXED_ASSET';
 export const FETCHED_FIXED_ASSETS_PRODUCT = 'FETCHED_FIXED_ASSETS_PRODUCT';
 export const FETCHED_FIXED_ASSET_LIST = 'FETCHED_FIXED_ASSET_LIST';
 export const BATCH_TRANSACTIONS_LIST = 'BATCH_TRANSACTIONS_LIST';
+export const SUCCESS_MESSAGE = 'SUCCESS_MESSAGE';
+export const CLEAR_ERROR = '  CLEAR_ERROR';
 
 export const fetchGeneralLedgerSubTypes = data => ({
   type: FETCH_GENERAL_LEDGER,
@@ -67,6 +69,8 @@ export const newMultipleGLList = data => ({
   type: COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
   payload: data,
 });
+
+export const clearError = () => dispatch => dispatch({ type: CLEAR_ERROR });
 
 export const getGeneralLedgerSubTypes = () => async dispatch => {
   const path = 'api/Finance/GetGeneralLedgerSubTypes';
@@ -292,9 +296,11 @@ export const saveTransactions = userAccount => async dispatch => {
   result.push(userAccount);
   try {
     const response = await SaveTransactionRequest(method, path, result);
-    dispatch({ type: CASH_TRANSACTION, payload: response?.data });
+    console.log(response.data, 'response data');
+    // dispatch({ type: CASH_TRANSACTION, payload: response?.data });
+    return dispatch({ type: SUCCESS_MESSAGE });
   } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
+    return dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
 
@@ -315,9 +321,9 @@ export const transferTransaction = data => async dispatch => {
   try {
     const response = await TransferTransactionRequest(method, path, data);
     console.log(response.data, 'response data');
-    dispatch({ type: TRANSFER_TRANSACTION, payload: response?.data });
+    return dispatch({ type: SUCCESS_MESSAGE });
   } catch (error) {
-    dispatch({ type: LOADING_ERROR, payload: error.message });
+    return dispatch({ type: LOADING_ERROR, payload: error.message });
   }
 };
 

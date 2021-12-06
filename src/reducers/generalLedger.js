@@ -5,7 +5,8 @@ import {
   FETCH_SINGLE_GENERAL_LEDGER_DETAILS, COPY_SINGLE_ACCOUNT_TO_BRANCHES,
   FETCH_GL_PARAMETERS, UPDATE_GL_PARAMETERS, CASH_TRANSACTION, CASH_TRANSACTION_LIST,
   DELETE_FIXED_ASSETS_PRODUCT, FETCHED_FIXED_ASSETS_PRODUCT, COPY_MULTIPLE_ACCOUNTS_TO_BRANCH,
-  FETCHED_FIXED_ASSET_LIST, DELETE_FIXED_ASSET, BATCH_TRANSACTIONS_LIST,
+  FETCHED_FIXED_ASSET_LIST, DELETE_FIXED_ASSET, BATCH_TRANSACTIONS_LIST, SUCCESS_MESSAGE,
+  CLEAR_ERROR,
 } from '../actions/generalLedger';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   fixedAssestPrdtsList: [],
   fixedAssetList: [],
   batchTransactionsList: [],
+  successRequest: false,
 };
 
 const generalLedgerReducer = (state = initialState, action) => {
@@ -119,6 +121,18 @@ const generalLedgerReducer = (state = initialState, action) => {
           content => (content.serialID === action.payload.serialID
             ? action.payload : content),
         ),
+      };
+    case SUCCESS_MESSAGE:
+      return {
+        ...state,
+        loading: false,
+        successRequest: true,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        loading: false,
+        successRequest: false,
       };
     default:
       return state;

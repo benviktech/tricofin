@@ -6,7 +6,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
@@ -20,7 +20,7 @@ import {
   GLListFilter, SCListFilter, initialState, calculateTotal,
 } from './TransactionHelpers';
 import TransactionDetails from './TransactionDetails';
-import { transferTransaction } from '../../../actions/generalLedger';
+import { clearError, transferTransaction } from '../../../actions/generalLedger';
 
 const TransferTransactions = () => {
   const [values, setValues] = useState(initialState);
@@ -51,6 +51,11 @@ const TransferTransactions = () => {
   const [count, setCount] = useState(0);
   const [errorModal, setErrorModal] = useState(false);
   const history = useHistory();
+
+  const successRequest = useSelector(state => state.generalLedgerReducer.successRequest);
+  const routeBack = () => history.goBack();
+  const clearSuccesMessage = () => dispatch(clearError());
+  useEffect(() => dispatch(clearError()), []);
 
   const {
     tranTypes, accTypes, modalBranchList,
@@ -202,7 +207,15 @@ const TransferTransactions = () => {
           console.log(userAccount, 'userAccount update');
         } else {
           setAccountsArray([...accountsArray, userAccount]);
-          setValues(initialState);
+          setValues(
+            {
+              ...initialState,
+              tranAmount: values.tranAmount,
+              valueDate: values.valueDate,
+              receiptNo: values.receiptNo,
+              tranRemarks: values.tranRemarks,
+            },
+          );
         }
       } else {
         setErrorModal(true);
@@ -237,13 +250,12 @@ const TransferTransactions = () => {
       setValues(initialState); setAccountsArray([]); setCount(0);
     } else { console.log('Please ensure that the book is balanced'); }
   };
-  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
       <div className="lower-form-section">
         <div className="maintenance-customer-info">
-          <span>Cash Transactions</span>
+          <span>Transfer Transactions</span>
         </div>
         <div className="lower-downer-section">
           <div className="left-inner-form-section">
@@ -326,8 +338,13 @@ const TransferTransactions = () => {
                   <div className="transactions-errors shadow">
                     <i onClick={() => setErrorModal(false)} className="far fa-times-circle" />
                     <ul>
-                      {Object.values(errors).map(error => <li key={error}>{error}</li>)}
+                      {Object.values(errors).filter(error => error !== 'submit').map(error => <li key={error}>{error}</li>)}
                     </ul>
+                  </div>
+                ) : successRequest ? (
+                  <div className="transactions-success shadow">
+                    <span>Created Successfully</span>
+                    <i onClick={() => clearSuccesMessage()} className="far text-danger fa-lg fa-times-circle" />
                   </div>
                 ) : null
               }

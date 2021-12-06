@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
 import { TransactionsSidebar } from '../../Sidebar/Sidebar';
-import { saveTransactions } from '../../../actions/generalLedger';
+import { clearError, saveTransactions } from '../../../actions/generalLedger';
 import transactionValidator from '../../Validators/Transaction';
 import { CashierDetails, AccountDetails } from './Details';
 import Modal from './Modal';
@@ -48,6 +48,10 @@ const Transaction = () => {
   const history = useHistory();
 
   const cashTransactionList = useSelector(state => state.generalLedgerReducer.cashTransactionList);
+  const successRequest = useSelector(state => state.generalLedgerReducer.successRequest);
+  const routeBack = () => history.goBack();
+  const clearSuccesMessage = () => dispatch(clearError());
+  useEffect(() => dispatch(clearError()), []);
 
   const {
     tranTypes, accTypes, modalBranchList,
@@ -204,17 +208,19 @@ const Transaction = () => {
 
   useEffect(() => {
     if (Object.keys(userAccount).length > 0) {
-      setErrors(transactionValidator(userAccount));
+      setErrors(transactionValidator(userAccount, 'submit'));
     }
   }, [userAccount]);
 
   useEffect(async () => {
-    if (Object.keys(errors).length === 0) {
-      if (editState) {
-        console.log(userAccount, 'userAccount update');
-      } else {
-        await dispatch(saveTransactions(userAccount));
-        setValues(initialState);
+    if (Object.values(errors).includes('submit')) {
+      if (Object.keys(errors).length === 1) {
+        if (editState) {
+          console.log(userAccount, 'userAccount update');
+        } else {
+          await dispatch(saveTransactions(userAccount));
+          setValues(initialState);
+        }
       }
     }
   }, [errors]);
@@ -229,7 +235,6 @@ const Transaction = () => {
     if (type === 'savings') { setSVInnerModalList(sortedNewModalList); }
     if (type === 'shares') { setSHInnerModalList(sortedNewModalList); }
   };
-  const routeBack = () => history.goBack();
 
   return (
     <div className="individual-customer-form">
@@ -329,14 +334,19 @@ const Transaction = () => {
                 />
               </div>
               {
-                Object.keys(errors).length > 0 ? (
+                Object.keys(errors).length > 1 ? (
                   <div className="transactions-errors shadow">
                     <i onClick={() => setErrors({})} className="far fa-times-circle" />
                     <ul>
                       {
-                        Object.values(errors).map(error => <li key={error}>{error}</li>)
+                        Object.values(errors).filter(error => error !== 'submit').map(error => <li key={error}>{error}</li>)
                       }
                     </ul>
+                  </div>
+                ) : successRequest ? (
+                  <div className="transactions-success shadow">
+                    <span>Created Successfully</span>
+                    <i onClick={() => clearSuccesMessage()} className="far text-success fa-lg fa-times-circle" />
                   </div>
                 ) : null
               }
