@@ -32,7 +32,9 @@ const TransferTransactions = () => {
   const [innerModalList, setInnerModalList] = useState([]);
   const [copyinnerModalList, setCopyInnerModalList] = useState([]);
   const [sVInnerModalList, setSVInnerModalList] = useState([]);
+  const [copysVInnerModalList, setCopySVInnerModalList] = useState([]);
   const [sHInnerModalList, setSHInnerModalList] = useState([]);
+  const [copysHInnerModalList, setCopySHInnerModalList] = useState([]);
   const [gLAcType, setGLAcType] = useState(false);
   const [sharesAcType, setSharesAcType] = useState(false);
   const [modalList, setModalList] = useState([]);
@@ -143,11 +145,19 @@ const TransferTransactions = () => {
         : sharesAcType ? sharesModalList : null).filter(
         account => account.branchID === savingModalBranch,
       );
-      if (savingsAcType) { setSVInnerModalList(newModalList); }
-      if (sharesAcType) { setSHInnerModalList(newModalList); }
+      if (savingsAcType) {
+        setSVInnerModalList(newModalList); setCopySVInnerModalList(newModalList);
+      }
+      if (sharesAcType) {
+        setSHInnerModalList(newModalList); setCopySHInnerModalList(newModalList);
+      }
     } else {
-      if (savingsAcType) { setSVInnerModalList(savingModalList); }
-      if (sharesAcType) { setSHInnerModalList(sharesModalList); }
+      if (savingsAcType) {
+        setSVInnerModalList(savingModalList); setCopySVInnerModalList(savingModalList);
+      }
+      if (sharesAcType) {
+        setSHInnerModalList(sharesModalList); setCopySHInnerModalList(sharesModalList);
+      }
     }
   }, [savingModalBranch]);
 
@@ -237,7 +247,7 @@ const TransferTransactions = () => {
 
   const filterListTwo = (content, type, text) => {
     const sortedNewModalList = Array
-      .from(new Set(SCListFilter(savingsList, sharesList, content, type, text)));
+      .from(new Set(SCListFilter(copysVInnerModalList, copysHInnerModalList, content, type, text)));
     if (type === 'savings') { setSVInnerModalList(sortedNewModalList); }
     if (type === 'shares') { setSHInnerModalList(sortedNewModalList); }
   };
