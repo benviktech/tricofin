@@ -218,8 +218,8 @@ const Transaction = () => {
     const result = {
       ...values,
       partTranType: editState ? values.partTranType
-        : (values.tranTypeID === '001' ? 'C'
-          : values.tranTypeID === '002' ? 'D'
+        : (values.tranTypeID === '003' ? 'C'
+          : values.tranTypeID === '004' ? 'D'
             : null),
     };
 
@@ -326,8 +326,8 @@ const Transaction = () => {
                     tranTypes.map(tranType => (
                       <option
                         key={tranType.tranType}
-                        value={tranType.tranType === 'C' ? '001'
-                          : tranType.tranType === 'D' ? '002' : null}
+                        value={tranType.tranType === 'C' ? '003'
+                          : tranType.tranType === 'D' ? '004' : null}
                       >
                         {tranType.transactionType}
                       </option>
@@ -405,6 +405,8 @@ const Transaction = () => {
               submitCashTransaction={submitCashTransaction}
               compName={compName}
               setCursorPosition={setCursorPosition}
+              setValues={setValues}
+              initialState={initialState}
             />
             <CashierDetails creditSum={creditSum} debitSum={debitSum} />
             <AccountDetails compName={compName} currentAccount={currentAccount} />
