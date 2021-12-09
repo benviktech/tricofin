@@ -6,7 +6,7 @@ import React from 'react';
 const TransactionForm = ({
   values, handleChange, currentAccount,
   editState, currentTranObject, setErrors,
-  submitCashTransaction, compName,
+  submitCashTransaction, compName, setCursorPosition,
 }) => (
   <div className="cash-transaction-middle-section">
     <div className="left-cash-transaction-middle-section">
@@ -16,6 +16,7 @@ const TransactionForm = ({
           autoComplete="off"
           name="accountId"
           value={values.accountId}
+          onFocus={() => setCursorPosition(true)}
           type="text"
           onChange={handleChange}
         />
@@ -39,8 +40,8 @@ const TransactionForm = ({
       </div>
       <div className="left-cash-transaction-middle-section-inner">
         <div className="left-cash-transaction-middle-section-title">Product:</div>
-        <div className="left-cash-transaction-middle-section-id-name">{values.productID}</div>
-        <div className="left-cash-transaction-middle-section-text">{values.productName}</div>
+        <div className="left-cash-transaction-middle-section-id-name">{values?.accountId && values.productID}</div>
+        <div className="left-cash-transaction-middle-section-text">{values?.accountId && values.productName}</div>
       </div>
       <div className="left-cash-transaction-middle-receipt-date">
         <div className="left-cash-transaction-middle-reciept-title">Receipt#.</div>

@@ -54,6 +54,7 @@ const TransferTransactions = () => {
   const [count, setCount] = useState(0);
   const [errorModal, setErrorModal] = useState(false);
   const history = useHistory();
+  const [cursorPosition, setCursorPosition] = useState(true);
 
   const successRequest = useSelector(state => state.generalLedgerReducer.successRequest);
   const errorRequest = useSelector(state => state.generalLedgerReducer.error);
@@ -122,9 +123,13 @@ const TransferTransactions = () => {
     }
   }, [currentTranObject]);
 
+  const determineInput = () => {
+    if (cursorPosition) { setModal(true); setDiplayModalState(false); }
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', e => {
-      if (e.code === 'F2') { setModal(true); setDiplayModalState(false); }
+      if (e.code === 'F2') { determineInput(); }
     });
   });
 
@@ -143,7 +148,7 @@ const TransferTransactions = () => {
     }
   }, [values.accTypeID]);
 
-  const hideModal = () => setModal(false);
+  const hideModal = () => { setModal(false); setCursorPosition(false); };
 
   useEffect(() => {
     if (modalBranch.length > 0 && modalBranch !== '004') {
@@ -188,6 +193,23 @@ const TransferTransactions = () => {
     });
     setDiplayModalState(true);
   };
+
+  useEffect(() => {
+    if (values.accountId && values.accTypeID) {
+      if (values.accTypeID === 'G') {
+        const res = glList.find(account => account.accountID === values.accountId);
+        if (res) { setSelectedAccount(res, 'GL'); } else { setSelectedAccount({}, 'GL'); }
+      }
+      if (values.accTypeID === 'S') {
+        const res = savingsList.find(account => account.accountID === values.accountId);
+        if (res) { setSelectedAccount(res, 'SV'); } else { setSelectedAccount({}, 'SV'); }
+      }
+      if (values.accTypeID === 'C') {
+        const res = sharesList.find(account => account.accountID === values.accountId);
+        if (res) { setSelectedAccount(res, 'SH'); } else { setSelectedAccount({}, 'SH'); }
+      }
+    }
+  }, [values.accountId]);
 
   useEffect(() => {
     if (diplayModalState) { setModal(false); }
@@ -298,6 +320,7 @@ const TransferTransactions = () => {
             <div className="cash-traction-top-section">
               {
                 modal
+                && cursorPosition
                 && editState === false
                 && values.accTypeID.length > 0 ? (
                   <Modal
@@ -353,7 +376,11 @@ const TransferTransactions = () => {
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Tran#: </span>
-                <input onChange={e => setCurrentTranId(e.target.value)} type="text" />
+                <input
+                  onChange={e => setCurrentTranId(e.target.value)}
+                  onFocus={() => setCursorPosition(false)}
+                  type="text"
+                />
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Serial#: </span>
@@ -388,6 +415,7 @@ const TransferTransactions = () => {
               currentTranObject={currentTranObject}
               setErrors={setErrors}
               compName={compName}
+              setCursorPosition={setCursorPosition}
             />
             <AccountDetails compName={compName} currentAccount={currentAccount} />
             <div className="part-tran-details-section d-flex">
@@ -441,7 +469,7 @@ const TransferTransactions = () => {
             </div>
             <TransactionDetails accountsArray={accountsArray} />
             <div className="lower-transaction-submit-section">
-              <button onClick={submitTransfers} type="button">Add</button>
+              <button onClick={submitTransfers} type="button">Submit</button>
               <button type="button">Cancel</button>
               <button type="button">Delete</button>
             </div>

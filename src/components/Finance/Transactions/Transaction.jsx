@@ -49,6 +49,7 @@ const Transaction = () => {
   const [debitSum, setDebitSum] = useState(0);
   const compName = 'Transaction';
   const history = useHistory();
+  const [cursorPosition, setCursorPosition] = useState(true);
 
   const cashTransactionList = useSelector(state => state.generalLedgerReducer.cashTransactionList);
   const successRequest = useSelector(state => state.generalLedgerReducer.successRequest);
@@ -109,9 +110,13 @@ const Transaction = () => {
     }
   }, [currentTranObject]);
 
+  const determineInput = () => {
+    if (cursorPosition) { setModal(true); setDiplayModalState(false); }
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', e => {
-      if (e.code === 'F2') { setModal(true); setDiplayModalState(false); }
+      if (e.code === 'F2') { determineInput(); }
     });
   });
 
@@ -142,7 +147,7 @@ const Transaction = () => {
     }
   }, [values.accTypeID]);
 
-  const hideModal = () => setModal(false);
+  const hideModal = () => { setModal(false); setCursorPosition(false); };
 
   useEffect(() => {
     if (modalBranch.length > 0 && modalBranch !== '004') {
@@ -187,6 +192,23 @@ const Transaction = () => {
     });
     setDiplayModalState(true);
   };
+
+  useEffect(() => {
+    if (values.accountId && values.accTypeID) {
+      if (values.accTypeID === 'G') {
+        const res = glList.find(account => account.accountID === values.accountId);
+        if (res) { setSelectedAccount(res, 'GL'); } else { setSelectedAccount({}, 'GL'); }
+      }
+      if (values.accTypeID === 'S') {
+        const res = savingsList.find(account => account.accountID === values.accountId);
+        if (res) { setSelectedAccount(res, 'SV'); } else { setSelectedAccount({}, 'SV'); }
+      }
+      if (values.accTypeID === 'C') {
+        const res = sharesList.find(account => account.accountID === values.accountId);
+        if (res) { setSelectedAccount(res, 'SH'); } else { setSelectedAccount({}, 'SH'); }
+      }
+    }
+  }, [values.accountId]);
 
   useEffect(() => {
     if (diplayModalState) { setModal(false); }
@@ -269,6 +291,7 @@ const Transaction = () => {
             <div className="cash-traction-top-section">
               {
                 modal
+                && cursorPosition
                 && editState === false
                 && values.accTypeID.length > 0 ? (
                   <Modal
@@ -335,7 +358,11 @@ const Transaction = () => {
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Tran#: </span>
-                <input onChange={e => setCurrentTranId(e.target.value)} type="text" />
+                <input
+                  onChange={e => setCurrentTranId(e.target.value)}
+                  onFocus={() => setCursorPosition(false)}
+                  type="text"
+                />
               </div>
               <div className="cash-traction-top-section-grid">
                 <span> Serial#: </span>
@@ -377,6 +404,7 @@ const Transaction = () => {
               setErrors={setErrors}
               submitCashTransaction={submitCashTransaction}
               compName={compName}
+              setCursorPosition={setCursorPosition}
             />
             <CashierDetails creditSum={creditSum} debitSum={debitSum} />
             <AccountDetails compName={compName} currentAccount={currentAccount} />
