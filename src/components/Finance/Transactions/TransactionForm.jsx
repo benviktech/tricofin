@@ -99,9 +99,8 @@ const TransactionForm = ({
         {
         compName === 'Transaction' ? (
           <div className="cash-transaction-buttons-section">
-            <button onClick={submitCashTransaction} type="button">
-              { editState ? 'Edit' : 'Add'}
-            </button>
+            {editState ? (<button onClick={submitCashTransaction} type="button"> Update</button>)
+              : (<button onClick={submitCashTransaction} type="button">Add</button>)}
             <button onClick={() => resetValues()} type="button">Cancel</button>
             <button type="button">Delete</button>
           </div>

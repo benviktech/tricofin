@@ -470,7 +470,7 @@ const TransferTransactions = () => {
             <TransactionDetails accountsArray={accountsArray} />
             <div className="lower-transaction-submit-section">
               <button onClick={submitTransfers} type="button">Submit</button>
-              <button type="button">Cancel</button>
+              <button onClick={() => setValues(initialState)} type="button">Cancel</button>
               <button type="button">Delete</button>
             </div>
           </div>

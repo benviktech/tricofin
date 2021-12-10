@@ -250,7 +250,7 @@ const Transaction = () => {
     if (Object.values(errors).includes('submit')) {
       if (Object.keys(errors).length === 1) {
         if (editState) {
-          console.log(userAccount, 'userAccount update');
+          console.log(userAccount, 'userAccount');
         } else {
           await dispatch(saveTransactions(userAccount));
           setValues(initialState);
