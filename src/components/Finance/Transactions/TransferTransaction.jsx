@@ -55,6 +55,7 @@ const TransferTransactions = () => {
   const [errorModal, setErrorModal] = useState(false);
   const history = useHistory();
   const [cursorPosition, setCursorPosition] = useState(true);
+  const [editGrid, setEditGrid] = useState(false);
 
   const successRequest = useSelector(state => state.generalLedgerReducer.successRequest);
   const errorRequest = useSelector(state => state.generalLedgerReducer.error);
@@ -134,7 +135,7 @@ const TransferTransactions = () => {
   });
 
   useEffect(() => {
-    if (values.accTypeID.length > 0) {
+    if (values?.accTypeID?.length > 0) {
       if (values.accTypeID === 'G') {
         setSavingModalList([]); setSharesModalList([]); setModalList(glList);
         setSavingsAcType(false); setSharesAcType(false); setGLAcType(true);
@@ -247,6 +248,13 @@ const TransferTransactions = () => {
     }
   }, [userAccount]);
 
+  const updateArrayData = (accountsArray, userAccount) => {
+    const result = accountsArray.map(
+      account => (account.accountID === userAccount.accountID ? userAccount : account),
+    );
+    setAccountsArray(result);
+  };
+
   useEffect(async () => {
     if (Object.values(errors).includes('submit')) {
       if (Object.keys(errors).length === 1) {
@@ -254,7 +262,9 @@ const TransferTransactions = () => {
         if (editState) {
           console.log(userAccount, 'userAccount update');
         } else {
-          setAccountsArray([...accountsArray, userAccount]);
+          if (editGrid && accountsArray.length > 0) { updateArrayData(accountsArray, userAccount); }
+          if (editGrid === false) { setAccountsArray([...accountsArray, userAccount]); }
+          setEditGrid(false);
           setValues(
             {
               ...initialState,
@@ -297,6 +307,20 @@ const TransferTransactions = () => {
       await dispatch(transferTransaction(result));
       setValues(initialState); setAccountsArray([]); setCount(0);
     } else { console.log('Please ensure that the book is balanced'); }
+  };
+
+  const resetFormData = data => {
+    setEditGrid(true);
+    setValues({
+      ...values,
+      accountId: data.accountID,
+      accTypeID: data.accountType,
+      productID: data.productID,
+      receiptNo: data.receiptNo,
+      tranAmount: data.tranAmount,
+      tranRemarks: data.tranRemarks,
+      tranTypeID: data.partTranType === 'C' ? '003' : '004',
+    });
   };
 
   return (
@@ -467,7 +491,7 @@ const TransferTransactions = () => {
                 </div>
               </div>
             </div>
-            <TransactionDetails accountsArray={accountsArray} />
+            <TransactionDetails accountsArray={accountsArray} resetFormData={resetFormData} />
             <div className="lower-transaction-submit-section">
               <button onClick={submitTransfers} type="button">Submit</button>
               <button onClick={() => setValues(initialState)} type="button">Cancel</button>

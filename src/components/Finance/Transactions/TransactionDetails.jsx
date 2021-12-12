@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const TransactionDetails = ({ accountsArray }) => {
+const TransactionDetails = ({ accountsArray, resetFormData }) => {
   console.log('transaction details');
   return (
     <div className="transaction-details-form-section-container">
@@ -66,7 +66,16 @@ const TransactionDetails = ({ accountsArray }) => {
                     <div className="serial-content-grid">
                       {account.tranRemarks && account.tranRemarks }
                     </div>
-                    <div className="serial-content-grid">...</div>
+                    <div className="serial-content-grid">
+                      <button
+                        onClick={() => resetFormData(account)}
+                        type="button"
+                        className="btn btn-secondary p-0 px-2"
+                        style={{ fontSize: '11px', height: '20px' }}
+                      >
+                        Edit
+                      </button>
+                    </div>
                   </div>
                 ) : null
             ))
